@@ -60,7 +60,7 @@ class AtencionClinicaController extends Controller
        
         $areas=Area::all();
         $salas=DB::table("salas as s")
-                   ->join("areas as a",'a.id','=','s.id_area')
+                   ->join("Areas as a",'a.id','=','s.id_area')
                    ->select('a.tipo_dato','s.nombre','s.id')
                    ->orderBy('a.tipo_dato')
                    ->get();
