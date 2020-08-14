@@ -72,7 +72,7 @@
   // echo $request->input('a');
   $url_array =  explode('/', URL::current()) ;
   // echo $url_array[3];
-  
+  $usuario = Auth::user();
 ?>
   <nav class="navbar navbar-dark navbar-expand-sm bg-dark">
  {{--  <nav class="navbar navbar-expand-lg navbar-light " --}} {{-- style="background-color:transparent;" >--}}
@@ -118,7 +118,7 @@
         <ul class="navbar-nav mr-sm-2">
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle"  style="color: #eee; " href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    {{ Auth::user()->name }}
+                    {{ $usuario->name }}
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                     <a class="dropdown-item" href="{{ route('logout') }}"
@@ -129,14 +129,97 @@
                     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                         @csrf
                     </form>
-                    <a class="dropdown-item" href="{{ route('profesionales.index') }}">{{ __('Perfil') }}</a>
+                  {{--  <a class="dropdown-item" href="{{ route('profesionales.index') }}">{{ __('Perfil') }}</a>--}}
+                    <!-- Button trigger modal -->
+                    <button type="button" class="dropdown-item" data-toggle="modal" data-target="#modalPerfil{{$usuario->id}}">Perfil</button>
                 </div>
             </li>
         </ul>
     </div>
 </nav>
-</header>
 
+</header>
+<!-- Modal -->
+<div class="modal fade" id="modalPerfil{{$usuario->id}}" tabindex="-1" role="dialog" aria-labelledby="modalPerfilTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h6 class="modal-title" id="exampleModalLongTitle">Datos de Usuario</h6>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group row">
+
+          <div class="col-md-6 text-md-right">
+            <h5>Nombre de usuario:</h5>			
+          </div>
+          <div class="col-md-6">
+            <h5>{{$usuario->username}}</h5>		
+          </div>
+          <div class="col-md-6 text-md-right">
+            <h5>Email:</h5>			
+          </div>
+          <div class="col-md-6">
+            <h5>{{$usuario->email}}</h5>		
+          </div>
+          <div class="col-md-6 text-md-right">
+            <h5>Rol:</h5>			
+          </div>
+          <div class="col-md-6">
+            <h5>{{$usuario->rol->nombre}}</h5>		
+          </div>
+          @if($usuario->profesional)
+            <div class="col-md-6 text-md-right">
+              <h5>Nombre:</h5>			
+            </div>
+            <div class="col-md-6">
+              <h5>{{$usuario->profesional->nombre}}</h5>		
+            </div>
+            <div class="col-md-6 text-md-right">
+              <h5>Apellido:</h5>			
+            </div>
+            <div class="col-md-6">
+              <h5>{{$usuario->profesional->apellido}}</h5>		
+            </div>
+            <div class="col-md-6 text-md-right">
+              <h5>Domicilio:</h5>			
+            </div>
+            <div class="col-md-6">
+              <h5>{{$usuario->profesional->domicilio}}</h5>		
+            </div>
+            <div class="col-md-6 text-md-right">
+              <h5>Matrícula:</h5>			
+            </div>
+            <div class="col-md-6">
+              <h5>{{$usuario->profesional->matricula}}</h5>		
+            </div>
+            <div class="col-md-6 text-md-right">
+              <h5>Especialidades:</h5>			
+            </div>					
+            <div class="col-md-6">
+              @foreach($usuario->profesional->detalleProfesional as $esp)
+                <h5><li> {{$esp->especialidad->nombre}}</li></h5>
+              @endforeach		
+            </div>
+          @else
+            <h5>No hay más datos para este usuario</h5>
+          @endif
+        </div>
+          @if($usuario->profesional)
+            <div class="text-center">
+              <a class="btn btn-primary" disabled>{{ __('Completar') }}</a>			
+            </div>
+          @else
+            <div class="text-center">
+              <a class="btn btn-primary" href="{{route('profesionales.create')}}">{{ __('Completar') }}</a>
+            </div>
+          @endif
+      </div>
+    </div>
+  </div>
+</div>
 @yield("cabecera")
 <div class="container-fluid">
     {{-- <div class="row justify-content-center">
