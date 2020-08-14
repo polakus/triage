@@ -22,6 +22,6 @@ class DetalleProfesional extends Model
 
     public function especialidad()
     {
-        return $this->belongsTo('App\Especialidad');
+        return $this->belongsTo('App\Especialidad', 'id_especialidad');
     }
 }

@@ -53,21 +53,10 @@ Route::resource('/protocolos', 'protocolosController')->middleware('auth');
 Route::resource('/profesionales', 'profesionalesController', ['except' => ['destroy', 'show', 'edit', 'update']])->middleware('auth');
 Route::resource('/cie','CieController')->middleware('auth');
 Route::resource('/especialidades','EspecialidadController')->middleware('auth');
+Route::resource('/pruebas', 'pruebaController');
 
 Route::post('/atencionclinica/sala','AtencionClinicaController@cargarSala')->middleware('auth');
 
-Route::get('/prueba', function(){
-    // $user = new User;
-    // $user->name = "Alejandro";
-    // $user->username = "aledvs";
-    // $user->email = "aledvs@gmail.com";
-    // $user->password = Hash::make("asdfñlkj");
-    // $user->id_rol = 1;
-    // $user->id= 1;
-    // $user->save();
-    // echo gettype(Auth::guard());
-    echo User::all()->count();
-});
 
 
 Auth::routes();#['register' => false]);

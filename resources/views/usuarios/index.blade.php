@@ -66,28 +66,57 @@
 									<div class="modal-dialog modal-dialog-centered" role="document">
 										<div class="modal-content">
 											<div class="modal-header">
-												<h5 class="modal-title" id="exampleModalLongTitle">Datos de Usuario</h5>
+												<h6 class="modal-title" id="exampleModalLongTitle">Datos de Usuario</h6>
 												<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 													<span aria-hidden="true">&times;</span>
 												</button>
 											</div>
 											<div class="modal-body">
 												@if($usuario->profesional)
-													
-													<div class="col{{-- -md-4 text-md-right --}}">
-														<h5>Nombre: {{$usuario->profesional->nombre}}</h5>			
+												<div class="row">
+													<div class="text-md-right col-md-4">
+														<h6>Nombre:</h6>			
 													</div>
-													
-													<div class="col{{-- -md-4 text-md-right --}}">
-														<h5>Apellido: {{$usuario->profesional->apellido}}</h5>			
+													<div class="col-md-4">
+														<h6>{{$usuario->profesional->nombre}}</h6>			
 													</div>
-													
-													<div class="col{{-- -md-4 text-md-right --}}">
-														<h5>Domicilio: {{$usuario->profesional->domicilio}}</h5>			
+												</div>
+												<div class="row">
+													<div class="text-md-right col-md-4">
+														<h6>Apellido:</h6>			
 													</div>
-													
+													<div class="col-md-4">
+														<h6>{{$usuario->profesional->apellido}}</h6>			
+													</div>
+												</div>
+												<div class="row">
+													<div class="text-md-right col-md-4">
+														<h6>Domicilio:</h6>			
+													</div>
+													<div class="col-md-4">
+														<h6>{{$usuario->profesional->domicilio}}</h6>			
+													</div>
+												</div>
+												<div class="row">
+													<div class="text-md-right col-md-4">
+														<h6>Matrícula:</h6>			
+													</div>
+													<div class="col-md-4">
+														<h6>{{$usuario->profesional->matricula}}</h6>			
+													</div>
+												</div>
+												<div class="row">
+													<div class="text-md-right col-md-4">
+														<h6>Especialidades:</h6>			
+													</div>
+													<div class="col-md-4">
+														@foreach($usuario->profesional->detalleProfesional as $esp)
+															<h6><li> {{$esp->especialidad->nombre}}</li></h6>
+														@endforeach			
+													</div>
+												</div>
 												@else
-												<h5>No hay más datos para este usuario</h5>
+												<h6>No hay más datos para este usuario</h6>
 												@endif
 											</div>
 										</div>

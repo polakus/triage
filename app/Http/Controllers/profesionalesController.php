@@ -71,29 +71,6 @@ class profesionalesController extends Controller
             $request->session()->flash('alert-warning', 'Usted ya cargó su perfil!');
         }
         return redirect()->back()->withInput();
-        // if(Profesional::where('matricula', $request->matricula)->get()->isEmpty()){
-        //     if(Profesional::where('id_user', Auth::user()->id)->get()->isEmpty()){
-        //         $profesional = new Profesional;
-        //         $profesional->nombre = $request->nombre;
-        //         $profesional->apellido = $request->apellido;
-        //         $profesional->matricula = $request->matricula;
-        //         $profesional->domicilio = $request->domicilio;
-        //         $profesional->id_user = Auth::user()->id;
-        //         $profesional->disponibilidad = 1;
-        //         $profesional->save();
-        //         foreach($request->esp as $especialidad){
-        //             $newDet = new DetalleProfesional;
-        //             $newDet->id_profesional = Auth::id();
-        //             $newDet->id_especialidad = $especialidad;
-        //             $newDet->save();
-        //         }
-        //         $request->session()->flash('alert-success', 'Los datos se han agregado correctamente!');
-        //     }else{
-        //         $request->session()->flash('alert-danger', 'Ya posee un perfil!');
-        //     }
-        // }else{
-        //     $request->session()->flash('alert-danger', 'La matrícula ingresada ya se encuentra registrada!');
-        // }
     }
 
     /**

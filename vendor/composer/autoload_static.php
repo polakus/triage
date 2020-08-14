@@ -501,6 +501,7 @@ class ComposerStaticInit1a709310398a22a0e722e2017fb146ab
         'App\\Http\\Controllers\\controladorPacientes' => __DIR__ . '/../..' . '/app/Http/Controllers/controladorPacientes.php',
         'App\\Http\\Controllers\\profesionalesController' => __DIR__ . '/../..' . '/app/Http/Controllers/profesionalesController.php',
         'App\\Http\\Controllers\\protocolosController' => __DIR__ . '/../..' . '/app/Http/Controllers/protocolosController.php',
+        'App\\Http\\Controllers\\pruebaController' => __DIR__ . '/../..' . '/app/Http/Controllers/pruebaController.php',
         'App\\Http\\Controllers\\salasController' => __DIR__ . '/../..' . '/app/Http/Controllers/salasController.php',
         'App\\Http\\Controllers\\usuariosController' => __DIR__ . '/../..' . '/app/Http/Controllers/usuariosController.php',
         'App\\Http\\Kernel' => __DIR__ . '/../..' . '/app/Http/Kernel.php',

@@ -9,6 +9,6 @@ class Especialidad extends Model
     protected $table = 'Especialidades';
     
     public function detalleProfesional(){
-        return $this->hasMany('App\DetalleProfesional', 'id_especialidad');
+        return $this->hasMany('App\DetalleProfesional');
     }
 }

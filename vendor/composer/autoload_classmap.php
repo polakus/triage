@@ -42,6 +42,7 @@ return array(
     'App\\Http\\Controllers\\controladorPacientes' => $baseDir . '/app/Http/Controllers/controladorPacientes.php',
     'App\\Http\\Controllers\\profesionalesController' => $baseDir . '/app/Http/Controllers/profesionalesController.php',
     'App\\Http\\Controllers\\protocolosController' => $baseDir . '/app/Http/Controllers/protocolosController.php',
+    'App\\Http\\Controllers\\pruebaController' => $baseDir . '/app/Http/Controllers/pruebaController.php',
     'App\\Http\\Controllers\\salasController' => $baseDir . '/app/Http/Controllers/salasController.php',
     'App\\Http\\Controllers\\usuariosController' => $baseDir . '/app/Http/Controllers/usuariosController.php',
     'App\\Http\\Kernel' => $baseDir . '/app/Http/Kernel.php',
