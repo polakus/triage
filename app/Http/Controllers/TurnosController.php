@@ -250,7 +250,7 @@ class TurnosController extends Controller
                     ->join('CodigosTriage as codigotriage','codigotriage.id','=','da.id_codigo_triage')
                    
                     ->select('p.nombre','p.apellido','da.fecha','da.hora','are.tipo_dato','esp.nombre as especialidad','da.estado','da.id_codigo_triage','da.id','da.sala','codigotriage.color','da.operar')
-                    //->where('da.fecha','=',date('Y-m-d'))
+                    ->where('da.fecha','=',date('Y-m-d'))
                     
                     ->orderBy('da.id_codigo_triage','DESC')
                     ->orderBy('da.hora','ASC')

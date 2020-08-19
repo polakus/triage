@@ -56,7 +56,10 @@ class AtencionClinicaController extends Controller
 
         }
 
+        $cantidad= DetalleAtencion::where("estado","LIKE","consulta")->count();
         
+        
+
        
         $areas=Area::all();
         $salas=DB::table("salas as s")
@@ -70,7 +73,7 @@ class AtencionClinicaController extends Controller
             $val2=$request->val2;
        
             
-        return view('atencionclinica.index', compact('pacientes','areas','especialidades','val1','val2','salas','mensaje'));
+        return view('atencionclinica.index', compact('pacientes','areas','especialidades','val1','val2','salas','mensaje','cantidad'));
 
     }
 
@@ -107,7 +110,7 @@ class AtencionClinicaController extends Controller
         $actualizar_detalle->hora=date('H:i');
         $actualizar_detalle->respuestas=$request->descripto;
 
-        echo $request->descripto;
+    
 
         if (isset($_POST['boton'])) {
             $actualizar_detalle->atendido=1;
@@ -323,6 +326,23 @@ class AtencionClinicaController extends Controller
 
       return redirect()->action("AtencionClinicaController@index",['mensaje'=>$mensaje]);
 
+    }
+
+
+    public function refresh(Request $request){
+        $cantidad_vieja=$request->get('cant');
+        
+        $cantidad_nueva=$cantidad_vieja;
+        $cantidad_nueva=DetalleAtencion::where("estado","LIKE","consulta")->count();
+        // while($cantidad_nueva<=$cantidad_vieja){
+        //     $cantidad_nueva=DetalleAtencion::where("estado","LIKE","consulta")->count();
+        //     usleep(10000);
+        //     // clearstatcache();
+
+        // }
+
+
+        return response()->json(['cantidad_nueva'=>$cantidad_nueva]);
     }
     
 }

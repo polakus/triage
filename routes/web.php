@@ -26,6 +26,7 @@ Route::get('/', function () {
 Route::get('/test',function(){
 	return view('triagepreguntas.test');
 });
+Route::post('atencionclinica/refresh','AtencionClinicaController@refresh')->name("refresh");
 
 Route::get('/usuarios/pendientes/{id}/edit', 'usuariosController@aceptar')->middleware('auth');
 Route::delete('/usuarios/pendientes/{id}', 'usuariosController@rechazar')->middleware('auth');

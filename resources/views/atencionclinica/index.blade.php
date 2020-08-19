@@ -1,11 +1,20 @@
 @extends("layouts.plantillaTest")
 
 
+@section("metadatos")
+{{-- <meta name="csrf-token" content="{{ csrf_token() }}" /> --}}
+@endsection
+
+
+
 
 @section("cuerpo")
 <div class="card"> 
   <div class="card-header" style="font-size: 20px;">Pacientes para atender</div>
     <div class="card-body">
+     
+      <input type="hidden" name="_token" value="{{ csrf_token() }}" id="token">
+      {{-- <button id="btn-ingresar" onclick="hacer()" class="btn">Ingresar</button> --}}
     @if($mensaje=="") 
       <div id="Salas">
         <form method="POST" action="/atencionclinica/sala">
@@ -35,14 +44,17 @@
       </div>
   @else
   <div class="form-group">
-      
+      <input type="hidden" name="cantidad_actual" id="cantidad_actual" value="{{ $cantidad }}">
+       
          <h6>{{ $mensaje }}</h6>
      
       <a href="{{ route('atencionclinica.edit', Auth::id() ) }}"class="btn btn-dark btn-sm" style="width:220px;">Cambiar ubicacion</a>
       
      {{-- <button class="btn btn-success btn-sm" style="float: right;" onclick="recargar()">Refrescar automatico</button> --}}
   </div>
+  
       <div class="form-row" id="seccionRecargar">
+       
         <div class="form-group col-md-2" style="font-size: 17px;">
               <label for="inputState">Área</label>
               <select name="area" id="area" class="form-control">
@@ -72,13 +84,36 @@
           </div>
 
       </div>
+      <div class="form-group row-cols-3">
+        {{-- <label>ASDASD</label>
+        <div class="col-1">
+          <input type="" class="form-control" name="">
+        </div>
+        <div class="col-2">
+          <button>asd</button>
+        </div> --}}
+        <label>Pacientes activos</label>
+        <input type="text" name="cantidad" disabled value="0" id="cantidad" style="width: 40px;text-align: center;">
+        <button class="btn btn-dark btn-sm" style="height: 30px;float: right;"  onclick="document.location.reload();">Refresh</button>
+      </div>
+        
+      
 
 
 
         {{--   <form class="form-inline" method="GET" action="/atencionclinica">
            
             <button type="submit" class="btn btn-dark btn-sm">Refresh</button>
+            <div class="row" style="float: right;margin-top: -6%; margin-right: 0.1%;">
+              <label style="margin-top: 3%;">Pacientes nuevos:</label>
+              <input type="text" class="form-control form-control-sm ml-1" name="cantidad" id="cantidad" value="0" style="width: 40px;text-align: center;">
+              
+            </div>
           </form> --}}
+         {{--  <div class="form-group">
+            <button class="btn btn-dark btn-sm" style="float: right;margin-top: -3%;width:130px;" > Refresh</button>
+          </div> --}}
+          
           <table class="table table-bordered  table-sm table-hover table-responsive-sm" id="table_id">
             <thead class="thead-dark">
               <tr>
@@ -241,17 +276,17 @@ $(document).ready(function() {
 } );
 </script>
 
-<script type="text/javascript">
+{{-- <script type="text/javascript">
   
     
-    var x = document.crearInputs('input');
-    x.setAttribute('type','text');
+    var x = document.createElement('input');
+    x.setAttribute('type','hidden');
     x.setAttribute('name','val1');
     x.setAttribute('value',"probando");
 
     document.getElementById("frm1").appendChild(x);
   
-</script>
+</script> --}}
 <script>
   $('form[id^="frm1"').submit( function() {
     
@@ -295,5 +330,59 @@ $(document).ready(function() {
     setInterval("actualizar()",input.value);
   }
 </script> --}}
-@endsection
 
+
+
+{{-- <script type="text/javascript">
+  function hacer(){
+   
+   var cant="{{ $cantidad }}";
+   var ruta = "{{ route('refresh') }}";
+   var token = $("#token").val();
+   $.ajax({
+    headers:{'X-CSRF-TOKE':token},
+    type:'POST',
+    url: ruta,
+    dataType:'json',
+    data:{cant:cant,"_token": "{{ csrf_token() }}"}
+   }).done(function(info){
+      alert(info.mensaje);
+   })
+};
+
+
+  $(document).ready(function() {
+    hacer();
+});
+</script>
+ --}}
+<script type="text/javascript">
+  function actualizar(){
+   
+   var cant=document.getElementById("cantidad_actual").value;
+   
+   var ruta = "{{ route('refresh') }}";
+   var token = $("#token").val();
+   $.ajax({
+    headers:{'X-CSRF-TOKE':token},
+    type:'POST',
+    url: ruta,
+    dataType:'json',
+    data:{cant:cant,"_token": "{{ csrf_token() }}"}
+   }).done(function(info){
+      var cantidad_actual=document.getElementById("cantidad_actual");
+      if(cantidad_actual.value != info.cantidad_nueva){
+           var inputNombre = document.getElementById("cantidad");
+           inputNombre.value = parseInt(inputNombre.value) + info.cantidad_nueva - cantidad_actual.value;
+           cantidad_actual.value=info.cantidad_nueva
+         
+      }
+      
+   })
+};
+//Función para actualizar cada 4 segundos(4000 milisegundos)
+  setInterval("actualizar()",4000);
+</script>
+  
+</script>
+@endsection
