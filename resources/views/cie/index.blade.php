@@ -1,16 +1,16 @@
-@extends("layouts.plantillaTest")
+@extends("triagepreguntas.test")
 
 
 
 @section("cuerpo")
-<div class="card">
-<div class="card-header">Cie</div>
-<div class="card-body">
+{{-- <div class="card"> --}}
+{{-- <div class="card-header">Cie</div>
+<div class="card-body"> --}}
+	<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <h4 class="h4">CIE</h4>
+    </div>
 	<div class="form-group">
 		<div class="row">
-		 {{--  <div class="col">
-		   <input class="form-control col-md-2" type="text" id="myInput" onkeyup="myFunction()" placeholder="Nombre" >
-		  </div> --}}
 		  <div class="col-auto">
 		  	<button type="button" class="btn btn-dark" data-toggle="modal" data-target="#exampleModal">
               Agregar
@@ -25,6 +25,7 @@
 
 		</div>
 	</div>
+	<div class="table-responsive">
 	    <table class="table table-bordered table-sm table-hover" id="myTable">
 		  <thead class="thead-dark">
 		    <tr>
@@ -92,7 +93,8 @@
 		   	@endforeach
 		  </tbody>
 		</table>
-</div>
+	</div>
+{{-- </div> --}}
 
 
 <!-- Modal -->
@@ -111,11 +113,11 @@
 						<form method="POST" action="/cie">
 							@csrf
 							<div class="table-responsive">
-								<table class="table table-bordered"  id=tabla_sintomas>
+								<table class="table table-bordered table-sm"  id=tabla_sintomas>
 									<tr>
-										<td class="col-md-2"><input type="text" name="ciecodigo[]" class="form-control" placeholder="Cod"></td>
+										<td width="100px;"><input type="text" name="ciecodigo[]" class="form-control" placeholder="Cod"></td>
 										<td><input type="text" name="ciedescripcion[]" class="form-control"placeholder="Nombre"></td>
-										<td><button type="button" id="add" name="add" class="btn btn-dark">Agregar filas</button></td>
+										<td><button type="button" id="add" name="add" class="btn btn-dark btn-sm">Agregar filas</button></td>
 									</tr>
 								</table>
 								
@@ -140,10 +142,10 @@
           </div>
 
 
-</div>
-
-
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+{{-- </div> --}}
+@endsection
+@section("scripts")
+{{-- <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script> --}}
 
 <script>
 function myFunction() {

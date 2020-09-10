@@ -1,14 +1,16 @@
-@extends("layouts.plantillaTest")
+@extends("triagepreguntas.test")
 
 @section("cabecera")
     
 @endsection
 
 @section("cuerpo")
-<div class="card">
+{{-- <div class="card">
   <div class="card-header"> Registracion de un nuevo Protoloco </div>
-    <div class="card-body">
-
+    <div class="card-body"> --}}
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h5 class="h5">Registracion de un nuevo protocolo</h5>
+</div>
           <form method="POST" action="/protocolos">
             @csrf
 
@@ -68,6 +70,6 @@
         </div>
 
       </form>
-    </div>
-  </div>
+   {{--  </div>
+  </div> --}}
 @endsection

@@ -1,4 +1,4 @@
-@extends("layouts.plantillaTest")
+@extends("triagepreguntas.test")
 
 @section("cabecera")
     

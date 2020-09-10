@@ -1,15 +1,20 @@
-@extends("layouts.plantillaTest")
-
-@section("cabecera")
-    
-@endsection
+@extends("triagepreguntas.test")
 
 @section("cuerpo")
 <!-- Para Modal -->
 {{-- <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script> --}}
-<div class="card">
+{{-- <div class="card">
 	<div class="card-header"> Usuarios </div>
-	   <div class="card-body">
+	   <div class="card-body"> --}}
+	   	<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <h4 class="h4">Usuarios</h4>
+        <div class="btn-toolbar mb-2 mb-md-0">
+          <div class="btn-group mr-2">
+           <a class="btn btn-outline-secondary btn-sm ml-1" href="{{ route('usuarios.create') }}">Registrar Usuario</a>
+            <a class="btn btn-outline-secondary btn-sm ml-1" href="/usuarios/pendientes">Usuarios Pendientes</a>
+          </div>
+        </div>
+      </div>
 		<div class="flash-message">
 		    @foreach (['danger', 'warning', 'success', 'info'] as $msg)
 		      @if(Session::has('alert-' . $msg))
@@ -19,23 +24,19 @@
 		    @endforeach
 		</div>
 
-		<div class="form-row">
+		{{-- <div class="form-row">
 			<div class="form-group col-md-2">
 				<a class="btn btn-dark" href="{{ route('usuarios.create') }}">Registrar Usuario</a>
 			</div>
 			<div class="form-group col-md-2">
 				<a class="btn btn-dark" href="/usuarios/pendientes">Usuarios Pendientes</a>
 			</div>
-		</div>
-		{{-- <div class="form-row">
-			<div class="form-group col-md-2">
-				<input class="form-control" type="text" id="myInput" onkeyup="myFunction()" placeholder="Nombre">
-			</div>
 		</div> --}}
+		
 		<div class="table-responsive">
 		  
 			<table id="myTable" class="table table-bordered table-hover table-sm" cellspacing="0" width="100%">
-				<thead class="thead-dark">
+				<thead >
 					<tr>
 						<th scope="col" style="width:20%">Usuario</th>
 						<th scope="col" style="width:15%">Estado</th>
@@ -129,9 +130,9 @@
 									@csrf
 									{{method_field('DELETE')}}
 									@if(Auth::id()==$usuario->id)
-										<button type="submit" class="btn btn-danger btn-sm" value="{{$usuario->id}}" disabled>Eliminar</button>
+										<button type="submit" class="btn btn-danger btn-sm ml-1" value="{{$usuario->id}}" disabled>Eliminar</button>
 									@else
-										<button type="submit" class="btn btn-danger btn-sm" value="{{$usuario->id}}">Eliminar</button>
+										<button type="submit" class="btn btn-danger btn-sm ml-1" value="{{$usuario->id}}">Eliminar</button>
 									@endif
 								</form>
 							</div>
@@ -142,11 +143,11 @@
 			</table>
 		</div>
 
-	</div>
+	{{-- </div>
 </div>
-
-
-
+ --}}
+@endsection
+@section("scripts")
 
 
 <script>
@@ -186,7 +187,54 @@ $('form[id^="a2"').submit( function() {
   
 
 $(document).ready(function() {
-    $('#myTable').DataTable();
+    $('#myTable').DataTable({
+      "iDisplayLength": 50,
+      "language": {
+         "decimal": ",",
+        "thousands": ".",
+        "info": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+        "infoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+        "infoPostFix": "",
+        "infoFiltered": "(filtrado de un total de _MAX_ registros)",
+        "loadingRecords": "Cargando...",
+        "lengthMenu": "Mostrar _MENU_ registros",
+        "paginate": {
+            "first": "Primero",
+            "last": "Último",
+            "next": "Siguiente",
+            "previous": "Anterior"
+        },
+         "processing": "Procesando...",
+        "search": "Buscar:",
+        "searchPlaceholder": "",
+        "zeroRecords": "No se encontraron resultados",
+        "emptyTable": "Ningún dato disponible en esta tabla",
+        "aria": {
+            "sortAscending":  ": Activar para ordenar la columna de manera ascendente",
+            "sortDescending": ": Activar para ordenar la columna de manera descendente"
+        },
+         "buttons": {
+            "create": "Nuevo",
+            "edit": "Cambiar",
+            "remove": "Borrar",
+            "copy": "Copiar",
+            "csv": "fichero CSV",
+            "excel": "tabla Excel",
+            "pdf": "documento PDF",
+            "print": "Imprimir",
+            "colvis": "Visibilidad columnas",
+            "collection": "Colección",
+            "upload": "Seleccione fichero...."
+        },
+        "select": {
+            "rows": {
+                _: '%d filas seleccionadas',
+                0: 'clic fila para seleccionar',
+                1: 'una fila seleccionada'
+            }
+        }
+      }
+    });
 } );
 </script>
 @endsection

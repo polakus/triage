@@ -1,13 +1,16 @@
-@extends("layouts.plantillaTest")
+@extends("triagepreguntas.test")
 
 @section("cabecera")
     
 @endsection
 
 @section("cuerpo")
-<div class="card">
+{{-- <div class="card">
     <div class="card-header">Registracion de usuario </div>
-        <div class="card-body">
+        <div class="card-body"> --}}
+            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <h4 class="h4">Registracion de usuario</h4>
+    </div>
         <div class="flash-message">
             @foreach (['danger', 'warning', 'success', 'info'] as $msg)
                 @if(Session::has('alert-' . $msg))
@@ -87,7 +90,7 @@
                 <label class="col-md-4 col-form-label text-md-right" for="id_rol">Rol</label>
                 <div class="col-md-6">
                     <select name="id_rol" id="id_rol" class="form-control">
-                        <option value=""></option>
+                      
                         @foreach($roles as $rol)
                         <option value="{{$rol->id}}" {{ old('id_rol')==$rol->id ? 'selected': '' }}>{{$rol->nombre}}</option>
                         @endforeach
@@ -107,8 +110,8 @@
                 </div>
             </div>
         </form>
-    </div>
-</div>
+  {{--   </div>
+</div> --}}
 
 
 @endsection

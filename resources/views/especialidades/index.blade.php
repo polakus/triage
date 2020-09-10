@@ -1,20 +1,29 @@
-@extends("layouts.plantillaTest")
+@extends("triagepreguntas.test")
 
 
 
 
 @section("cuerpo")
-<div class="card">
+{{-- <div class="card">
 <div class="card-header">Especialidades</div>
-<div class="card-body">
-	
-	<div class="form-row">
+<div class="card-body"> --}}
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <h4 class="h4">Protolocos</h4>
+        <div class="btn-toolbar mb-2 mb-md-0">
+          <div class="btn-group mr-2">
+            <button type="button" class="btn btn-sm btn-outline-secondary" data-toggle="modal" data-target="#exampleModal">
+              Agregar un protocolo
+            </button>
+          </div>
+        </div>
+</div>
+	{{-- <div class="form-row">
 		<div class="form-group col-md-2">
 			<button type="button" class="btn btn-dark" data-toggle="modal" data-target="#exampleModal">
               Agregar
             </button>
 		</div>
-	</div>
+	</div> --}}
 	
 	<div class="form-row">
 		<div class="form-group col-md-2">
@@ -24,7 +33,7 @@
 	</div>
 
 
-
+	<div class="table-responsive">
 	    <table class="table table-bordered table-hover table-sm table-striped" id="myTable">
 		  <thead class="thead-dark">
 		    <tr>
@@ -53,11 +62,12 @@
 			                    <span aria-hidden="true">&times;</span>
 			                  </button>
 			                </div>
+			                <form method="POST" action="/especialidades/{{ $e->id }}">
+							@csrf
 			                <div class="modal-body">
 			                   <div class="container col-md-12">
 								<div class="form-group">
-									<form method="POST" action="/especialidades/{{ $e->id }}">
-										@csrf
+									
 										{{ method_field('PUT') }}
 										<div class="form-row">
 											<div class="form-group">
@@ -86,10 +96,11 @@
 			                </div>
 			                <div class="modal-footer">
 			                	<button type="submit" class="btn btn-dark">Editar</button>
-			                	</form>
+			                	
 			                  <button type="button" class="btn btn-dark" data-dismiss="modal">Cerrar</button>
 			                
 			                </div>
+			                </form>
 			              </div>
 			            </div>
 			          </div>
@@ -113,11 +124,12 @@
                     <span aria-hidden="true">&times;</span>
                   </button>
                 </div>
+                <form method="POST" action="/especialidades">
+					@csrf
                 <div class="modal-body">
                    <div class="container">
 					<div class="form-group">
-						<form method="POST" action="/especialidades">
-							@csrf
+						
 							<div class="form-row">
 									<div class="form-group">
 											<label>Nombre</label>
@@ -143,21 +155,6 @@
 									</div>
 							</div>
 
-
-
-							{{-- <div class="table-responsive">
-								<table class="table table-bordered" >
-									<tr>
-										<td class="col-md-4"><input type="text" name="esp_nombre" class="form-control" placeholder="Nombre"></td>
-										<td><textarea class="form-control" id="de" name="descripcion" rows="3" placeholder="Descripcion"></textarea></td>
-										
-										
-									</tr>
-								</table>
-								
-							</div> --}}
-							
-							
 						
 					</div>
 					
@@ -169,18 +166,17 @@
                 </div>
                 <div class="modal-footer">
                   <button type="submit" class="btn btn-dark">Guardar</button>
-                  </form>
+                  
                   <button type="button" class="btn btn-dark" data-dismiss="modal">Cerrar</button>
                 
                 </div>
+                </form>
               </div>
             </div>
           </div>
 
-
-
-</div>
-
+@endsection
+@section("scripts")
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
 
 <script>

@@ -1,4 +1,4 @@
-@extends("layouts.plantillaTest")
+@extends("triagepreguntas.test")
 
 @section("cabecera")
     
@@ -6,10 +6,12 @@
 
 @section("cuerpo")
 <!-- Para Modal -->
-{{-- <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script> --}}
-<div class="card">
+{{-- <div class="card">
 	<div class="card-header">Usuarios Pendientes</div>
-	  <div class="card-body">
+	  <div class="card-body"> --}}
+	  	<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <h4 class="h4">Usuarios pendiente</h4>
+    </div>
 		<div class="flash-message">
 		    @foreach (['danger', 'warning', 'success', 'info'] as $msg)
 		      @if(Session::has('alert-' . $msg))
@@ -64,9 +66,10 @@
 				</tbody>
 			</table>
 		</div>
-	</div>
-</div>
-
+	{{-- </div>
+</div> --}}
+@endsection
+@section("scripts")
 <script>
 function myFunction() {
   var input, filter, table, tr, td, i, txtValue;

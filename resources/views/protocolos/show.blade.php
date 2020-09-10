@@ -1,8 +1,5 @@
-@extends("layouts.plantillaTest")
+@extends("triagepreguntas.test")
 
-@section("cabecera")
-    
-@endsection
 
 @section("cuerpo")
 <div class="card">

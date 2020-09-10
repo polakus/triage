@@ -61,4 +61,4 @@ Route::post('/atencionclinica/sala','AtencionClinicaController@cargarSala')->mid
 
 
 Auth::routes();#['register' => false]);
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/inicio', 'HomeController@index')->name('inicio');

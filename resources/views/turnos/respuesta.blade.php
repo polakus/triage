@@ -1,10 +1,12 @@
-@extends('layouts.plantillaTest')
-
+@extends('triagepreguntas.test')
 
 @section('cuerpo')
 
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <h1 class="h2">Analisis de acuerdo a los sintomas descriptos</h1>
+</div>
 <div class="card">
-	<div class="card-header">Analisis de acuerdo a los Sintomas descriptos</div>
+	<div class="card-header">Resultado</div>
 		<div class="card-body">
 			@if($bandera=="")
 			  @if($disponibles_salas != "")
