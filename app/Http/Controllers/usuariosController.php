@@ -29,7 +29,6 @@ class usuariosController extends Controller
      */
     public function index()
     {
-        // echo "ignorar y borrar";
         $usuarios = User::where('estado', 1)->get();
         return view('usuarios.index', compact('usuarios'));
     }
