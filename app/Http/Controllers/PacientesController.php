@@ -81,7 +81,7 @@ class PacientesController extends Controller
         $paciente = Paciente::findOrFail($id);
 
         $nn= DB::table("Pacientes as p")
-                ->join("Atencion as a",'a.Paciente_id','=','p.Paciente_id')
+                ->join("atencion as a",'a.Paciente_id','=','p.Paciente_id')
                 ->join("detalle_atencion as da",'da.id_atencion','=','a.id')
                 ->join("historial as h",'h.id_detalle_atencion','=','da.id')
                 ->select("p.fechaNac",'h.descripcion','a.id as id_atencion')
