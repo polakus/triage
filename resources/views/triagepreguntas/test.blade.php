@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
@@ -37,6 +38,21 @@
           font-size: 3.5rem;
         }
       }
+
+      body {
+        margin: 0;
+      }
+
+      .container {
+        height: 100vh;
+      }
+
+      .chart-wrapper {
+        width: 500px;
+        height: 500px;
+        margin: 0 auto;
+      }
+
     </style>
    
   </head>

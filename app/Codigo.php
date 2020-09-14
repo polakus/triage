@@ -12,4 +12,8 @@ class Codigo extends Model
     {
         return $this->hasMany('App\Protocolo');
     }
+    // public function detalleAtencion()
+    // {
+    //     return $this->hasMany('App\User');
+    // }
 }
