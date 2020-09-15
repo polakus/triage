@@ -11,6 +11,7 @@ use App\Paciente;
 use App\Profesional;
 use App\DetalleAtencion;
 use App\Codigo;
+use App\Sala;
 
 class HomeController extends Controller
 {
@@ -51,21 +52,30 @@ class HomeController extends Controller
         # <<---- Para obtener el nombre del mes en español ---->> #
         $meses = array("enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre");
         $mes = $meses[date('m')-1];
-
-        # <<---- Para pasar los datos al gráfico de torta ---->> #
-        $data = [];
-        $codigos = DetalleAtencion::groupBy('id_codigo_triage')->select('id_codigo_triage', DB::raw('count(*) as cantidad') )->whereMonth('created_at', Carbon::now()->month - 1)->get();
-        $total = 0;
-        foreach ($codigos as $codigo){  #Le agregamos el color del código
-            $codigo->color=Codigo::find($codigo->id_codigo_triage)->color;
-            $total = $total + $codigo->cantidad;
+        $anio = date('y');
+        // echo $anio;
+        # <<---- Consultamos por las cantidades de los códigos por el mes actual (corregir el mes actual)---->> #
+        $dataMes = [];
+        $codigosMes = DetalleAtencion::select('id_codigo_triage', DB::raw('count(*) as cantidad') )->whereMonth('created_at', Carbon::now()->month - 1)->groupBy('id_codigo_triage')->get();
+        $totalMes = DetalleAtencion::count();
+        foreach($codigosMes as $codigoMes){     # Armamos array (dataPoints) para el gráfico de tortas
+            $dataMes[] = '{y: '.strval(($codigoMes->cantidad *100)/$totalMes).',label: "'.$codigoMes->CodigoTriage->color.'",color: "'.$this->traductorColor($codigoMes->CodigoTriage->color).'"}';
         }
-        foreach($codigos as $codigo){
-            $data[] = '{y: '.strval(($codigo->cantidad *100)/$total).',label: "'.$codigo->color.'",color: "'.$this->traductorColor($codigo->color).'"}';
-        }
-        $data = '[' . implode(', ', $data) . ']';
+        $dataMes = '[' . implode(', ', $dataMes) . ']';
         
-        return view('inicio', compact('cantUOnline', 'mes', 'cantUPendientes', 'cantPacientes', 'cantProfesionales', 'data'));
+        # <<---- Consultamos por las cantidades de los códigos por el año actual ---->> #
+        $dataAnio = [];
+        $codigosAnios = DetalleAtencion::select('id_codigo_triage', DB::raw('count(*) as cantidad') )->whereYear('created_at', Carbon::now()->year)->groupBy('id_codigo_triage')->get();
+        $totalAnio = DetalleAtencion::count();
+        foreach($codigosAnios as $codigoAnio){     # Armamos array (dataPoints) para el gráfico de tortas
+            $dataAnio[] = '{y: '.strval(($codigoAnio->cantidad *100)/$totalAnio).',label: "'.$codigoAnio->CodigoTriage->color.'",color: "'.$this->traductorColor($codigoAnio->CodigoTriage->color).'"}';
+        }
+        $dataAnio = '[' . implode(', ', $dataAnio) . ']';
+        
+        # <<---- Consultamos Salas ---->> #
+        $salas = Sala::select("id_area", DB::raw("count(*) as cantidad"), DB::raw("sum(disponibilidad) as disponibles"))->groupBy('id_area')->get();
+        
+        return view('inicio', compact('cantUOnline', 'mes', 'anio', 'cantUPendientes', 'cantPacientes', 'cantProfesionales', 'dataMes', 'dataAnio', 'salas'));
     }
 
     # <<---- Para traducir colores del español al inglés ---->> #

@@ -102,35 +102,102 @@
     <div class="card border-left-success shadow h-100 py-2">
       <div class="card-body">
         <div class="row no-gutters align-items-center">
-          <div id="chartContainer" style="height: 300px; width: 100%;"></div>
+          <div id="chartContainerMes" style="height: 300px; width: 100%;"></div>
         </div>
       </div>
     </div>
   </div>
-  <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+
+  <div class="col-x1-6 col-md-6 mb-4">
+    <div class="card border-left-success shadow h-100 py-2">
+      <div class="card-body">
+        <div class="row no-gutters align-items-center">
+          <div id="chartContainerAnio" style="height: 300px; width: 100%;"></div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 
+<div class="row">
+  <div class="col-x1-6 col-md-6 mb-4">
+    <div class="card border-left-success shadow h-100 py-2">
+      <div class="card-body">
+        <h4>Salas</h4>
+        <div class="row no-gutters align-items-center table-wrapper-scroll-y my-custom-scrollbar">
+          <table class="table">
+            <thead class="thead-light">
+              <tr>
+                <th scope="col">Area</th>
+                <th scope="col">Cantidad Salas</th>
+                <th scope="col">Cantidad Disponibles</th>
+              </tr>
+            </thead>
+            <tbody>
+              @foreach($salas as $sala)
+              <tr>
+                <th scope="row">{{$sala->area->tipo_dato}}</th>
+                <td>{{$sala->cantidad}}</td>
+                <td>{{$sala->disponibles}}</td>
+              </tr>
+              @endforeach
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
 <script>
   window.onload = function() {
   var t = "Porcentaje de Códigos ";
-  var texto = <?php echo json_encode("(".strtoupper($mes).")"); ?>;
-  var data = <?php echo $data; ?>;
-  var chart = new CanvasJS.Chart("chartContainer", {
+  var textoMes = <?php echo json_encode("(".strtoupper($mes).")"); ?>;
+  var textoAnio = <?php echo json_encode("(".strval($anio).")"); ?>;
+  var dataMes = <?php echo $dataMes; ?>;
+  var dataAnio = <?php echo $dataAnio; ?>;
+  var chartMes = new CanvasJS.Chart("chartContainerMes", {
     animationEnabled: true,
+    theme: "theme3",
     title: {
-      text: "Porcentaje de Códigos "+texto
+      text: "Porcentaje de Códigos "+textoMes
+    },
+    // subtitles: [{
+    //   text: "Que lindo subtítulo!"
+    // }],
+    legend: {
+      fontStyle: "italic",
     },
     data: [{
-      indexLabelPlacement: "inside",
-      type: "pie",
+      type: "doughnut",// type: "pie",
       startAngle: 240,
       yValueFormatString: "##0.00\"%\"",
       indexLabel: "{label} {y}",
-      dataPoints: data
+      dataPoints: dataMes
     }]
   });
-  chart.render();
-
+  var chartAnio = new CanvasJS.Chart("chartContainerAnio", {
+    animationEnabled: true,
+    theme: "theme3",
+    title: {
+      text: "Porcentaje de Códigos "+textoAnio
+    },
+    // subtitles: [{
+    //   text: "Que lindo subtítulo!"
+    // }],
+    legend: {
+      fontStyle: "italic",
+    },
+    data: [{
+      type: "doughnut",// type: "pie",
+      startAngle: 240,
+      yValueFormatString: "##0.00\"%\"",
+      indexLabel: "{label} {y}",
+      dataPoints: dataAnio
+    }]
+  });
+  chartMes.render();
+  chartAnio.render();
   }
 </script>
   @endsection

@@ -38,19 +38,13 @@
           font-size: 3.5rem;
         }
       }
-
-      body {
-        margin: 0;
+      .my-custom-scrollbar {
+        position: relative;
+        height: 300px;
+        overflow: auto;
       }
-
-      .container {
-        height: 100vh;
-      }
-
-      .chart-wrapper {
-        width: 500px;
-        height: 500px;
-        margin: 0 auto;
+      .table-wrapper-scroll-y {
+        display: block;
       }
 
     </style>
@@ -104,7 +98,7 @@
       <div class="sidebar-sticky pt-3">
         <ul class="nav flex-column">
           <li class="nav-item">
-            <a class="nav-link" href="{{ route('inicio') }}">
+            <a id="inicio" class="nav-link <?php  if ($url_array[3] == "inicio"){ echo "active";} ?>" href="{{ route('inicio') }}">
               <span data-feather="home"></span>
               Inicio <span class="sr-only">(current)</span>
             </a>
