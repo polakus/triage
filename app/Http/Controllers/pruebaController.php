@@ -14,13 +14,15 @@ class pruebaController extends Controller
      */
     public function index(Request $request)
     {
-        $pruebas= Prueba::all();
-        // echo "ke pasa aki";
-        if($request->ajax()){
-            // return response()->json(array('pruebas'=>$pruebas));
-            return \Response::json(array('pruebas'=>$pruebas));
-        }
-        return view('pruebas.index', compact('pruebas'));
+        // $pruebas= Prueba::all();
+        // // echo "ke pasa aki";
+        // if($request->ajax()){
+        //     // return response()->json(array('pruebas'=>$pruebas));
+        //     return \Response::json(array('pruebas'=>$pruebas));
+        // }
+        // return view('pruebas.index', compact('pruebas'));
+        $a = ["Google"=>79.45 , "Bing"=>7.31, "Baidu"=>7.06, "Yahoo"=>4.91, "Others"=>1.26];
+        return view('pruebas.index', compact('a'));
     }
 
     /**

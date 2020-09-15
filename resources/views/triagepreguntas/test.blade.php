@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
@@ -37,6 +38,15 @@
           font-size: 3.5rem;
         }
       }
+      .my-custom-scrollbar {
+        position: relative;
+        height: 300px;
+        overflow: auto;
+      }
+      .table-wrapper-scroll-y {
+        display: block;
+      }
+
     </style>
    
   </head>
@@ -88,7 +98,7 @@
       <div class="sidebar-sticky pt-3">
         <ul class="nav flex-column">
           <li class="nav-item">
-            <a class="nav-link" href="{{ route('inicio') }}">
+            <a id="inicio" class="nav-link <?php  if ($url_array[3] == "inicio"){ echo "active";} ?>" href="{{ route('inicio') }}">
               <span data-feather="home"></span>
               Inicio <span class="sr-only">(current)</span>
             </a>
