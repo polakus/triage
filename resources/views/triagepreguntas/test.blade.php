@@ -18,6 +18,12 @@
    <!-- Custom styles for this template -->
     <link href="../assets/dashboard.css" rel="stylesheet">
  <!-- <link href="../assets/css/sb-admin-2.min.css" rel="stylesheet"> -->
+    
+    <!-- PARA LOS TABAS DE EL GRÁFICO DE TORTAS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <!-- -------------------------------------- -->
 
     {{-- Data tables --}}
     {{-- <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.css"> --}}
@@ -38,6 +44,7 @@
           font-size: 3.5rem;
         }
       }
+      /* PARA INICIO SALAS SCROLLBAR */
       .my-custom-scrollbar {
         position: relative;
         height: 300px;
@@ -46,7 +53,7 @@
       .table-wrapper-scroll-y {
         display: block;
       }
-
+      
     </style>
    
   </head>
