@@ -149,6 +149,7 @@ class TriagepreguntasController extends Controller
                     
         while ($i < sizeof($probando) and $band) {
             $dsp = Detalle_Sintoma_Protocolo::where('id_protocolo', $probando[$i]->id)->get();
+            $encontro = False;
             if (count($dsp)==count($lista_respuestas)) {
                 $j=0;
                 $encontro = True;

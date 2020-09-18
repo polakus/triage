@@ -3,7 +3,7 @@
 @section("cuerpo")
 
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-  <h1 class="h2">Dashboardafasdf</h1>
+  <h1 class="h2">Dashboard</h1>
 	<div class="btn-toolbar mb-2 mb-md-0">
 	  <div class="btn-group mr-2">
       <button type="button" class="btn btn-sm btn-outline-secondary">Share</button>
@@ -96,18 +96,18 @@
     </div>
   </div>
 </div>
-
 <div class="row">
+  {{--
   <div class="col-x1-6 col-md-6 mb-4">
     <div class="card border-left-success shadow h-100 py-2">
       <div class="card-body">
         <div class="row no-gutters align-items-center">
-          <div id="chartContainerMes" style="height: 300px; width: 100%;"></div>
+          <div id="chartContainer" style="height: 300px; width: 100%;"></div>
         </div>
       </div>
     </div>
-  </div>
-
+  </div>--}}
+{{--
   <div class="col-x1-6 col-md-6 mb-4">
     <div class="card border-left-success shadow h-100 py-2">
       <div class="card-body">
@@ -117,9 +117,59 @@
       </div>
     </div>
   </div>
-</div>
-
-<div class="row">
+  --}}
+  <div class="col-x1-6 col-md-6 mb-4">
+    <div class="card border-left-success shadow h-100 py-2">
+      <ul class="nav nav-tabs" id="myTab" role="tablist">
+        <li class="nav-item" role="presentation">
+          <a class="nav-link active" id="home-tab" onclick = "funcDia()" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Dia</a>
+        </li>
+        <li class="nav-item" role="presentation">
+          <a class="nav-link" id="profile-tab" onclick = "funcMes()" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Mes</a>
+        </li>
+        <li class="nav-item" role="presentation">
+          <a class="nav-link" id="contact-tab" onclick= "funcAnio()" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">Año</a>
+        </li>
+      </ul>
+      <div class="card-body">
+        <div class="tab-content" id="myTabContent">
+          <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+            <div class="align-items-center" id="chartContainerDia" style="height: 300px; width: 100%;"></div>
+          </div>
+          <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+            <div class="align-items-center" id="chartContainerMes" style="height: 300px; width: 100%;"></div>
+          </div>
+          <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
+            <div class="align-items-center" id="chartContainerAnio" style="height: 300px; width: 100%;"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{{--  ESTE ES EL BUENO
+  <div class="col-x1-6 col-md-6 mb-4">
+    <div class="card border-left-success shadow h-100 py-2">
+      <ul class="nav nav-tabs" id="myTab" role="tablist">
+        <li class="nav-item" role="presentation">
+          <a class="nav-link active" id="chartContainerDia-tab" onclick = "funcDia()" data-toggle="tab" href="#chartContainerDia" role="tab" aria-controls="chartContainerDia" aria-selected="true">Home</a>
+        </li>
+        <li class="nav-item" role="presentation">
+          <a class="nav-link" id="chartContainerMes-tab" onclick = "funcMes()" data-toggle="tab" href="#chartContainerMes" role="tab" aria-controls="chartContainerMes" aria-selected="false">Profile</a>
+        </li>
+        <li class="nav-item" role="presentation">
+          <a class="nav-link" id="chartContainerAnio-tab" onclick = "funcAnio()" data-toggle="tab" href="#chartContainerAnio" role="tab" aria-controls="chartContainerAnio" aria-selected="false">Contact</a>
+        </li>
+      </ul>
+      <div class="card-body">
+          <div class="tab-content" id="myTabContent" >
+            <div class="tab-pane fade show active" id="chartContainerDia" role="tabpanel" aria-labelledby="chartContainerDia-tab" style="height: 300px; width: 100%;"></div>
+            <div class="tab-pane fade" id="chartContainerMes" role="tabpanel" aria-labelledby="chartContainerMes-tab" style="height: 300px; width: 100%;"></div>
+            <div class="tab-pane fade" id="chartContainerAnio" role="tabpanel" aria-labelledby="chartContainerAnio-tab" style="height: 300px; width: 100%;"></div>
+          </div>
+      </div>
+    </div>
+  </div>
+--}}
   <div class="col-x1-6 col-md-6 mb-4">
     <div class="card border-left-success shadow h-100 py-2">
       <div class="card-body">
@@ -147,18 +197,179 @@
       </div>
     </div>
   </div>
+    
 </div>
+
+
+
 <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
 <script>
+
+var t = "Porcentaje de Códigos ";
+var textoDia = <?php echo json_encode("(".strtoupper($dia).")"); ?>;
+var textoMes = <?php echo json_encode("(".strtoupper($mes).")"); ?>;
+var textoAnio = <?php echo json_encode("(".strval($anio).")"); ?>;
+var dataDia = <?php echo $dataDia; ?>;
+var dataMes = <?php echo $dataMes; ?>;
+var dataAnio = <?php echo $dataAnio; ?>;
+
+var chartDia = new CanvasJS.Chart("chartContainerDia", {
+  animationEnabled: true,
+  theme: "theme3",
+  width: 400,
+  height: 300,
+  axisY: {
+    title: "Growth Rate (in %)",
+    suffix: "%"
+  },
+  axisX: {
+    title: "Countries"
+  },
+  title: {
+    text: "Porcentaje de Códigos "+textoDia
+  },
+  // subtitles: [{
+  //   text: "Que lindo subtítulo!"
+  // }],
+  legend: {
+    fontStyle: "italic",
+  },
+  data: [{
+    type: "doughnut",// type: "pie",
+    startAngle: 240,
+    yValueFormatString: "##0.00\"%\"",
+    indexLabel: "{label} {y}",
+    dataPoints: dataDia
+  }]
+});
+
+var chartMes = new CanvasJS.Chart("chartContainerMes", {
+  animationEnabled: true,
+  theme: "theme3",
+  width: 400,
+  height: 300,
+  axisY: {
+    title: "Growth Rate (in %)",
+    suffix: "%"
+  },
+  axisX: {
+    title: "Countries"
+  },
+  title: {
+    text: "Porcentaje de Códigos "+textoMes
+  },
+  // subtitles: [{
+  //   text: "Que lindo subtítulo!"
+  // }],
+  legend: {
+    fontStyle: "italic",
+  },
+  data: [{
+    type: "doughnut",// type: "pie",
+    startAngle: 240,
+    yValueFormatString: "##0.00\"%\"",
+    indexLabel: "{label} {y}",
+    dataPoints: dataMes
+  }]
+});
+var chartAnio = new CanvasJS.Chart("chartContainerAnio", {
+  animationEnabled: true,
+  theme: "theme3",
+  width: 400,
+  height: 300,
+  axisY: {
+    title: "Growth Rate (in %)",
+    suffix: "%"
+  },
+  axisX: {
+    title: "Countries"
+  },  
+  title: {
+    text: "Porcentaje de Códigos "+textoAnio
+  },
+  // subtitles: [{
+  //   text: "Que lindo subtítulo!"
+  // }],
+  legend: {
+    fontStyle: "italic",
+  },
+  data: [{
+    type: "doughnut",// type: "pie",
+    startAngle: 240,
+    yValueFormatString: "##0.00\"%\"",
+    indexLabel: "{label} {y}",
+    dataPoints: dataAnio
+  }]
+});
+window.onload = function(){
+  funcDia();
+}
+function funcDia(){
+  chartDia.render();
+}
+function funcMes(){
+  chartMes.render();
+}
+function funcAnio(){
+  chartAnio.render();
+}
+  
+</script>
+
+{{--
+<script>
   window.onload = function() {
+  // function func(){
   var t = "Porcentaje de Códigos ";
+  var textoDia = <?php echo json_encode("(".strtoupper($dia).")"); ?>;
   var textoMes = <?php echo json_encode("(".strtoupper($mes).")"); ?>;
   var textoAnio = <?php echo json_encode("(".strval($anio).")"); ?>;
+  var dataDia = <?php echo $dataDia; ?>;
   var dataMes = <?php echo $dataMes; ?>;
   var dataAnio = <?php echo $dataAnio; ?>;
+
+  var chartDia = new CanvasJS.Chart("chartContainerDia", {
+    animationEnabled: true,
+    theme: "theme3",
+    // width: 500,
+    // height: 300,
+    axisY: {
+      title: "Growth Rate (in %)",
+      suffix: "%"
+    },
+    axisX: {
+      title: "Countries"
+    },
+    title: {
+      text: "Porcentaje de Códigos "+textoDia
+    },
+    // subtitles: [{
+    //   text: "Que lindo subtítulo!"
+    // }],
+    legend: {
+      fontStyle: "italic",
+    },
+    data: [{
+      type: "doughnut",// type: "pie",
+      startAngle: 240,
+      yValueFormatString: "##0.00\"%\"",
+      indexLabel: "{label} {y}",
+      dataPoints: dataDia
+    }]
+  });
+
   var chartMes = new CanvasJS.Chart("chartContainerMes", {
     animationEnabled: true,
     theme: "theme3",
+    // width: 500,
+    // height: 300,
+    axisY: {
+      title: "Growth Rate (in %)",
+      suffix: "%"
+    },
+    axisX: {
+      title: "Countries"
+    },
     title: {
       text: "Porcentaje de Códigos "+textoMes
     },
@@ -179,6 +390,15 @@
   var chartAnio = new CanvasJS.Chart("chartContainerAnio", {
     animationEnabled: true,
     theme: "theme3",
+    // width: 500,
+    // height: 300,
+    axisY: {
+      title: "Growth Rate (in %)",
+      suffix: "%"
+    },
+    axisX: {
+      title: "Countries"
+    },  
     title: {
       text: "Porcentaje de Códigos "+textoAnio
     },
@@ -196,9 +416,11 @@
       dataPoints: dataAnio
     }]
   });
+  chartDia.render();
   chartMes.render();
   chartAnio.render();
   }
 </script>
+--}}
   @endsection
           
