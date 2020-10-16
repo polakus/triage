@@ -1,10 +1,10 @@
-@extends("layouts.plantillaTest")
+@extends("triagepreguntas.test")
 
-@section("cabecera")
-    
-@endsection
 
 @section("cuerpo")
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <h4 >Registrar un nuevo Paciente</h4>
+</div>
 <form method="POST" action="/pacientes">
   @csrf
   <div class="form-row">

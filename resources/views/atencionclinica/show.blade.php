@@ -190,6 +190,7 @@
   </div>
   
   <input type="hidden" name="mensaje" value="{{ $mensaje }}">
+  <input type="hidden" name="id_det_profesional_sala" value="{{ $id_det_profesional_sala }}">
   <br>
   <button type="submit" class="btn btn-dark btn-sm" name="boton">Finalizar</button>
   <button type="submit" class="btn btn-dark btn-sm" name="Continuar">Continuar Luego</button>

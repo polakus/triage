@@ -4,9 +4,7 @@
 
 
 @section("cuerpo")
-{{-- <div class="card">
-<div class="card-header">Especialidades</div>
-<div class="card-body"> --}}
+
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
         <h4 class="h4">Protolocos</h4>
         <div class="btn-toolbar mb-2 mb-md-0">
@@ -17,21 +15,8 @@
           </div>
         </div>
 </div>
-	{{-- <div class="form-row">
-		<div class="form-group col-md-2">
-			<button type="button" class="btn btn-dark" data-toggle="modal" data-target="#exampleModal">
-              Agregar
-            </button>
-		</div>
-	</div> --}}
 	
-	<div class="form-row">
-		<div class="form-group col-md-2">
-			<input class="form-control" type="text" id="myInput" onkeyup="myFunction()" placeholder="Nombre" >
-
-		</div>
-	</div>
-
+	
 
 	<div class="table-responsive">
 	    <table class="table table-bordered table-hover table-sm table-striped" id="myTable">
@@ -177,29 +162,68 @@
 
 @endsection
 @section("scripts")
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+{{-- JS Datatables --}}
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
 
-<script>
-function myFunction() {
-  var input, filter, table, tr, td, i, txtValue;
-  input = document.getElementById("myInput");
-  filter = input.value.toUpperCase();
-  table = document.getElementById("myTable");
-  tr = table.getElementsByTagName("tr");
-  for (i = 0; i < tr.length; i++) {
-    td = tr[i].getElementsByTagName("td")[0];
-    if (td) {
-      txtValue = td.textContent || td.innerText;
-      if (txtValue.toUpperCase().indexOf(filter) > -1) {
-        tr[i].style.display = "";
-      } else {
-        tr[i].style.display = "none";
-      }
-    }       
-  }
-}
 
+<script type="text/javascript">
+  $(document).ready(function() {
+    $('#myTable').DataTable({
+      
+      
+       "language": {
+        "decimal": ",",
+        "thousands": ".",
+        "info": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+        "infoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+        "infoPostFix": "",
+        "infoFiltered": "(filtrado de un total de _MAX_ registros)",
+        "loadingRecords": "Cargando...",
+        "lengthMenu": "Mostrar _MENU_ registros",
+        "paginate": {
+            "first": "Primero",
+            "last": "Último",
+            "next": "Siguiente",
+            "previous": "Anterior"
+        },
+        "processing": "Procesando...",
+        "search": "Buscar:",
+        "searchPlaceholder": "",
+        "zeroRecords": "No se encontraron resultados",
+        "emptyTable": "Ningún dato disponible en esta tabla",
+        "aria": {
+            "sortAscending":  ": Activar para ordenar la columna de manera ascendente",
+            "sortDescending": ": Activar para ordenar la columna de manera descendente"
+        },
+        //only works for built-in buttons, not for custom buttons
+        "buttons": {
+            "create": "Nuevo",
+            "edit": "Cambiar",
+            "remove": "Borrar",
+            "copy": "Copiar",
+            "csv": "fichero CSV",
+            "excel": "tabla Excel",
+            "pdf": "documento PDF",
+            "print": "Imprimir",
+            "colvis": "Visibilidad columnas",
+            "collection": "Colección",
+            "upload": "Seleccione fichero...."
+        },
+        "select": {
+            "rows": {
+                _: '%d filas seleccionadas',
+                0: 'clic fila para seleccionar',
+                1: 'una fila seleccionada'
+            }
+        }
+    }           
+    });
+} );
 </script>
+
+
 
 
 

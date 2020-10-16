@@ -7,6 +7,7 @@
     <meta name="description" content="">
     <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
     <meta name="generator" content="Jekyll v4.1.1">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Dashboard Template · Bootstrap</title>
 
     <link rel="canonical" href="https://getbootstrap.com/docs/4.5/examples/dashboard/">
@@ -157,6 +158,12 @@
             </a>
           </li>
           <li class="nav-item">
+            <a id="especialidades" class="nav-link" href="/profesionales/atenciones">
+              <span data-feather="layers"></span>
+              Profesionales Atenciones
+            </a>
+          </li>
+          <li class="nav-item">
             <a id="usuarios"class="nav-link <?php  if ($url_array[3] == "usuarios"){ echo "active";} ?>"  href="{{route('usuarios.index')}}">
               <span data-feather="users"></span>
               Usuarios
@@ -302,14 +309,24 @@
     </main>
   </div>
 </div>
+
+
+
 <script src='{{ asset('js/jquery.js') }}'></script>
+
 {{-- js del dash board --}}
-{{-- <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script> --}}
-      <script>window.jQuery || document.write('<script src="../assets/js/vendor/jquery.slim.min.js"><\/script>')</script><script src="../assets/dist/js/bootstrap.bundle.min.js"></script> {{-- Este scrip sirve para los modales --}}
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+      <script>window.jQuery || document.write('<script src="../assets/js/vendor/jquery.slim.min.js"><\/script>')</script>
+      {{-- <script src="../assets/dist/js/bootstrap.bundle.min.js"></script> {{-- Este scrip sirve para los modales --}} --}}
         <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.9.0/feather.min.js"></script>
         {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js"></script> --}}
         <script src="../assets/dashboard.js"></script>
-@yield("scripts")
 
+
+
+@yield("scripts")
+{{-- <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script> --}}
+{{-- <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script> --}}
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
 </body>
 </html>

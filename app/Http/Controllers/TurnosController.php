@@ -111,35 +111,43 @@ class TurnosController extends Controller
     public function store(Request $request)
     {
     	 
-        // $date=$request->get('day_aux');
-        // $seleccionado=$request->get('seleccion');
-
-        // $array=explode(" ", $request->get('seleccion'));
-        // DB::table('Detalle_Horarios')->insert([
-        //     ['id_atencion' => $request->get('atencion'), 'id_horarios' =>$array[1], 'start' =>$date ]
-        // ]);
-        // return redirect('pacientes');
       date_default_timezone_set('UTC');
 
       date_default_timezone_set("America/Argentina/Buenos_Aires");
       
+      // $actualizar_detalle=DetalleAtencion::findOrFail($request->detalleatencion);
+      // $actualizar_detalle->estado=$request->tipo;
+      // $actualizar_detalle->sala=$request->sala;
+      // $actualizar_detalle->fecha=date('Y-m-d');
+      // $actualizar_detalle->hora=date('H:i');
+      // if($request->tipo == "Operado"){
+      //   $actualizar_detalle->operar=0;
+      //   $sala_actualizar= Sala::findOrFail($request->id_sala);
+      //   $sala_actualizar->disponibilidad=0;
+      //   $sala_actualizar->save();
+      // }
+      // $actualizar_detalle->save();
 
-      $actualizar_detalle=DetalleAtencion::findOrFail($request->detalleatencion);
-      $actualizar_detalle->estado=$request->tipo;
-      $actualizar_detalle->sala=$request->sala;
+      $actualizar_detalle=DetalleAtencion::findOrFail($request->get('detalleatencion'));
+      $actualizar_detalle->estado=$request->get('tipo');
+      $actualizar_detalle->sala=$request->get('sala');
       $actualizar_detalle->fecha=date('Y-m-d');
       $actualizar_detalle->hora=date('H:i');
-      if($request->tipo == "Operado"){
+      if($request->get('tipo') == "Operado"){
         $actualizar_detalle->operar=0;
-        $sala_actualizar= Sala::findOrFail($request->id_sala);
+        $sala_actualizar= Sala::findOrFail($request->get('id_sala'));
         $sala_actualizar->disponibilidad=0;
         $sala_actualizar->save();
       }
       $actualizar_detalle->save();
 
-
-
-      return redirect()->action('TurnosController@mostrar');
+      // $resultado = $relevamiento->save();
+        if ($actualizar_detalle) {
+            return response()->json(['success'=>'true']);
+        }else{
+            return response()->json(['success'=>'false']);
+        }
+      // return redirect()->action('TurnosController@mostrar');
 
 
         
@@ -261,9 +269,8 @@ class TurnosController extends Controller
                      ->select('h.descripcion as observacion','c.codigo','c.descripcion','h.id_detalle_atencion')
                      //->where('h.fecha','=',date('Y-m-d'))
                      ->get(); 
-    
-
       
+
       $salas= DB::table('salas as s')
                   ->join('Areas as a','a.id','=','s.id_area')
                   ->select('a.tipo_dato','s.nombre','s.camas','s.disponibilidad','s.id')

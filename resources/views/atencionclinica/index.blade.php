@@ -114,7 +114,7 @@
            <form id="frm1" class= "form-inline" action="{{route('atencionclinica.show',$paciente->id_atencion)}}" method="GET">
               <input type="hidden" name="detalleatencion" value="{{ $paciente->id }}">
               <input type="hidden" name="mensaje" value="{{ $mensaje }}">
-
+              <input type="hidden" name="id_det_profesional_sala" value="{{ $id_det_profesional_sala }}">
               <button type="submit" class="btn btn-dark btn-sm ml-1">Triaje</button>
            </form>
            {{-- <button type="submit" class="btn btn-primary btn-sm ml-1">Editar</button> --}}

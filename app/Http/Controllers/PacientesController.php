@@ -16,11 +16,11 @@ class PacientesController extends Controller
     public function index()
     {
         
-        $pacientes= DB::table('Pacientes')->get();
+        // $pacientes= DB::table('Pacientes')->where('nombre','!=','nn')->where('apellido','!=','nn')->get();
         //$pacientes = Paciente::all()->paginate(10);
         $colores = Codigo::all();
         $cie = DB::table("cie as c")->get();
-        return view('pacientes.index', compact('pacientes','colores','cie'));
+        return view('pacientes.index', compact('colores','cie'));
     }
 
     /**
@@ -88,6 +88,7 @@ class PacientesController extends Controller
                  ->where("p.nombre",'=',"nn")
                  ->where("p.apellido",'=','nn')
                  ->get();
+
         return view('pacientes.edit', compact('paciente','nn','id'));
     }
 

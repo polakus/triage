@@ -35,6 +35,8 @@ class AtencionClinicaController extends Controller
         $mensaje=$request->mensaje;
         $pacientes="";
         $especialidades="";
+        $cantidad=0;
+        $id_det_profesional_sala=$request->id_det_profesional_sala;
         if($request->mensaje!=""){
             
             $pacientes= DB::table('detalle_atencion as da')
@@ -53,10 +55,11 @@ class AtencionClinicaController extends Controller
                     ->orderBy('da.id','ASC')
                     ->get();
             $especialidades=Especialidad::all();
+            $cantidad= DetalleAtencion::where("estado","LIKE","consulta")->count();
 
         }
 
-        $cantidad= DetalleAtencion::where("estado","LIKE","consulta")->count();
+        
         
         
 
@@ -73,7 +76,7 @@ class AtencionClinicaController extends Controller
             $val2=$request->val2;
        
             
-        return view('atencionclinica.index', compact('pacientes','areas','especialidades','val1','val2','salas','mensaje','cantidad'));
+        return view('atencionclinica.index', compact('pacientes','areas','especialidades','val1','val2','salas','mensaje','cantidad','id_det_profesional_sala'));
 
     }
 
@@ -109,7 +112,7 @@ class AtencionClinicaController extends Controller
         $actualizar_detalle->fecha=date('Y-m-d');
         $actualizar_detalle->hora=date('H:i');
         $actualizar_detalle->respuestas=$request->descripto;
-
+        $actualizar_detalle->id_det_profesional_sala=$request->id_det_profesional_sala;
     
 
         if (isset($_POST['boton'])) {
@@ -241,12 +244,12 @@ class AtencionClinicaController extends Controller
                     
                     ->get();
         
-        
+        $id_det_profesional_sala=$request->id_det_profesional_sala;
         $cie=CIE::all();
 
         $codigos = DB::table('CodigosTriage')->get();
 
-        return view('atencionclinica.show', compact('pacientes','preguntas','areas','especialidades','id','codigos','val1','val2','historial','cie','detalleatencion','paciente_seleccionado','mensaje'));
+        return view('atencionclinica.show', compact('pacientes','preguntas','areas','especialidades','id','codigos','val1','val2','historial','cie','detalleatencion','paciente_seleccionado','mensaje','id_det_profesional_sala'));
         
     }
 
@@ -324,7 +327,7 @@ class AtencionClinicaController extends Controller
        }
        
 
-      return redirect()->action("AtencionClinicaController@index",['mensaje'=>$mensaje]);
+      return redirect()->action("AtencionClinicaController@index",['mensaje'=>$mensaje,'id_det_profesional_sala'=>$nuevo->id]);
 
     }
 
