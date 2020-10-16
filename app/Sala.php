@@ -6,7 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class Sala extends Model
 {
-    protected $table = "salas";
+    // protected $table = "salas"; #Si empieza a fallar, descomentar esta linea
+
+    protected $fillable = [
+        'nombre', 'camas', 'id_area', 'disponibilidad',
+    ];
 
     public function area()
     {

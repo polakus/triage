@@ -1,4 +1,4 @@
-@extends("layouts.plantilla")
+@extends("triagepreguntas.test")
 
 @section("cabecera")
     
@@ -14,7 +14,7 @@
     @endforeach
 </div>
 <form method="POST" action="/profesionales">
-  @csrf
+    @csrf
     <div class="form-row">
         <div class="form-group col-md-4">
             <label for="inputEmail4">Nombre</label>

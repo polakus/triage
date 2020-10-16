@@ -42,14 +42,24 @@ class salasController extends Controller
      */
     public function store(Request $request)
     {
-        $sala = new Sala;
-        $sala->id_area = $request->area;
-        $sala->nombre = $request->nombre;
-        $sala->disponibilidad = 1;
-        $sala->camas = $request->camas;
-        $sala->save();
+        $mensajes = [
+            'required' => 'Este campo no debe estar vacío.',
+            'max' => 'Este campo supera la capacidad máxima de caracteres.',
+            'min' => 'El valor está por debajo del mínimo.',
+        ];
+        $pr = $request->validate([
+            'nombre' => 'required|max:255',
+            'camas' =>'required|numeric|min:0',
+        ], $mensajes);
+        
+        $sala = Sala::create([
+            'nombre' => $request->nombre,
+            'camas' => $request->camas,
+            'id_area' => $request->area,
+            'disponibilidad' => 1,
+        ]);
         $request->session()->flash('alert-success', 'La sala fue agregada exitosamente!');
-        return redirect()->route('salas.create');
+        return redirect()->back()->withInput();
     }
 
     /**

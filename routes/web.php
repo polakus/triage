@@ -49,7 +49,7 @@ Route::resource('/turnos','TurnosController')->middleware('auth');
 Route::resource('/pacientes','PacientesController')->middleware('auth');
 Route::resource('/triagepreguntas', 'TriagepreguntasController')->middleware('auth');
 Route::resource('/salas', 'salasController')->middleware('auth');
-Route::resource('/salas/areas', 'areasController', ['except' => ['destroy', 'show', 'edit']])->middleware('auth');
+Route::resource('/areas', 'areasController', ['except' => ['destroy', 'show', 'edit']])->middleware('auth');
 Route::resource('/protocolos', 'protocolosController')->middleware('auth');
 Route::resource('/profesionales', 'profesionalesController', ['except' => ['destroy', 'show', 'edit', 'update']])->middleware('auth');
 Route::resource('/cie','CieController')->middleware('auth');
