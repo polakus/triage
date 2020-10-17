@@ -58,6 +58,13 @@ class protocolosController extends Controller
      */
     public function store(Request $request)
     {
+        $mensajes = [
+            'required' =>'Este campo no debe estar vacio.',
+            'max' => 'Este campo supera la capacidad máxima de caracteres.',
+        ];
+        $prot = $request->validate([
+            'desc' => 'required|max:255',
+        ], $mensajes);
         $protocolo = new Protocolo;
         $protocolo->id_codigo_triage= $request->codigo;
         $protocolo->descripcion= $request->desc;
@@ -74,6 +81,7 @@ class protocolosController extends Controller
         $det_protocolo->id_especialidad = $request->especialidad;
         $det_protocolo->id_protocolo = $protocolo->id;
         $det_protocolo->save();
+        
         $request->session()->flash('alert-success', 'El protocolo fue agregado exitosamente!');
         return redirect()->route('protocolos.create');
     }

@@ -8,6 +8,8 @@ class Protocolo extends Model
 {
     //
     protected $table="Protocolos";
+
+    // protected $fillable = ['descripcion',];
     
     public function det_sintomas_protocolos()
     {

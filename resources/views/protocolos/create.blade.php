@@ -5,19 +5,28 @@
 @endsection
 
 @section("cuerpo")
-{{-- <div class="card">
-  <div class="card-header"> Registracion de un nuevo Protoloco </div>
-    <div class="card-body"> --}}
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
     <h5 class="h5">Registracion de un nuevo protocolo</h5>
 </div>
+        <div class="flash-message">
+          @foreach (['danger', 'warning', 'success', 'info'] as $msg)
+            @if(Session::has('alert-' . $msg))
+              <p class="alert alert-{{ $msg }}">{{ Session::get('alert-' . $msg) }} <a href="{{ route('protocolos.index') }}" class="close" data-dismiss="alert" aria-label="close">&times;</a></p>
+            @endif
+          @endforeach
+        </div>
           <form method="POST" action="/protocolos">
             @csrf
 
             <div class="form-row">
               <div class="form-group col-md-4">
                 <label for="inputEmail4">Descripción</label>
-                <input type="text" autocomplete="on" name="desc"  class="form-control" placeholder="Nombre">
+                <input type="text" name="desc"  class="form-control @error('desc') is-invalid @enderror" value="{{ old('desc') }}" placeholder="Nombre">
+                @error('desc')
+                <span class="invalid-feedback" role="alert">
+                    <strong>{{ $message }}</strong>
+                </span>
+                @enderror
               </div>
               <div class="form-group col-md-2">
                 <label for="inputState">Código</label>
@@ -48,7 +57,7 @@
               @foreach($sintomas as $sintoma)
               <tr>
                 <td>{{$sintoma->descripcion}}</td>
-                <td><input class="form-check-input position-static" type="checkbox" name="cbs[]" value="{{$sintoma->id}}"></td>
+                <td> <input class="form-check-input position-static" type="checkbox" name="cbs[]" value="{{$sintoma->id}}" ></td>
               </tr>
               @endforeach
             </tbody>
@@ -56,18 +65,6 @@
 
             <button type="submit" class="btn btn-primary">Registrar</button>
             <a class="btn btn-default btn-close" href="{{ route('protocolos.index') }}">Volver</a>
-
-
-        {{--Mensaje--}}
-        
-
-        <div class="flash-message">
-          @foreach (['danger', 'warning', 'success', 'info'] as $msg)
-            @if(Session::has('alert-' . $msg))
-              <p class="alert alert-{{ $msg }}">{{ Session::get('alert-' . $msg) }} <a href="{{ route('protocolos.index') }}" class="close" data-dismiss="alert" aria-label="close">&times;</a></p>
-            @endif
-          @endforeach
-        </div>
 
       </form>
    {{--  </div>
