@@ -41,21 +41,34 @@ class PacientesController extends Controller
      */
     public function store(Request $request)
     {
-           $pacientes=Paciente::where('dni',$request->get('dni'))->get();
-        if($pacientes->count()){
-            $rta="el dni del paciente ingresado ya está cargado.";
-        }else{
-            $nuevo = new Paciente;
-            $nuevo->dni=$request->get('dni');
-            $nuevo->nombre=$request->get('nombre');
-            $nuevo->apellido=$request->get('apellido');
-            $nuevo->domicilio=$request->get('direccion');
-            $nuevo->telefono=$request->get('telefono');
-            $nuevo->fechaNac=$request->get('fechaNac');
-            $nuevo->sexo=$request->get('sexo');
-            $nuevo->save();
-        }
-        return redirect()->action('PacientesController@index');
+        $mensajes = [
+            'required' =>'Este campo no debe estar vacio.',
+            'max' => 'Este campo supera la capacidad máxima de caracteres.',
+            'numeric' => 'Este campo requiere una valor numérico.',
+            'date' => 'La fecha ingresada no es válida.',
+            'unique' => 'Este documento ya se encuentra registrado',
+        ];
+        $prot = $request->validate([
+            'nombre' => 'required|max:255',
+            'apellido' => 'required|max:255',
+            'telefono' => 'required|numeric',
+            'fechaNac' => 'required|date',
+            'sexo' => 'required',
+            'direccion' => 'required|max:255',
+            'dni' => 'required|numeric|unique:pacientes',
+        ], $mensajes);
+        $nuevo = new Paciente;
+        $nuevo->dni=$request->get('dni');
+        $nuevo->nombre=$request->get('nombre');
+        $nuevo->apellido=$request->get('apellido');
+        $nuevo->domicilio=$request->get('direccion');
+        $nuevo->telefono=$request->get('telefono');
+        $nuevo->fechaNac=$request->get('fechaNac');
+        $nuevo->sexo=$request->get('sexo');
+        $nuevo->save();
+
+        $request->session()->flash('alert-success', 'El paciente fue agregado exitosamente!');
+        return redirect()->back()->withInput();
     }
 
     /**
