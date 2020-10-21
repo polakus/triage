@@ -50,180 +50,7 @@
             </tr>
           </thead>
           <tbody id="tabla">
-          {{--  @foreach($pacientes as $p)
-              @if($p->color == "verde")
-              <tr class="table-success">
-            @elseif($p->color== "amarillo")
-              <tr class="table-warning">
-            @elseif($p->color=="rojo")
-              <tr class="table-danger">
-            @endif
-              <td> {{ $p->nombre }} {{ $p->apellido }}</td>
-              <td> {{ $p->fecha }} {{ $p->hora }}</td>
-              <td> {{ $p->tipo_dato }}</td>
-              <td> {{ $p->especialidad}} </td>
-              <td> {{ $p->estado }}</td>
-              <td>
-                @foreach($historial as $h)
-                  @if($h->id_detalle_atencion == $p->id)
-                    CIE:{{ $h->codigo }}-{{ $h->descripcion }}
-                    <br>
-                    {{ $h->observacion }}
 
-                  @endif
-                @endforeach
-              </td>
-               <td>
-                @if($p->estado != "consulta" && $p->estado!= "alta" && $p->estado !="Internado" && $p->estado != "Operado" && $p->estado != "Operar")
-                    <!-- Button trigger modal -->
-
-                    <button type="button" class="btn btn-dark btn-sm" data-toggle="modal" data-target="#exampleModal{{ $p->id }}" id="button1">
-
-                      Asignar sala
-                    </button>
-
-
-                  <!-- Modal -->
-                  <div class="modal fade" id="exampleModal{{ $p->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div class="modal-dialog">
-                      <div class="modal-content">
-                        <div class="modal-header">
-                          <h3 class="modal-title" id="exampleModalLabel">Salas</h3>
-                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                          </button>
-                        </div>
-                        <div class="modal-body">
-                          <div class="container col-md-12">
-                              
-                              @if($p->estado == "Internar")
-                                @foreach($salas as $s)
-                                  @if($s->tipo_dato == "Internacion")
-                                    <div class="row border">
-                                      <div class="col border">
-                                       <label>{{ $s->nombre }}</label> 
-                                      </div>
-
-                                      @if($s->disponibilidad == 1)
-                                          <div class="col">
-                                              <label>Disponible</label>
-                                          </div>
-                                          <div class="col border">
-                                              <form method="POST" action="/turnos">
-                                                @csrf
-                                                <input type="hidden" name="sala" value="{{ $s->nombre }}">
-                                                <input type="hidden" name="detalleatencion" value="{{ $p->id }}">
-                                                <input type="hidden" name="id_sala" value={{ $s->id }}>
-                                                <input type="hidden" name="tipo" value="Internado">
-                                                <button type="submit" id="add" name="add" class="btn btn-success btn-sm">Asignar esta sala</button>
-                                              </form>
-                                          </div>
-                                      @else
-                                          <div class="col border">
-                                            <label>No disponible</label>
-                                          </div>
-                                           <div class="col border">
-                                            <button type="submit" id="add" name="add" class="btn btn-success btn-sm" disabled>Asignar esta sala</button>
-                                          </div>
-                                      @endif
-                                    </div>
-
-                                  @endif
-                                @endforeach
-                              @endif
-                          </div> 
-                        </div>
-                        <div class="modal-footer">
-                          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                        
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                @else
-                  @if($p->estado != "consulta" && $p->estado != "Operado")
-                    {{ $p->sala }}
-                  @endif
-
-                @endif
-              </td>
-
-              <td>
-                @if($p->operar == 1 || $p->estado == "Operar" )
-                    <!-- Button trigger modal -->
-
-                    <button type="button" class="btn btn-dark btn-sm" data-toggle="modal" data-target="#modal{{ $p->id }}" id="button1">
-                      Quirofano
-                    </button>
-
-
-                  <!-- Modal -->
-                  <div class="modal fade" id="modal{{ $p->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div class="modal-dialog">
-                      <div class="modal-content">
-                        <div class="modal-header">
-                          <h3 class="modal-title" id="exampleModalLabel">Salas de Quirofanos</h3>
-                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                          </button>
-                        </div>
-                        <div class="modal-body">
-                          <div class="container col-md-12">
-
-                             @foreach($salas as $s)
-                                  @if($s->tipo_dato == "Quirofano")
-                                     <div class="row border">
-                                        <div class="col border">
-                                          <label>{{ $s->nombre }}</label> 
-                                        </div>
-                                        @if($s->disponibilidad == 1)
-                                          <div class="col border">
-                                              <label>Disponible</label>
-                                          </div>
-                                          <div class="col border">
-                                              <form method="POST" action="/turnos">
-                                                @csrf
-                                                <input type="hidden" name="sala" value="{{ $s->nombre }}">
-                                                <input type="hidden" name="detalleatencion" value="{{ $p->id }}">
-                                                <input type="hidden" name="id_sala" value={{ $s->id }}>
-                                                <input type="hidden" name="tipo" value="Operado">
-                                                <button type="submit" id="add" name="add" class="btn btn-success">Asignar esta sala</button>
-                                              </form>
-                                            </div>
-                                        @else
-                                            <div class="col border">
-                                              <label>No disponible</label>
-                                            </div>
-                                             <div class="col border">
-                                              <button type="submit" id="add" name="add" class="btn btn-success" disabled>Asignar esta sala</button>
-                                            </div>
-                                        @endif
-                                     </div>
-                                  @endif
-                                @endforeach
-                          </div>
-                        </div>
-                        <div class="modal-footer">
-                          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                        
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                @else
-                  @if($p->estado =="Operado")
-                    {{ $p->sala }}
-                  @endif
-
-                @endif
-              </td> 
-              <td>
-                @if($p->estado == "Internado")
-                  <a href="{{ route('turnos.edit',$p->id) }}" class="btn btn-success btn-sm">Dar de alta</a>
-                @endif
-              </td>  
-              </tr>
-           @endforeach --}}
           </tbody>
         </table>
 </div>
@@ -276,7 +103,7 @@
               
          },
            "columns":[
-            {data:'paciente_full'},
+            {data:'paciente_full',"orderable": "false"},
             {data:'fecha_hora'},
             {data:'tipo_dato'},
             {data:'especialidad'},
@@ -300,6 +127,7 @@
                             }
                           }
                          },
+      "ordering": false,
       "iDisplayLength": 10,
       "language": {
          "decimal": ",",

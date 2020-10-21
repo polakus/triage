@@ -16,7 +16,9 @@ use DB;
 
 use App\DetalleAtencion;
 use App\Especialidad;
-
+use App\Protocolo;
+use App\Detalle_Sintoma_Protocolo;
+use App\DetalleProtocolo;
 
 
 class TurnosController extends Controller
@@ -261,6 +263,7 @@ class TurnosController extends Controller
                     // ->where('da.fecha','=',date('Y-m-d'))
                     
                     ->orderBy('da.id_codigo_triage','DESC')
+                    ->orderBy('da.fecha','ASC')
                     ->orderBy('da.hora','ASC')
                     ->get();
       
@@ -382,7 +385,8 @@ class TurnosController extends Controller
         $especialidades=Especialidad::all();
         $codigos= DB::table('CodigosTriage')->get();
         $atencion=$request->atencion;
-        return view('turnos.respuesta',compact('bandera','especialidades','codigos','atencion'));
+        $sintomas=$request->sintomas;
+        return view('turnos.respuesta',compact('bandera','especialidades','codigos','atencion','sintomas'));
     }
 
     }
@@ -399,6 +403,30 @@ class TurnosController extends Controller
       $nuevo->estado="consulta";
       $nuevo->id_codigo_triage=$request->color;
       $nuevo->save();
+      if($request->radios == "si"){
+          $cantidad= DB::table("Protocolos")
+                         ->where("descripcion","LIKE","DEFECTO%")
+                         ->count();                    
+          $nuevo_protocolo = new Protocolo;
+          $nuevo_protocolo->descripcion = "DEFECTO".$cantidad;
+          $nuevo_protocolo->id_codigo_triage=$request->color;
+          $nuevo_protocolo->save();
+
+          $nuevo_detalle= new DetalleProtocolo;
+          $nuevo_detalle->id_protocolo= $nuevo_protocolo->id;
+          $nuevo_detalle->id_especialidad=$request->esp;
+          $nuevo_detalle->save();
+          
+
+          foreach(json_decode($request->sintomas, true) as $value){
+              $sintomas_detalle_protocolo = new Detalle_Sintoma_Protocolo;
+              $sintomas_detalle_protocolo->id_protocolo=$nuevo_protocolo->id;
+              $sintomas_detalle_protocolo->id_sintoma = $value;
+              $sintomas_detalle_protocolo->save();
+             
+          }
+
+      }
       return redirect()->action('PacientesController@index');
     }
 
