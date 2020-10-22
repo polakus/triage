@@ -1,8 +1,6 @@
 @extends("triagepreguntas.test")
 
 
-
-
 @section("cuerpo")
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
         <h4>Atenciones</h4>
@@ -61,12 +59,6 @@
 @section("scripts")
 
 
-
-<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
-<script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
-<script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
-
-
 <script type="text/javascript">
 
   // var fecha = new Date(); //Fecha actual
@@ -90,13 +82,6 @@
 <script type="text/javascript">
   $(document).ready(function() {
    
-
-    // $('body').on('click', '.asignar', function(){
-    //   var 
-       
-    // });
-       
-    
     var table=$('#example').DataTable({
       "serverSide":true,
            "ajax":{url:"{{ url('api/mostrar') }}",
@@ -207,7 +192,7 @@
     var tipo=$('#tipo'+id).val();
     var id_sala=$('#id_sala'+sala_id).val();
     var sala=$('#sala'+sala_id).val();
-    alert(sala);
+   
       $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')

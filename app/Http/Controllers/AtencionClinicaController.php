@@ -44,14 +44,13 @@ class AtencionClinicaController extends Controller
                     ->join('Areas as are','are.id','=','det_e_a.id_area')
                     ->join('Especialidades as esp','esp.id','=','det_e_a.id_especialidad')
                     ->join('Atencion as a','a.id','=','da.id_atencion')
-                    ->join('Protocolos as prot','prot.id','=','a.id_protocolo')
                     ->join('Pacientes as p','p.Paciente_id','=','a.Paciente_id')
                     ->join('CodigosTriage as codigotriage','codigotriage.id','=','da.id_codigo_triage')
-                    ->select('p.nombre','p.apellido','da.fecha','da.id_atencion','prot.id_codigo_triage','are.tipo_dato','esp.nombre as especialidad','da.id','codigotriage.color')
+                    ->select('p.nombre','p.apellido','da.fecha','da.id_atencion','da.id_codigo_triage','are.tipo_dato','esp.nombre as especialidad','da.id','codigotriage.color')
                     ->where('da.fecha','=',date('Y-m-d'))
                     ->where('da.atendido','=',0)
                     ->where('da.estado','LIKE','consulta')
-                    ->orderBy('prot.id_codigo_triage','DESC')
+                    ->orderBy('da.id_codigo_triage','DESC')
                     ->orderBy('da.id','ASC')
                     ->get();
             $especialidades=Especialidad::all();
@@ -60,10 +59,6 @@ class AtencionClinicaController extends Controller
         }
 
         
-        
-        
-
-       
         $areas=Area::all();
         $salas=DB::table("salas as s")
                    ->join("Areas as a",'a.id','=','s.id_area')
@@ -146,34 +141,7 @@ class AtencionClinicaController extends Controller
         $mensaje = $request->mensaje;
         $val1=$request->val1;
         $val2=$request->val2;
-        // if($request->internar == "alta"){
-        //      $actualizar_detalle->atendido=1;
-        // }
-        // else{
-        //     $actualizar_detalle->estado=$request->internar;
-        // }
-        // if($request->internar == "Internar"){
-        //     if($request->op == "si"){
-                
-        //         $actualizar_detalle->operar=1;
-        //     }
-            
-        // }
-        // $id_color=DB::table('CodigosTriage')->select('id')->where('color','LIKE',$request->color)->get();
-        // $actualizar_detalle->id_codigo_triage=$id_color[0]->id;
-        // $actualizar_detalle->save();
-
-
-        // $nuevo=new Historial;
-        // $nuevo->id_detalle_atencion=$request->detalleatencion1;
-        // $codigocie=explode("-", $request->cieslist);
-        // $id_cie=CIE::select('id')->where('codigo','=',$codigocie[0])->get();
-        // $nuevo->id_cie=$id_cie[0]->id;
-        // $nuevo->descripcion= $request->observacion;
-        // $nuevo->fecha=date('Y-m-d');
-        // $nuevo->hora=date('H:i');
-        // $nuevo->save();
-
+   
         return redirect()->action('AtencionClinicaController@index',['mensaje'=>$mensaje,'val1'=>$val1,'val2'=>$val2]);
 
        
@@ -200,14 +168,14 @@ class AtencionClinicaController extends Controller
                     ->join('Areas as are','are.id','=','det_e_a.id_area')
                     ->join('Especialidades as esp','esp.id','=','det_e_a.id_especialidad')
                     ->join('Atencion as a','a.id','=','da.id_atencion')
-                    ->join('Protocolos as prot','prot.id','=','a.id_protocolo')
+                    // ->join('Protocolos as prot','prot.id','=','a.id_protocolo')
                     ->join('Pacientes as p','p.Paciente_id','=','a.Paciente_id')
                     ->join('CodigosTriage as codigotriage','codigotriage.id','=','da.id_codigo_triage')
-                    ->select('p.nombre','p.apellido','da.fecha','da.id_atencion','prot.id_codigo_triage','are.tipo_dato','esp.nombre as especialidad','p.Paciente_id','da.id','da.respuestas','codigotriage.color')
+                    ->select('p.nombre','p.apellido','da.fecha','da.id_atencion','da.id_codigo_triage','are.tipo_dato','esp.nombre as especialidad','p.Paciente_id','da.id','da.respuestas','codigotriage.color')
                     ->where('da.fecha','=',date('Y-m-d'))
                     ->where('da.atendido','=',0)
                     ->where('da.estado','LIKE','consulta')
-                    ->orderBy('prot.id_codigo_triage','DESC')
+                    ->orderBy('da.id_codigo_triage','DESC')
                     ->orderBy('da.id','ASC')
                     ->get();
         $especialidades=Especialidad::all();

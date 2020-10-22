@@ -8,7 +8,7 @@
         <h4 class="h4">CIE</h4>
         <div class="btn-toolbar mb-2 mb-md-0">
       <div class="btn-group mr-2">
-        <button type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#exampleModal">
+        <button type="button" class="btn btn-outline-secondary btn-sm" data-toggle="modal" data-target="#exampleModal">
               Agregar CIE
             </button>
 		   
@@ -164,12 +164,6 @@ $(document).ready(function(){
 
 })
 </script>
-
-{{-- JS Datatables --}}
-<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
-<script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
-<script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
-
 
 <script type="text/javascript">
   $(document).ready(function() {

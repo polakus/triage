@@ -1,4 +1,4 @@
-@extends("layouts.plantillaTest")
+@extends("triagepreguntas.test")
 
 @section("cabecera")
     
@@ -8,13 +8,18 @@
 <div class="card">
   <div class="card-header">Registracion de Area </div>
     <div class="card-body">
-      <form method="POST" action="/salas/areas">
+      <form method="POST" action="/areas">
         @csrf
 
         <div class="form-row">
           <div class="form-group col-md-4">
             <label for="inputEmail4">Nombre</label>
-            <input type="text" name="nombre" class="form-control" placeholder="Nombre">
+            <input type="text" name="nombre" class="form-control @error('nombre') is-invalid @enderror" value="{{ old('nombre') }}" placeholder="Nombre">
+            @error('nombre')
+                <span class="invalid-feedback" role="alert">
+                    <strong>{{ $message }}</strong>
+                </span>
+            @enderror
           </div>
         </div>
 
@@ -35,7 +40,8 @@
         </div>
 
       </form>
-</div>
+    </div>
+  </div>
 </div>
 
 @endsection

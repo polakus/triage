@@ -1,13 +1,5 @@
-{{-- @extends("layouts.plantillaTest") --}}
-@extends("triagepreguntas.test")
-{{-- <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-<link rel="stylesheet" href="/resources/demos/style.css">
-<script src="{{ asset('js/jquery.js') }}"></script> --}}
-@section("css")
-<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-<link rel="stylesheet" href="/resources/demos/style.css">
 
-@endsection
+@extends("triagepreguntas.test")
 
 @section("cuerpo")
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
@@ -51,8 +43,7 @@
 @endsection
 @section("scripts")
 @parent
-<script src='{{ asset('js/jquery.js') }}'></script>
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
 <script >
 $(document).ready(function(){
 	var i=1;
