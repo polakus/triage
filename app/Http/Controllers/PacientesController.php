@@ -42,27 +42,8 @@ class PacientesController extends Controller
      */
     public function store(Request $request)
     {
-<<<<<<< HEAD
         $pac = $this->validarPaciente($request);
         $pacU = $request->validate(['dni' => 'unique:pacientes'], ['unique' => 'Este documento ya se encuentra registrado.']);  #para que pregunte si el documento ya existe
-=======
-        $mensajes = [
-            'required' =>'Este campo no debe estar vacio.',
-            'max' => 'Este campo supera la capacidad máxima de caracteres.',
-            'numeric' => 'Este campo requiere una valor numérico.',
-            'date' => 'La fecha ingresada no es válida.',
-            'unique' => 'Este documento ya se encuentra registrado',
-        ];
-        $prot = $request->validate([
-            'nombre' => 'required|max:255',
-            'apellido' => 'required|max:255',
-            'telefono' => 'required|numeric',
-            'fechaNac' => 'required|date',
-            'sexo' => 'required',
-            'direccion' => 'required|max:255',
-            'dni' => 'required|numeric|unique:pacientes',
-        ], $mensajes);
->>>>>>> nuevoServer
         $nuevo = new Paciente;
         $nuevo->dni=$request->get('dni');
         $nuevo->nombre=$request->get('nombre');
