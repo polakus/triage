@@ -349,40 +349,81 @@
             <div class="form-row">
               <div class="form-group col-md-4">
                 <label for="inputEmail4">Nombre</label>
-                <input type="text" name="nombre" class="form-control" placeholder="Nombre" value="{{ $paciente->nombre }}" >
+                <input type="text" name="nombre" class="form-control @error('nombre') is-invalid @enderror" value="{{count($errors)>0 ? old('nombre'):$paciente->nombre}}" placeholder="Nombre">
+                @error('nombre')
+                  <span class="invalid-feedback" role="alert">
+                    <strong>{{ $message }}</strong>
+                  </span>
+                @enderror
               </div>
               <div class="form-group col-md-4">
                 <label for="inputEmail4">Apellido</label>
-                <input type="text" name="apellido" class="form-control" placeholder="Apellido" value="{{ $paciente->apellido }}">
+                <input type="text" name="apellido" class="form-control @error('apellido') is-invalid @enderror" value="{{count($errors)>0 ? old('apellido'):$paciente->apellido}}" placeholder="Apellido">
+                @error('apellido')
+                  <span class="invalid-feedback" role="alert">
+                    <strong>{{ $message }}</strong>
+                  </span>
+                @enderror
               </div>
               <div class="form-group col-md-4">
                 <label for="inputEmail4">Teléfono</label>
-                <input type="text" name="telefono" class="form-control" placeholder="Teléfono" value="{{ $paciente->telefono }}">
+                <input type="number" name="telefono" class="form-control @error('telefono') is-invalid @enderror" value="{{count($errors)>0 ? old('telefono'):$paciente->telefono}}" placeholder="Teléfono">
+                @error('telefono')
+                  <span class="invalid-feedback" role="alert">
+                    <strong>{{ $message }}</strong>
+                  </span>
+                @enderror
               </div>
             </div>
-
             <div class="form-row">
               <div class="form-group col-md-2">
                 <label for="inputEmail4">Fecha de Nacimiento</label>
-                <input type="text" name="fechaNac" class="form-control" id="inputEmail4" placeholder="dd/mm/aaaa" value="{{ $paciente->fechaNac }}">
+                <input type="date" name="fechaNac" class="form-control @error('fechaNac') is-invalid @enderror" value="{{count($errors)>0 ? old('fechaNac'):$paciente->fechaNac}}" id="inputEmail4">
+                @error('fechaNac')
+                  <span class="invalid-feedback" role="alert">
+                    <strong>{{ $message }}</strong>
+                  </span>
+                @enderror
               </div>
               <div class="form-group col-md-2">
                 <label for="inputState">Sexo</label>
-                <select name="sexo" id="inputState" class="form-control">
-                  <option value="Masculino">Masculino</option>
-                  <option value="Femenino">Femenino</option>
+                <select name="sexo" id="inputState" class="form-control @error('sexo') is-invalid @enderror" >
+                @if(count($errors)>0)
+                  <option value="" ></option>
+                  <option value="Masculino" {{ (collect(old('sexo'))->contains('Masculino')) ? 'selected':'' }}>Masculino</option>
+                  <option value="Femenino" {{ (collect(old('sexo'))->contains('Femenino')) ? 'selected':'' }}>Femenino</option>
+                @else
+                  <option value="" ></option>
+                  <option value="Masculino" {{ $paciente->sexo == 'Masculino' ? 'selected':'' }}>Masculino</option>
+                  <option value="Femenino" {{ $paciente->sexo == 'Femenino' ? 'selected':'' }}>Femenino</option>
+                @endif
                 </select>
+                @error('sexo')
+                  <span class="invalid-feedback" role="alert">
+                    <strong>{{ $message }}</strong>
+                  </span>
+                @enderror
               </div>
               <div class="form-group col-md-8">
                 <label for="inputAddress">Dirección</label>
-                <input type="text" name="direccion" class="form-control" id="inputAddress" placeholder="Dirección" value="{{ $paciente->domicilio }}">
+                <input type="text" name="direccion" class="form-control @error('direccion') is-invalid @enderror" value="{{ count($errors)>0 ? old('direccion') : $paciente->domicilio}}" id="inputAddress" placeholder="Dirección">
+                @error('direccion')
+                  <span class="invalid-feedback" role="alert">
+                    <strong>{{ $message }}</strong>
+                  </span>
+                @enderror
               </div>
             </div>
 
             <div class="form-row">
               <div class="form-group col-md-4">
                 <label for="inputZip">Documento</label>
-                <input type="number" max="99999999" min="1000000" name="dni" class="form-control" id="inputZip" placeholder="Número de Documento" value="{{ $paciente->dni }}">
+                <input type="number" max="99999999" min="1000000" name="dni" class="form-control @error('dni') is-invalid @enderror" value="{{count($errors)>0 ? old('dni'):$paciente->dni}}" id="inputZip" placeholder="Número de Documento">
+                @error('dni')
+                  <span class="invalid-feedback" role="alert">
+                    <strong>{{ $message }}</strong>
+                  </span>
+                @enderror
               </div>
             </div>
             <button type="submit" class="btn btn-primary">Guardar</button>

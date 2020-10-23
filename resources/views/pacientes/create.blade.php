@@ -27,7 +27,7 @@
     </div>
     <div class="form-group col-md-4">
       <label for="inputEmail4">Apellido</label>
-      <input type="text" name="apellido" class="form-control @error('nombre') is-invalid @enderror" value="{{ old('nombre') }}" placeholder="Apellido">
+      <input type="text" name="apellido" class="form-control @error('apellido') is-invalid @enderror" value="{{ old('apellido') }}" placeholder="Apellido">
       @error('apellido')
         <span class="invalid-feedback" role="alert">
           <strong>{{ $message }}</strong>

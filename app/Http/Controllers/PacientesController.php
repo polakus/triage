@@ -41,22 +41,8 @@ class PacientesController extends Controller
      */
     public function store(Request $request)
     {
-        $mensajes = [
-            'required' =>'Este campo no debe estar vacio.',
-            'max' => 'Este campo supera la capacidad máxima de caracteres.',
-            'numeric' => 'Este campo requiere una valor numérico.',
-            'date' => 'La fecha ingresada no es válida.',
-            'unique' => 'Este documento ya se encuentra registrado',
-        ];
-        $prot = $request->validate([
-            'nombre' => 'required|max:255',
-            'apellido' => 'required|max:255',
-            'telefono' => 'required|numeric',
-            'fechaNac' => 'required|date',
-            'sexo' => 'required',
-            'direccion' => 'required|max:255',
-            'dni' => 'required|numeric|unique:pacientes',
-        ], $mensajes);
+        $pac = $this->validarPaciente($request);
+        $pacU = $request->validate(['dni' => 'unique:pacientes'], ['unique' => 'Este documento ya se encuentra registrado.']);  #para que pregunte si el documento ya existe
         $nuevo = new Paciente;
         $nuevo->dni=$request->get('dni');
         $nuevo->nombre=$request->get('nombre');
@@ -71,6 +57,24 @@ class PacientesController extends Controller
         return redirect()->back()->withInput();
     }
 
+    public function validarPaciente($request){
+        $mensajes = [
+            'required' =>'Este campo no debe estar vacio.',
+            'max' => 'Este campo supera la capacidad máxima de caracteres.',
+            'numeric' => 'Este campo requiere una valor numérico.',
+            'date' => 'La fecha ingresada no es válida.',
+            'unique' => 'Este documento ya se encuentra registrado',
+        ];
+        return $request->validate([
+            'nombre' => 'required|max:255',
+            'apellido' => 'required|max:255',
+            'telefono' => 'required|numeric',
+            'fechaNac' => 'required|date',
+            'sexo' => 'required',
+            'direccion' => 'required|max:255',
+            'dni' => 'required|numeric',
+        ], $mensajes);
+    }
     /**
      * Display the specified resource.
      *
@@ -114,8 +118,8 @@ class PacientesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
         if($request->comprobador == 1){
+            $pac = $this->validarPaciente($request);
             $nuevo = Paciente::findOrFail($id);
             $nuevo->dni=$request->get('dni');
             $nuevo->nombre=$request->get('nombre');
@@ -126,8 +130,7 @@ class PacientesController extends Controller
             $nuevo->sexo=$request->get('sexo');
             $nuevo->save();
 
-        }
-        else{
+        }else{
             $atencion= Atencion::findOrFail($id);
             $atencion->Paciente_id=$request->id_paciente;
             $atencion->save();
