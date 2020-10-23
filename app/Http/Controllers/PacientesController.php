@@ -8,6 +8,7 @@ use App\Codigo;
 use App\Atencion;
 use App\DetalleAtencion;
 use App\Historial;
+use Illuminate\Support\Facades\Auth;
 use App\CIE;
 use DB;
 
@@ -41,8 +42,27 @@ class PacientesController extends Controller
      */
     public function store(Request $request)
     {
+<<<<<<< HEAD
         $pac = $this->validarPaciente($request);
         $pacU = $request->validate(['dni' => 'unique:pacientes'], ['unique' => 'Este documento ya se encuentra registrado.']);  #para que pregunte si el documento ya existe
+=======
+        $mensajes = [
+            'required' =>'Este campo no debe estar vacio.',
+            'max' => 'Este campo supera la capacidad máxima de caracteres.',
+            'numeric' => 'Este campo requiere una valor numérico.',
+            'date' => 'La fecha ingresada no es válida.',
+            'unique' => 'Este documento ya se encuentra registrado',
+        ];
+        $prot = $request->validate([
+            'nombre' => 'required|max:255',
+            'apellido' => 'required|max:255',
+            'telefono' => 'required|numeric',
+            'fechaNac' => 'required|date',
+            'sexo' => 'required',
+            'direccion' => 'required|max:255',
+            'dni' => 'required|numeric|unique:pacientes',
+        ], $mensajes);
+>>>>>>> nuevoServer
         $nuevo = new Paciente;
         $nuevo->dni=$request->get('dni');
         $nuevo->nombre=$request->get('nombre');
@@ -152,11 +172,7 @@ class PacientesController extends Controller
         //
     }
 
-    // public function shows(Request $request){
-    //     $documento=$request->get('doc');
-    //     $pacientes = Paciente::where('dni',$documento)->get();
-    //     return view('pacientes.shows',compact('pacientes','documento'));
-    // }
+
 
     public function insertarNN(Request $request){
 
@@ -177,7 +193,7 @@ class PacientesController extends Controller
 
             $atencion = new Atencion;
             $atencion->Paciente_id = $nuevo->Paciente_id;
-            $atencion->usuario_id = 1;
+            $atencion->usuario_id = Auth::id();
             $atencion->save();
 
             $detalleatencion = new DetalleAtencion;
@@ -198,7 +214,9 @@ class PacientesController extends Controller
             $historial = new Historial;
             $historial->id_detalle_atencion = $detalleatencion->id;
             $historial->descripcion = $request->observacion;
-            $historial->id_cie = $request->radiocie;
+            $codigocie=explode("-", $request->ciess);
+            $id_cie=CIE::select('id')->where('codigo','=',$codigocie[0])->get();
+            $historial->id_cie =$id_cie[0]->id;
             $historial->fecha=date('Y-m-d');
             $historial->hora  = date('H:i');
             $historial->save();

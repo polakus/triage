@@ -13,11 +13,7 @@
       <input type="text" id="buscar" class="form-control form-control-sm">
   </div>
 
-{{--   <div class="form-group col-md-2">
-      <label for="inputState">Fecha Desde</label>
-      <input type="date" class="form-control form-control-sm" data-date-format="DD-MMMM-YYYY" name="fecha" id="fecha_buscar">
-  </div> 
-   --}}
+
   
 </div>
 <label>Filtro para buscar por un rango de fechas:</label>
@@ -57,9 +53,7 @@
 
 @section("scripts")
 {{-- JS Datatables --}}
-<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
-<script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
-<script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
+
 <script type="text/javascript">
   
 </script>
@@ -156,37 +150,7 @@
 } );
  
 
-//     // Funcion para hacer busquedas 
-//     searchByColumn(table);
-//     function searchByColumn(table){
-//     	$(document).on('keyup change','#buscar',function(){
-//     		table.search('').columns().search('').draw();
-//     		table.columns(1).search(this.value).draw()
 
-//     	});
-//     	$(document).on('change','#fecha_buscar',function(){
-//     		table.search('').columns().search('').draw();
-//     		table.columns(3).search(this.value).draw()
-
-//     	});
-//     }
-// } 
-// );
-
-// $('#myTable thead tr').clone(true).appendTo('#myTable thead');
-// $('#myTable thead tr:eq(1) th').each(function(i){
-//   var title=$(this).text();
-//   $(this).html('<input type="text" placeholder="Buscar..." />');
-//   $('input',this).on('keyup change',function(){
-//     if(table.column(i).search()!== this.value){
-    
-//       table
-//         .column(i)
-//         .search(this.value)
-//         .draw()
-//     }
-//   })
-// })
 
  
 

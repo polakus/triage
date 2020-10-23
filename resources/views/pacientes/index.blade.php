@@ -1,12 +1,5 @@
-{{-- @extends("layouts.plantillaTest") --}}
+
 @extends('triagepreguntas.test')
-
-@section("cabecera")
-    
-@endsection
-
-
-
 
 @section("estilos")
   {{-- <style type="text/css">
@@ -31,6 +24,15 @@
       text-decoration: none;
     }
   </style> --}}
+<style type="text/css">
+.ui-autocomplete{
+    z-index:1050;
+}
+#container_tags {
+    display: block; 
+    position:relative
+}
+</style>
 @endsection
 
 @section("cuerpo")
@@ -70,23 +72,7 @@
             </tr>
           </thead>
           <tbody>
-           {{--  @foreach($pacientes as $paciente)
-                <tr>
-                  <td><strong>{{ $paciente->apellido }}</strong></td>
-                  <td>{{ $paciente->nombre }}</td>
-                  <td>{{ $paciente->dni }}</td>
-                  <td>{{ $paciente->telefono }}</td>
-                  <td>{{ $paciente->fechaNac }}</td>
-                  <td>{{ $paciente->sexo }}</td>
-                  <td>
-                    <div class="form-row">
-                     <form class= "form-inline" action="{{route('triagepreguntas.show',$paciente->Paciente_id)}}" method="GET">
-                        <button type="submit" class="btn btn-sm btn-outline-secondary ml-1">Triaje</button>
-                      </form>
-                      <a href="{{ route('pacientes.edit', $paciente->Paciente_id) }}"  class="btn btn-sm btn-outline-secondary ml-1">Editar</a>
-                    </div>
-                </td>
-            @endforeach --}}
+          
           </tbody>
         </table>
 </div>
@@ -102,7 +88,7 @@
       </div>
       <form method="POST" action="/pacientes/nn">
       @csrf
-      <div class="modal-body">
+      <div class="modal-body ui-front">
           <div class="form-group col-md-10 op">
             <label>Para:</label>
             <select class="form-control" name="condicion">
@@ -128,24 +114,8 @@
           </div>
           <div class="form-group col-md-10 ">
             <label>CIE:</label>
-            <div class="table-responsive">
-              <input type="text" name="searchcie" id="searchcie" class="form-control" placeholder="Buscar por cie" onkeyup="myFunctioncie()">
-              <table class="table table-bordered"  id=TablaCie>
-                @foreach($cie as $ci)
-                  <tr>
-                    <td>{{ $ci->codigo }}-{{ $ci->descripcion }}</td>
-                    
-                    <td>
-                      <div class="custom-control custom-radio">
-                        <input type="radio" id="customRadio{{ $ci->id }}" name="radiocie" class="custom-control-input" value="{{ $ci->id }}" >
-                        <label class="custom-control-label" for="customRadio{{$ci->id }}"> </label>
-                      </div>
-
-                    </td>
-                  </tr>
-                @endforeach            
-              </table> 
-           </div>
+             <input type="text" name="ciess" id="cieslist" class="form-control form-control-sm">
+     
           </div>
           <div class="form-group col-md-10 ">        
             <label for="exampleFormControlTextarea1">Observacion</label>
@@ -163,38 +133,29 @@
 
 @endsection
 @section("scripts")
+@parent
+
+
 <script>
-function myFunctioncie() {
-  var input, filter, table, tr, td, i, txtValue;
-  input = document.getElementById("searchcie");
-  if(input.value.length==0){
+  $( function() {
+    cies=<?php echo $cie ?>;
+    var availableTags=[];
+    for(let i=0; i<cies.length;i++){
+      availableTags.push(cies[i].codigo+"-"+cies[i].descripcion);
+    }
     
-    document.getElementById('TablaCie').style.display ="none";
-  }
-  filter = input.value.toUpperCase();
-  table = document.getElementById("TablaCie");
-  tr = table.getElementsByTagName("tr");
-  for (i = 0; i < tr.length; i++) {
-    td = tr[i].getElementsByTagName("td")[0];
-    if (td) {
-      txtValue = td.textContent || td.innerText;
-      if (txtValue.toUpperCase().indexOf(filter) > -1 && input.value.length>0) {
-        tr[i].style.display = "";
-        
-        document.getElementById('TablaCie').style.display = 'block';
-      } else {
+    $( "#cieslist" ).autocomplete({
+      source: availableTags
+    });
+   
+  
 
-        tr[i].style.display = "none";
-      }
-    }       
-  }
-}
-
-</script>
-
+  } );
+ 
+ </script>
 <script >
   document.getElementById('operar').style.display = 'none';
-  document.getElementById('TablaCie').style.display = 'none';
+ 
   $('.op').change(function (e) {
     if(e.target.value == "Internar"){
       document.getElementById('operar').style.display = 'block';
@@ -206,14 +167,11 @@ function myFunctioncie() {
 });
 </script>
 
-{{-- JS Datatables --}}
-<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
-<script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
-<script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
-
 
 <script type="text/javascript">
+  
   $(document).ready(function() {
+    
     $('#myTable').DataTable({
       "processing":true,
           "serverSide":true,
@@ -279,9 +237,6 @@ function myFunctioncie() {
     });
 } );
 </script>
-
-
-{{-- <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script> --}}
 
 
 
