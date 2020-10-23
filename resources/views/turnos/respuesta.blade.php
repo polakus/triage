@@ -181,6 +181,13 @@
   				<form method="POST" action="/turnos/cargarsinprotocolo">
   					@csrf
   					<input type="hidden" name="atencion" value="{{ $atencion }}">
+  					<input type="hidden" name="sintomas" value="{{ json_encode($sintomas,TRUE)}}">
+  					<ul>
+  						@foreach($sintomas as $s)
+  							<li>{{ $s }}</li>
+  						@endforeach
+
+  					</ul>
 	  				<div class="form-row">
 							<div class="form-group col-md-2">
 								<label>Especialidad</label>
@@ -198,6 +205,22 @@
 							  <option value="{{ $c->id }}">{{ $c->color }}</option>
 							  @endforeach
 							</select>
+							</div>
+							<div class="form-group col-md-4">
+								<label>Desea guardar este nuevo protocolo?</label>
+								<br>
+								<div class="form-check form-check-inline">
+								  <input class="form-check-input" type="radio" name="radios" id="radioSi" value="si">
+								  <label class="form-check-label">
+								   Si
+								  </label>
+								</div>
+								<div class="form-check form-check-inline">
+								  <input class="form-check-input" type="radio" name="radios" id="radioNo" value="no">
+								  <label class="form-check-label">
+								   No
+								  </label>
+								</div>
 							</div>
 					</div>
 					<div class="form-group">

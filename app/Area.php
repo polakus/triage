@@ -8,6 +8,10 @@ class Area extends Model
 {
     protected $table = 'Areas';
 
+    protected $fillable = [
+        'tipo_dato',
+    ];
+
     public function salas()
     {
         return $this->hasMany('App\Sala');

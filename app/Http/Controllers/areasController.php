@@ -35,11 +35,21 @@ class areasController extends Controller
      */
     public function store(Request $request)
     {
-        $area = new Area;
-        $area->tipo_dato = $request->nombre;
-        $area->save();
+        $mensajes = [
+            'required' =>'Este campo no debe estar vacio.',
+            'max' => 'Este campo supera la capacidad máxima de caracteres.',
+        ];
+        $pr = $request->validate([
+            'nombre' => 'required|max:255',
+        ], $mensajes);
+        $area = Area::create([
+            'tipo_dato' => $request->nombre,
+        ]);
+        // $area = new Area;
+        // $area->tipo_dato = $request->nombre;
+        // $area->save();
         $request->session()->flash('alert-success', 'El area fue agregado exitosamen!');
-        return redirect()->route('areas.create');
+        return redirect()->back()->withInput();
     }
 
     /**

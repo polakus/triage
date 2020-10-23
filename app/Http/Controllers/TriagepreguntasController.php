@@ -149,6 +149,7 @@ class TriagepreguntasController extends Controller
                     
         while ($i < sizeof($probando) and $band) {
             $dsp = Detalle_Sintoma_Protocolo::where('id_protocolo', $probando[$i]->id)->get();
+            $encontro = False;
             if (count($dsp)==count($lista_respuestas)) {
                 $j=0;
                 $encontro = True;
@@ -192,7 +193,7 @@ class TriagepreguntasController extends Controller
         else{
             // FALTA PONER ALGO EN CASO DE QUE NO ENCUENTRE UN PROTOCOLO
             $bandera="Lo sentimos muchos, nuestra base de datos no contiene los datos suficientes para poder encontrar un protocolo para dichos Sintomas descriptos...";
-            return redirect()->action('TurnosController@respuesta',['bandera'=>$bandera,'atencion'=>$id]);
+            return redirect()->action('TurnosController@respuesta',['bandera'=>$bandera,'atencion'=>$id, 'sintomas'=>$lista_respuestas]);
         }
        
         

@@ -16,7 +16,9 @@ use DB;
 
 use App\DetalleAtencion;
 use App\Especialidad;
-
+use App\Protocolo;
+use App\Detalle_Sintoma_Protocolo;
+use App\DetalleProtocolo;
 
 
 class TurnosController extends Controller
@@ -111,35 +113,43 @@ class TurnosController extends Controller
     public function store(Request $request)
     {
     	 
-        // $date=$request->get('day_aux');
-        // $seleccionado=$request->get('seleccion');
-
-        // $array=explode(" ", $request->get('seleccion'));
-        // DB::table('Detalle_Horarios')->insert([
-        //     ['id_atencion' => $request->get('atencion'), 'id_horarios' =>$array[1], 'start' =>$date ]
-        // ]);
-        // return redirect('pacientes');
       date_default_timezone_set('UTC');
 
       date_default_timezone_set("America/Argentina/Buenos_Aires");
       
+      // $actualizar_detalle=DetalleAtencion::findOrFail($request->detalleatencion);
+      // $actualizar_detalle->estado=$request->tipo;
+      // $actualizar_detalle->sala=$request->sala;
+      // $actualizar_detalle->fecha=date('Y-m-d');
+      // $actualizar_detalle->hora=date('H:i');
+      // if($request->tipo == "Operado"){
+      //   $actualizar_detalle->operar=0;
+      //   $sala_actualizar= Sala::findOrFail($request->id_sala);
+      //   $sala_actualizar->disponibilidad=0;
+      //   $sala_actualizar->save();
+      // }
+      // $actualizar_detalle->save();
 
-      $actualizar_detalle=DetalleAtencion::findOrFail($request->detalleatencion);
-      $actualizar_detalle->estado=$request->tipo;
-      $actualizar_detalle->sala=$request->sala;
+      $actualizar_detalle=DetalleAtencion::findOrFail($request->get('detalleatencion'));
+      $actualizar_detalle->estado=$request->get('tipo');
+      $actualizar_detalle->sala=$request->get('sala');
       $actualizar_detalle->fecha=date('Y-m-d');
       $actualizar_detalle->hora=date('H:i');
-      if($request->tipo == "Operado"){
+      if($request->get('tipo') == "Operado"){
         $actualizar_detalle->operar=0;
-        $sala_actualizar= Sala::findOrFail($request->id_sala);
+        $sala_actualizar= Sala::findOrFail($request->get('id_sala'));
         $sala_actualizar->disponibilidad=0;
         $sala_actualizar->save();
       }
       $actualizar_detalle->save();
 
-
-
-      return redirect()->action('TurnosController@mostrar');
+      // $resultado = $relevamiento->save();
+        if ($actualizar_detalle) {
+            return response()->json(['success'=>'true']);
+        }else{
+            return response()->json(['success'=>'false']);
+        }
+      // return redirect()->action('TurnosController@mostrar');
 
 
         
@@ -253,6 +263,7 @@ class TurnosController extends Controller
                     // ->where('da.fecha','=',date('Y-m-d'))
                     
                     ->orderBy('da.id_codigo_triage','DESC')
+                    ->orderBy('da.fecha','ASC')
                     ->orderBy('da.hora','ASC')
                     ->get();
       
@@ -261,9 +272,8 @@ class TurnosController extends Controller
                      ->select('h.descripcion as observacion','c.codigo','c.descripcion','h.id_detalle_atencion')
                      //->where('h.fecha','=',date('Y-m-d'))
                      ->get(); 
-    
-
       
+
       $salas= DB::table('salas as s')
                   ->join('Areas as a','a.id','=','s.id_area')
                   ->select('a.tipo_dato','s.nombre','s.camas','s.disponibilidad','s.id')
@@ -375,7 +385,8 @@ class TurnosController extends Controller
         $especialidades=Especialidad::all();
         $codigos= DB::table('CodigosTriage')->get();
         $atencion=$request->atencion;
-        return view('turnos.respuesta',compact('bandera','especialidades','codigos','atencion'));
+        $sintomas=$request->sintomas;
+        return view('turnos.respuesta',compact('bandera','especialidades','codigos','atencion','sintomas'));
     }
 
     }
@@ -392,6 +403,30 @@ class TurnosController extends Controller
       $nuevo->estado="consulta";
       $nuevo->id_codigo_triage=$request->color;
       $nuevo->save();
+      if($request->radios == "si"){
+          $cantidad= DB::table("Protocolos")
+                         ->where("descripcion","LIKE","DEFECTO%")
+                         ->count();                    
+          $nuevo_protocolo = new Protocolo;
+          $nuevo_protocolo->descripcion = "DEFECTO".$cantidad;
+          $nuevo_protocolo->id_codigo_triage=$request->color;
+          $nuevo_protocolo->save();
+
+          $nuevo_detalle= new DetalleProtocolo;
+          $nuevo_detalle->id_protocolo= $nuevo_protocolo->id;
+          $nuevo_detalle->id_especialidad=$request->esp;
+          $nuevo_detalle->save();
+          
+
+          foreach(json_decode($request->sintomas, true) as $value){
+              $sintomas_detalle_protocolo = new Detalle_Sintoma_Protocolo;
+              $sintomas_detalle_protocolo->id_protocolo=$nuevo_protocolo->id;
+              $sintomas_detalle_protocolo->id_sintoma = $value;
+              $sintomas_detalle_protocolo->save();
+             
+          }
+
+      }
       return redirect()->action('PacientesController@index');
     }
 

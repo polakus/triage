@@ -3,28 +3,20 @@
 
 
 @section("cuerpo")
-{{-- <div class="card"> --}}
-{{-- <div class="card-header">Cie</div>
-<div class="card-body"> --}}
+
 	<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
         <h4 class="h4">CIE</h4>
-    </div>
-	<div class="form-group">
-		<div class="row">
-		  <div class="col-auto">
-		  	<button type="button" class="btn btn-dark" data-toggle="modal" data-target="#exampleModal">
-              Agregar
+        <div class="btn-toolbar mb-2 mb-md-0">
+      <div class="btn-group mr-2">
+        <button type="button" class="btn btn-outline-secondary btn-sm" data-toggle="modal" data-target="#exampleModal">
+              Agregar CIE
             </button>
 		   
-		  </div>
-		</div>	
-	</div>
-	<div class="form-row">
-		<div class="form-group col-md-2">
-			<input class="form-control" type="text" id="myInput" onkeyup="myFunction()" placeholder="Nombre" >
-
-		</div>
-	</div>
+      </div>
+    </div>
+    </div>
+	
+	
 	<div class="table-responsive">
 	    <table class="table table-bordered table-sm table-hover" id="myTable">
 		  <thead class="thead-dark">
@@ -107,11 +99,12 @@
                     <span aria-hidden="true">&times;</span>
                   </button>
                 </div>
+                <form method="POST" action="/cie">
+				@csrf
                 <div class="modal-body">
                   <div class="row col-md-16">
 					<div class="form-group">
-						<form method="POST" action="/cie">
-							@csrf
+						
 							<div class="table-responsive">
 								<table class="table table-bordered table-sm"  id=tabla_sintomas>
 									<tr>
@@ -123,8 +116,8 @@
 								
 							</div>
 							&nbsp 
-							<button type="submit" class="btn btn-dark">Agregar CIE</button>
-						</form>
+							
+						
 					</div>
 					
 				</div>
@@ -134,40 +127,22 @@
                   
                 </div>
                 <div class="modal-footer">
+                	<button type="submit" class="btn btn-success">Guardar</button>
                   <button type="button" class="btn btn-dark" data-dismiss="modal">Cerrar</button>
-                
+                	
                 </div>
+                </form>
               </div>
             </div>
           </div>
 
 
-{{-- </div> --}}
+
 @endsection
 @section("scripts")
-{{-- <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script> --}}
 
-<script>
-function myFunction() {
-  var input, filter, table, tr, td, i, txtValue;
-  input = document.getElementById("myInput");
-  filter = input.value.toUpperCase();
-  table = document.getElementById("myTable");
-  tr = table.getElementsByTagName("tr");
-  for (i = 0; i < tr.length; i++) {
-    td = tr[i].getElementsByTagName("td")[1];
-    if (td) {
-      txtValue = td.textContent || td.innerText;
-      if (txtValue.toUpperCase().indexOf(filter) > -1) {
-        tr[i].style.display = "";
-      } else {
-        tr[i].style.display = "none";
-      }
-    }       
-  }
-}
 
-</script>
+
 
 <script >
 $(document).ready(function(){
@@ -190,7 +165,60 @@ $(document).ready(function(){
 })
 </script>
 
-
+<script type="text/javascript">
+  $(document).ready(function() {
+    $('#myTable').DataTable({
+      
+      
+       "language": {
+        "decimal": ",",
+        "thousands": ".",
+        "info": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+        "infoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+        "infoPostFix": "",
+        "infoFiltered": "(filtrado de un total de _MAX_ registros)",
+        "loadingRecords": "Cargando...",
+        "lengthMenu": "Mostrar _MENU_ registros",
+        "paginate": {
+            "first": "Primero",
+            "last": "Último",
+            "next": "Siguiente",
+            "previous": "Anterior"
+        },
+        "processing": "Procesando...",
+        "search": "Buscar:",
+        "searchPlaceholder": "",
+        "zeroRecords": "No se encontraron resultados",
+        "emptyTable": "Ningún dato disponible en esta tabla",
+        "aria": {
+            "sortAscending":  ": Activar para ordenar la columna de manera ascendente",
+            "sortDescending": ": Activar para ordenar la columna de manera descendente"
+        },
+        //only works for built-in buttons, not for custom buttons
+        "buttons": {
+            "create": "Nuevo",
+            "edit": "Cambiar",
+            "remove": "Borrar",
+            "copy": "Copiar",
+            "csv": "fichero CSV",
+            "excel": "tabla Excel",
+            "pdf": "documento PDF",
+            "print": "Imprimir",
+            "colvis": "Visibilidad columnas",
+            "collection": "Colección",
+            "upload": "Seleccione fichero...."
+        },
+        "select": {
+            "rows": {
+                _: '%d filas seleccionadas',
+                0: 'clic fila para seleccionar',
+                1: 'una fila seleccionada'
+            }
+        }
+    }           
+    });
+} );
+</script>
 
 @endsection
 

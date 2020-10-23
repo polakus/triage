@@ -7,21 +7,27 @@
     <meta name="description" content="">
     <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
     <meta name="generator" content="Jekyll v4.1.1">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Dashboard Template · Bootstrap</title>
 
+    {{-- CSS --}}
     <link rel="canonical" href="https://getbootstrap.com/docs/4.5/examples/dashboard/">
 
-    <!-- Bootstrap core CSS  Esto es del DASHBOARD -->
+    <!-- Bootstrap core CSS  DASHBOARD -->
     <link href="../assets/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <link href="../assets/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-   <!-- Custom styles for this template -->
+   <!-- Custom styles for this template DASHBOARD -->
     <link href="../assets/dashboard.css" rel="stylesheet">
- <!-- <link href="../assets/css/sb-admin-2.min.css" rel="stylesheet"> -->
 
-    {{-- Data tables --}}
-    {{-- <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.css"> --}}
-  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.21/css/dataTables.bootstrap4.min.css">
+    {{-- DataTable --}}
+    {{-- <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.21/css/dataTables.bootstrap4.min.css"> --}}
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/datatables.bootstrap4.min.css') }}">
+
+    {{-- Autocompletar --}}
+
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/jquery-ui.css') }}">
+    {{-- <link rel="stylesheet" href="/resources/demos/style.css"> --}}
     @yield("css")
     <style>
       .bd-placeholder-img {
@@ -88,7 +94,6 @@
     </div>
   </div>
 
-
 </nav>
 
 
@@ -149,6 +154,12 @@
             <a id="especialidades" class="nav-link <?php  if ($url_array[3] == "especialidades"){ echo "active";} ?>" href="{{route('especialidades.index')}}">
               <span data-feather="layers"></span>
               Especialidades
+            </a>
+          </li>
+          <li class="nav-item">
+            <a id="especialidades" class="nav-link" href="/profesionales/atenciones">
+              <span data-feather="layers"></span>
+              Profesionales Atenciones
             </a>
           </li>
           <li class="nav-item">
@@ -297,13 +308,37 @@
     </main>
   </div>
 </div>
+
+{{-- Scripts --}}
+
+{{-- JQUERY --}}
 <script src='{{ asset('js/jquery.js') }}'></script>
+
 {{-- js del dash board --}}
+<script type="text/javascript" src="{{ asset('js/jquery-3.5.1.slim.min.js') }}"></script>
+<script>window.jQuery || document.write('<script src="../assets/js/vendor/jquery.slim.min.js"><\/script>')</script>
+{{-- <script src="../assets/dist/js/bootstrap.bundle.min.js"></script>  --}}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.9.0/feather.min.js"></script>
+{{-- <script src="{{ asset('js/feather.min.js') }}"></script> --}} {{-- Sale advertencia de la url --}}
+
+{{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js"></script> --}}
+<script src="../assets/dashboard.js"></script>
+
+ {{-- DataTable --}}
+<script src="{{ asset('js/jquery-3.5.1.js') }}"></script>
+<script src="{{ asset('js/jquery.dataTables.min.js') }}"></script>
+<script src="{{ asset('js/dataTables.bootstrap4.min.js') }}"></script>
+
+{{-- Boostrap --}}
 {{-- <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script> --}}
-      <script>window.jQuery || document.write('<script src="../assets/js/vendor/jquery.slim.min.js"><\/script>')</script><script src="../assets/dist/js/bootstrap.bundle.min.js"></script> {{-- Este scrip sirve para los modales --}}
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.9.0/feather.min.js"></script>
-        {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js"></script> --}}
-        <script src="../assets/dashboard.js"></script>
+{{-- <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script> --}}
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+{{-- <script src="{{ asset('js/bootstrap.min.js') }}"></script> --}} {{-- Este tmb tira advertencia
+ --}}
+{{-- Autocompletar --}}
+
+<script src="{{ asset('js/jquery-ui.js') }}"></script>
+
 @yield("scripts")
 
 </body>

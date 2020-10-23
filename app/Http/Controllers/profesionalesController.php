@@ -9,6 +9,8 @@ use App\Profesional;
 use App\Especialidad;
 use App\DetalleProfesional;
 
+use DB;
+
 class profesionalesController extends Controller
 {
     /**
@@ -116,5 +118,10 @@ class profesionalesController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function atenciones()
+    {
+        return view('profesionales.atenciones');
     }
 }
