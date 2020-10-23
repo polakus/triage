@@ -45,14 +45,24 @@ class EspecialidadController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validarEspecialidad($request);
         $esp = new Especialidad;
         $esp->nombre = $request->esp_nombre;
         $esp->descripcion= $request->descripcion;
         $esp->save();
         return redirect()->action('EspecialidadController@index');
     }
-
+    public function validarEspecialidad($request){
+        $mensajes = [
+            'required' =>'Este campo no debe estar vacio.',
+            'max' => 'Este campo supera la capacidad máxima de caracteres.',
+        ];
+        return $request->validate([
+            'nombre' => 'required|max:30',
+            'descripcion' => 'required|max:255',
+            ''
+        ], $mensajes);
+    }
     /**
      * Display the specified resource.
      *
