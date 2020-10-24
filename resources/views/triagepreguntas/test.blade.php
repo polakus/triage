@@ -21,13 +21,13 @@
     <link href="../assets/dashboard.css" rel="stylesheet">
 
     {{-- DataTable --}}
-    {{-- <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.21/css/dataTables.bootstrap4.min.css"> --}}
+
     <link rel="stylesheet" type="text/css" href="{{ asset('css/datatables.bootstrap4.min.css') }}">
 
     {{-- Autocompletar --}}
 
     <link rel="stylesheet" type="text/css" href="{{ asset('css/jquery-ui.css') }}">
-    {{-- <link rel="stylesheet" href="/resources/demos/style.css"> --}}
+ 
     @yield("css")
     <style>
       .bd-placeholder-img {

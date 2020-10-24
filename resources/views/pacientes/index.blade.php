@@ -2,27 +2,7 @@
 @extends('triagepreguntas.test')
 
 @section("estilos")
-  {{-- <style type="text/css">
-    .btn{
-      display: inline-block;
-      transition: .3s;
-      border:solid 1.5px;
-    }
-    .btn-black{
-      
-      border-color: #2D2C31;
-      color: #2D2C31;
-      background-color: #eee;
-      text-decoration: none;
-      
-    }
-    .btn-black:hover{
-      border:solid 1px;
-      border-color: #eee;
-      color: #eee;
-      background-color: #2D2C31;
-      text-decoration: none;
-    }
+ 
   </style> --}}
 <style type="text/css">
 .ui-autocomplete{
@@ -86,26 +66,26 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <form method="POST" action="/pacientes/nn">
-      @csrf
+      <{{-- form method="POST" action="/pacientes/nn">
+      @csrf --}}
       <div class="modal-body ui-front">
           <div class="form-group col-md-10 op">
             <label>Para:</label>
-            <select class="form-control" name="condicion">
+            <select class="form-control" name="condicion" id="condicion">
               <option value="Operar">Operar</option>      
               <option value="Internar">Internar</option>               
             </select>
           </div>
           <div class="form-group col-md-10 " id="operar">
             <label>Luego para operar?:</label>
-            <select class="form-control" name="selectop">
+            <select class="form-control" name="selectop" id="selectop">
               <option value="si">Si</option>      
               <option value="no">No</option>               
             </select>
           </div>
           <div class="form-group col-md-10 ">
             <label>Color:</label>
-            <select class="form-control" name="id_color">
+            <select class="form-control" name="id_color" id="id_color">
               @foreach($colores as $color)
               <option value="{{ $color->id }}">{{ $color->color }}</option>
              
@@ -119,14 +99,14 @@
           </div>
           <div class="form-group col-md-10 ">        
             <label for="exampleFormControlTextarea1">Observacion</label>
-            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="observacion"></textarea>
+            <textarea class="form-control" id="observacion" rows="3" name="observacion"></textarea>
           </div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="submit" class="btn btn-primary">Save changes</button>
+        <button type="button" class="btn btn-primary" onclick="cargar_nn()">Save changes</button>
       </div>
-     </form>
+     {{-- </form> --}}
     </div>
   </div>
 </div>
@@ -237,7 +217,49 @@
     });
 } );
 </script>
+<script type="text/javascript">
+  function cargar_nn(){
+    $('#myModal').modal('hide');
+    var condicion= $("#condicion").val();
+    var ciess = $("#cieslist").val();
+    var observacion=$("#observacion").val();
+    var selectop = $("#selectop").val();
+    var id_color =$("#id_color").val();
 
+     $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+    });
+
+       $.ajax({
+                type:'POST',
+                url:"/pacientes/nn",
+                dataType:"json",
+                data:{
+                    condicion:condicion,
+                    ciess:ciess,
+                    observacion:observacion,
+                    selectop:selectop,
+                    id_color:id_color
+                },
+                success: function(response){
+                    alert("El paciente fue cargado exitosamente")
+                    var table = $('#myTable').DataTable();
+                    table.draw();
+
+                    },
+                error:function(){
+                    // $("#labelNombre").text("Error 2");
+                    // $("#labelNombre").addClass('text-danger');
+                }
+            });
+
+  }
+
+
+
+</script>
 
 
 

@@ -212,7 +212,7 @@
         $( document ).ready(function() {
 			$('#exampleModal').removeClass('fade');
             $('#exampleModal').modal('show');
-			$('#exampleModal').removeClass('fade');
+			$('#exampleModal').addClass('fade');
         });
     </script>
 @endif

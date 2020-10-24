@@ -50,6 +50,8 @@ class EspecialidadController extends Controller
         $esp->nombre = $request->esp_nombre;
         $esp->descripcion= $request->descripcion;
         $esp->save();
+
+    
         return redirect()->action('EspecialidadController@index');
     }
     public function validarEspecialidad($request){

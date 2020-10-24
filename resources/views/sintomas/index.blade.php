@@ -83,6 +83,15 @@
       </div>
 
 
+    {{-- @if($errors->any())
+     <ul>
+    @foreach ($errors->all() as $error)
+        <li>{{ $error }}</li>
+        <li>{{ old('text_sintomas.0') }} </li>
+    @endforeach
+</ul>
+    @endif
+ --}}
 @endsection
 @section("scripts")
 
@@ -96,6 +105,7 @@ $(document).ready(function(){
             '<td><input type="text" name="text_sintomas[]" class="form-control" placeholder="Nombre del Sintoma"></td>'+
             '<td><button type="button" id="'+i+'" name="remove" class="btn btn-danger btn-sm btn_remove">Quitar</button></td>'+
           '</tr>');
+
   });
 
   $(document).on('click','.btn_remove',function(){
@@ -108,9 +118,7 @@ $(document).ready(function(){
 
 
 {{-- JS Datatables --}}
-<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
-<script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
-<script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
+
 
 
 <script type="text/javascript">
@@ -167,4 +175,32 @@ $(document).ready(function(){
     });
 } );
 </script>
+
+@if (count($errors) > 0)
+    <script>
+        $( document ).ready(function() {
+      $('#exampleModal').removeClass('fade');
+      var tam = <?php echo count(old('text_sintomas')) ?>;
+      var valores = <?php echo old('text_sintomas') ?>;
+      alert(valores);
+      // for(var i =0;i<tam;i++){
+        
+        
+      //   $('#tabla_sintomas').append('<tr id="row'+i+'">'+
+      //       '<td><input type="text" name="text_sintomas[]" class="form-control" placeholder="Nombre del Sintoma" value="{'+"{"+"old('"+'text_sintomas'+'.'+i+"'"+')}}"></td>'+
+      //       '<td><button type="button" id="'+i+'" name="remove" class="btn btn-danger btn-sm btn_remove">Quitar</button></td>'+
+      //     '</tr>');
+      // }
+       
+      $('#exampleModal').modal('show');
+      $('#exampleModal').addClass('fade');
+        });
+    </script>
+@endif
+
+@if(old('text_sintomas'))
+                            @for( $i =0; $i < count(old('text_sintomas')); $i++)                            
+                           <input type="text" value="{{ old('text_sintomas.'.$i)}}"  name="text_sintomas[]" class="form-control" />                                       
+                           @endfor
+                          @endif
 @endsection
