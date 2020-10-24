@@ -193,7 +193,7 @@ class TriagepreguntasController extends Controller
         else{
             // FALTA PONER ALGO EN CASO DE QUE NO ENCUENTRE UN PROTOCOLO
             $bandera="Lo sentimos muchos, nuestra base de datos no contiene los datos suficientes para poder encontrar un protocolo para dichos Sintomas descriptos...";
-            return redirect()->action('TurnosController@respuesta',['bandera'=>$bandera,'atencion'=>$id]);
+            return redirect()->action('TurnosController@respuesta',['bandera'=>$bandera,'atencion'=>$id, 'sintomas'=>$lista_respuestas]);
         }
        
         

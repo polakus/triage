@@ -83,7 +83,7 @@ class protocolosController extends Controller
         $det_protocolo->save();
         
         $request->session()->flash('alert-success', 'El protocolo fue agregado exitosamente!');
-        return redirect()->route('protocolos.create');
+        return redirect()->back()->withInput();
     }
 
     /**

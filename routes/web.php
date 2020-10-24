@@ -51,7 +51,8 @@ Route::resource('/triagepreguntas', 'TriagepreguntasController')->middleware('au
 Route::resource('/salas', 'salasController')->middleware('auth');
 Route::resource('/areas', 'areasController', ['except' => ['destroy', 'show', 'edit']])->middleware('auth');
 Route::resource('/protocolos', 'protocolosController')->middleware('auth');
-Route::resource('/profesionales', 'profesionalesController', ['except' => ['destroy', 'show', 'edit', 'update']])->middleware('auth');
+Route::get('/profesionales/atenciones','profesionalesController@atenciones')->middleware('auth');
+Route::resource('/profesionales', 'profesionalesController', ['except' => ['destroy', 'edit', 'update']])->middleware('auth');
 Route::resource('/cie','CieController')->middleware('auth');
 Route::resource('/especialidades','EspecialidadController')->middleware('auth');
 Route::resource('/pruebas', 'pruebaController');
