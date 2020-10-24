@@ -4,7 +4,6 @@
 
 
 @section("cuerpo")
-{{$errors}}
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
 	<h4 class="h4">Especialidades</h4>
 	<div class="btn-toolbar mb-2 mb-md-0">
@@ -35,31 +34,29 @@
 				<td>{{ $e->descripcion }}</td>
 				<td>{{ $e->tipo_dato }}</td>
 				<td>
-				<button type="button" class="btn btn-dark btn-sm" data-toggle="modal" data-target="#editar{{ $e->id }}">
-					Editar
-				</button>
-				<div class="modal fade" id="editar{{ $e->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-					<div class="modal-dialog">
-						<div class="modal-content">
-						<div class="modal-header">
-							<h3 class="modal-title" id="exampleModalLabel">Editar especialidad</h3>
-							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-							<span aria-hidden="true">&times;</span>
-							</button>
-						</div>
-						<form method="POST" action="/especialidades/{{ $e->id }}">
-						@csrf
-						<div class="modal-body">
-							<div class="container col-md-12">
-							<div class="form-group">
-								
+					<button type="button" class="btn btn-dark btn-sm" data-toggle="modal" data-target="#editar{{ $e->id }}">
+						Editar
+					</button>
+					<div class="modal fade" id="editar{{ $e->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+						<div class="modal-dialog">
+							<div class="modal-content">
+							<div class="modal-header">
+								<h3 class="modal-title" id="exampleModalLabel">Editar especialidad</h3>
+								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+								</button>
+							</div>
+							<form method="POST" action="/especialidades/{{ $e->id }}">
+							@csrf
+							<div class="modal-body">
+								<div class="container col-md-12">
+								<div class="form-group">
 									{{ method_field('PUT') }}
 									<div class="form-row">
 										<div class="form-group">
 											<label>Nombre</label>
 											<input type="text" name="editarnom" class="form-control" placeholder="Cod" value="{{ $e->nombre }}">
 										</div>
-
 									</div>
 									<div class="form-row">
 										<div class="form-group col-md-10">
@@ -67,18 +64,18 @@
 											<textarea class="form-control" id="d" name="des" rows="3">{{ $e->descripcion }}</textarea>
 										</div>
 									</div>
+								</div>
+							</div>
+							</div>
+							<div class="modal-footer">
+								<button type="submit" class="btn btn-dark">Editar</button>
+								<button type="button" class="btn btn-dark" data-dismiss="modal">Cerrar</button>
+							</div>
+							</form>
 							</div>
 						</div>
-						</div>
-						<div class="modal-footer">
-							<button type="submit" class="btn btn-dark">Editar</button>
-							<button type="button" class="btn btn-dark" data-dismiss="modal">Cerrar</button>
-						</div>
-						</form>
-						</div>
 					</div>
-					</div>
-					</td>
+				</td>
 
 			</tr>
 
@@ -212,7 +209,7 @@
         $( document ).ready(function() {
 			$('#exampleModal').removeClass('fade');
             $('#exampleModal').modal('show');
-			$('#exampleModal').removeClass('fade');
+			$('#exampleModal').addClass('fade');
         });
     </script>
 @endif

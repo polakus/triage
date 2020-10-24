@@ -197,9 +197,9 @@ class PacientesController extends Controller
             $historial->descripcion = $request->observacion;
             $codigocie=explode("-", $request->ciess);
             $id_cie=CIE::select('id')->where('codigo','=',$codigocie[0])->get();
-            $historial->id_cie =$id_cie[0]->id;
-            $historial->fecha=date('Y-m-d');
-            $historial->hora  = date('H:i');
+            $historial->id_cie = $id_cie[0]->id;
+            $historial->fecha = date('Y-m-d');
+            $historial->hora = date('H:i');
             $historial->save();
             $message="El paciente fue cargado exitosamente";
             

@@ -16,13 +16,12 @@ class EspecialidadController extends Controller
      */
     public function index()
     {
-        //
         $especialidades = DB::table('Especialidades as esp')
                             ->join('det_especialidad_area as det','det.id_especialidad','=','esp.id')
                             ->join('Areas as a','a.id','=','det.id_area')
                             ->select('esp.id','esp.nombre','esp.descripcion','a.tipo_dato')
                             ->get();
-        //$especialidades = Especialidad::all();
+
         $areas = Area::all();
         return view('especialidades.index',compact('especialidades','areas'));
     }
@@ -52,6 +51,7 @@ class EspecialidadController extends Controller
         $esp->save();
         return redirect()->action('EspecialidadController@index');
     }
+    
     public function validarEspecialidad($request){
         $mensajes = [
             'required' =>'Este campo no debe estar vacio.',
@@ -60,7 +60,6 @@ class EspecialidadController extends Controller
         return $request->validate([
             'nombre' => 'required|max:30',
             'descripcion' => 'required|max:255',
-            ''
         ], $mensajes);
     }
     /**
