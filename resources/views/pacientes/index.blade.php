@@ -249,9 +249,19 @@
                     table.draw();
 
                     },
-                error:function(){
-                    // $("#labelNombre").text("Error 2");
-                    // $("#labelNombre").addClass('text-danger');
+                error:function(err){
+                    if (err.status == 422) { // when status code is 422, it's a validation issue
+                      console.log(err.responseJSON);
+                      // $('#success_message').fadeIn().html(err.responseJSON.message);
+
+                      // // you can loop through the errors object and show it to the user
+                      // console.warn(err.responseJSON.errors);
+                      // // display errors on each form field
+                      // $.each(err.responseJSON.errors, function (i, error) {
+                      //     var el = $(document).find('[name="'+i+'"]');
+                      //     el.after($('<span style="color: red;">'+error[0]+'</span>'));
+                      // });
+                  }
                 }
             });
 

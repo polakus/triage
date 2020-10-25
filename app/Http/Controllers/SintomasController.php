@@ -14,9 +14,9 @@ class SintomasController extends Controller
      */
     public function index()
     {
-        $sintomas=Sintoma::all();
+       
 
-        return view('sintomas.index',compact('sintomas'));
+        return view('sintomas.index');
     }
 
     /**
@@ -37,28 +37,26 @@ class SintomasController extends Controller
      */
     public function store(Request $request)
     {
-//         $mensajes = [
-//             'required' =>'Este campo no debe estar vacio.',
-          
-//         ];
-//         $cantidad= count($request->text_sintomas);
-//         $validator = \Validator::make($request->all(), [
-//     'text_sintomas.*' => 'required|numeric'],
-//     [
-//     'text_sintomas.*'       => 'Se requiere un nombre',
-    
-// ]
-// );
+        $this->validate($request, ['nombre_sintoma' => 'required']);
+        $name = $request->get('nombre_sintoma');
 
-        $mensajes = [
-            'required' =>'Este campo no debe estar vacio.',
-            'max' => 'Este campo supera la capacidad máxima de caracteres.',
-        ];
-        $prot = $request->validate([
-            'text_sintomas.*' => 'required|max:255|numeric',
-        ], $mensajes);
+        $nuevo=new Sintoma;
+        $nuevo->descripcion=$request->get('nombre_sintoma');
+        $nuevo->save();
 
-        return redirect()->back()->withInput();
+    return response()->json();
+        
+
+        // $mensajes = [
+        //     'required' =>'Este campo no debe estar vacio.',
+        //     'max' => 'Este campo supera la capacidad máxima de caracteres.',
+        // ];
+        // $prot = $request->validate([
+        //     'text_sintomas.*' => 'required|max:255|numeric',
+        // ], $mensajes);
+
+        // return redirect()->back()->withInput();
+        // return response()->json(['success'=>'true', 'id'=>$nuevo->id,'nombre'=>$nuevo->descripcion]);
       
 //     if ($validator->fails()) {
 //     return back()->withInput()->withErrors($validator->errors());
@@ -119,8 +117,10 @@ class SintomasController extends Controller
      */
     public function destroy($id)
     {
+
         $sintoma=Sintoma::findOrFail($id);
         $sintoma->delete();
-        return redirect('/sintomas');
+        return response()->json(["hola"=>'hola']);
+        // return redirect('/sintomas');
     }
 }

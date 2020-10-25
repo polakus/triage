@@ -1,0 +1,1 @@
+<button type="button" class="btn btn-danger btn-sm" onclick="eliminar({{ $id }})">Eliminar</button>

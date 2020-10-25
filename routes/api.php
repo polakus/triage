@@ -103,3 +103,14 @@ Route::get('mostrar',function(){
                         ->rawColumns(['observacion','Internacion','Operar','DarAlta'])
                     ->toJson();
 });
+
+
+Route::get('sintomas_cargar', function(){
+     $sintomas=DB::table('sintomas')->get();
+     return DataTables::of($sintomas)
+                       ->addColumn('button','sintomas/action_eliminar')
+                       ->rawColumns(['button']) 
+    ->toJson();
+
+
+});

@@ -189,6 +189,7 @@
 
 } );
 
+
   function cargarValores(id,sala_id){
     $('#exampleModal'+id).modal('hide');
     var detalleatencion=$('#detalleatencion'+id).val();
