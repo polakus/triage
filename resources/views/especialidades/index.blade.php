@@ -4,7 +4,6 @@
 
 
 @section("cuerpo")
-{{$errors}}
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
 	<h4 class="h4">Especialidades</h4>
 	<div class="btn-toolbar mb-2 mb-md-0">
@@ -106,8 +105,8 @@
 							<div class="form-row">
 								<div class="form-group">
 									<label>Nombre</label>
-									<input type="text" name="esp_nombre" value= "{{old('esp_nombre')}}" class="form-control @error('nombre') is-invalid @enderror" placeholder="Nombre">
-									@error('nombre')
+									<input type="text" name="esp_nombre" value= "{{old('esp_nombre')}}" class="form-control @error('esp_nombre') is-invalid @enderror" placeholder="Nombre">
+									@error('esp_nombre')
 										<span class="invalid-feedback" role="alert">
 											<strong>{{ $message }}</strong>
 										</span>
@@ -118,7 +117,7 @@
 								<div class="form-group col-md-10">
 									<label>Descripcion </label>
 									<textarea value= "{{old('descripcion')}}" class="form-control @error('descripcion') is-invalid @enderror" name="descripcion" rows="3" placeholder="Descripcion"></textarea>
-									@error('nombre')
+									@error('descripcion')
 										<span class="invalid-feedback" role="alert">
 											<strong>{{ $message }}</strong>
 										</span>
@@ -128,10 +127,10 @@
 							<div class="form-row">
 								<div class="form-group">
 									<label>Area </label>
-									<select class="form-control">
+									<select name="area" class="form-control">
 										<option value="" selected disabled hidden>Seleccione</option>
 									@foreach($areas as $a)
-										<option value="{{ $a->id }}">{{ $a->tipo_dato }} </option>
+										<option value="{{ $a->id }}" {{old('area') == $a->id ? 'selected':''}}>{{ $a->tipo_dato }} </option>
 									@endforeach
 									</select>
 								</div>
@@ -153,11 +152,11 @@
 {{-- JS Datatables --}}
 
 <script type="text/javascript">
-  $(document).ready(function() {
+	$(document).ready(function() {
     $('#myTable').DataTable({
       
       
-       "language": {
+    	"language": {
         "decimal": ",",
         "thousands": ".",
         "info": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",

@@ -3,10 +3,10 @@
 @section("cuerpo")
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
   <h4 class="h4">Sintomas</h4>
-  <div class="ml-auto">
-    <input type="text" class="form-control form-inline form-control-sm ml-2 " placeholder="Nombre del sintoma" style="width: 200px" name="nombre_sintoma" id="nombre_sintoma" >
+    <div class="ml-auto">
+      <input type="text" class="form-control form-inline form-control-sm ml-2 " placeholder="Nombre del sintoma" style="width: 200px" name="nombre_sintoma" id="nombre_sintoma" >
     </div>
-  <button class="btn btn-outline-secondary btn-sm ml-2"  id="agregar">Agregar sintoma</button>
+    <button class="btn btn-outline-secondary btn-sm ml-2"  id="agregar">Agregar sintoma</button>
  
   
 </div>

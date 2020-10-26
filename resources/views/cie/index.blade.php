@@ -3,17 +3,13 @@
 
 
 @section("cuerpo")
-
 	<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
         <h4 class="h4">CIE</h4>
         <div class="btn-toolbar mb-2 mb-md-0">
-      <div class="btn-group mr-2">
-        <button type="button" class="btn btn-outline-secondary btn-sm" data-toggle="modal" data-target="#exampleModal">
-              Agregar CIE
-            </button>
-		   
-      </div>
-    </div>
+			<button type="button" class="btn btn-outline-secondary btn-sm" data-toggle="modal" data-target="#exampleModal">
+				Agregar CIE
+			</button>
+    	</div>
     </div>
 	
 	
@@ -64,16 +60,10 @@
 										<button type="submit" class="btn btn-dark btn-sm">Editar</button>
 									</form>
 								</div>
-								
-							</div>
-			                  
-			                  
-			                 
-			                  
+							</div> 
 			                </div>
 			                <div class="modal-footer">
 			                  <button type="button" class="btn btn-dark" data-dismiss="modal">Cerrar</button>
-			                
 			                </div>
 			              </div>
 			            </div>
@@ -88,89 +78,89 @@
 	</div>
 {{-- </div> --}}
 
-
 <!-- Modal -->
-          <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h3 class="modal-title" id="exampleModalLabel">Registracion de Cie</h3>
-                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                  </button>
-                </div>
-                <form method="POST" action="/cie">
-				@csrf
-                <div class="modal-body">
-                  <div class="row col-md-16">
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+		<div class="modal-header">
+			<h3 class="modal-title" id="exampleModalLabel">Registracion de Cie</h3>
+			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			<span aria-hidden="true">&times;</span>
+			</button>
+		</div>
+		{{$errors}}
+		<form method="POST" action="/cie">
+			@csrf
+			<div class="modal-body">
+				<div class="container">
 					<div class="form-group">
-						
-							<div class="table-responsive">
-								<table class="table table-bordered table-sm"  id=tabla_sintomas>
-									<tr>
-										<td width="100px;"><input type="text" name="ciecodigo[]" class="form-control" placeholder="Cod"></td>
-										<td><input type="text" name="ciedescripcion[]" class="form-control"placeholder="Nombre"></td>
-										<td><button type="button" id="add" name="add" class="btn btn-dark btn-sm">Agregar filas</button></td>
-									</tr>
-								</table>
-								
-							</div>
-							&nbsp 
-							
-						
+						<div class="form-group>
+							<label for="inputEmail4">Código</label>
+							<input type="text" name="codigo" class="form-control @error('codigo') is-invalid @enderror" value="{{ old('codigo') }}" placeholder="Código">
+							@error('codigo')
+								<span class="invalid-feedback" role="alert">
+									<strong>{{ $message }}</strong>
+								</span>
+							@enderror
+						</div>
+						<div class="form-group">
+							<label for="inputEmail4">Nombre</label>
+							<input type="text" name="nombre" class="form-control @error('nombre') is-invalid @enderror" value="{{ old('nombre') }}" placeholder="Nombre">
+							@error('nombre')
+								<span class="invalid-feedback" role="alert">
+									<strong>{{ $message }}</strong>
+								</span>
+							@enderror
+						</div>
 					</div>
-					
 				</div>
-                  
-                  
-                 
-                  
-                </div>
-                <div class="modal-footer">
-                	<button type="submit" class="btn btn-success">Guardar</button>
-                  <button type="button" class="btn btn-dark" data-dismiss="modal">Cerrar</button>
-                	
-                </div>
-                </form>
-              </div>
-            </div>
-          </div>
-
+			</div>
+			<div class="modal-footer">
+				<button type="submit" id="guardar" class="btn btn-success">Guardar</button>
+				<button type="button" class="btn btn-dark" data-dismiss="modal">Cerrar</button>
+			</div>
+		</form>
+		</div>
+	</div>
+</div>
 
 
 @endsection
 @section("scripts")
-
-
-
-
+{{--
+@if (count($errors) > 0)
+    <script>
+        $( document ).ready(function() {
+			$('#exampleModal').removeClass('fade');
+            $('#exampleModal').modal('show');
+			$('#exampleModal').addClass('fade');
+        });
+    </script>
+@endif
+--}}
+{{--
 <script >
-$(document).ready(function(){
-	var i=1;
-	$('#add').click(function(){
-		i++;
-	
-		$('#tabla_sintomas').append('<tr id="row'+i+'">'+
-						'<td><input type="text" name="ciecodigo[]" class="form-control"placeholder="Cod"></td>'+
-						'<td><input type="text" name="ciedescripcion[]" class="form-control"placeholder="Nombre"></td>'+
-						'<td><button type="button" id="'+i+'" name="remove" class="btn btn-danger btn_remove">Quitar</button></td>'+
-					'</tr>');
-	});
-
-	$(document).on('click','.btn_remove',function(){
-		var id= $(this).attr('id');
-		$('#row'+id).remove();
-	});
-
-})
+	$(document).ready(function(){
+		var i=1;
+		$('#add').click(function(){
+			i++;
+			$('#tabla_sintomas').append('<tr id="row'+i+'">'+
+							'<td><input type="text" name="ciecodigo[]" class="form-control"placeholder="Cod"></td>'+
+							'<td><input type="text" name="ciedescripcion[]" class="form-control"placeholder="Nombre"></td>'+
+							'<td><button type="button" id="'+i+'" name="remove" class="btn btn-danger btn_remove">Quitar</button></td>'+
+						'</tr>');
+		});
+		$(document).on('click','.btn_remove',function(){
+			var id= $(this).attr('id');
+			$('#row'+id).remove();
+		});
+	})
 </script>
-
+--}}
 <script type="text/javascript">
-  $(document).ready(function() {
+	$(document).ready(function() {
     $('#myTable').DataTable({
-      
-      
-       "language": {
+    	"language": {
         "decimal": ",",
         "thousands": ".",
         "info": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
@@ -217,7 +207,49 @@ $(document).ready(function(){
         }
     }           
     });
-} );
+	});
+
+	$('#guardar').click(function() {
+      	var nombre = $('#nombre').val();
+		var codigo = $('#codigo').val();
+		$.ajaxSetup({
+			headers: {
+				'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+			}
+		});
+   		$.ajax({
+            type:'POST',
+            url:"/cie",
+            dataType:"json",
+            data:{
+                nombre:nombre,
+				codigo:codigo,
+            },
+            success: function(response){
+				
+				alert("se guardo prr");
+                // var table = $('#myTable').DataTable();
+                // table.draw();
+                // var inputNombre = document.getElementById("nombre_sintoma");
+                // inputNombre.value="";
+            },
+            error:function(err){
+				if (err.status == 422) { // when status code is 422, it's a validation issue
+					console.log(err.responseJSON);
+					$('#success_message').fadeIn().html(err.responseJSON.message);
+					$.each(err.responseJSON.errors, function (i, error) {
+						// var el = $(document).find('[name="'+i+'"]');
+						// el.after($('<span style="color: red;">'+error[0]+'</span>'));
+						alert(error)
+					});
+				}
+				// alert("eentro o no entro"); 	
+				// $('#exampleModal').removeClass('fade');
+				// $('#exampleModal').modal('show');
+				// $('#exampleModal').addClass('fade');
+            }
+        });
+	});
 </script>
 
 @endsection

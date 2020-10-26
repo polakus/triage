@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Especialidad;
 use App\Area;
+use App\Det_especialidad_area;
 use DB;
 
 class EspecialidadController extends Controller
@@ -50,8 +51,10 @@ class EspecialidadController extends Controller
         $esp->nombre = $request->esp_nombre;
         $esp->descripcion= $request->descripcion;
         $esp->save();
-
-    
+        $dea = new Det_especialidad_area;
+        $dea->id_area = $request->area;
+        $dea->id_especialidad = $esp->id;
+        $dea->save();
         return redirect()->action('EspecialidadController@index');
     }
     public function validarEspecialidad($request){
@@ -60,9 +63,8 @@ class EspecialidadController extends Controller
             'max' => 'Este campo supera la capacidad máxima de caracteres.',
         ];
         return $request->validate([
-            'nombre' => 'required|max:30',
+            'esp_nombre' => 'required|max:30',
             'descripcion' => 'required|max:255',
-            ''
         ], $mensajes);
     }
     /**

@@ -226,45 +226,43 @@
     var selectop = $("#selectop").val();
     var id_color =$("#id_color").val();
 
-     $.ajaxSetup({
+    $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
     });
 
-       $.ajax({
-                type:'POST',
-                url:"/pacientes/nn",
-                dataType:"json",
-                data:{
-                    condicion:condicion,
-                    ciess:ciess,
-                    observacion:observacion,
-                    selectop:selectop,
-                    id_color:id_color
+    $.ajax({
+            type:'POST',
+            url:"/pacientes/nn",
+            dataType:"json",
+            data:{
+                condicion:condicion,
+                ciess:ciess,
+                observacion:observacion,
+                selectop:selectop,
+                id_color:id_color
+            },
+            success: function(response){
+                alert("El paciente fue cargado exitosamente")
+                var table = $('#myTable').DataTable();
+                table.draw();
                 },
-                success: function(response){
-                    alert("El paciente fue cargado exitosamente")
-                    var table = $('#myTable').DataTable();
-                    table.draw();
+            error:function(err){
+                if (err.status == 422) { // when status code is 422, it's a validation issue
+                  console.log(err.responseJSON);
+                  // $('#success_message').fadeIn().html(err.responseJSON.message);
 
-                    },
-                error:function(err){
-                    if (err.status == 422) { // when status code is 422, it's a validation issue
-                      console.log(err.responseJSON);
-                      // $('#success_message').fadeIn().html(err.responseJSON.message);
-
-                      // // you can loop through the errors object and show it to the user
-                      // console.warn(err.responseJSON.errors);
-                      // // display errors on each form field
-                      // $.each(err.responseJSON.errors, function (i, error) {
-                      //     var el = $(document).find('[name="'+i+'"]');
-                      //     el.after($('<span style="color: red;">'+error[0]+'</span>'));
-                      // });
-                  }
+                  // // you can loop through the errors object and show it to the user
+                  // console.warn(err.responseJSON.errors);
+                  // // display errors on each form field
+                  // $.each(err.responseJSON.errors, function (i, error) {
+                  //     var el = $(document).find('[name="'+i+'"]');
+                  //     el.after($('<span style="color: red;">'+error[0]+'</span>'));
+                  // });
                 }
-            });
-
+            }
+          });
   }
 
 

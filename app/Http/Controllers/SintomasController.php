@@ -117,7 +117,6 @@ class SintomasController extends Controller
      */
     public function destroy($id)
     {
-
         $sintoma=Sintoma::findOrFail($id);
         $sintoma->delete();
         return response()->json(["hola"=>'hola']);

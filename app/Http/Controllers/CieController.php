@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\CIE;
+use Illuminate\Support\Facades\Validator;
 
 class CieController extends Controller
 {
@@ -37,22 +38,31 @@ class CieController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {  
-        $cantidad= count($request->ciecodigo);
-        
-        for ($i=0; $i <$cantidad ; $i++) { 
-            if($request->ciecodigo[$i]!=""){
-                if($request->ciedescripcion[$i] != "")
-                         $nuevo=new CIE;
-                         $nuevo->codigo=$request->ciecodigo[$i];
-                         $nuevo->descripcion=$request->ciedescripcion[$i];
-                         $nuevo->save();
-            }
-        }
-
-        return redirect()->action('CieController@index');
+    {
+        $c = $request->validate([
+            'nombre' => 'required|max:255',
+            'codigo' => 'required|unique:cie',
+        ],[
+            'required' => 'Este campo no puede estar vacio.',
+            'max' => 'Este es demasiado largo.',
+        ]);
+        // $nuevo=new CIE;
+        // $nuevo->codigo=$request->codigo;
+        // $nuevo->descripcion=$request->nombre;
+        // $nuevo->save();
+        // return redirect()->action('CieController@index');
+        // $validacion = Validator::make($request->all(),[
+        //     'nombre' => 'required|max:255',
+        //     'codigo' => 'required|unique:cie',
+        //     ] ,[
+        //     'required' => 'Este campo no puede estar vacio.',
+        //     'max' => 'Este es demasiado largo.',
+        //     ]);
+        // if ($validacion->fails()){
+        //     return response()->json(['errors' => $validacion->errors()]);
+        // }
+        return response()->json();
     }
-
     /**
      * Display the specified resource.
      *
