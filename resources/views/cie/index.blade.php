@@ -89,37 +89,30 @@
 			</button>
 		</div>
 		{{$errors}}
-		<form method="POST" action="/cie">
-			@csrf
+		
 			<div class="modal-body">
 				<div class="container">
 					<div class="form-group">
-						<div class="form-group>
+						<div class="form-group">
 							<label for="inputEmail4">Código</label>
-							<input type="text" name="codigo" class="form-control @error('codigo') is-invalid @enderror" value="{{ old('codigo') }}" placeholder="Código">
-							@error('codigo')
-								<span class="invalid-feedback" role="alert">
-									<strong>{{ $message }}</strong>
-								</span>
-							@enderror
+							<input type="text" name="codigo" id="codigo" class="form-control @error('codigo') is-invalid @enderror" value="{{ old('codigo') }}" placeholder="Código">
+							<div id="error_codigo"></div>
+							
 						</div>
 						<div class="form-group">
 							<label for="inputEmail4">Nombre</label>
-							<input type="text" name="nombre" class="form-control @error('nombre') is-invalid @enderror" value="{{ old('nombre') }}" placeholder="Nombre">
-							@error('nombre')
-								<span class="invalid-feedback" role="alert">
-									<strong>{{ $message }}</strong>
-								</span>
-							@enderror
+							<input type="text" name="nombre" id="nombre" class="form-control @error('nombre') is-invalid @enderror" value="{{ old('nombre') }}" placeholder="Nombre">
+							<div id="error_nombre"></div>
+							
 						</div>
 					</div>
 				</div>
 			</div>
 			<div class="modal-footer">
-				<button type="submit" id="guardar" class="btn btn-success">Guardar</button>
+				<button type="button" id="guardar" class="btn btn-success">Guardar</button>
 				<button type="button" class="btn btn-dark" data-dismiss="modal">Cerrar</button>
 			</div>
-		</form>
+		{{-- </form> --}}
 		</div>
 	</div>
 </div>
@@ -226,7 +219,7 @@
 				codigo:codigo,
             },
             success: function(response){
-				
+				$('#exampleModal').modal('hide');
 				alert("se guardo prr");
                 // var table = $('#myTable').DataTable();
                 // table.draw();
@@ -234,13 +227,22 @@
                 // inputNombre.value="";
             },
             error:function(err){
+            	// console.log(err.responseJSON);
 				if (err.status == 422) { // when status code is 422, it's a validation issue
 					console.log(err.responseJSON);
+			
 					$('#success_message').fadeIn().html(err.responseJSON.message);
 					$.each(err.responseJSON.errors, function (i, error) {
+						if(i=="nombre"){
+							$('#error_nombre').html('<span style="color: red;">'+error[0]+'</span>');
+						}
+						else{
+							$('#error_codigo').html('<span style="color: red;">'+error[0]+'</span>');
+						}
 						// var el = $(document).find('[name="'+i+'"]');
+						// // alert(i);
 						// el.after($('<span style="color: red;">'+error[0]+'</span>'));
-						alert(error)
+						// alert(error)
 					});
 				}
 				// alert("eentro o no entro"); 	

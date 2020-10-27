@@ -45,7 +45,10 @@ class CieController extends Controller
         ],[
             'required' => 'Este campo no puede estar vacio.',
             'max' => 'Este es demasiado largo.',
+            'unique' => 'Este codigo ya se encuentra almacenado.'
+
         ]);
+        // $this->validate($request, ['codigo' => 'unique']);
         // $nuevo=new CIE;
         // $nuevo->codigo=$request->codigo;
         // $nuevo->descripcion=$request->nombre;
