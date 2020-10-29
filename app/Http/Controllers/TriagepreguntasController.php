@@ -144,7 +144,6 @@ class TriagepreguntasController extends Controller
                     ->groupBy('p.id')
                     ->get();
 
-        
         $i=0;
                     
         while ($i < sizeof($probando) and $band) {

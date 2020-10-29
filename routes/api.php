@@ -2,6 +2,8 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use Yajra\DataTables\Facades\DataTables;
+
 // use DB;
 
 /*
@@ -91,8 +93,7 @@ Route::get('mostrar',function(){
                             ->first();
                             if($encontrar!=null){
                                 return '<td>CIE:'.$encontrar->codigo.'-'.$encontrar->descripcion.'<br>'.$encontrar->observacion.'</td>';
-                            }
-                            else{
+                            }else{
                                 return '<td> </td>';
                             }
                         })
@@ -111,6 +112,13 @@ Route::get('sintomas_cargar', function(){
                        ->addColumn('button','sintomas/action_eliminar')
                        ->rawColumns(['button']) 
     ->toJson();
+});
 
-
+Route::get('cargar_cie', function(){
+    // $cies = App\CIE::all();
+    $enfermedades = DB::table('cie')->get();
+    return DataTables::of($enfermedades)
+                        ->addColumn('button', 'cie/action_editar')
+                        ->rawColumns(['button']) 
+                        ->toJson();
 });

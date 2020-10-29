@@ -56,7 +56,12 @@ Route::get('/profesionales/atenciones','profesionalesController@atenciones')->mi
 Route::resource('/profesionales', 'profesionalesController', ['except' => ['destroy', 'edit', 'update']])->middleware('auth');
 Route::resource('/cie','CieController')->middleware('auth');
 Route::resource('/especialidades','EspecialidadController')->middleware('auth');
-Route::resource('/pruebas', 'pruebaController');
+// Route::get('/pruebas', function(){
+//     $cies = App\CIE::all();
+//     foreach($cies as $cie){
+//         echo $cie."<br>";
+//     }
+// });
 
 Route::post('/atencionclinica/sala','AtencionClinicaController@cargarSala')->middleware('auth');
 

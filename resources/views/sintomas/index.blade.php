@@ -95,7 +95,7 @@
                 1: 'una fila seleccionada'
             }
         }
-    }           
+    }
     });
 
    $('#agregar').click(function() {

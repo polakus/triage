@@ -46,24 +46,11 @@ class CieController extends Controller
             'required' => 'Este campo no puede estar vacio.',
             'max' => 'Este es demasiado largo.',
             'unique' => 'Este codigo ya se encuentra almacenado.'
-
         ]);
-        // $this->validate($request, ['codigo' => 'unique']);
-        // $nuevo=new CIE;
-        // $nuevo->codigo=$request->codigo;
-        // $nuevo->descripcion=$request->nombre;
-        // $nuevo->save();
-        // return redirect()->action('CieController@index');
-        // $validacion = Validator::make($request->all(),[
-        //     'nombre' => 'required|max:255',
-        //     'codigo' => 'required|unique:cie',
-        //     ] ,[
-        //     'required' => 'Este campo no puede estar vacio.',
-        //     'max' => 'Este es demasiado largo.',
-        //     ]);
-        // if ($validacion->fails()){
-        //     return response()->json(['errors' => $validacion->errors()]);
-        // }
+        $nuevo=new CIE;
+        $nuevo->codigo=$request->codigo;
+        $nuevo->descripcion=$request->nombre;
+        $nuevo->save();
         return response()->json();
     }
     /**
@@ -97,8 +84,8 @@ class CieController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
 
+        echo "entro controller";
         $update = CIE::findOrFail($id);
         if($request->editarcod !=""){
             $update->codigo= $request->editarcod;
