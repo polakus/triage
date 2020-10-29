@@ -147,16 +147,12 @@
                 table.draw();
             },
             error:function(err){
-            	// console.log(err.responseJSON);
 				if (err.status == 422) { // when status code is 422, it's a validation issue
-					// console.log(err.responseJSON);
-			
 					$('#success_message').fadeIn().html(err.responseJSON.message);
 					$.each(err.responseJSON.errors, function (i, error) {
 						if(i=="nombre"){
 							$('#error_nombre').html('<span style="color: red;">'+error[0]+'</span>');
-						}
-						else{
+						}else{
 							$('#error_codigo').html('<span style="color: red;">'+error[0]+'</span>');
 						}
 					});
@@ -165,30 +161,30 @@
         });
 	});
 
-	$('#guardar').click(function() {
-      	var nombre = $('#nombre').val();
-		var codigo = $('#codigo').val();
+	function cargarid(id) {
+		var nombre = $('#editardesc'+id).val();
+      	var codigo = $('#editarcod'+id).val();
 		$.ajaxSetup({
 			headers: {
 				'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
 			}
 		});
    		$.ajax({
-            type:'POST',
-            url:"/cie",
+            type:'PUT',
+            url:"/cie/"+id,
             dataType:"json",
             data:{
                 nombre:nombre,
 				codigo:codigo,
             },
             success: function(response){
-				
+				alert("sillego");
             },
             error: function(err){
-            	
+            	alert("nollego "+err.status);
             }
         });
-	});
+	}
 </script>
 
 @endsection

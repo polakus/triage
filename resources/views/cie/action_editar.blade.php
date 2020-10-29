@@ -13,19 +13,16 @@
             <div class="modal-body">
                 <div class="row col-md-16">
                     <div class="form-group">
-                        <form method="put" action="{{route('cie.update', $id)}}"></form>
-                            @csrf
-                            {{ method_field('PUT')}}
-                            <div class="table-responsive">
-                                <table class="table table-bordered"  id=tablita>
-                                    <tr>
-                                        <td width="100"><input type="text" name="editarcod" class="form-control" placeholder="Cod" value="{{ $codigo }}"></td>
-                                        <td><input type="text" name="editardesc" class="form-control" value="{{ $descripcion }}" ></td>
-                                    </tr>
-                                </table>
-                            </div>
-                            <button type="submit" class="btn btn-dark btn-sm">Editar</button>
-                        </form>
+                        <div class="table-responsive">
+                            {{$id}}
+                            <table class="table table-bordered"  id=tablita>
+                                <tr>
+                                    <td width="100"><input type="text" id="editarcod{{$id}}" name="editarcod[]" class="form-control" placeholder="Cod" value="{{ $codigo }}"></td>
+                                    <td><input type="text" id="editardesc{{$id}}" name="editardesc[]" class="form-control" value="{{ $descripcion }}" ></td>
+                                </tr>
+                            </table>
+                        </div>
+                        <button type="button" onclick="cargarid({{ $id }})" class="btn btn-dark btn-sm">Editar</button>            
                     </div>
                 </div> 
             </div>

@@ -86,15 +86,16 @@ class CieController extends Controller
     {
 
         echo "entro controller";
+        $request->validate([
+            'nombre' => 'required|max:255',
+            'codigo' => 'required',
+        ]);
         $update = CIE::findOrFail($id);
-        if($request->editarcod !=""){
-            $update->codigo= $request->editarcod;
-        }
-        if($request->editardesc != ""){
-            $update->descripcion = $request->editardesc;
-        }
+        $update->codigo= $request->editarcod;
+        $update->descripcion = $request->editardesc;
         $update->save();
-        return redirect()->action("CieController@index");
+        // return redirect()->action("CieController@index");
+        return response()->json();
     }
 
     /**
