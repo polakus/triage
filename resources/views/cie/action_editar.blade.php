@@ -17,8 +17,8 @@
                             {{$id}}
                             <table class="table table-bordered"  id=tablita>
                                 <tr>
-                                    <td width="100"><input type="text" id="editarcod{{$id}}" name="editarcod[]" class="form-control" placeholder="Cod" value="{{ $codigo }}"></td>
-                                    <td><input type="text" id="editardesc{{$id}}" name="editardesc[]" class="form-control" value="{{ $descripcion }}" ></td>
+                                    <td width="100"><input type="text" id="editarcod{{$id}}" class="form-control" placeholder="Cod" value="{{ $codigo }}"></td>
+                                    <td><input type="text" id="editardesc{{$id}}" class="form-control" value="{{ $descripcion }}" ></td>
                                 </tr>
                             </table>
                         </div>

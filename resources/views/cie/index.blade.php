@@ -164,6 +164,8 @@
 	function cargarid(id) {
 		var nombre = $('#editardesc'+id).val();
       	var codigo = $('#editarcod'+id).val();
+		// alert(nombre);
+		// alert(codigo);
 		$.ajaxSetup({
 			headers: {
 				'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')

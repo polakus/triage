@@ -85,14 +85,11 @@ class CieController extends Controller
     public function update(Request $request, $id)
     {
 
-        echo "entro controller";
-        $request->validate([
-            'nombre' => 'required|max:255',
-            'codigo' => 'required',
-        ]);
+        // echo "entro controller";
+        
         $update = CIE::findOrFail($id);
-        $update->codigo= $request->editarcod;
-        $update->descripcion = $request->editardesc;
+        $update->codigo= $request->codigo;
+        $update->descripcion = $request->nombre;
         $update->save();
         // return redirect()->action("CieController@index");
         return response()->json();
