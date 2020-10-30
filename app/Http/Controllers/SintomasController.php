@@ -14,9 +14,9 @@ class SintomasController extends Controller
      */
     public function index()
     {
-        $sintomas=Sintoma::all();
+       
 
-        return view('sintomas.index',compact('sintomas'));
+        return view('sintomas.index');
     }
 
     /**
@@ -37,17 +37,41 @@ class SintomasController extends Controller
      */
     public function store(Request $request)
     {
-        $cantidad= count($request->text_sintomas);
+        $this->validate($request, ['nombre_sintoma' => 'required']);
+        $name = $request->get('nombre_sintoma');
+
+        $nuevo=new Sintoma;
+        $nuevo->descripcion=$request->get('nombre_sintoma');
+        $nuevo->save();
+
+    return response()->json();
         
-        for ($i=0; $i <$cantidad ; $i++) { 
-            if($request->text_sintomas[$i]!=""){
-             $nuevo=new Sintoma;
-             $nuevo->descripcion=$request->text_sintomas[$i];
-             $nuevo->save();
-            }
-        }
+
+        // $mensajes = [
+        //     'required' =>'Este campo no debe estar vacio.',
+        //     'max' => 'Este campo supera la capacidad máxima de caracteres.',
+        // ];
+        // $prot = $request->validate([
+        //     'text_sintomas.*' => 'required|max:255|numeric',
+        // ], $mensajes);
+
+        // return redirect()->back()->withInput();
+        // return response()->json(['success'=>'true', 'id'=>$nuevo->id,'nombre'=>$nuevo->descripcion]);
+      
+//     if ($validator->fails()) {
+//     return back()->withInput()->withErrors($validator->errors());
+// }
+
+        // echo $request->text_sintomas[0];
+        // for ($i=0; $i <$cantidad ; $i++) { 
+        //     if($request->text_sintomas[$i]!=""){
+        //      $nuevo=new Sintoma;
+        //      $nuevo->descripcion=$request->text_sintomas[$i];
+        //      $nuevo->save();
+        //     }
+        // }
         
-        return redirect('/sintomas');
+        // return redirect('/sintomas');
        
     }
 
@@ -95,6 +119,7 @@ class SintomasController extends Controller
     {
         $sintoma=Sintoma::findOrFail($id);
         $sintoma->delete();
-        return redirect('/sintomas');
+        return response()->json(["hola"=>'hola']);
+        // return redirect('/sintomas');
     }
 }

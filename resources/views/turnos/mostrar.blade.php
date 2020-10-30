@@ -1,6 +1,7 @@
 @extends("triagepreguntas.test")
 
 
+
 @section("cuerpo")
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
         <h4>Atenciones</h4>
@@ -33,18 +34,18 @@
 </div>
 
 <div class="table-responsive">
-        <table class="table table-striped table-bordered table-sm" id="example" >
+        <table class="table table-striped table-hover table-bordered table-sm" id="example" >
           <thead>
             <tr>
-              <th>Nombre y Apellido</th>
+              <th width="100px">Nombre y Apellido</th>
               <th>Fecha y hora</th>
               <th>Areas</th>
               <th>Especialidades</th>
               <th>Condicion</th>
               <th>Observacion</th>
-              <th >Sala de internacion</th>
+              <th width="100px">Sala de internacion</th>
               <th >Sala de operacion</th>
-              <th>Accion</th>
+              <th width="70px">Accion</th>
             </tr>
           </thead>
           <tbody id="tabla">
@@ -105,13 +106,15 @@
                           }
                           else{
                             if(data.color=="verde"){
-                              $(row).css('background-color','#85F361')
+                              $(row).css('background-color','#85F361');
+                             
                             }
                             else{
-                              $(row).css('background-color','#F6FC3C')
+                              $(row).css('background-color','#DEE512')
                             }
                           }
                          },
+      "processing":true,
       "ordering": false,
       "iDisplayLength": 10,
       "language": {
@@ -185,6 +188,7 @@
     }
 
 } );
+
 
   function cargarValores(id,sala_id){
     $('#exampleModal'+id).modal('hide');

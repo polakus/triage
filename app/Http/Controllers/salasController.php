@@ -93,6 +93,7 @@ class salasController extends Controller
      */
     public function update(Request $request, $id)
     {
+        
         $sala = Sala::find($id);
         if($sala->disponibilidad == 0){
             $sala->disponibilidad = 1;

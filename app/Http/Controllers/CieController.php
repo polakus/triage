@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\CIE;
+use Illuminate\Support\Facades\Validator;
 
 class CieController extends Controller
 {
@@ -37,22 +38,21 @@ class CieController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {  
-        $cantidad= count($request->ciecodigo);
-        
-        for ($i=0; $i <$cantidad ; $i++) { 
-            if($request->ciecodigo[$i]!=""){
-                if($request->ciedescripcion[$i] != "")
-                         $nuevo=new CIE;
-                         $nuevo->codigo=$request->ciecodigo[$i];
-                         $nuevo->descripcion=$request->ciedescripcion[$i];
-                         $nuevo->save();
-            }
-        }
-
-        return redirect()->action('CieController@index');
+    {
+        $c = $request->validate([
+            'nombre' => 'required|max:255',
+            'codigo' => 'required|unique:cie',
+        ],[
+            'required' => 'Este campo no puede estar vacio.',
+            'max' => 'Este es demasiado largo.',
+            'unique' => 'Este codigo ya se encuentra almacenado.'
+        ]);
+        $nuevo=new CIE;
+        $nuevo->codigo=$request->codigo;
+        $nuevo->descripcion=$request->nombre;
+        $nuevo->save();
+        return response()->json();
     }
-
     /**
      * Display the specified resource.
      *
@@ -84,17 +84,22 @@ class CieController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
-
+        $c = $request->validate([
+            'nombre' => 'required|max:255',
+            'codigo' => 'required',
+        ],[
+            'required' => 'Este campo no puede estar vacio.',
+            'max' => 'Este es demasiado largo.',
+        ]);
         $update = CIE::findOrFail($id);
-        if($request->editarcod !=""){
-            $update->codigo= $request->editarcod;
+        if ( $update->codigo!=$request->codigo){
+            $request->validate(['codigo'=>'unique:cie'],['unique' => 'Este codigo ya se encuentra almacenado.']);
+            $update->codigo= $request->codigo;
         }
-        if($request->editardesc != ""){
-            $update->descripcion = $request->editardesc;
-        }
+        $update->descripcion = $request->nombre;
         $update->save();
-        return redirect()->action("CieController@index");
+        // return redirect()->action("CieController@index");
+        return response()->json();
     }
 
     /**

@@ -39,6 +39,7 @@ Route::get('/turnos/respuesta','TurnosController@respuesta')->middleware('auth')
 Route::post('turnos/cargarsinprotocolo','TurnosController@cargarsinprotocolo');
 Route::post('/salas/filtros','salasController@filtro')->name('salas.filtro')->middleware('auth');
 // Route::post('/usuarios/registrar','usuariosController@create')->name('usuarios.registrar');
+Route::get('/editar/{id}', 'PacientesController@edit');
 Route::post('/pacientes/nn','PacientesController@insertarNN')->middleware('auth');
 Route::get('/atencionclinica/internacion','AtencionClinicaController@internar')->middleware('auth');
 
@@ -55,7 +56,12 @@ Route::get('/profesionales/atenciones','profesionalesController@atenciones')->mi
 Route::resource('/profesionales', 'profesionalesController', ['except' => ['destroy', 'edit', 'update']])->middleware('auth');
 Route::resource('/cie','CieController')->middleware('auth');
 Route::resource('/especialidades','EspecialidadController')->middleware('auth');
-Route::resource('/pruebas', 'pruebaController');
+// Route::get('/pruebas', function(){
+//     $cies = App\CIE::all();
+//     foreach($cies as $cie){
+//         echo $cie."<br>";
+//     }
+// });
 
 Route::post('/atencionclinica/sala','AtencionClinicaController@cargarSala')->middleware('auth');
 
