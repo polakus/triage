@@ -11,22 +11,23 @@
                 </button>
             </div>
             <div class="modal-body">
-                <div class="row col-md-16">
+                <div class="container">
                     <div class="form-group">
-                        <div class="table-responsive">
-                            {{$id}}
-                            <table class="table table-bordered"  id=tablita>
-                                <tr>
-                                    <td width="100"><input type="text" id="editarcod{{$id}}" class="form-control" placeholder="Cod" value="{{ $codigo }}"></td>
-                                    <td><input type="text" id="editardesc{{$id}}" class="form-control" value="{{ $descripcion }}" ></td>
-                                </tr>
-                            </table>
+                        <div class="form-group">
+                            <label for="inputEmail4">Código</label>    
+                            <input type="text" id="editarcod{{$id}}" class="form-control" placeholder="Cod" value="{{ $codigo }}">
+                            <div id="edit_error_codigo{{$id}}"></div>
                         </div>
-                        <button type="button" onclick="cargarid({{ $id }})" class="btn btn-dark btn-sm">Editar</button>            
+                        <div class="form-group">
+							<label for="inputEmail4">Nombre</label>
+                            <input type="text" id="editardesc{{$id}}" class="form-control" value="{{ $descripcion }}" >
+                            <div id="edit_error_nombre{{$id}}"></div>
+						</div>
                     </div>
                 </div> 
             </div>
             <div class="modal-footer">
+                <button type="button" onclick="cargarid({{ $id }})" class="btn btn-dark btn-sm">Editar</button>            
                 <button type="button" class="btn btn-dark" data-dismiss="modal">Cerrar</button>
             </div>
         </div>

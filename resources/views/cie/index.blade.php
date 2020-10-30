@@ -164,10 +164,8 @@
 	function cargarid(id) {
 		var nombre = $('#editardesc'+id).val();
       	var codigo = $('#editarcod'+id).val();
-		// alert(nombre);
-		// alert(codigo);
 		$.ajaxSetup({
-			headers: {
+			headers: {	
 				'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
 			}
 		});
@@ -180,10 +178,21 @@
 				codigo:codigo,
             },
             success: function(response){
-				alert("sillego");
+				$('#editar'+id).modal('hide');
+				var table = $('#myTable').DataTable();
+                table.draw();
             },
             error: function(err){
-            	alert("nollego "+err.status);
+				if (err.status == 422) { // when status code is 422, it's a validation issue
+					$('#success_message').fadeIn().html(err.responseJSON.message);
+					$.each(err.responseJSON.errors, function (i, error) {
+						if(i=="nombre"){
+							$('#edit_error_nombre'+id).html('<span style="color: red;">'+error[0]+'</span>');
+						}else{
+							$('#edit_error_codigo'+id).html('<span style="color: red;">'+error[0]+'</span>');
+						}
+					});
+				}
             }
         });
 	}
