@@ -286,124 +286,145 @@ class TurnosController extends Controller
       //                 ->get();
       
 
-       return view('turnos.mostrar',compact('especialidades','pacientes','historial','salas'));}
+       return view('turnos.mostrar',compact('especialidades','pacientes','historial','salas'));
+     }
         
     
 
      public function respuesta(Request $request)
     {
-      if($request->bandera==""){
-        $id_atencion=$request->get('atencion');
-        $id_protocolo=$request->get('protocolo');
-        $disponibles_salas="";
-        $respuesta="";
-        $color=$request->color;
+      $msj_especialidades=array();
+      $nombres_especialidades=array();
+      $color="";
+      $casos="";
+      $especialidades=DB::table('Especialidades')->orderBy('nombre','ASC')->get();
+      $codigos=DB::table('CodigosTriage')->orderBy('color')->get();
+      $atencion=$request->get('atencion');
+      $sintomas=$request->sintomas;
 
-        $especialidad=DB::table('det_protocolos as det_prot')
-                          ->join('Especialidades as esp','esp.id','=','det_prot.id_especialidad')
-                          ->select('det_prot.id_especialidad', 'esp.nombre')
-                          ->where('det_prot.id_protocolo','=',$id_protocolo)
-                          ->get();
-        if(count($especialidad) != 0){
-          $disponibles=DB::table('det_profesionales as det_pro')
-                           ->join('profesionales as prof','prof.id','=','det_pro.id_profesional')
-                           
-                           ->where('det_pro.id_especialidad','=',$especialidad[0]->id_especialidad)
-                           ->where('prof.disponibilidad','=',1)
-                           ->count('det_pro.id_profesional');
-         if($disponibles>0){
-             $disponibles_salas=DB::table('det_profesionales_salas as det_prof_sala')
-                                ->join('det_profesionales as det_prof','det_prof.id_profesional','=','det_prof_sala.id_profesional')
-                                ->join('salas as s','s.id','=','det_prof_sala.id_sala')
-                                ->join('Areas as a','a.id','=','s.id_area')
-                                ->select('s.nombre','a.tipo_dato')
-                                ->where('det_prof.id_especialidad','=',$especialidad[0]->id_especialidad)
-                                ->where('det_prof_sala.disponibilidad','=',1)
-                                ->get();
-            if(count($disponibles_salas)==0){
-              $disponibles_salas="";
+      $protocolos = DB::table('Detalles_Sintomas_Protocolos as det')
+                            ->join('Protocolos as prot','prot.id','=','det.id_protocolo')
+                            ->join('Sintomas as s','s.id','=','det.id_sintoma')
+                            ->join('det_protocolos as det_prot','det_prot.id_protocolo','=','det.id_protocolo')
+                            ->join('Especialidades as esp','esp.id','=','det_prot.id_especialidad')
+                            ->join('CodigosTriage as cod','cod.id','=','prot.id_codigo_triage')
+                            ->select("det.id_protocolo", DB::raw('count(*) as cantidad','det.id_protocolo'),'det_prot.id_especialidad','esp.nombre','cod.color')
+                            ->whereIn('s.id',$request->sintomas)
+                            ->groupBy('det.id_protocolo')
+                            ->groupBy('det_prot.id_especialidad')
+                            ->groupBy('esp.nombre')
+                            ->groupBy('cod.color')
+                            ->orderBy('cantidad','DESC')
+                            ->orderBy('prot.id_codigo_triage','DESC')
+                            ->get();
+      if(sizeof($protocolos)>0){
+        // BUSCAMOS EL PROTOCOLO 
+        
+        foreach ($protocolos as $prot) {
+          $cant = DB::table('Detalles_Sintomas_Protocolos as det')
+                      ->where('det.id_protocolo','=',$prot->id_protocolo)
+                      ->count();
+          if(sizeof($request->sintomas)==$cant){
+            #Encontramos el protocolo
+            if(sizeof($nombres_especialidades)==0){
+              array_push($nombres_especialidades, $prot->nombre);
+              $color=$prot->color;
+            }
+            else{
+              $band = array_search($prot->nombre,$nombres_especialidades, false);
+              if($band == ""){
+                array_push($nombres_especialidades, $prot->nombre);
+              }
             }
           }
+        }
+        // print_r($nombres_especialidades);
+        if(sizeof($nombres_especialidades)!=0){
+          #Tenemos protocolos ahora buscamos cuantos especialistas se encuentran disponibles.
+          $disponibles=DB::table('det_profesionales as det_pro')
+                         ->join('profesionales as prof','prof.id','=','det_pro.id_profesional')
+                         ->join('Especialidades as esp','esp.id','=','det_pro.id_especialidad')
+                         ->select('esp.nombre',DB::raw('count(*) as cantidad','esp.nombre'))
+                         ->whereIn('esp.nombre',$nombres_especialidades)
+                         ->where('prof.disponibilidad','=',1)
+                         ->groupBy('esp.nombre')
+                         ->get();
 
+          if(sizeof($disponibles)>0){
+            $casos="disponibles";
+          #Armamos el msj de cuantos disponibles hay
+            
+            foreach ($disponibles as $d) {
+              $temp_msj=$d->nombre.":".$d->cantidad;
+              array_push($msj_especialidades, $temp_msj);
+            }
+            
+          }
+          else{
+            #En este caso no hay persona disponibles :D 
+          #mandamos los nombres de especialidades
+            $casos="no disponibles";
+          
+
+          }
         }
         else{
-          $especialidad=Especialidad::select('id')->where('nombre','LIKE',"Clinico")->get();
-          $disponibles=DB::table('det_profesionales as det_pro')
-                           ->join('profesionales as prof','prof.id','=','det_pro.id_profesional')
-                           ->join('Especialidades as esp','esp.id','=','det_pro.id_especialidad')
-                           ->where('esp.nombre','LIKE',"Clinico")
-                           ->where('prof.disponibilidad','=',1)
-                           ->count('det_pro.id_profesional');
-          if($disponibles>0){
-
-             $disponibles_salas=DB::table('det_profesionales_salas as det_prof_sala')
-                                ->join('det_profesionales as det_prof','det_prof.id_profesional','=','det_prof_sala.id_profesional')
-                                ->join('salas as s','s.id','=','det_prof_sala.id_sala')
-                                ->join('Areas as a','a.id','=','s.id_area')
-                                ->select('s.nombre','a.tipo_dato')
-                                ->where('det_prof.id_especialidad','=',$especialidad[0]->id)
-                                ->where('det_prof_sala.disponibilidad','=',1)
-                                ->get();
-
-           if(count($disponibles_salas)==0){
-              $disponibles_salas="";
-            }
+          // No se encontro un protocolo pero si tenemos coincidencias con otros protocolos :D
+          $casos="probabilidades";
+          $lista_probabilidades=array();
+          $lista_nombres_especialidades=array();
+          foreach ($protocolos as $p) {
+           
+            array_push($lista_nombres_especialidades,$p->nombre);
+            array_push($lista_probabilidades,$p->cantidad*100/sizeof($request->sintomas).'%'.' Codigo: '.$p->color);
           }
-
+          $nombres_especialidades=array_unique($lista_nombres_especialidades);
+          foreach ($nombres_especialidades as $r ) {
+            $indice=array_search($r, $lista_nombres_especialidades, false);
+            $msg=$r." coincidencia de un:".$lista_probabilidades[$indice];
+            array_push($msj_especialidades,$msg);
+          }
           
-          $respuesta="De acuerdo a los sintomas descripto no se encontro coincidencia en la base de datos, pero se recomienda derivarlo a un Medico Clinico";
-        }
-                   
-        date_default_timezone_set('UTC');
 
-        date_default_timezone_set("America/Argentina/Buenos_Aires");
-       
-        $id_codigo=DB::table('CodigosTriage')
-                      ->select('id')
-                      ->where('color','LIKE',$color)
-                      ->get();
+
+        }
+      }
+      else{
+        #en caso de que no existe ningun protocolo!
+        $casos="no protocolo";
+        
+      }
+      return view('turnos.respuesta',compact('nombres_especialidades','msj_especialidades','color','casos','especialidades','codigos','atencion','sintomas'));
+
+
+    }
+
+    public function cargaratencion(Request $request){
+      date_default_timezone_set('UTC');
+      date_default_timezone_set("America/Argentina/Buenos_Aires");
+      if($request->get('casos')=="disponibles" or $request->get('casos')=="no disponibles"){
         $nuevo=new DetalleAtencion;
-        $nuevo->id_atencion=$id_atencion;
-        if($respuesta==""){
-          $nuevo->id_especialidad=$especialidad[0]->id_especialidad;
-        }else{$nuevo->id_especialidad=$especialidad[0]->id;}
+        $nuevo->id_atencion=$request->atencion;
+        $nuevo->id_especialidad=$request->esp;
+        $id_codigo=DB::table('CodigosTriage')->select('id')->where('color','LIKE',$request->color)->get();
+        $nuevo->id_codigo_triage=$id_codigo[0]->id;
         $nuevo->fecha=date('Y-m-d');
         $nuevo->hora=date('H:i');
         $nuevo->atendido=0;
         $nuevo->estado="consulta";
-        $nuevo->id_codigo_triage=$id_codigo[0]->id;
         $nuevo->save();
-
-        $especialidad=$especialidad[0]->nombre;
-    
-        $id_detalle_atencion=$nuevo->id;
-
-        $bandera="";
-        return view('turnos.respuesta',compact('color','especialidad','disponibles','disponibles_salas','id_detalle_atencion','respuesta','bandera'));
-    }else{
-        $bandera=$request->bandera;
-        $especialidades=Especialidad::all();
-        $codigos= DB::table('CodigosTriage')->get();
-        $atencion=$request->atencion;
-        $sintomas=$request->sintomas;
-        return view('turnos.respuesta',compact('bandera','especialidades','codigos','atencion','sintomas'));
-    }
-
-    }
-
-    public function cargarsinprotocolo(Request $request){
-      date_default_timezone_set('UTC');
-      date_default_timezone_set("America/Argentina/Buenos_Aires");
-      $nuevo=new DetalleAtencion;
-      $nuevo->id_atencion=$request->atencion;
-      $nuevo->id_especialidad=$request->esp;
-      $nuevo->fecha=date('Y-m-d');
-      $nuevo->hora=date('H:i');
-      $nuevo->atendido=0;
-      $nuevo->estado="consulta";
-      $nuevo->id_codigo_triage=$request->color;
-      $nuevo->save();
-      if($request->radios == "si"){
+      }
+      else{
+        $nuevo=new DetalleAtencion;
+        $nuevo->id_atencion=$request->atencion;
+        $nuevo->id_especialidad=$request->esp;
+        $nuevo->id_codigo_triage=$request->color;
+        $nuevo->fecha=date('Y-m-d');
+        $nuevo->hora=date('H:i');
+        $nuevo->atendido=0;
+        $nuevo->estado="consulta";
+        $nuevo->save();
+        if($request->radios == "si"){
           $cantidad= DB::table("Protocolos")
                          ->where("descripcion","LIKE","DEFECTO%")
                          ->count();                    
@@ -426,11 +447,11 @@ class TurnosController extends Controller
              
           }
 
+        }
       }
+
       return redirect()->action('PacientesController@index');
     }
-
-
     
 
 }

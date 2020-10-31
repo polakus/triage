@@ -36,7 +36,7 @@ Route::get('/triagepreguntas/estado/{triagepreguntas}', 'TriagepreguntasControll
 Route::get('/pacientes/shows', 'PacientesController@shows')->middleware('auth');
 Route::get('/turnos/mostrar', 'TurnosController@mostrar')->name('mostrar')->middleware('auth');
 Route::get('/turnos/respuesta','TurnosController@respuesta')->middleware('auth');
-Route::post('turnos/cargarsinprotocolo','TurnosController@cargarsinprotocolo');
+Route::post('turnos/cargaratencion','TurnosController@cargaratencion');
 Route::post('/salas/filtros','salasController@filtro')->name('salas.filtro')->middleware('auth');
 // Route::post('/usuarios/registrar','usuariosController@create')->name('usuarios.registrar');
 Route::get('/editar/{id}', 'PacientesController@edit');

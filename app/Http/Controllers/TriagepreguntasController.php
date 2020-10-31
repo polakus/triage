@@ -65,10 +65,16 @@ class TriagepreguntasController extends Controller
 
         $id=$atencion->id;
        
-        
+        $rtas = Pregunta::where('id_atencion', $id)->select('id_sintoma')->get();
+        $lista_respuestas= array();
+        $i=0;
+        for($i=0;$i<sizeof($rtas);$i++){
+           
+            array_push($lista_respuestas,$rtas[$i]->id_sintoma);
+        }
        
-       
-        return redirect('triagepreguntas/estado/'.$id);
+        return redirect()->action('TurnosController@respuesta',['atencion'=>$id, 'sintomas'=>$lista_respuestas]);
+        // return redirect('triagepreguntas/estado/'.$id);
       
      }
 
@@ -135,66 +141,87 @@ class TriagepreguntasController extends Controller
             array_push($lista_respuestas,$rtas[$i]->id_sintoma);
         }
 
-       
-        $probando = DB::table('Protocolos as p')
-                    ->join('Detalles_Sintomas_Protocolos as det','det.id_protocolo','=','p.id')
-                    ->join('Sintomas as s','s.id','=','det.id_sintoma')
-                    ->select("p.id")
-                    ->whereIn('s.id',$lista_respuestas)
-                    ->groupBy('p.id')
-                    ->get();
-
+        $protocolos = DB::table('Detalles_Sintomas_Protocolos as det')
+                            ->join('Protocolos as prot','prot.id','=','det.id_protocolo')
+                            ->join('Sintomas as s','s.id','=','det.id_sintoma')
+                            ->join('det_protocolos as det_prot','det_prot.id_protocolo','=','det.id_protocolo')
+                            ->join('Especialidades as esp','esp.id','=','det_prot.id_especialidad')
+                            ->join('CodigosTriage as cod','cod.id','=','prot.id_codigo_triage')
+                            ->select("det.id_protocolo", DB::raw('count(*) as cantidad','p.id'),'esp.nombre','cod.color')
+                            ->whereIn('s.id',$lista_respuestas)
+                            ->groupBy('det.id_protocolo')
+                            ->groupBy('esp.nombre')
+                            ->groupBy('cod.color')
+                            ->orderBy('cantidad','DESC')
+                            ->get();
+        return redirect()->action('TurnosController@respuesta',['atencion'=>$id, 'proto'=>$protocolos]);
         
-        $i=0;
+        // $probando = DB::table('Protocolos as p')
+        //             ->join('Detalles_Sintomas_Protocolos as det','det.id_protocolo','=','p.id')
+        //             ->join('Sintomas as s','s.id','=','det.id_sintoma')
+        //             ->select("p.id", DB::raw('count(*) as cantidad','p.id'))
+        //             ->whereIn('s.id',$lista_respuestas)
+        //             ->groupBy('p.id')
+        //             ->orderBy('cantidad','DESC')
+        //             ->get();
+
+        // foreach ($protocolos as $p) {
+        //     # code...
+        //     // echo $p->color.'<br>';
+        //     echo $p->cantidad*100/sizeof($lista_respuestas).'%'.' color:'.$p->nombre.'<br>';
+        // }
+
+
+        // $i=0;
                     
-        while ($i < sizeof($probando) and $band) {
-            $dsp = Detalle_Sintoma_Protocolo::where('id_protocolo', $probando[$i]->id)->get();
-            $encontro = False;
-            if (count($dsp)==count($lista_respuestas)) {
-                $j=0;
-                $encontro = True;
-                while ($j<count($dsp) and $encontro) {
-                    $k=0;
+        // while ($i < sizeof($probando) and $band) {
+        //     $dsp = Detalle_Sintoma_Protocolo::where('id_protocolo', $probando[$i]->id)->get();
+        //     $encontro = False;
+        //     if (count($dsp)==count($lista_respuestas)) {
+        //         $j=0;
+        //         $encontro = True;
+        //         while ($j<count($dsp) and $encontro) {
+        //             $k=0;
                     
-                    while($k<count($dsp) and ($dsp[$j]->id_sintoma<>$rtas[$k]->id_sintoma)){
-                        $k=$k+1;
-                    }
+        //             while($k<count($dsp) and ($dsp[$j]->id_sintoma<>$rtas[$k]->id_sintoma)){
+        //                 $k=$k+1;
+        //             }
                    
-                    if($k>=count($dsp)){
-                        $encontro = False;
+        //             if($k>=count($dsp)){
+        //                 $encontro = False;
                        
-                    }
-                    $j=$j+1;
-                }
-                if($encontro==True){
+        //             }
+        //             $j=$j+1;
+        //         }
+        //         if($encontro==True){
                     
-                    $band=False;
-                    $aux=$i;
-                }
-            }
-            $i=$i+1;
-        }
-        if($encontro){
+        //             $band=False;
+        //             $aux=$i;
+        //         }
+        //     }
+        //     $i=$i+1;
+        // }
+        // if($encontro){
         
-            $actualizar_atencion=Atencion::findOrFail($id);
-            $actualizar_atencion->id_protocolo=$id_prot=$probando[$aux]->id;
-            $actualizar_atencion->save();
+        //     $actualizar_atencion=Atencion::findOrFail($id);
+        //     $actualizar_atencion->id_protocolo=$id_prot=$probando[$aux]->id;
+        //     $actualizar_atencion->save();
 
 
-             $id_prot=$probando[$aux]->id;
-             $consulta=DB::table('Protocolos as p')
-                ->join('CodigosTriage as cod','cod.id','=','p.id_codigo_triage')
-                ->select('cod.color')
-                ->where('p.id','=',$id_prot)
-                ->get();
-            $color=$consulta[0]->color;
-            return redirect()->action('TurnosController@respuesta',['atencion'=>$id, 'protocolo'=>$id_prot,'color'=>$color]);
-        }
-        else{
-            // FALTA PONER ALGO EN CASO DE QUE NO ENCUENTRE UN PROTOCOLO
-            $bandera="Lo sentimos muchos, nuestra base de datos no contiene los datos suficientes para poder encontrar un protocolo para dichos Sintomas descriptos...";
-            return redirect()->action('TurnosController@respuesta',['bandera'=>$bandera,'atencion'=>$id, 'sintomas'=>$lista_respuestas]);
-        }
+        //      $id_prot=$probando[$aux]->id;
+        //      $consulta=DB::table('Protocolos as p')
+        //         ->join('CodigosTriage as cod','cod.id','=','p.id_codigo_triage')
+        //         ->select('cod.color')
+        //         ->where('p.id','=',$id_prot)
+        //         ->get();
+        //     $color=$consulta[0]->color;
+        //     return redirect()->action('TurnosController@respuesta',['atencion'=>$id, 'protocolo'=>$id_prot,'color'=>$color]);
+        // }
+        // else{
+        //     // FALTA PONER ALGO EN CASO DE QUE NO ENCUENTRE UN PROTOCOLO
+        //     $bandera="Lo sentimos muchos, nuestra base de datos no contiene los datos suficientes para poder encontrar un protocolo para dichos Sintomas descriptos...";
+        //     return redirect()->action('TurnosController@respuesta',['bandera'=>$bandera,'atencion'=>$id, 'sintomas'=>$lista_respuestas]);
+        // }
        
         
        
