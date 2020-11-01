@@ -196,6 +196,31 @@
             }
         });
 	}
+	function eliminarCie(id){
+		if (confirm('¿Desea eliminar elemento?')){
+			$.ajaxSetup({
+				headers: {
+					'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+				}
+			});
+			$.ajax({
+				type:'DELETE',
+				url:"/cie/"+id,
+				dataType:"json",
+				// data:{
+				// 	nombre:nombre,
+				// 	codigo:codigo,
+				// },
+				success: function(response){
+					var table = $('#myTable').DataTable();
+                	table.draw();
+				},
+				error:function(err){
+					alert("Hubo un error al intentar eliminar elemento");
+				}
+			});
+		}
+	}
 </script>
 
 @endsection

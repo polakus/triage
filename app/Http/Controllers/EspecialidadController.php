@@ -54,7 +54,7 @@ class EspecialidadController extends Controller
         $dea->id_area = $request->area;
         $dea->id_especialidad = $esp->id;
         $dea->save();
-        return redirect()->action('EspecialidadController@index');
+        return response()->json();
     }
     
     public function validarEspecialidad($request){
@@ -65,6 +65,7 @@ class EspecialidadController extends Controller
         return $request->validate([
             'esp_nombre' => 'required|max:30',
             'descripcion' => 'required|max:255',
+            'area' => 'required',
         ], $mensajes);
     }
     /**
@@ -99,12 +100,11 @@ class EspecialidadController extends Controller
     public function update(Request $request, $id)
     {
         //  
-
+        $this->validarEspecialidad($request);
         $update = Especialidad::findOrFail($id);
 
         if($request->editarnom !=""){
             $update->nombre= $request->editarnom;
-
         }
         if($request->des != ""){
             $update->descripcion = $request->des;

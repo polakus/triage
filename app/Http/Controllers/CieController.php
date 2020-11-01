@@ -108,8 +108,9 @@ class CieController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
-    {
-        //
+    public function destroy($id){
+        $cie=CIE::findOrFail($id);
+        $cie->delete();
+        return response()->json();
     }
 }

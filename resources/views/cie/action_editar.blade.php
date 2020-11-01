@@ -13,6 +13,7 @@
             <div class="modal-body">
                 <div class="container">
                     <div class="form-group">
+                        <!-- <input type="text" id="idcie" value="{{$id}}"> -->
                         <div class="form-group">
                             <label for="inputEmail4">Código</label>    
                             <input type="text" id="editarcod{{$id}}" class="form-control" placeholder="Cod" value="{{ $codigo }}">
@@ -27,9 +28,12 @@
                 </div> 
             </div>
             <div class="modal-footer">
-                <button type="button" onclick="cargarid({{ $id }})" class="btn btn-dark btn-sm">Editar</button>            
+                <button type="button" onclick="cargarid({{ $id }})" class="btn btn-dark">Editar</button>            
                 <button type="button" class="btn btn-dark" data-dismiss="modal">Cerrar</button>
             </div>
         </div>
     </div>
 </div>
+<button type="button" class="btn btn-dark btn-sm" id="eliminarcie" onclick="eliminarCie({{$id}})">
+    Eliminar
+</button>

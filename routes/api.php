@@ -122,3 +122,16 @@ Route::get('cargar_cie', function(){
                         ->rawColumns(['button']) 
                         ->toJson();
 });
+
+Route::get('dtespecialidades', function(){
+    // $especialidades = App\Especialidad::all();
+    $especialidades = DB::table('Especialidades as esp')
+                        ->join('det_especialidad_area as det','det.id_especialidad','=','esp.id')
+                        ->join('Areas as a','a.id','=','det.id_area')
+                        ->select('esp.id','esp.nombre','esp.descripcion','a.tipo_dato')
+                        ->get();
+    return DataTables::of($especialidades)
+                        ->addColumn('button', 'especialidades/accion_editar')
+                        ->rawColumns(['button']) 
+                        ->toJson();
+});

@@ -26,11 +26,11 @@
 				<td>{{ $protocolo->codigo->color }}</td>
 				<td>
 					<div class="form-row">
-						<form id="a1" class= "form-inline" action="/protocolos/{{$protocolo->id}}" method="get">
+						<form id="a1{{$protocolo->id}}" class= "form-inline" action="/protocolos/{{$protocolo->id}}" method="get">
 							<button type="submit" class="btn btn-dark btn-sm ml-1">Ver</button>
 						</form>
 
-						<form id="a2" name="{{$protocolo->descripcion}}" action="/protocolos/{{$protocolo->id}}" method="post">
+						<form id="a2{{$protocolo->id}}" name="{{$protocolo->descripcion}}" action="/protocolos/{{$protocolo->id}}" method="post">
 							@csrf
 							{{method_field('DELETE')}}
 							<button type="submit" class="btn btn-danger btn-sm ml-1" value="{{$protocolo->descripcion}}">Eliminar</button>

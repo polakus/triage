@@ -494,6 +494,7 @@ class ComposerStaticInit1a709310398a22a0e722e2017fb146ab
         'App\\CIE' => __DIR__ . '/../..' . '/app/CIE.php',
         'App\\Codigo' => __DIR__ . '/../..' . '/app/Codigo.php',
         'App\\Console\\Kernel' => __DIR__ . '/../..' . '/app/Console/Kernel.php',
+        'App\\Det_especialidad_area' => __DIR__ . '/../..' . '/app/Det_especialidad_area.php',
         'App\\DetalleAtencion' => __DIR__ . '/../..' . '/app/DetalleAtencion.php',
         'App\\DetalleHorario' => __DIR__ . '/../..' . '/app/DetalleHorario.php',
         'App\\DetalleProfSala' => __DIR__ . '/../..' . '/app/DetalleProfSala.php',

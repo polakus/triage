@@ -11,6 +11,7 @@ return array(
     'App\\CIE' => $baseDir . '/app/CIE.php',
     'App\\Codigo' => $baseDir . '/app/Codigo.php',
     'App\\Console\\Kernel' => $baseDir . '/app/Console/Kernel.php',
+    'App\\Det_especialidad_area' => $baseDir . '/app/Det_especialidad_area.php',
     'App\\DetalleAtencion' => $baseDir . '/app/DetalleAtencion.php',
     'App\\DetalleHorario' => $baseDir . '/app/DetalleHorario.php',
     'App\\DetalleProfSala' => $baseDir . '/app/DetalleProfSala.php',
