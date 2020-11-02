@@ -114,7 +114,14 @@
 @endsection
 @section("scripts")
 @parent
+<script type="text/javascript">
+  $("document").ready(function(){
+    setTimeout(function(){
+       $("div.alert").remove();
+    }, 5000 ); // 5 secs
 
+});
+</script>
 
 <script>
   $( function() {

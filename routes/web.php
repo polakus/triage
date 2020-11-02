@@ -19,9 +19,7 @@ use App\Profesional;
 Route::get('/', function () {
     return view('welcome');
 });
-// Route::get('/test', function () {
-//     return view('layouts.plantillaTest');
-// });
+Route::get('/atencionclinica/atencionsala','AtencionClinicaController@atencionsala')->middleware('auth');
 
 Route::get('/test',function(){
 	return view('triagepreguntas.test');
@@ -31,12 +29,12 @@ Route::post('atencionclinica/refresh','AtencionClinicaController@refresh')->name
 Route::get('/usuarios/pendientes/{id}/edit', 'usuariosController@aceptar')->middleware('auth');
 Route::delete('/usuarios/pendientes/{id}', 'usuariosController@rechazar')->middleware('auth');
 Route::get('/usuarios/pendientes', 'usuariosController@pendientes')->middleware('auth');
-Route::get('/triagepreguntas/estado/{triagepreguntas}', 'TriagepreguntasController@estado')->middleware('auth');
+// Route::get('/triagepreguntas/estado/{triagepreguntas}', 'TriagepreguntasController@estado')->middleware('auth');
 //Route::get('/triagepreguntas/analizar', 'TriagepreguntasController@analizar');
 Route::get('/pacientes/shows', 'PacientesController@shows')->middleware('auth');
 Route::get('/turnos/mostrar', 'TurnosController@mostrar')->name('mostrar')->middleware('auth');
 Route::get('/turnos/respuesta','TurnosController@respuesta')->middleware('auth');
-Route::post('turnos/cargarsinprotocolo','TurnosController@cargarsinprotocolo');
+Route::post('turnos/cargaratencion','TurnosController@cargaratencion');
 Route::post('/salas/filtros','salasController@filtro')->name('salas.filtro')->middleware('auth');
 // Route::post('/usuarios/registrar','usuariosController@create')->name('usuarios.registrar');
 Route::get('/editar/{id}', 'PacientesController@edit');
@@ -63,6 +61,7 @@ Route::get('/pruebas', function(){
     // }
     echo $area_seleccionada = App\Det_especialidad_area::where('id_especialidad', '=', 5)->first()->area->id;
 });
+
 
 Route::post('/atencionclinica/sala','AtencionClinicaController@cargarSala')->middleware('auth');
 
