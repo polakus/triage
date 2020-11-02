@@ -135,8 +135,6 @@ Route::get('dtespecialidades', function(){
                         ->rawColumns(['button']) 
                         ->toJson();
 });
-});
-
 
 Route::get('historial',function(Request $request){
     $historial=DB::table('historial as h')

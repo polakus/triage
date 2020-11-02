@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1:3306
--- Tiempo de generación: 23-10-2020 a las 19:27:20
+-- Tiempo de generación: 02-11-2020 a las 20:36:37
 -- Versión del servidor: 8.0.18
 -- Versión de PHP: 7.4.0
 
@@ -66,7 +66,7 @@ CREATE TABLE IF NOT EXISTS `atencion` (
   KEY `atencion_id_procotocolo_foreign` (`id_protocolo`),
   KEY `atencion_paciente_id_foreign` (`Paciente_id`),
   KEY `atencion_usuario_id_foreign` (`usuario_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=147 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=151 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Volcado de datos para la tabla `atencion`
@@ -89,7 +89,11 @@ INSERT INTO `atencion` (`id`, `created_at`, `updated_at`, `id_protocolo`, `Pacie
 (143, '2020-10-21 01:43:22', '2020-10-21 01:43:22', NULL, 32, 1),
 (144, '2020-10-21 01:44:17', '2020-10-21 01:44:17', NULL, 33, 1),
 (145, '2020-10-21 01:46:46', '2020-10-22 15:43:45', NULL, 31, 1),
-(146, '2020-10-21 22:26:11', '2020-10-21 22:26:11', NULL, 22, 1);
+(146, '2020-10-21 22:26:11', '2020-10-21 22:26:11', NULL, 22, 1),
+(147, '2020-10-27 23:18:51', '2020-10-27 23:18:51', NULL, 1, 1),
+(148, '2020-10-27 23:40:42', '2020-10-27 23:41:35', NULL, 1, 1),
+(149, '2020-11-02 20:25:17', '2020-11-02 20:25:17', NULL, 3, 1),
+(150, '2020-11-02 20:29:15', '2020-11-02 20:29:15', NULL, 3, 1);
 
 -- --------------------------------------------------------
 
@@ -106,7 +110,7 @@ CREATE TABLE IF NOT EXISTS `cie` (
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `cie_codigo_unique` (`codigo`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Volcado de datos para la tabla `cie`
@@ -119,7 +123,10 @@ INSERT INTO `cie` (`id`, `descripcion`, `codigo`, `created_at`, `updated_at`) VA
 (4, 'Fiebres tifoidea y paratifoidea', 'A01', '2020-06-26 06:51:08', '2020-06-29 03:54:52'),
 (5, 'Otras infecciones debidas a Salmonella', 'A02', '2020-06-26 06:51:08', '2020-06-26 06:51:08'),
 (6, 'Apendicitis aguda', 'k35', '2020-07-13 00:32:14', '2020-07-13 00:32:14'),
-(7, 'otras', 'k361', '2020-07-15 22:24:51', '2020-07-15 22:24:51');
+(7, 'otras', 'k361', '2020-07-15 22:24:51', '2020-07-15 22:24:51'),
+(8, 'cualquier cosa', 'a21', '2020-10-27 23:15:29', '2020-10-27 23:15:29'),
+(11, 'asdf', 'a33', '2020-10-28 02:46:51', '2020-10-30 18:46:01'),
+(12, 'asdsd', 'A91', '2020-10-29 19:31:48', '2020-10-30 14:11:40');
 
 -- --------------------------------------------------------
 
@@ -183,8 +190,7 @@ INSERT INTO `detalles_sintomas_protocolos` (`id`, `created_at`, `updated_at`, `i
 (12, '2020-07-15 02:51:32', '2020-07-15 02:51:32', 30, 2),
 (13, '2020-07-15 02:51:32', '2020-07-15 02:51:32', 30, 3),
 (14, '2020-07-15 02:51:32', '2020-07-15 02:51:32', 30, 4),
-(15, '2020-07-15 02:51:32', '2020-07-15 02:51:32', 30, 5),
-(16, '2020-07-15 03:00:17', '2020-07-15 03:00:17', 31, 3);
+(15, '2020-07-15 02:51:32', '2020-07-15 02:51:32', 30, 5);
 
 -- --------------------------------------------------------
 
@@ -212,7 +218,7 @@ CREATE TABLE IF NOT EXISTS `detalle_atencion` (
   KEY `detalle_atencion_id_atencion_foreign` (`id_atencion`),
   KEY `detalle_atencion_id_det_profesional_sala_foreign` (`id_det_profesional_sala`),
   KEY `detalle_atencion_id_especialidad_foreign` (`id_especialidad`)
-) ENGINE=InnoDB AUTO_INCREMENT=146 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=149 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Volcado de datos para la tabla `detalle_atencion`
@@ -231,7 +237,10 @@ INSERT INTO `detalle_atencion` (`id`, `created_at`, `updated_at`, `id_atencion`,
 (142, '2020-09-18 13:01:29', '2020-09-18 13:01:29', 141, NULL, '2020-09-18', '13:01', 6, 0, 'consulta', 2, NULL, 0, NULL),
 (143, '2020-10-21 01:43:22', '2020-10-21 01:43:22', 143, NULL, '2020-10-20', '22:43', 5, 0, 'Operar', 1, NULL, 0, NULL),
 (144, '2020-10-21 01:44:17', '2020-10-21 01:44:17', 144, NULL, '2020-10-20', '22:44', 5, 0, 'Operar', 1, NULL, 0, NULL),
-(145, '2020-10-21 01:46:46', '2020-10-21 01:46:46', 145, NULL, '2020-10-20', '22:46', 5, 0, 'Operar', 1, NULL, 0, NULL);
+(145, '2020-10-21 01:46:46', '2020-10-21 01:46:46', 145, NULL, '2020-10-20', '22:46', 5, 0, 'Operar', 1, NULL, 0, NULL),
+(146, '2020-10-27 23:40:42', '2020-10-27 23:40:42', 148, NULL, '2020-10-27', '20:40', 5, 0, 'Operar', 1, NULL, 0, NULL),
+(147, '2020-11-02 20:25:51', '2020-11-02 20:25:51', 149, NULL, '2020-11-02', '17:25', 6, 0, 'consulta', 2, NULL, 0, NULL),
+(148, '2020-11-02 20:31:14', '2020-11-02 20:31:14', 150, NULL, '2020-11-02', '17:31', 7, 0, 'consulta', 2, NULL, 0, NULL);
 
 -- --------------------------------------------------------
 
@@ -249,16 +258,18 @@ CREATE TABLE IF NOT EXISTS `det_especialidad_area` (
   PRIMARY KEY (`id`),
   KEY `det_especialidad_area_id_especialidad_foreign` (`id_especialidad`),
   KEY `det_especialidad_area_id_area_foreign` (`id_area`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Volcado de datos para la tabla `det_especialidad_area`
 --
 
 INSERT INTO `det_especialidad_area` (`id`, `created_at`, `updated_at`, `id_especialidad`, `id_area`) VALUES
-(1, NULL, NULL, 6, 6),
-(2, NULL, NULL, 5, 5),
-(3, NULL, NULL, 7, 6);
+(16, '2020-11-01 03:00:00', '2020-11-01 03:00:00', 5, 5),
+(17, '2020-11-01 03:00:00', '2020-11-01 03:00:00', 6, 6),
+(18, '2020-11-01 03:00:00', '2020-11-01 03:00:00', 7, 7),
+(19, '2020-11-01 03:00:00', '2020-11-01 03:00:00', 8, 8),
+(20, '2020-11-01 03:00:00', '2020-11-01 03:00:00', 9, 7);
 
 -- --------------------------------------------------------
 
@@ -356,7 +367,7 @@ CREATE TABLE IF NOT EXISTS `especialidades` (
   `nombre` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `descripcion` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Volcado de datos para la tabla `especialidades`
@@ -364,7 +375,7 @@ CREATE TABLE IF NOT EXISTS `especialidades` (
 
 INSERT INTO `especialidades` (`id`, `created_at`, `updated_at`, `nombre`, `descripcion`) VALUES
 (5, NULL, '2020-07-15 04:00:26', 'Oftalmologia', 'Problemas de ojos'),
-(6, NULL, '2020-07-15 04:22:09', 'Clinico', '1234'),
+(6, NULL, '2020-11-02 02:21:59', 'Clinico', 'a'),
 (7, NULL, NULL, 'Cardiologia', 'asda'),
 (8, '2020-07-15 03:44:45', '2020-07-15 03:44:45', 'Traumatologia', 'Dolores de espalda, huesos,etc'),
 (9, '2020-07-15 04:10:30', '2020-07-15 04:10:30', 'Cirugia General', 'Se encarga de tal....');
@@ -405,7 +416,7 @@ CREATE TABLE IF NOT EXISTS `historial` (
   PRIMARY KEY (`id`),
   KEY `historial_id_cie_foreign` (`id_cie`),
   KEY `historial_id_detalle_atencion_foreign` (`id_detalle_atencion`)
-) ENGINE=InnoDB AUTO_INCREMENT=75 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=76 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Volcado de datos para la tabla `historial`
@@ -416,7 +427,8 @@ INSERT INTO `historial` (`id`, `created_at`, `updated_at`, `id_cie`, `descripcio
 (71, '2020-08-04 04:46:19', '2020-08-04 04:46:19', 3, 'nada grave', '2020-08-04', '01:46:00', 133),
 (72, '2020-08-04 21:15:50', '2020-08-04 21:15:50', 6, 'nnn', '2020-08-04', '18:15:00', 135),
 (73, '2020-08-05 00:35:23', '2020-08-05 00:35:23', 1, 'traumatismo', '2020-08-04', '21:35:00', 137),
-(74, '2020-10-21 01:46:46', '2020-10-21 01:46:46', 1, 'asfd', '2020-10-20', '22:46:00', 145);
+(74, '2020-10-21 01:46:46', '2020-10-21 01:46:46', 1, 'asfd', '2020-10-20', '22:46:00', 145),
+(75, '2020-10-27 23:40:43', '2020-10-27 23:40:43', 1, 'añlskdfsj', '2020-10-27', '20:40:00', 146);
 
 -- --------------------------------------------------------
 
@@ -430,7 +442,7 @@ CREATE TABLE IF NOT EXISTS `migrations` (
   `migration` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `batch` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=46 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=47 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Volcado de datos para la tabla `migrations`
@@ -477,7 +489,8 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (42, '2020_08_04_004913_add_user_to_atencion_table', 23),
 (43, '2020_08_08_194021_create_prueba_table', 24),
 (44, '2020_10_16_233426_edit_foreign_key_from_det_protocolos', 25),
-(45, '2020_10_22_172823_add_vote_fecha_nac_to_table_pacientes', 26);
+(45, '2020_10_22_172823_add_vote_fecha_nac_to_table_pacientes', 26),
+(46, '2020_11_01_183508_change_vote_foreign_key_to_det_especialidad_area', 27);
 
 -- --------------------------------------------------------
 
@@ -498,7 +511,7 @@ CREATE TABLE IF NOT EXISTS `pacientes` (
   `updated_at` timestamp NULL DEFAULT NULL,
   `domicilio` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`Paciente_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=35 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=36 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Volcado de datos para la tabla `pacientes`
@@ -536,7 +549,8 @@ INSERT INTO `pacientes` (`Paciente_id`, `dni`, `nombre`, `apellido`, `telefono`,
 (31, 39590142, 'prueba', 'prueba', '140', '2020-10-07', 'Masculino', '2020-10-21 01:24:37', '2020-10-21 01:24:37', 'Acevedo 368'),
 (32, 0, 'nn', 'nn', '1', '2020-10-20', 'Masculino', '2020-10-21 01:43:22', '2020-10-21 01:43:22', 'nn'),
 (33, 0, 'nn', 'nn', '1', '2020-10-20', 'Masculino', '2020-10-21 01:44:17', '2020-10-21 01:44:17', 'nn'),
-(34, 0, 'nn', 'nn', '1', '2020-10-20', 'Masculino', '2020-10-21 01:46:46', '2020-10-21 01:46:46', 'nn');
+(34, 0, 'nn', 'nn', '1', '2020-10-20', 'Masculino', '2020-10-21 01:46:46', '2020-10-21 01:46:46', 'nn'),
+(35, 0, 'nn', 'nn', '1', '2020-10-27', 'Masculino', '2020-10-27 23:40:42', '2020-10-27 23:40:42', 'nn');
 
 -- --------------------------------------------------------
 
@@ -568,7 +582,7 @@ CREATE TABLE IF NOT EXISTS `preguntas` (
   PRIMARY KEY (`id`),
   KEY `preguntas_id_atencion_foreign` (`id_atencion`),
   KEY `preguntas_id_sintoma_foreign` (`id_sintoma`)
-) ENGINE=InnoDB AUTO_INCREMENT=159 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=166 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Volcado de datos para la tabla `preguntas`
@@ -594,7 +608,14 @@ INSERT INTO `preguntas` (`id`, `created_at`, `updated_at`, `id_atencion`, `id_si
 (155, '2020-09-18 14:07:50', '2020-09-18 14:07:50', 142, 1),
 (156, '2020-10-21 22:26:12', '2020-10-21 22:26:12', 146, 6),
 (157, '2020-10-21 22:26:12', '2020-10-21 22:26:12', 146, 2),
-(158, '2020-10-21 22:26:12', '2020-10-21 22:26:12', 146, 10);
+(158, '2020-10-21 22:26:12', '2020-10-21 22:26:12', 146, 10),
+(159, '2020-10-27 23:18:51', '2020-10-27 23:18:51', 147, 7),
+(160, '2020-10-27 23:18:51', '2020-10-27 23:18:51', 147, 6),
+(161, '2020-11-02 20:25:17', '2020-11-02 20:25:17', 149, 4),
+(162, '2020-11-02 20:25:17', '2020-11-02 20:25:17', 149, 3),
+(163, '2020-11-02 20:29:15', '2020-11-02 20:29:15', 150, 3),
+(164, '2020-11-02 20:29:15', '2020-11-02 20:29:15', 150, 4),
+(165, '2020-11-02 20:29:15', '2020-11-02 20:29:15', 150, 2);
 
 -- --------------------------------------------------------
 
@@ -752,7 +773,7 @@ CREATE TABLE IF NOT EXISTS `salas` (
 
 INSERT INTO `salas` (`id`, `created_at`, `updated_at`, `id_area`, `disponibilidad`, `camas`, `nombre`) VALUES
 (1, NULL, '2020-06-22 07:01:27', 5, 1, 0, '1'),
-(2, NULL, NULL, 6, 1, 0, '1'),
+(2, NULL, '2020-10-29 21:35:26', 6, 0, 0, '1'),
 (3, '2020-06-22 22:16:53', '2020-06-22 22:16:53', 7, 1, 20, 'Box de varones'),
 (4, '2020-06-22 22:17:31', '2020-07-08 21:58:20', 7, 1, 20, 'Box de mujeres'),
 (5, '2020-06-22 23:46:05', '2020-08-05 00:35:37', 8, 0, 0, '1'),
@@ -774,7 +795,7 @@ CREATE TABLE IF NOT EXISTS `sintomas` (
   `updated_at` timestamp NULL DEFAULT NULL,
   `descripcion` varchar(40) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Volcado de datos para la tabla `sintomas`
@@ -889,8 +910,8 @@ ALTER TABLE `detalle_atencion`
 -- Filtros para la tabla `det_especialidad_area`
 --
 ALTER TABLE `det_especialidad_area`
-  ADD CONSTRAINT `det_especialidad_area_id_area_foreign` FOREIGN KEY (`id_area`) REFERENCES `areas` (`id`),
-  ADD CONSTRAINT `det_especialidad_area_id_especialidad_foreign` FOREIGN KEY (`id_especialidad`) REFERENCES `especialidades` (`id`);
+  ADD CONSTRAINT `det_especialidad_area_id_area_foreign` FOREIGN KEY (`id_area`) REFERENCES `areas` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `det_especialidad_area_id_especialidad_foreign` FOREIGN KEY (`id_especialidad`) REFERENCES `especialidades` (`id`) ON DELETE CASCADE;
 
 --
 -- Filtros para la tabla `det_profesionales`
