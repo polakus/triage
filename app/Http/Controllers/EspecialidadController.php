@@ -103,15 +103,21 @@ class EspecialidadController extends Controller
         $this->validarEspecialidad($request);
         $update = Especialidad::findOrFail($id);
 
-        if($request->editarnom !=""){
-            $update->nombre= $request->editarnom;
-        }
-        if($request->des != ""){
-            $update->descripcion = $request->des;
-            
-        }
+        $update->nombre= $request->esp_nombre;
+        $update->descripcion = $request->descripcion;
         $update->save();
-        return redirect()->action("EspecialidadController@index");
+        $detesparea = Det_especialidad_area::where('id_especialidad', $id);
+        $array_ids = [];
+        foreach($detesparea as $det){
+            array_push($array_ids, $det->id);
+        }
+        Det_especialidad_area::destroy($array_ids);
+        // $detesparea->delete();
+        $det = new Det_especialidad_area;
+        $det->id_especialidad = $update->id;
+        $det->id_area = $request->area;
+        // return redirect()->action("EspecialidadController@index");
+        return response()->json();
     }
 
     /**

@@ -56,12 +56,13 @@ Route::get('/profesionales/atenciones','profesionalesController@atenciones')->mi
 Route::resource('/profesionales', 'profesionalesController', ['except' => ['destroy', 'edit', 'update']])->middleware('auth');
 Route::resource('/cie','CieController')->middleware('auth');
 Route::resource('/especialidades','EspecialidadController')->middleware('auth');
-// Route::get('/pruebas', function(){
-//     $cies = App\CIE::all();
-//     foreach($cies as $cie){
-//         echo $cie."<br>";
-//     }
-// });
+Route::get('/pruebas', function(){
+    // $detesp = App\Det_especialidad_area::all();
+    // foreach($detesp as $cie){
+    //     echo $cie->area->tipo_dato."<br>";
+    // }
+    echo $area_seleccionada = App\Det_especialidad_area::where('id_especialidad', '=', 5)->first()->area->id;
+});
 
 Route::post('/atencionclinica/sala','AtencionClinicaController@cargarSala')->middleware('auth');
 

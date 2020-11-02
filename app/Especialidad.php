@@ -11,4 +11,7 @@ class Especialidad extends Model
     public function detalleProfesional(){
         return $this->hasMany('App\DetalleProfesional');
     }
+    public function Det_especialidad_area(){
+        return $this->hasMany('App\Det_epecialidad_area');
+    }
 }
