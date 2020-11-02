@@ -231,7 +231,7 @@
     var tipo=$('#tipo'+id).val();
     var id_sala=$('#id_sala'+sala_id).val();
     var sala=$('#sala'+sala_id).val();
-    alert(sala);
+    // alert(sala);
       $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -248,6 +248,30 @@
                     id_sala:id_sala,
                     sala:sala
                 },
+                success: function(response){
+                    
+                    var table = $('#example').DataTable();
+                    table.draw();
+
+                    },
+                error:function(){
+                    // $("#labelNombre").text("Error 2");
+                    // $("#labelNombre").addClass('text-danger');
+                }
+            });
+   };
+   function darAlta(id){
+     $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+    });
+
+       $.ajax({
+                type:'get',
+                url:"/turnos/"+id+"/edit",
+                dataType:"json",
+                
                 success: function(response){
                     
                     var table = $('#example').DataTable();

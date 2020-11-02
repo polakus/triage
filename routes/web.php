@@ -19,9 +19,7 @@ use App\Profesional;
 Route::get('/', function () {
     return view('welcome');
 });
-// Route::get('/test', function () {
-//     return view('layouts.plantillaTest');
-// });
+Route::get('/atencionclinica/atencionsala','AtencionClinicaController@atencionsala')->middleware('auth');
 
 Route::get('/test',function(){
 	return view('triagepreguntas.test');
@@ -31,7 +29,7 @@ Route::post('atencionclinica/refresh','AtencionClinicaController@refresh')->name
 Route::get('/usuarios/pendientes/{id}/edit', 'usuariosController@aceptar')->middleware('auth');
 Route::delete('/usuarios/pendientes/{id}', 'usuariosController@rechazar')->middleware('auth');
 Route::get('/usuarios/pendientes', 'usuariosController@pendientes')->middleware('auth');
-Route::get('/triagepreguntas/estado/{triagepreguntas}', 'TriagepreguntasController@estado')->middleware('auth');
+// Route::get('/triagepreguntas/estado/{triagepreguntas}', 'TriagepreguntasController@estado')->middleware('auth');
 //Route::get('/triagepreguntas/analizar', 'TriagepreguntasController@analizar');
 Route::get('/pacientes/shows', 'PacientesController@shows')->middleware('auth');
 Route::get('/turnos/mostrar', 'TurnosController@mostrar')->name('mostrar')->middleware('auth');
@@ -57,6 +55,7 @@ Route::resource('/profesionales', 'profesionalesController', ['except' => ['dest
 Route::resource('/cie','CieController')->middleware('auth');
 Route::resource('/especialidades','EspecialidadController')->middleware('auth');
 Route::resource('/pruebas', 'pruebaController');
+
 
 Route::post('/atencionclinica/sala','AtencionClinicaController@cargarSala')->middleware('auth');
 

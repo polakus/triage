@@ -1,5 +1,5 @@
 
 @if($estado!="alta")
-<a href="{{ route('turnos.edit',$id) }}" class="btn btn-success btn-sm">Dar alta</a>
+<button {{-- href="{{ route('turnos.edit',$id) }}" --}} onclick="darAlta({{ $id }})"class="btn btn-success btn-sm">Dar alta</button>
 
 @endif

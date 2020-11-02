@@ -114,3 +114,19 @@ Route::get('sintomas_cargar', function(){
 
 
 });
+
+
+Route::get('historial',function(Request $request){
+    $historial=DB::table('historial as h')
+                     ->join('detalle_atencion as dt','dt.id','=','h.id_detalle_atencion')
+                     ->join('Atencion as a','a.id','=','dt.id_atencion')
+                     
+                     ->join('cie as c','c.id','=','h.id_cie')
+                     ->select('c.descripcion','c.codigo','h.descripcion as observacion')
+                     ->where('a.Paciente_id','=',$request->id_paciente)
+                    
+                    ->get();
+    return DataTables::of($historial)
+           ->toJson();
+});
+

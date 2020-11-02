@@ -188,8 +188,8 @@ class TurnosController extends Controller
       
       
       $actualizar_detalle->save();
-
-      return redirect()->action('TurnosController@mostrar');
+      return response()->json();
+      // return redirect()->action('TurnosController@mostrar');
         
     }
 
@@ -449,8 +449,8 @@ class TurnosController extends Controller
 
         }
       }
-
-      return redirect()->action('PacientesController@index');
+      $message="Se almacenaron los datos correctamente.";
+      return redirect()->action('PacientesController@index')->with('success',$message);
     }
     
 
