@@ -1,22 +1,13 @@
-<?php 
- $salas= DB::table('salas as s')
-                  ->join('Areas as a','a.id','=','s.id_area')
-                  ->select('a.tipo_dato','s.nombre','s.camas','s.disponibilidad','s.id')
-                  ->get();
-
-?>
-
-
-@if($operar == 1 || $estado == "Operar" )
+@if($pacientes->operar == 1 || $pacientes->estado == "Operar" )
                     <!-- Button trigger modal -->
 
-      <button type="button" class="btn btn-dark btn-sm" data-toggle="modal" data-target="#modal{{ $id }}" id="button1">
+      <button type="button" class="btn btn-dark btn-sm" data-toggle="modal" data-target="#modal{{ $pacientes->id }}" id="button1">
         Quirofano
       </button>
 
 
     <!-- Modal -->
-    <div class="modal fade" id="modal{{ $id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="modal{{ $pacientes->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
@@ -41,10 +32,10 @@
                             <div class="col border">
                                
                                   <input type="hidden" id="sala{{ $s->id }}" value="{{ $s->nombre }}">
-                                  <input type="hidden" id="detalleatencion{{ $id }}" value="{{ $id }}">
+                                  <input type="hidden" id="detalleatencion{{ $pacientes->id }}" value="{{ $pacientes->id }}">
                                   <input type="hidden" id="id_sala{{ $s->id }}" value={{ $s->id }}>
-                                  <input type="hidden" id="tipo{{ $id }}" value="Operado">
-                                  <button type="button" id="add2" name="add" onclick="cargarValorOperar({{ $id }},{{ $s->id }})" class="btn btn-success">Asignar esta sala</button>
+                                  <input type="hidden" id="tipo{{ $pacientes->id }}" value="Operado">
+                                  <button type="button" id="add2" name="add" onclick="cargarValorOperar({{ $pacientes->id }},{{ $s->id }})" class="btn btn-success">Asignar esta sala</button>
                                 
                               </div>
                           @else
@@ -68,8 +59,8 @@
       </div>
     </div>
   @else
-    @if($estado =="Operado")
-      {{ $sala }}
+    @if($pacientes->estado =="Operado")
+      {{ $pacientes->sala }}
     @endif
 
   @endif

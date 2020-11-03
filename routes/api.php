@@ -99,7 +99,14 @@ Route::get('mostrar',function(){
                         })
                         // ->rawColumns(['observacion'])
                         ->addColumn('Internacion','turnos/actionsInternar')
-                        ->addColumn('Operar','turnos/actionsOperar')  
+                        // ->addColumn('Operar','turnos/actionsOperar')
+                        ->addColumn('Operar', function($pacientes){
+                            $salas = DB::table('salas as s')
+                                        ->join('Areas as a','a.id','=','s.id_area')
+                                        ->select('a.tipo_dato','s.nombre','s.camas','s.disponibilidad','s.id')
+                                        ->get();
+                            return view('turnos/actionsOperar', compact('pacientes', 'salas'));
+                        })  
                         ->addColumn('DarAlta','turnos/daralta')  
                         ->rawColumns(['observacion','Internacion','Operar','DarAlta'])
                     ->toJson();
@@ -131,7 +138,11 @@ Route::get('dtespecialidades', function(){
                         ->select('esp.id','esp.nombre','esp.descripcion', 'a.tipo_dato')
                         ->get();
     return DataTables::of($especialidades)
-                        ->addColumn('button', 'especialidades/accion_editar')
+                        ->addColumn('button', function($especialidades){
+                            $editareas = App\Area::all();
+                            $area_seleccionada = App\Det_especialidad_area::where('id_especialidad', '=', $especialidades->id)->first()->area->id;
+                            return view('especialidades/accion_editar', compact('editareas', 'area_seleccionada', 'especialidades'));
+                        })
                         ->rawColumns(['button']) 
                         ->toJson();
 });

@@ -1,7 +1,7 @@
-<button type="button" class="btn btn-dark btn-sm" data-toggle="modal" data-target="#editar{{ $id }}">
+<button type="button" class="btn btn-dark btn-sm" data-toggle="modal" data-target="#editar{{ $especialidades->id }}">
     Editar
 </button>
-<div class="modal fade" id="editar{{ $id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="editar{{ $especialidades->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -16,38 +16,34 @@
                         <div class="form-row">
                             <div class="form-group">
                                 <label>Nombre</label>
-                                <input type="text" id="nomb{{$id}}" name="editarnomb" class="form-control" placeholder="Cod" value="{{ $nombre }}">
-                                <div id="error_edit_nomb{{$id}}"></div>
+                                <input type="text" id="nomb{{$especialidades->id}}" name="editarnomb" class="form-control" placeholder="Cod" value="{{ $especialidades->nombre }}">
+                                <div id="error_edit_nomb{{$especialidades->id}}"></div>
                             </div>
                         </div>
                         <div class="form-row">
                             <div class="form-group col-md-10">
                                 <label>Descripcion </label>
-                                <textarea class="form-control" id="desc{{$id}}" name="editardesc" rows="3" value="{{$descripcion}}">{{ $descripcion }}</textarea>
-                                <div id="error_edit_desc{{$id}}"></div>
+                                <textarea class="form-control" id="desc{{$especialidades->id}}" name="editardesc" rows="3" value="{{$especialidades->descripcion}}">{{ $especialidades->descripcion }}</textarea>
+                                <div id="error_edit_desc{{$especialidades->id}}"></div>
                             </div>
                         </div>
-                        {{-- ARREGLAR URGENTE--}}
-                        <?php $editareas = App\Area::all();?>
-                        <?php $area_seleccionada = App\Det_especialidad_area::where('id_especialidad', '=', 5)->first()->area->id;?>
-                                {{----}}
                         <div class="form-row">
 							<div class="form-group">
 								<label>Area </label>
-								<select id="editarea{{$id}}" name="editarea" class="form-control">
+								<select id="editarea{{$especialidades->id}}" name="editarea" class="form-control">
 									<option value="" selected disabled hidden>Seleccione</option>
 								@foreach($editareas as $a)
 									<option value="{{ $a->id }}" {{$area_seleccionada == $a->id ? 'selected':''}}>{{ $a->tipo_dato }} </option>
 								@endforeach
 								</select>
-								<div id="error_edit_area{{$id}}"></div>
+								<div id="error_edit_area{{$especialidades->id}}"></div>
 							</div>
 						</div>
                     </div>
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="submit" onclick="editaresp({{$id}})" class="btn btn-dark">Editar</button>
+                <button type="submit" onclick="editaresp({{$especialidades->id}})" class="btn btn-dark">Editar</button>
                 <button type="button" class="btn btn-dark" data-dismiss="modal">Cerrar</button>
             </div>
         </div>
@@ -58,7 +54,7 @@
     function editaresp(id) {
       	var nombre = $('#nomb'+id).val();
 		var descripcion = $('#desc'+id).val();
-		var area = $('#editarea{{$id}}').val();
+		var area = $('#editarea'+id).val();
 		$('#error_edit_nomb'+id).empty();
 		$('#error_desc'+id).empty();
 		$('#error_edit_area'+id).empty();
