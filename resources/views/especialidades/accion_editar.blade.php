@@ -56,7 +56,7 @@
 		var descripcion = $('#desc'+id).val();
 		var area = $('#editarea'+id).val();
 		$('#error_edit_nomb'+id).empty();
-		$('#error_desc'+id).empty();
+		$('#error_edit_desc'+id).empty();
 		$('#error_edit_area'+id).empty();
 
 		$.ajaxSetup({
@@ -80,7 +80,6 @@
                 table.draw();
             },
             error:function(err){
-				alert("no");
                 if (err.status == 422) { // when status code is 422, it's a validation issue
 					$('#success_message').fadeIn().html(err.responseJSON.message);
 					$.each(err.responseJSON.errors, function (i, error) {
