@@ -1,13 +1,13 @@
-@if($pacientes->operar == 1 || $pacientes->estado == "Operar" )
+@if($paciente->operar == 1 || $paciente->estado == "Operar" )
                     <!-- Button trigger modal -->
 
-      <button type="button" class="btn btn-dark btn-sm" data-toggle="modal" data-target="#modal{{ $pacientes->id }}" id="button1">
+      <button type="button" class="btn btn-dark btn-sm" data-toggle="modal" data-target="#modal{{ $paciente->id }}" id="button1">
         Quirofano
       </button>
 
 
     <!-- Modal -->
-    <div class="modal fade" id="modal{{ $pacientes->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="modal{{ $paciente->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
@@ -32,10 +32,10 @@
                             <div class="col border">
                                
                                   <input type="hidden" id="sala{{ $s->id }}" value="{{ $s->nombre }}">
-                                  <input type="hidden" id="detalleatencion{{ $pacientes->id }}" value="{{ $pacientes->id }}">
+                                  <input type="hidden" id="detalleatencion{{ $paciente->id }}" value="{{ $paciente->id }}">
                                   <input type="hidden" id="id_sala{{ $s->id }}" value={{ $s->id }}>
-                                  <input type="hidden" id="tipo{{ $pacientes->id }}" value="Operado">
-                                  <button type="button" id="add2" name="add" onclick="cargarValorOperar({{ $pacientes->id }},{{ $s->id }})" class="btn btn-success">Asignar esta sala</button>
+                                  <input type="hidden" id="tipo{{ $paciente->id }}" value="Operado">
+                                  <button type="button" id="add2" name="add" onclick="cargarValorOperar({{ $paciente->id }},{{ $s->id }})" class="btn btn-success">Asignar esta sala</button>
                                 
                               </div>
                           @else
@@ -59,8 +59,8 @@
       </div>
     </div>
   @else
-    @if($pacientes->estado =="Operado")
-      {{ $pacientes->sala }}
+    @if($paciente->estado =="Operado")
+      {{ $paciente->sala }}
     @endif
 
   @endif

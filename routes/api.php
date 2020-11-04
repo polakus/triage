@@ -83,7 +83,10 @@ Route::get('mostrar',function(){
                     ->orderBy('da.hora','ASC')
                     ->get();
    
-    
+    $salas = DB::table('salas as s')
+                    ->join('Areas as a','a.id','=','s.id_area')
+                    ->select('a.tipo_dato','s.nombre','s.camas','s.disponibilidad','s.id')
+                    ->get();
     return DataTables::of($pacientes)
                         ->addColumn('observacion',function($paciente){
                             $encontrar=DB::table('historial as h')
@@ -98,14 +101,13 @@ Route::get('mostrar',function(){
                             }
                         })
                         // ->rawColumns(['observacion'])
-                        ->addColumn('Internacion','turnos/actionsInternar')
+                        ->addColumn('Internacion', function($paciente) use($salas){
+                            return view('turnos/actionsInternar',compact('paciente','salas'));
+                        })
                         // ->addColumn('Operar','turnos/actionsOperar')
-                        ->addColumn('Operar', function($pacientes){
-                            $salas = DB::table('salas as s')
-                                        ->join('Areas as a','a.id','=','s.id_area')
-                                        ->select('a.tipo_dato','s.nombre','s.camas','s.disponibilidad','s.id')
-                                        ->get();
-                            return view('turnos/actionsOperar', compact('pacientes', 'salas'));
+                        ->addColumn('Operar', function($paciente) use ($salas){
+                            
+                            return view('turnos/actionsOperar', compact('paciente', 'salas'));
                         })  
                         ->addColumn('DarAlta','turnos/daralta')  
                         ->rawColumns(['observacion','Internacion','Operar','DarAlta'])
