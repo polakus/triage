@@ -1,7 +1,7 @@
-<button type="button" class="btn btn-dark btn-sm" data-toggle="modal" data-target="#editar{{ $especialidades->id }}">
+<button type="button" id="bnedit" class="btn btn-dark btn-sm" data-toggle="modal" data-target="#editar{{ $especialidad->id }}">
     Editar
 </button>
-<div class="modal fade" id="editar{{ $especialidades->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="editar{{ $especialidad->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -16,34 +16,34 @@
                         <div class="form-row">
                             <div class="form-group">
                                 <label>Nombre</label>
-                                <input type="text" id="nomb{{$especialidades->id}}" name="editarnomb" class="form-control" placeholder="Cod" value="{{ $especialidades->nombre }}">
-                                <div id="error_edit_nomb{{$especialidades->id}}"></div>
+                                <input type="text" id="nomb{{$especialidad->id}}" name="editarnomb" class="form-control" placeholder="Cod" value="{{ $especialidad->nombre }}">
+                                <div id="error_edit_nomb{{$especialidad->id}}"></div>
                             </div>
                         </div>
                         <div class="form-row">
                             <div class="form-group col-md-10">
                                 <label>Descripcion </label>
-                                <textarea class="form-control" id="desc{{$especialidades->id}}" name="editardesc" rows="3" value="{{$especialidades->descripcion}}">{{ $especialidades->descripcion }}</textarea>
-                                <div id="error_edit_desc{{$especialidades->id}}"></div>
+                                <textarea class="form-control" id="desc{{$especialidad->id}}" name="editardesc" rows="3" value="{{$especialidad->descripcion}}">{{ $especialidad->descripcion }}</textarea>
+                                <div id="error_edit_desc{{$especialidad->id}}"></div>
                             </div>
                         </div>
                         <div class="form-row">
 							<div class="form-group">
 								<label>Area </label>
-								<select id="editarea{{$especialidades->id}}" name="editarea" class="form-control">
+								<select id="editarea{{$especialidad->id}}" name="editarea" class="form-control">
 									<option value="" selected disabled hidden>Seleccione</option>
 								@foreach($editareas as $a)
-									<option value="{{ $a->id }}" {{$area_seleccionada == $a->id ? 'selected':''}}>{{ $a->tipo_dato }} </option>
+									<option value="{{ $a->id }}" {{$especialidad->id_area == $a->id ? 'selected':''}}>{{ $a->tipo_dato }} </option>
 								@endforeach
 								</select>
-								<div id="error_edit_area{{$especialidades->id}}"></div>
+								<div id="error_edit_area{{$especialidad->id}}"></div>
 							</div>
 						</div>
                     </div>
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="submit" onclick="editaresp({{$especialidades->id}})" class="btn btn-dark">Editar</button>
+                <button type="submit" onclick="editaresp({{$especialidad->id}})" class="btn btn-dark">Editar</button>
                 <button type="button" class="btn btn-dark" data-dismiss="modal">Cerrar</button>
             </div>
         </div>
@@ -74,7 +74,6 @@
 				area:area,
             },
             success: function(response){
-                // alert("si");
 				$('#editar'+id).modal('hide');
 				var table = $('#myTable').DataTable();
                 table.draw();

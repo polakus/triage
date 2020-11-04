@@ -59,7 +59,14 @@ Route::get('/pruebas', function(){
     // foreach($detesp as $cie){
     //     echo $cie->area->tipo_dato."<br>";
     // }
-    echo $area_seleccionada = App\Det_especialidad_area::where('id_especialidad', '=', 5)->first()->area->id;
+    // foreach(App\Det_especialidad_area::all() as $det){
+    //     echo $det->area->id.'<br>';
+    // }
+    foreach(App\Especialidad::all() as $esp){
+        foreach($esp->Det_especialidad_area as $det)
+            echo $det->area->id.'<br>';
+    }
+    // echo $area_seleccionada = App\Det_especialidad_area::where('id_especialidad', '=', 5)->first()->area->id;
 });
 
 

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1:3306
--- Tiempo de generación: 02-11-2020 a las 20:36:37
+-- Tiempo de generación: 03-11-2020 a las 22:35:00
 -- Versión del servidor: 8.0.18
 -- Versión de PHP: 7.4.0
 
@@ -66,7 +66,7 @@ CREATE TABLE IF NOT EXISTS `atencion` (
   KEY `atencion_id_procotocolo_foreign` (`id_protocolo`),
   KEY `atencion_paciente_id_foreign` (`Paciente_id`),
   KEY `atencion_usuario_id_foreign` (`usuario_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=151 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=152 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Volcado de datos para la tabla `atencion`
@@ -93,7 +93,8 @@ INSERT INTO `atencion` (`id`, `created_at`, `updated_at`, `id_protocolo`, `Pacie
 (147, '2020-10-27 23:18:51', '2020-10-27 23:18:51', NULL, 1, 1),
 (148, '2020-10-27 23:40:42', '2020-10-27 23:41:35', NULL, 1, 1),
 (149, '2020-11-02 20:25:17', '2020-11-02 20:25:17', NULL, 3, 1),
-(150, '2020-11-02 20:29:15', '2020-11-02 20:29:15', NULL, 3, 1);
+(150, '2020-11-02 20:29:15', '2020-11-02 20:29:15', NULL, 3, 1),
+(151, '2020-11-03 19:05:57', '2020-11-03 19:05:57', NULL, 7, 1);
 
 -- --------------------------------------------------------
 
@@ -218,7 +219,7 @@ CREATE TABLE IF NOT EXISTS `detalle_atencion` (
   KEY `detalle_atencion_id_atencion_foreign` (`id_atencion`),
   KEY `detalle_atencion_id_det_profesional_sala_foreign` (`id_det_profesional_sala`),
   KEY `detalle_atencion_id_especialidad_foreign` (`id_especialidad`)
-) ENGINE=InnoDB AUTO_INCREMENT=149 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=150 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Volcado de datos para la tabla `detalle_atencion`
@@ -235,12 +236,13 @@ INSERT INTO `detalle_atencion` (`id`, `created_at`, `updated_at`, `id_atencion`,
 (139, '2020-08-18 19:41:51', '2020-08-18 19:41:51', 137, NULL, '2020-08-18', '19:41', 5, 0, 'consulta', 1, NULL, 0, NULL),
 (141, '2020-09-18 12:59:43', '2020-09-18 12:59:43', 140, NULL, '2020-09-18', '12:59', 5, 0, 'consulta', 1, NULL, 0, NULL),
 (142, '2020-09-18 13:01:29', '2020-09-18 13:01:29', 141, NULL, '2020-09-18', '13:01', 6, 0, 'consulta', 2, NULL, 0, NULL),
-(143, '2020-10-21 01:43:22', '2020-10-21 01:43:22', 143, NULL, '2020-10-20', '22:43', 5, 0, 'Operar', 1, NULL, 0, NULL),
+(143, '2020-10-21 01:43:22', '2020-11-03 19:59:26', 143, NULL, '2020-11-03', '16:59', 5, 0, 'Operado', 1, '3', 0, NULL),
 (144, '2020-10-21 01:44:17', '2020-10-21 01:44:17', 144, NULL, '2020-10-20', '22:44', 5, 0, 'Operar', 1, NULL, 0, NULL),
 (145, '2020-10-21 01:46:46', '2020-10-21 01:46:46', 145, NULL, '2020-10-20', '22:46', 5, 0, 'Operar', 1, NULL, 0, NULL),
 (146, '2020-10-27 23:40:42', '2020-10-27 23:40:42', 148, NULL, '2020-10-27', '20:40', 5, 0, 'Operar', 1, NULL, 0, NULL),
 (147, '2020-11-02 20:25:51', '2020-11-02 20:25:51', 149, NULL, '2020-11-02', '17:25', 6, 0, 'consulta', 2, NULL, 0, NULL),
-(148, '2020-11-02 20:31:14', '2020-11-02 20:31:14', 150, NULL, '2020-11-02', '17:31', 7, 0, 'consulta', 2, NULL, 0, NULL);
+(148, '2020-11-02 20:31:14', '2020-11-02 20:31:14', 150, NULL, '2020-11-02', '17:31', 7, 0, 'consulta', 2, NULL, 0, NULL),
+(149, '2020-11-03 19:06:07', '2020-11-03 19:06:07', 151, NULL, '2020-11-03', '16:06', 7, 0, 'consulta', 2, NULL, 0, NULL);
 
 -- --------------------------------------------------------
 
@@ -258,7 +260,7 @@ CREATE TABLE IF NOT EXISTS `det_especialidad_area` (
   PRIMARY KEY (`id`),
   KEY `det_especialidad_area_id_especialidad_foreign` (`id_especialidad`),
   KEY `det_especialidad_area_id_area_foreign` (`id_area`)
-) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Volcado de datos para la tabla `det_especialidad_area`
@@ -269,7 +271,8 @@ INSERT INTO `det_especialidad_area` (`id`, `created_at`, `updated_at`, `id_espec
 (17, '2020-11-01 03:00:00', '2020-11-01 03:00:00', 6, 6),
 (18, '2020-11-01 03:00:00', '2020-11-01 03:00:00', 7, 7),
 (19, '2020-11-01 03:00:00', '2020-11-01 03:00:00', 8, 8),
-(20, '2020-11-01 03:00:00', '2020-11-01 03:00:00', 9, 7);
+(20, '2020-11-01 03:00:00', '2020-11-01 03:00:00', 9, 7),
+(21, '2020-11-03 20:33:29', '2020-11-03 20:33:29', 26, 7);
 
 -- --------------------------------------------------------
 
@@ -367,7 +370,7 @@ CREATE TABLE IF NOT EXISTS `especialidades` (
   `nombre` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `descripcion` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Volcado de datos para la tabla `especialidades`
@@ -378,7 +381,8 @@ INSERT INTO `especialidades` (`id`, `created_at`, `updated_at`, `nombre`, `descr
 (6, NULL, '2020-11-02 02:21:59', 'Clinico', 'a'),
 (7, NULL, NULL, 'Cardiologia', 'asda'),
 (8, '2020-07-15 03:44:45', '2020-07-15 03:44:45', 'Traumatologia', 'Dolores de espalda, huesos,etc'),
-(9, '2020-07-15 04:10:30', '2020-07-15 04:10:30', 'Cirugia General', 'Se encarga de tal....');
+(9, '2020-07-15 04:10:30', '2020-07-15 04:10:30', 'Cirugia General', 'Se encarga de tal....'),
+(26, '2020-11-03 20:33:29', '2020-11-03 20:33:29', 'borrar', 'sdfsd');
 
 -- --------------------------------------------------------
 
@@ -582,7 +586,7 @@ CREATE TABLE IF NOT EXISTS `preguntas` (
   PRIMARY KEY (`id`),
   KEY `preguntas_id_atencion_foreign` (`id_atencion`),
   KEY `preguntas_id_sintoma_foreign` (`id_sintoma`)
-) ENGINE=InnoDB AUTO_INCREMENT=166 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=167 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Volcado de datos para la tabla `preguntas`
@@ -615,7 +619,8 @@ INSERT INTO `preguntas` (`id`, `created_at`, `updated_at`, `id_atencion`, `id_si
 (162, '2020-11-02 20:25:17', '2020-11-02 20:25:17', 149, 3),
 (163, '2020-11-02 20:29:15', '2020-11-02 20:29:15', 150, 3),
 (164, '2020-11-02 20:29:15', '2020-11-02 20:29:15', 150, 4),
-(165, '2020-11-02 20:29:15', '2020-11-02 20:29:15', 150, 2);
+(165, '2020-11-02 20:29:15', '2020-11-02 20:29:15', 150, 2),
+(166, '2020-11-03 19:05:57', '2020-11-03 19:05:57', 151, 1);
 
 -- --------------------------------------------------------
 
@@ -780,7 +785,7 @@ INSERT INTO `salas` (`id`, `created_at`, `updated_at`, `id_area`, `disponibilida
 (6, '2020-06-22 23:46:15', '2020-08-04 05:18:59', 8, 0, 0, '2'),
 (7, NULL, NULL, 6, 1, 0, '2'),
 (8, NULL, NULL, 6, 1, 0, '3'),
-(9, '2020-08-03 02:26:01', '2020-08-04 05:18:57', 8, 1, 1, '3');
+(9, '2020-08-03 02:26:01', '2020-11-03 19:59:26', 8, 0, 1, '3');
 
 -- --------------------------------------------------------
 

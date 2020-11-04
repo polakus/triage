@@ -135,18 +135,24 @@ Route::get('dtespecialidades', function(){
     $especialidades = DB::table('Especialidades as esp')
                         ->join('det_especialidad_area as det','det.id_especialidad','=','esp.id')
                         ->join('Areas as a','a.id','=','det.id_area')
-                        ->select('esp.id','esp.nombre','esp.descripcion', 'a.tipo_dato')
+                        ->select('esp.id','esp.nombre','esp.descripcion', 'a.tipo_dato', 'a.id as id_area')
                         ->get();
+    $editareas = App\Area::all();
+    // $area_seleccionada = App\Det_especialidad_area::where('id_especialidad', '=', $especialidades->id)->first()->area->id;
     return DataTables::of($especialidades)
-                        ->addColumn('button', function($especialidades){
-                            $editareas = App\Area::all();
-                            $area_seleccionada = App\Det_especialidad_area::where('id_especialidad', '=', $especialidades->id)->first()->area->id;
-                            return view('especialidades/accion_editar', compact('editareas', 'area_seleccionada', 'especialidades'));
+                        // ->addColumn('area', function($especialidades){
+                        //     $unavariable = '';
+                        //     foreach($especialidades->Det_especialidad_area as $det){
+                        //         $unavariable = $det->area->tipo_dato;
+                        //     }
+                        //     return $unavariable;
+                        // })
+                        ->addColumn('button', function($especialidad) use ($editareas){
+                            return view('especialidades/accion_editar', compact('editareas', 'especialidad'));
                         })
                         ->rawColumns(['button']) 
                         ->toJson();
 });
-
 Route::get('historial',function(Request $request){
     $historial=DB::table('historial as h')
                      ->join('detalle_atencion as dt','dt.id','=','h.id_detalle_atencion')
