@@ -80,6 +80,7 @@ Route::get('mostrar',function(){
                     // ->where('da.fecha','=',date('Y-m-d'))
                     
                     ->orderBy('da.id_codigo_triage','DESC')
+                    ->orderBy('da.fecha','DESC')
                     ->orderBy('da.hora','ASC')
                     ->get();
    
@@ -125,7 +126,7 @@ Route::get('sintomas_cargar', function(){
 
 Route::get('cargar_cie', function(){
     // $cies = App\CIE::all();
-    $enfermedades = DB::table('cie')->get();
+    $enfermedades = DB::table('cie')->orderBy('codigo')->get();
     return DataTables::of($enfermedades)
                         ->addColumn('button', 'cie/action_editar')
                         ->rawColumns(['button']) 

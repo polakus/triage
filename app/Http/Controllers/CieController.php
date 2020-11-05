@@ -15,10 +15,9 @@ class CieController extends Controller
      */
     public function index()
     {
-        //
-        $cie= CIE::all()->sortBy('codigo');
+  
 
-        return view('cie.index',compact('cie'));
+        return view('cie.index');
     }
 
     /**

@@ -1,7 +1,7 @@
 @extends("triagepreguntas.test")
+@section("css")
 
-
-
+@endsection
 @section("cuerpo")
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
         <h4>Atenciones</h4>
@@ -33,19 +33,19 @@
   </div>
 </div>
 
-<div class="table-responsive">
-        <table class="table table-striped table-hover table-bordered table-sm" id="example" >
+<div class="table-responsive" >
+        <table class="table table-striped table-bordered table-hover  table-sm" id="example">
           <thead>
             <tr>
-              <th width="100px">Nombre y Apellido</th>
+              <th >Nombre y Apellido</th>
               <th>Fecha y hora</th>
               <th>Areas</th>
               <th>Especialidades</th>
               <th>Condicion</th>
               <th>Observacion</th>
-              <th width="100px">Sala de internacion</th>
+              <th >Sala de internacion</th>
               <th >Sala de operacion</th>
-              <th width="70px">Accion</th>
+              <th>Accion</th>
             </tr>
           </thead>
           <tbody id="tabla">
@@ -80,6 +80,7 @@
     
   //   }).trigger('change');
 </script>
+
 <script type="text/javascript">
   $(document).ready(function() {
    
@@ -98,22 +99,25 @@
             {data:'Internacion'},
             {data:'Operar'},
             {data:'DarAlta'}
-           ],
+           ], 
+           // "order": [[1, 'desc']],
          "createdRow": function( row, data, dataIndex){
                           if(data.color=="rojo"){
 
-                           $(row).css('background-color', '#F39B9B');
+                           $(row).css('background-color', '#FFAAAA');
                           }
                           else{
                             if(data.color=="verde"){
-                              $(row).css('background-color','#85F361');
+                              $(row).css('background-color','#B3FFAA');
                              
                             }
                             else{
-                              $(row).css('background-color','#DEE512')
+                              $(row).css('background-color','#F8FFAA')
                             }
                           }
                          },
+
+      "responsive": true,
       "processing":true,
       "ordering": false,
       "iDisplayLength": 10,

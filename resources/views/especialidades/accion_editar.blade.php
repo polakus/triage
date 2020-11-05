@@ -43,7 +43,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="submit" onclick="editaresp({{$especialidad->id}})" class="btn btn-dark">Editar</button>
+                <button type="button" onclick="editaresp({{$especialidad->id}})" class="btn btn-dark">Editar</button>
                 <button type="button" class="btn btn-dark" data-dismiss="modal">Cerrar</button>
             </div>
         </div>

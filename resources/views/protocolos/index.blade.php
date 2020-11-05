@@ -61,7 +61,7 @@ $('form[id^="a2"').submit( function() {
   $(document).ready(function() {
     $('#myTable').DataTable({
       
-      
+      "responsive": true,
        "language": {
         "decimal": ",",
         "thousands": ".",

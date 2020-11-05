@@ -23,6 +23,7 @@
     {{-- DataTable --}}
 
     <link rel="stylesheet" type="text/css" href="{{ asset('css/datatables.bootstrap4.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/responsive/2.2.6/css/responsive.dataTables.min.css">
 
     {{-- Autocompletar --}}
 
@@ -68,13 +69,7 @@
     <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-toggle="collapse" data-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
-  <!-- <input class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search"> -->
-
-  {{-- <ul class="navbar-nav px-3">
-    <li class="nav-item text-nowrap">
-      <a class="nav-link" href="#">Sign out</a>
-    </li>
-  </ul> --}}
+  
     <div class="dropdown" >
     <a class="btn btn-dark dropdown-toggle" style="background-color: transparent;"href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
       {{ $usuario->name }}
@@ -95,6 +90,7 @@
   </div>
 
 </nav>
+
 
 
 <div class="container-fluid">
@@ -328,6 +324,7 @@
 <script src="{{ asset('js/jquery-3.5.1.js') }}"></script>
 <script src="{{ asset('js/jquery.dataTables.min.js') }}"></script>
 <script src="{{ asset('js/dataTables.bootstrap4.min.js') }}"></script>
+<script src="https://cdn.datatables.net/responsive/2.2.6/js/dataTables.responsive.min.js"></script>
 
 {{-- Boostrap --}}
 {{-- <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script> --}}

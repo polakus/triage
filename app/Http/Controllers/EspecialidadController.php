@@ -17,14 +17,14 @@ class EspecialidadController extends Controller
      */
     public function index()
     {
-        $especialidades = DB::table('Especialidades as esp')
-                            ->join('det_especialidad_area as det','det.id_especialidad','=','esp.id')
-                            ->join('Areas as a','a.id','=','det.id_area')
-                            ->select('esp.id','esp.nombre','esp.descripcion','a.tipo_dato')
-                            ->get();
-
+       // $especialidades = DB::table('Especialidades as esp')
+       //                      ->join('det_especialidad_area as det','det.id_especialidad','=','esp.id')
+       //                      ->join('Areas as a','a.id','=','det.id_area')
+       //                      ->select('esp.id','esp.nombre','esp.descripcion','a.tipo_dato')
+       //                      ->get();
+        //$especialidades = Especialidad::all();
         $areas = Area::all();
-        return view('especialidades.index',compact('especialidades','areas'));
+        return view('especialidades.index',compact('areas'));
     }
 
     /**
@@ -106,17 +106,24 @@ class EspecialidadController extends Controller
         $update->nombre= $request->esp_nombre;
         $update->descripcion = $request->descripcion;
         $update->save();
-        $detesparea = Det_especialidad_area::where('id_especialidad', $id);
-        $array_ids = [];
-        foreach($detesparea as $det){
-            array_push($array_ids, $det->id);
-        }
-        Det_especialidad_area::destroy($array_ids);
-        // $detesparea->delete();
-        $det = new Det_especialidad_area;
-        $det->id_especialidad = $update->id;
-        $det->id_area = $request->area;
-        // return redirect()->action("EspecialidadController@index");
+
+        $id_det_area_esp=DB::table('det_especialidad_area')->select('id')->where('id_especialidad','=',$id)->get();
+        // $detesparea = Det_especialidad_area::where('id_especialidad', $id);
+        $det_area_esp= Det_especialidad_area::findOrFail($id_det_area_esp[0]->id);
+        $det_area_esp->id_area=$request->area;
+        $det_area_esp->save();
+        // echo $detesparea;
+
+        // $array_ids = [];
+        // foreach($detesparea as $det){
+        //     array_push($array_ids, $det->id);
+        // }
+        // Det_especialidad_area::destroy($array_ids);
+        // // $detesparea->delete();
+        // $det = new Det_especialidad_area;
+        // $det->id_especialidad = $update->id;
+        // $det->id_area = $request->area;
+        // // return redirect()->action("EspecialidadController@index");
         return response()->json();
     }
 

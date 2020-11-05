@@ -37,7 +37,15 @@ class SintomasController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, ['nombre_sintoma' => 'required']);
+        $c = $request->validate([
+            'nombre_sintoma' => 'required|max:255',
+            
+        ],[
+            'required' => 'Este campo no puede estar vacio.',
+            'max' => 'Este es demasiado largo.',
+            'unique' => 'Este codigo ya se encuentra almacenado.'
+        ]);
+        // $this->validate($request, ['nombre_sintoma' => 'required']);
         $name = $request->get('nombre_sintoma');
 
         $nuevo=new Sintoma;

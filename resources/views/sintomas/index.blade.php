@@ -5,6 +5,7 @@
   <h4 class="h4">Sintomas</h4>
     <div class="ml-auto">
       <input type="text" class="form-control form-inline form-control-sm ml-2 " placeholder="Nombre del sintoma" style="width: 200px" name="nombre_sintoma" id="nombre_sintoma" >
+      <div id="error_sintoma"></div>
     </div>
     <button class="btn btn-outline-secondary btn-sm ml-2"  id="agregar">Agregar sintoma</button>
  
@@ -128,9 +129,10 @@
             console.log(err.responseJSON);
             $('#success_message').fadeIn().html(err.responseJSON.message);
             $.each(err.responseJSON.errors, function (i, error) {
+                $('#error_sintoma').html('<span style="color: red;">'+error[0]+'</span>');
                 // var el = $(document).find('[name="'+i+'"]');
                 // el.after($('<span style="color: red;">'+error[0]+'</span>'));
-                alert(error[0])
+                // alert(error[0])
             });
         }
                 // $("#labelNombre").text("Error 2");
