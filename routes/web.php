@@ -49,6 +49,7 @@ Route::resource('/pacientes','PacientesController')->middleware('auth');
 Route::resource('/triagepreguntas', 'TriagepreguntasController')->middleware('auth');
 Route::resource('/salas', 'salasController')->middleware('auth');
 Route::resource('/areas', 'areasController', ['except' => ['destroy', 'show', 'edit']])->middleware('auth');
+Route::get('/editarProtocolo/{id}','protocolosController@editar');
 Route::resource('/protocolos', 'protocolosController')->middleware('auth');
 Route::get('/profesionales/atenciones','profesionalesController@atenciones')->middleware('auth');
 Route::resource('/profesionales', 'profesionalesController', ['except' => ['destroy', 'edit', 'update']])->middleware('auth');
@@ -62,9 +63,9 @@ Route::get('/pruebas', function(){
     // foreach(App\Det_especialidad_area::all() as $det){
     //     echo $det->area->id.'<br>';
     // }
-    foreach(App\Especialidad::all() as $esp){
-        foreach($esp->Det_especialidad_area as $det)
-            echo $det->area->id.'<br>';
+    foreach(App\Protocolo::all() as $esp){
+        foreach($esp->detalle_protocolo as $det)
+            echo $det->especialidad.'<br>';
     }
     // echo $area_seleccionada = App\Det_especialidad_area::where('id_especialidad', '=', 5)->first()->area->id;
 });

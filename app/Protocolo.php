@@ -20,4 +20,8 @@ class Protocolo extends Model
     {
         return $this->belongsTo('App\Codigo', 'id_codigo_triage');
     }
+
+    public function detalle_protocolo(){
+        return $this->hasMany('App\DetalleProtocolo','id_protocolo');
+    }
 }

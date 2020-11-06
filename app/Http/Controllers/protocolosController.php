@@ -112,12 +112,29 @@ class protocolosController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function editar($id)
     {
-        $sintomas_protocolo = Detalle_Sintoma_Protocolo::where('id_protocolo', $id)
-            ->leftJoin('Sintomas', 'Sintomas.id', '=', 'id_sintoma')->get();
-        $protocolo = Protocolo::find($id);
-        return view('protocolos.edit', compact('sintomas_protocolo', 'protocolo'));
+        $protocolo=DB::table('protocolos as prot')
+                        ->join('CodigosTriage as cod','cod.id','=','prot.id_codigo_triage')
+                        ->join('det_protocolos as det','det.id_protocolo','=','prot.id')
+                        ->join('Especialidades as esp','esp.id','=','det.id_especialidad')
+                        ->select('prot.id','cod.color','esp.nombre','prot.descripcion')
+                        ->where('prot.id','=',$id)
+                        ->first();
+        $sintomas_actuales=DB::table('detalles_sintomas_protocolos as det_sintomas')
+                                ->join('sintomas as s','s.id','=','det_sintomas.id_sintoma')
+                                ->select('s.descripcion','s.id')
+                                ->where('det_sintomas.id_protocolo','=',$id)
+                                ->get();
+        $codigos = Codigo::all();
+        $sintomas = Sintoma::all();
+        $especialidades = Especialidad::all();
+        return view('protocolos.edit', compact('codigos', 'sintomas','especialidades','protocolo','sintomas_actuales'));
+        // return view('protocolos.edit',compact('codigos','sintomas','especialidades'));
+        // $sintomas_protocolo = Detalle_Sintoma_Protocolo::where('id_protocolo', $id)
+        //     ->leftJoin('Sintomas', 'Sintomas.id', '=', 'id_sintoma')->get();
+        // $protocolo = Protocolo::find($id);
+        // return view('protocolos.edit', compact('sintomas_protocolo', 'protocolo'));
     }
 
     /**
@@ -140,8 +157,10 @@ class protocolosController extends Controller
      */
     public function destroy($id)
     {
+
         Detalle_Sintoma_Protocolo::where('id_protocolo', $id)->delete();
         Protocolo::destroy($id);
-        return redirect()->route('protocolos.index');
+        // return redirect()->route('protocolos.index');
+        return response()->json();
     }
 }

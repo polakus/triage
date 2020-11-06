@@ -170,3 +170,41 @@ Route::get('historial',function(Request $request){
            ->toJson();
 });
 
+Route::get('protocolos',function(){
+    // $protocolos=DB::table('Protocolos as prot')
+    //             ->join('CodigosTriage as cod','cod.id','=','prot.id_codigo_triage')
+    //             ->join('det_protocolos as det','det.id_protocolo','=','prot.id')
+    //             ->join('Especialidades as esp','esp.id','=','det.id_especialidad')
+    //             ->select('cod.color','esp.nombre','prot.descripcion')
+    //             ->get();
+    $protocolos=App\Protocolo::all();
+    return DataTables::of($protocolos)
+                        ->addColumn('ver',function(){
+                            return '<button class="btn btn-sm btn-dark" style="font-size:10px;"> Ver </button>';
+                        }) 
+                        ->addColumn('codigo',function($protocolo){
+
+                            return $protocolo->codigo->color;
+                        })
+                        ->addColumn('especialidad',function($protocolo){
+                             $l="";
+                            foreach($protocolo->detalle_protocolo as $det)
+                                $l=$l.$det->especialidad->nombre;
+                            return $l;
+                            // return $protocolo->detalle_protocolo->especialidad->nombre;
+                        })
+                        ->addColumn('sintomas',function($protocolo){
+                             $s="";
+                            foreach($protocolo->det_sintomas_protocolos as $det)
+                                $s=$s.$det->sintoma->descripcion.'-';
+                            return $s;
+                        })
+                        ->addColumn('buttons',function($protocolo){
+                            return '<a class="btn btn-sm btn-dark ml-1"href="/editarProtocolo/'.$protocolo->id.'">Editar</a>'.'<button class="btn btn-dark btn-sm ml-1" onclick="eliminar('.$protocolo->id.')">Eliminar</button>';
+                        })
+                        ->rawColumns(['codigo','especialidad','sintomas','ver','buttons'])
+                       // // ->addColumn('sintomas',function($protocolo){
+                           
+                       // // })
+            ->toJson();
+});
