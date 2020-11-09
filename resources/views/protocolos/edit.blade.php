@@ -16,13 +16,13 @@
     @endif
   @endforeach
 </div>
-<form method="POST" action="/protocolos">
+<form method="POST" action="/protocolos/{{$protocolo->id}}">
   @csrf
-
+  @method('PUT')
   <div class="form-row">
     <div class="form-group col-md-4">
       <label for="inputEmail4">Descripción</label>
-      <input type="text" name="desc"  class="form-control @error('desc') is-invalid @enderror" value="{{ $protocolo->descripcion }}"placeholder="Nombre">
+      <input type="text" name="desc"  class="form-control @error('desc') is-invalid @enderror" value="{{ count($errors) > 0 ? old('desc') : $protocolo->descripcion }}" placeholder="Nombre">
       @error('desc')
       <span class="invalid-feedback" role="alert">
           <strong>{{ $message }}</strong>
@@ -34,11 +34,10 @@
       <select name="codigo" id="inputState" class="form-control">
         @foreach($codigos as $codigo)
           @if($codigo->color == $protocolo->color)
-             <option value="{{$codigo->id}}"selected>{{$codigo->color}}</option>
+            <option value="{{$codigo->id}}"selected>{{$codigo->color}}</option>
           @else
-           <option value="{{$codigo->id}}">{{$codigo->color}}</option>
+            <option value="{{$codigo->id}}">{{$codigo->color}}</option>
           @endif
-          
         @endforeach
       </select>
     </div>
@@ -61,37 +60,36 @@
       <thead>
         <tr>
           <th>Descripcion</th>
-          <th>Accion</th>
         </tr>
        </thead>
        <tbody>
          @foreach($sintomas_actuales as $sintoma_actual)
           <tr>
             <td> {{$sintoma_actual->descripcion}} </td>
-            <td> <input class="form-check-input position-static" type="checkbox" name="cbs1[]" checked value="{{$sintoma_actual->id}}" ></td>
           </tr>
-         @endforeach
-       </tbody>
-     </table>
-   </div>
-  <h5 >Sintomas para Agregar</h5>
-  <table id="dtBasicExample" class="table table-striped table-bordered table-sm" width="100%">
-  <thead>
-    <tr>
-      <th>Descripción </th>
-      <th>Acción      </th>
-    </tr>
-  </thead>
-  <tbody>
-    @foreach($sintomas as $sintoma)
-    <tr>
-      <td> {{$sintoma->descripcion}} </td>
-      <td> <input class="form-check-input position-static" type="checkbox" name="cbs[]" value="{{$sintoma->id}}" ></td>
-    </tr>
-    @endforeach
-  </tbody>
-  </table>
+          @endforeach
+        </tbody>
+      </table>
+    </div>
+    <h5 >Sintomas para Agregar</h5>
+    @error('cbs')
+      <span style="color:#dc3545" role="alert">
+          <strong>{{ $message }}</strong>
+      </span>
+    @enderror
+    <div class="table-responsive">
+      <table id="dtBasicExample" class="table table-striped @error('cbs') table-danger @enderror table-bordered table-sm" width="100%">
+      <thead>
+        <tr>
+          <th>Acción      </th>
+          <th>Descripción </th>
+        </tr>
+      </thead>
+        <tbody>
 
+        </tbody>
+      </table>
+    </div>
   <button type="submit" class="btn btn-primary">Registrar</button>
   <a class="btn btn-default btn-close" href="{{ route('protocolos.index') }}">Volver</a>
 </form>
@@ -100,11 +98,19 @@
 @section("scripts")
 
 
-
+<label></label>
 <script type="text/javascript">
   $(document).ready(function() {
     $('#dtBasicExample').DataTable({
-      
+      "serverSide":true,
+			"ajax":{
+        url: "{{ url('api/editprotocolo') }}",
+        data: {"id": <?php echo $protocolo->id;?>},
+      },
+			"columns":[ 
+				{data:'checkbox'},
+				{data:'descripcion'}, 
+			],
       
        "language": {
         "decimal": ",",

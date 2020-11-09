@@ -16,11 +16,11 @@
           <thead>
             <tr>
               <th width="20px">Sintomas</th>
-              <th >Protocolo</th>
+              <th>Protocolo</th>
               <th>Codigo</th>
               <th>Especialidad</th>
               <th>Lista de Sintomas</th>
-              <th> Accion</th>
+              <th>Accion</th>
             </tr>
           </thead>
           <tbody id="tabla">

@@ -135,7 +135,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a id="protocolos" class="nav-link <?php  if ($url_array[3] == "protocolos"){ echo "active";} ?>" href="{{route('protocolos.index')}}">
+            <a id="protocolos" class="nav-link <?php  if ($url_array[3] == "protocolos" or $url_array[3] == "editarProtocolo"){ echo "active";} ?>" href="{{route('protocolos.index')}}">
               <span data-feather="layers"></span>
               Protocolos
             </a>
