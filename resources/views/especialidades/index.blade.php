@@ -8,9 +8,9 @@
 	<h4 class="h4">Especialidades</h4>
 	<div class="btn-toolbar mb-2 mb-md-0">
 		<div class="btn-group mr-2">
-		<button type="button" class="btn btn-sm btn-outline-secondary" data-toggle="modal" data-target="#exampleModal">
-			Agregar especialidad
-		</button>
+			<button type="button" class="btn btn-sm btn-outline-secondary" data-toggle="modal" data-target="#exampleModal">
+				Agregar especialidad
+			</button>
 		</div>
 	</div>
 </div>
@@ -28,18 +28,7 @@
 			</tr>
 		</thead>
 		<tbody >
-		{{--
-		@foreach($especialidades as $e)
-			<tr>
-				<td>{{ $e->nombre }}</td>
-				<td>{{ $e->descripcion }}</td>
-				<td>{{ $e->tipo_dato }}</td>
-				<td>
-					
-				</td>
-			</tr>
-		@endforeach
-		--}}
+			
 		</tbody>
 	</table>
 </div>

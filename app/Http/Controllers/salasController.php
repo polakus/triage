@@ -50,6 +50,7 @@ class salasController extends Controller
         $pr = $request->validate([
             'nombre' => 'required|max:255',
             'camas' =>'required|numeric|min:0',
+            'area' => 'required',
         ], $mensajes);
         
         $sala = Sala::create([
@@ -58,8 +59,9 @@ class salasController extends Controller
             'id_area' => $request->area,
             'disponibilidad' => 1,
         ]);
-        $request->session()->flash('alert-success', 'La sala fue agregada exitosamente!');
-        return redirect()->back()->withInput();
+        // $request->session()->flash('alert-success', 'La sala fue agregada exitosamente!');
+        // return redirect()->back()->withInput();
+        return response()->json(['hola'=> 3]);
     }
 
     /**
@@ -101,12 +103,9 @@ class salasController extends Controller
             $sala->disponibilidad=0;
         }
         $sala->save();
-
-        $val1 = $request->n;
-        $val2 = $request->a;
-
         
-        return redirect()->action('salasController@index',['val1'=>$val1, 'val2'=>$val2]);
+        // return redirect()->action('salasController@index',['val1'=>$val1, 'val2'=>$val2]);
+        return response()->json(['disp'=>$sala->disponibilidad]);
     }
 
     /**
@@ -118,8 +117,9 @@ class salasController extends Controller
     public function destroy($id)
     {
         Sala::destroy($id);
-        $val1 = $_POST['n'];
-        $val2 =$_POST['a'];
-        return redirect()->action('salasController@index',['val1'=>$val1, 'val2'=>$val2]);
+        // $val1 = $_POST['n'];
+        // $val2 =$_POST['a'];
+        // return redirect()->action('salasController@index',['val1'=>$val1, 'val2'=>$val2]);
+        return response()->json();
     }
 }

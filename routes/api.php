@@ -190,10 +190,7 @@ Route::get('protocolos',function(){
                             return '<a class="btn btn-sm btn-dark ml-1"href="/editarProtocolo/'.$protocolo->id.'">Editar</a>'.'<button class="btn btn-dark btn-sm ml-1" onclick="eliminar('.$protocolo->id.')">Eliminar</button>';
                         })
                         ->rawColumns(['codigo','especialidad','sintomas','ver','buttons'])
-                       // // ->addColumn('sintomas',function($protocolo){
-
-                       // // })
-            ->toJson();
+                        ->toJson();
 });
 Route::get('editprotocolo', function(){
     $sintomas = App\Sintoma::all();
@@ -222,4 +219,23 @@ Route::get('editprotocolo', function(){
                         })
                         ->rawColumns(['checkbox'])
                         ->toJson();
+});
+
+Route::get('tablasalas',function(Request $request){
+    $salas=App\Sala::all();
+
+    return DataTables::of($salas)
+                        ->addColumn('area', function($sala){
+                            return $sala->area->tipo_dato;
+                        })
+                        ->rawColumns(['area'])
+                        ->addColumn('habilita', function($sala){
+                            return view('salas/habilitasala', compact('sala'));
+                        })
+                        ->rawColumns(['habilita'])
+                        ->addColumn('elimina', function($sala){
+                            return view('salas/elimina', compact('sala'));
+                        })
+                        ->rawColumns(['elimina'])
+           ->toJson();
 });

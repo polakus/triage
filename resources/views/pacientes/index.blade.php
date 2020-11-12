@@ -160,6 +160,7 @@
   $(document).ready(function() {
     
     $('#myTable').DataTable({
+      "responsive": true,
       "processing":true,
           "serverSide":true,
            "ajax":{url:"{{ url('api/ApiPacientes') }}",
