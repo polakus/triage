@@ -118,6 +118,7 @@
 @endsection
 
 @section("scripts")
+@parent
 <script>
 	$('form[id^="f1"').submit( function() {
 		if (confirm('¿Desea cambiar el estado del Quirófano?')) {
@@ -132,20 +133,7 @@
 	});
 
 </script>
-{{--
-<script>
-	$('select').on('change', function() {
-		$('#myTable tr').filter(function(){
-			if($('#area').val() == 'Todas'){
-				$(this).toggle($(this).text().toLowerCase().indexOf($('#area').val().toLowerCase()) == -1)
-			}else{
-				$(this).toggle($(this).text().toLowerCase().indexOf($('#area').val().toLowerCase()) > -1)
-			}
-		});
-  	}).trigger('change');
 
-</script>
---}}
 <script>
 	$('form[id^="f2"').submit( function() {
 		if (confirm('Por favor, confirme que desea eliminar la sala '.concat($(this).attr('name')))) {
@@ -167,6 +155,7 @@
 <script type="text/javascript">
   $(document).ready(function() {
     $('#myTable').DataTable({
+    	"responsive":true,
 		"serverSide":true,
 			"ajax":{url:"{{ url('api/tablasalas') }}",},
 			"columns":[
@@ -254,25 +243,25 @@
                 table.draw();
             },
             error:function(err){
-				alert("No se pudo guardar la sala");
-				// if (err.status == 422) { // when status code is 422, it's a validation issue
-				// 	$('#success_message').fadeIn().html(err.responseJSON.message);
-				// 	$.each(err.responseJSON.errors, function (i, error) {
-				// 		switch( i ){
-				// 			case "nombre":
-				// 				$('#error_nombre').html('<span style="color: red;">'+error[0]+'</span>');
-				// 			break;
-				// 			case "camas":
-				// 				$('#error_camas').html('<span style="color: red;">'+error[0]+'</span>');
-				// 			break;
-				// 			case "area":
-				// 				$('#error_area').html('<span style="color: red;">'+error[0]+'</span>');
-				// 			break;
-				// 			default:
-				// 				alert("Ocurrió un error en la función de error de ajax");
-				// 		}
-				// 	});
-				// }
+				// alert("No se pudo guardar la sala");
+				if (err.status == 422) { // when status code is 422, it's a validation issue
+					$('#success_message').fadeIn().html(err.responseJSON.message);
+					$.each(err.responseJSON.errors, function (i, error) {
+						switch( i ){
+							case "nombre":
+								$('#error_nombre').html('<span style="color: red;">'+error[0]+'</span>');
+							break;
+							case "camas":
+								$('#error_camas').html('<span style="color: red;">'+error[0]+'</span>');
+							break;
+							case "area":
+								$('#error_area').html('<span style="color: red;">'+error[0]+'</span>');
+							break;
+							default:
+								alert("Ocurrió un error en la función de error de ajax");
+						}
+					});
+				}
             }
         });
 	});

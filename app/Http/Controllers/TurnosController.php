@@ -54,18 +54,6 @@ class TurnosController extends Controller
 
       date_default_timezone_set("America/Argentina/Buenos_Aires");
       
-      // $actualizar_detalle=DetalleAtencion::findOrFail($request->detalleatencion);
-      // $actualizar_detalle->estado=$request->tipo;
-      // $actualizar_detalle->sala=$request->sala;
-      // $actualizar_detalle->fecha=date('Y-m-d');
-      // $actualizar_detalle->hora=date('H:i');
-      // if($request->tipo == "Operado"){
-      //   $actualizar_detalle->operar=0;
-      //   $sala_actualizar= Sala::findOrFail($request->id_sala);
-      //   $sala_actualizar->disponibilidad=0;
-      //   $sala_actualizar->save();
-      // }
-      // $actualizar_detalle->save();
 
       $actualizar_detalle=DetalleAtencion::findOrFail($request->get('detalleatencion'));
       $actualizar_detalle->estado=$request->get('tipo');
@@ -80,13 +68,13 @@ class TurnosController extends Controller
       }
       $actualizar_detalle->save();
 
-      // $resultado = $relevamiento->save();
+     
         if ($actualizar_detalle) {
             return response()->json(['success'=>'true']);
         }else{
             return response()->json(['success'=>'false']);
         }
-      // return redirect()->action('TurnosController@mostrar');
+     
 
 
         
@@ -140,28 +128,7 @@ class TurnosController extends Controller
     public function update(Request $request, $id)
     {
         
-        
-        // $nombre="";
-        // $detallehorario=DetalleAtencion::findOrFail($id);
-        // $detallehorario->atendido=1;
-        // $detallehorario->save();
-        // $val1=$request->a;
-        // $val2=$request->m;
-        // if($request->control != ""){
-        //   $salas=DB::table('Salas as s')
-        //           ->join('Areas as a','a.id','=','s.id_area')
-        //           ->select('s.id','s.estado','s.nombre')
-        //           ->where('a.tipo_dato','LIKE','Quirofanos') // poner QUIROFANO ACA
-        //           ->where('s.estado','=',1)
-        //           ->get();
-        //   $sala=Sala::findOrFail($salas[0]->id);
-        //         $sala->estado=0;
-        //         $sala->save();
-        //   $nombre=$sala->nombre;
-          
-        // }
-        // return redirect()->action('TurnosController@mostrar',['val1'=>$val1,'val2'=>$val2,'sala'=>$nombre]);
-        // return redirect()->action('TurnosController@mostrar',['id_med'=>$request->id_medico]);
+  
     }
 
     /**

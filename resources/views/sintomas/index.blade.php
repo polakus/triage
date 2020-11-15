@@ -1,13 +1,64 @@
 @extends("triagepreguntas.test")
 
+@section('css')
+<style type="text/css">
+    .contenido{
+        display: block;
+        padding: 10px;
+        width:400px;
+    
+        flex-wrap: wrap;
+
+    }
+    .botones{
+        
+        display: flex;
+        
+        
+    }
+    .botones input{
+        flex-grow: 1;
+        width:60%;
+    }
+    .botones button{
+        width: 40%;
+        flex-grow: 1;
+    }
+    .error div{
+        margin-left: 10px;
+        
+    }
+
+    @media only screen and (max-width: 390px){
+        .botones{
+            display: block;
+
+        }
+        .botones input{
+            width: 100%;
+            margin-bottom: 3px;
+        }
+        .botones button{
+            width: 100%;
+        }
+    }
+   
+
+</style>
+
+@endsection
 @section("cuerpo")
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
   <h4 class="h4">Sintomas</h4>
-    <div class="ml-auto">
-      <input type="text" class="form-control form-inline form-control-sm ml-2 " placeholder="Nombre del sintoma" style="width: 200px" name="nombre_sintoma" id="nombre_sintoma" >
-      <div id="error_sintoma"></div>
+  <div class="contenido">
+    <div class="botones">
+      <input type="text" class="form-control form-inline form-control-sm ml-2 " placeholder="Nombre del sintoma"  name="nombre_sintoma" id="nombre_sintoma" >
+         <button class="btn btn-outline-secondary btn-sm ml-2"  id="agregar">Agregar sintoma</button>
     </div>
-    <button class="btn btn-outline-secondary btn-sm ml-2"  id="agregar">Agregar sintoma</button>
+    <div class="error">
+        <div id="error_sintoma"></div>
+    </div>
+   </div>
  
   
 </div>
@@ -42,6 +93,7 @@
   $(document).ready(function() {
    var table= $('#myTable').DataTable({
        "processing":true,
+        "responsive":true,
           "serverSide":true,
            "ajax":{url:"{{ url('api/sintomas_cargar') }}",
               

@@ -69,6 +69,7 @@
 <script type="text/javascript">
 	$(document).ready(function() {
 		var tabla = $('#myTable').DataTable({
+			"responsive":true,
 			"serverSide":true,
 			"ajax":{url:"{{ url('api/cargar_cie') }}",},
 			"columns":[

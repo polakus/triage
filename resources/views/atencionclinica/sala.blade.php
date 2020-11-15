@@ -125,7 +125,7 @@
   
   <input type="hidden" name="detalleatencion1" id="detalleatencion1">
   {{-- <input type="hidden" name="atencion" value={{ $id }}> --}}
-  <input type="hidden" name="id_det_profesional_sala" value="{{ $id_det_profesional_sala }}">
+  <input type="hidden" name="id_det_profesional_sala" id="id_det_profesional_sala" value="{{ $id_det_profesional_sala }}">
   <h5>Preguntas y Analisis</h5>
   <div class="row">
     <div class="col">
@@ -191,6 +191,7 @@
   <form style="display: none" action="/atencionclinica/atencionsala" method="GET" id="form">
 	  <input type="hidden" id="val1" name="val1" >
 	  <input type="hidden" id="val1" name="val1" >
+      <input type="text" name="id_det_profesional_sala" value="{{ $id_det_profesional_sala }}">
 	  <input type="hidden" name="mensaje" value="{{ $mensaje }}">
 	</form>
 {{-- </form> --}}
@@ -236,6 +237,7 @@
 
 $(document).ready(function() {
     $('#table_id').DataTable({
+       "responsive":true,
        "language": {
         "decimal": ",",
         "thousands": ".",
@@ -348,6 +350,7 @@ function sala(id,detalleatencion,id_paciente){
              
     
                 $('#myTable2').DataTable({
+                  "responsive":true,
                   "processing":true,
                       "serverSide":true,
                        "ajax":{url:"{{ url('api/historial') }}",

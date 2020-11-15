@@ -2,29 +2,35 @@
 
 <script>
     function habilita(id){
-        $.ajaxSetup({
-			headers: {
-				'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-			}
-		});
-   		$.ajax({
-            type:'PUT',
-            url:"/salas/"+id,
-            dataType:"json",
-            success: function(response){
-                if (response.disp==0){
-                    $('#bh'+id).removeClass('btn-success');
-                    $('#bh'+id).addClass('btn-danger');
-                    $('#bh'+id).text('F. de Servicio');
-                }else{
-                    $('#bh'+id).removeClass('btn-danger');
-                    $('#bh'+id).addClass('btn-success');
-                    $('#bh'+id).text('Disponible');
+        if (confirm('¿Desea cambiar el estado del Quirófano?')) {
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
+            });
+            $.ajax({
+                type:'PUT',
+                url:"/salas/"+id,
+                dataType:"json",
+                success: function(response){
+                    if (response.disp==0){
+                        $('#bh'+id).removeClass('btn-success');
+                        $('#bh'+id).addClass('btn-danger');
+                        $('#bh'+id).text('F. de Servicio');
+                    }else{
+                        $('#bh'+id).removeClass('btn-danger');
+                        $('#bh'+id).addClass('btn-success');
+                        $('#bh'+id).text('Disponible');
+                    }
             },
             error:function(err){
                 alert("No se pudo cambiar la disponibilidad de la sala");
             }
         });
+        }else{
+            return false;
+        }
+        
+   		
     }
 </script>

@@ -91,6 +91,7 @@
 <script type="text/javascript">
 	$(document).ready(function() {
 		$('#myTable').DataTable({
+			"responsive":true,
 			"serverSide":true,
 			"ajax":{url:"{{ url('api/dtespecialidades') }}",},
 			"columns":[

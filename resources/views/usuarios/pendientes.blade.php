@@ -26,11 +26,7 @@
 				<a class="btn btn-dark" href="{{ route('usuarios.index') }}">Volver</a>
 			</div>
 		</div>
-		<div class="form-row">
-			<div class="form-group col-md-2">
-				<input class="form-control" type="text" name="usuario" id="myInput" onkeyup="myFunction()" placeholder="Usuario" value="{{ old('busqueda') }}">
-			</div>
-		</div>
+		
 		<div class="table-responsive">
 		  
 			<table id="myTable" class="table table-bordered table-sm table-hover" cellspacing="0" width="100%">
@@ -43,7 +39,7 @@
 					</tr>
 				</thead>
 				<tbody id="tabla">
-					@foreach($usuarios as $usuario)
+					{{-- @foreach($usuarios as $usuario)
 					<tr>
 						<td>{{ $usuario->username }}</td>
 						<td>{{ $usuario->email }}</td>
@@ -62,7 +58,7 @@
 							</div>
 						</td>
 					</tr>
-					@endforeach
+					@endforeach --}}
 				</tbody>
 			</table>
 		</div>
@@ -70,26 +66,7 @@
 </div> --}}
 @endsection
 @section("scripts")
-<script>
-function myFunction() {
-  var input, filter, table, tr, td, i, txtValue;
-  input = document.getElementById("myInput");
-  filter = input.value.toUpperCase();
-  table = document.getElementById("myTable");
-  tr = table.getElementsByTagName("tr");
-  for (i = 0; i < tr.length; i++) {
-    td = tr[i].getElementsByTagName("td")[0];
-    if (td) {
-      txtValue = td.textContent || td.innerText;
-      if (txtValue.toUpperCase().indexOf(filter) > -1) {
-        tr[i].style.display = "";
-      } else {
-        tr[i].style.display = "none";
-      }
-    }       
-  }
-}
-</script>
+
 
 <script>
 $('form[id^="f1"').submit( function() {
@@ -117,6 +94,76 @@ $('form[id^="f2"').submit( function() {
 		return true;
 	});
 </script>
+
+
+<script type="text/javascript">
+  
+
+$(document).ready(function() {
+    $('#myTable').DataTable({
+      "responsive":true,
+      "iDisplayLength": 50,
+      "ajax":{url:"{{ url('api/usuariospendientes') }}",
+         },
+         "columns":[
+            {data:'username'},
+         
+            {data:'email'},
+            {data:'rol'},
+            {data:'buttons'}
+            
+           ],
+      "language": {
+         "decimal": ",",
+        "thousands": ".",
+        "info": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+        "infoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+        "infoPostFix": "",
+        "infoFiltered": "(filtrado de un total de _MAX_ registros)",
+        "loadingRecords": "Cargando...",
+        "lengthMenu": "Mostrar _MENU_ registros",
+        "paginate": {
+            "first": "Primero",
+            "last": "Último",
+            "next": "Siguiente",
+            "previous": "Anterior"
+        },
+         "processing": "Procesando...",
+        "search": "Buscar:",
+        "searchPlaceholder": "",
+        "zeroRecords": "No se encontraron resultados",
+        "emptyTable": "Ningún dato disponible en esta tabla",
+        "aria": {
+            "sortAscending":  ": Activar para ordenar la columna de manera ascendente",
+            "sortDescending": ": Activar para ordenar la columna de manera descendente"
+        },
+         "buttons": {
+            "create": "Nuevo",
+            "edit": "Cambiar",
+            "remove": "Borrar",
+            "copy": "Copiar",
+            "csv": "fichero CSV",
+            "excel": "tabla Excel",
+            "pdf": "documento PDF",
+            "print": "Imprimir",
+            "colvis": "Visibilidad columnas",
+            "collection": "Colección",
+            "upload": "Seleccione fichero...."
+        },
+        "select": {
+            "rows": {
+                _: '%d filas seleccionadas',
+                0: 'clic fila para seleccionar',
+                1: 'una fila seleccionada'
+            }
+        }
+      }
+    });
+} );
+</script>
+
+
+
 
 @endsection
 

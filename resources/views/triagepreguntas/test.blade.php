@@ -8,6 +8,7 @@
     <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
     <meta name="generator" content="Jekyll v4.1.1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard Template · Bootstrap</title>
 
     {{-- CSS --}}
@@ -31,6 +32,10 @@
  
     @yield("css")
     <style>
+      table{
+        width: 100% !important;
+        min-width: 250px;
+      }
       .bd-placeholder-img {
         font-size: 1.125rem;
         text-anchor: middle;

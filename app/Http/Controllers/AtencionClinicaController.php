@@ -99,10 +99,6 @@ class AtencionClinicaController extends Controller
      */
     public function store(Request $request)
     {
-        //Aca cargamos los datos utilizados
-        // $actualizar_detalle=DetalleAtencion::findOrFail($request->detalleatencion);
-        // $actualizar->id_det_profesional_sala=...
-        // $actualizar->save();
         
         
         date_default_timezone_set('UTC');

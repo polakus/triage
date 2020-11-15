@@ -239,3 +239,31 @@ Route::get('tablasalas',function(Request $request){
                         ->rawColumns(['elimina'])
            ->toJson();
 });
+
+
+Route::get('tablausuario',function(){
+    
+    $usuarios = App\User::where('estado', 1)->get();
+    return DataTables::of($usuarios)
+                    ->addColumn('rol',function($usuario){
+                        return $usuario->rol->nombre;
+                    })
+                    ->addColumn('buttons',function($usuario){
+                        return view('usuarios/buttons',compact('usuario'));
+                    })
+                    ->rawColumns(['rol','buttons'])
+            ->toJson();
+});
+
+Route::get('usuariospendientes',function(){
+    $usuarios = App\User::where('estado', 0)->get();
+     return DataTables::of($usuarios)
+                    ->addColumn('rol',function($usuario){
+                        return $usuario->rol->nombre;
+                    })
+                    ->addColumn('buttons',function($usuario){
+                        return view('usuarios/buttons_pendientes',compact('usuario'));
+                    })
+                    ->rawColumns(['rol','buttons'])
+            ->toJson();
+});

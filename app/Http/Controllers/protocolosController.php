@@ -20,10 +20,10 @@ class protocolosController extends Controller
      */
     public function index()
     {
-        $protocolos = Protocolo::all();
-        $det_sintomas_protocolos = Detalle_Sintoma_Protocolo::all();
+       
+        return view('protocolos.index');
         
-        return view('protocolos.index',compact('protocolos', 'det_sintomas_protocolos'));
+        
     }
 
     /**
@@ -83,16 +83,7 @@ class protocolosController extends Controller
      */
     public function show($id)
     {
-        $sintomas_protocolo = Detalle_Sintoma_Protocolo::where('id_protocolo', $id)
-            ->leftJoin('Sintomas', 'Sintomas.id', '=', 'id_sintoma')->get();
-        $especialidad_protocolo = DB::table('det_protocolos as det_pro')
-                                    ->join('Especialidades as esp','esp.id','=','det_pro.id_especialidad')
-                                    ->select('esp.nombre')
-                                    ->where('det_pro.id_protocolo','=',$id)
-                                    ->get();
-        $protocolo = Protocolo::find($id);
 
-        return view('protocolos.show', compact('sintomas_protocolo', 'protocolo','especialidad_protocolo'));
     }
 
     /**

@@ -29,12 +29,11 @@ class usuariosController extends Controller
      */
     public function index()
     {
-        $usuarios = User::where('estado', 1)->get();
-        return view('usuarios.index', compact('usuarios'));
+       
+        return view('usuarios.index');
     }
     public function pendientes(){
-        $usuarios = User::where('estado', 0)->get();
-        return view('usuarios.pendientes', compact('usuarios'));
+        return view('usuarios.pendientes');
     }
     /**
      * Show the form for creating a new resource.

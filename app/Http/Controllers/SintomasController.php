@@ -26,7 +26,7 @@ class SintomasController extends Controller
      */
     public function create()
     {
-        return view('sintomas.create');
+    
     }
 
     /**
@@ -55,31 +55,7 @@ class SintomasController extends Controller
     return response()->json();
         
 
-        // $mensajes = [
-        //     'required' =>'Este campo no debe estar vacio.',
-        //     'max' => 'Este campo supera la capacidad máxima de caracteres.',
-        // ];
-        // $prot = $request->validate([
-        //     'text_sintomas.*' => 'required|max:255|numeric',
-        // ], $mensajes);
-
-        // return redirect()->back()->withInput();
-        // return response()->json(['success'=>'true', 'id'=>$nuevo->id,'nombre'=>$nuevo->descripcion]);
-      
-//     if ($validator->fails()) {
-//     return back()->withInput()->withErrors($validator->errors());
-// }
-
-        // echo $request->text_sintomas[0];
-        // for ($i=0; $i <$cantidad ; $i++) { 
-        //     if($request->text_sintomas[$i]!=""){
-        //      $nuevo=new Sintoma;
-        //      $nuevo->descripcion=$request->text_sintomas[$i];
-        //      $nuevo->save();
-        //     }
-        // }
-        
-        // return redirect('/sintomas');
+       
        
     }
 

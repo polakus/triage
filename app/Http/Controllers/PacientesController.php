@@ -156,7 +156,17 @@ class PacientesController extends Controller
 
 
     public function insertarNN(Request $request){
-            
+            $mensajes = [
+                'required' =>'Este campo no debe estar vacio.',
+                'max' => 'Este campo supera la capacidad máxima de caracteres.',
+                'numeric' => 'Este campo requiere una valor numérico.',
+                'date' => 'La fecha ingresada no es válida.',
+                'unique' => 'Este documento ya se encuentra registrado',
+            ];
+            $r=$request->validate([
+            'ciess' => 'required|max:255',
+            'observacion' => 'required|max:255',
+            ], $mensajes);
             date_default_timezone_set('UTC');
 
             date_default_timezone_set("America/Argentina/Buenos_Aires");

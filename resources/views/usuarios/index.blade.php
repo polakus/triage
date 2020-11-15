@@ -46,7 +46,7 @@
 					</tr>
 				</thead>
 				<tbody id="tabla">
-					@foreach($usuarios as $usuario)
+				{{-- 	@foreach($usuarios as $usuario)
 					<tr>
 						<td>{{ $usuario->username }}</td>
 						<td>
@@ -138,7 +138,7 @@
 							</div>
 						</td>
 					</tr>
-					@endforeach
+					@endforeach --}}
 				</tbody>
 			</table>
 		</div>
@@ -150,26 +150,7 @@
 @section("scripts")
 
 
-<script>
-function myFunction() {
-  var input, filter, table, tr, td, i, txtValue;
-  input = document.getElementById("myInput");
-  filter = input.value.toUpperCase();
-  table = document.getElementById("myTable");
-  tr = table.getElementsByTagName("tr");
-  for (i = 0; i < tr.length; i++) {
-    td = tr[i].getElementsByTagName("td")[0];
-    if (td) {
-      txtValue = td.textContent || td.innerText;
-      if (txtValue.toUpperCase().indexOf(filter) > -1) {
-        tr[i].style.display = "";
-      } else {
-        tr[i].style.display = "none";
-      }
-    }       
-  }
-}
-</script>
+
 <script>
 $('form[id^="a2"').submit( function() {
 	if (confirm('Por favor, confirme que desea eliminar al usuario '.concat($(this).attr('name')))) {
@@ -180,15 +161,24 @@ $('form[id^="a2"').submit( function() {
 });
 </script>
 {{-- JS Datatables --}}
-<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
-<script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
-<script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
+
 <script type="text/javascript">
   
 
 $(document).ready(function() {
     $('#myTable').DataTable({
+      "responsive":true,
       "iDisplayLength": 50,
+      "ajax":{url:"{{ url('api/tablausuario') }}",
+         },
+         "columns":[
+            {data:'username'},
+            {data:'name'},
+            {data:'email'},
+            {data:'rol'},
+            {data:'buttons'}
+            
+           ],
       "language": {
          "decimal": ",",
         "thousands": ".",

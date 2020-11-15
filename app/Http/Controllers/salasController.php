@@ -6,6 +6,11 @@ use Illuminate\Http\Request;
 use App\Sala;
 use App\Especialidad;
 use App\Area;
+use App\DetalleProfSala;
+use App\DetalleAtencion;
+use App\Historial;
+
+use DB;
 
 class salasController extends Controller
 {
@@ -16,11 +21,11 @@ class salasController extends Controller
      */
     public function index(Request $request)
     {
-        $salas = Sala::all();
+        // $salas = Sala::all();
         $areas = Area::all();
-        $val1 = $request->val1;
+        // $val1 = $request->val1;
       
-        return view('salas.index', compact('salas', 'areas', 'val1')); 
+        return view('salas.index', compact('areas')); 
     }
 
     /**
@@ -30,8 +35,7 @@ class salasController extends Controller
      */
     public function create()
     {
-        $areas = Area::all();
-        return view('salas.create',compact('areas'));
+        
     }
 
     /**
@@ -116,6 +120,19 @@ class salasController extends Controller
      */
     public function destroy($id)
     {
+  
+        $id_det_prof_sala=DB::table('det_profesionales_salas')->select('id')->where('id_sala','=',$id)->get();
+        if(sizeof($id_det_prof_sala)>0){
+            $id_detalle_atencion=DB::table('detalle_atencion')->select('id')->where('id_det_profesional_sala','=',$id_det_prof_sala[0]->id)->get();
+            if(sizeof($id_detalle_atencion)>0){
+                $id_historial=DB::table('historial')->select('id')->where('id_detalle_atencion','=',$id_detalle_atencion[0]->id)->get();
+                if(sizeof($id_historial)>0){
+                    Historial::destroy($id_historial[0]->id);
+                }
+                DetalleAtencion::destroy($id_detalle_atencion[0]->id);
+            }
+            DetalleProfSala::destroy($id_det_prof_sala[0]->id);
+        }
         Sala::destroy($id);
         // $val1 = $_POST['n'];
         // $val2 =$_POST['a'];
