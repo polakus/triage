@@ -22,7 +22,7 @@
   <div class="form-row">
     <div class="form-group col-md-4">
       <label for="inputEmail4">Descripción</label>
-      <input type="text" name="desc"  class="form-control @error('desc') is-invalid @enderror" value="{{ count($errors) > 0 ? old('desc') : $protocolo->descripcion }}" placeholder="Nombre">
+      <input type="text" name="desc"  class="form-control form-control-sm @error('desc') is-invalid @enderror" value="{{ count($errors) > 0 ? old('desc') : $protocolo->descripcion }}" placeholder="Nombre">
       @error('desc')
       <span class="invalid-feedback" role="alert">
           <strong>{{ $message }}</strong>
@@ -31,7 +31,7 @@
     </div>
     <div class="form-group col-md-2">
       <label for="inputState">Código</label>
-      <select name="codigo" id="inputState" class="form-control">
+      <select name="codigo" id="inputState" class="form-control select">
         @foreach($codigos as $codigo)
           @if($codigo->color == $protocolo->color)
             <option value="{{$codigo->id}}"selected>{{$codigo->color}}</option>
@@ -43,7 +43,7 @@
     </div>
     <div class="form-group col-md-2">
       <label for="inputEsp">Especialidad</label>
-      <select name="especialidad" id="esp" class="form-control">
+      <select name="especialidad" id="esp" class="form-control select">
         @foreach($especialidades as $esp)
           @if($esp->nombre == $protocolo->nombre)
             <option value="{{$esp->id}}" selected="">{{$esp->nombre}}</option>

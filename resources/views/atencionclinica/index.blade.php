@@ -16,7 +16,7 @@
         
           <div class="form-group col-md-4" style="font-size: 17px;">
               <label for="inputState">Sala</label>
-              <select name="sala" id="sala" class="form-control">
+              <select name="sala" id="sala" class="form-control select">
                 
                     @foreach($salas as $s)
                         

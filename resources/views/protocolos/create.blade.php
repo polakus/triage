@@ -1,7 +1,13 @@
 @extends("triagepreguntas.test")
 
-@section("cabecera")
-    
+@section("css")
+    <style type="text/css">
+      .select2-choices {
+     min-height: 150px !important;
+     max-height: 150px;
+     overflow-y: auto;
+}
+    </style>
 @endsection
 
 @section("cuerpo")
@@ -22,7 +28,7 @@
   <div class="form-row">
     <div class="form-group col-md-4">
       <label for="inputEmail4">Descripción</label>
-      <input type="text" name="desc"  class="form-control @error('desc') is-invalid @enderror" value="{{ old('desc') }}" placeholder="Nombre">
+      <input type="text" name="desc"  class="form-control form-control-sm @error('desc') is-invalid @enderror" value="{{ old('desc') }}" placeholder="Nombre">
       @error('desc')
       <span class="invalid-feedback" role="alert">
           <strong>{{ $message }}</strong>
@@ -31,7 +37,7 @@
     </div>
     <div class="form-group col-md-2">
       <label for="inputState">Código</label>
-      <select name="codigo" id="inputState" class="form-control">
+      <select name="codigo" id="inputState" class="form-control select" >
         @foreach($codigos as $codigo)
           <option value="{{$codigo->id}}">{{$codigo->color}}</option>
         @endforeach
@@ -39,7 +45,7 @@
     </div>
     <div class="form-group col-md-2">
       <label for="inputEsp">Especialidad</label>
-      <select name="especialidad" id="esp" class="form-control">
+      <select name="especialidad" id="esp" class="form-control form-control-sm select">
         @foreach($especialidades as $esp)
           <option value="{{$esp->id}}">{{$esp->nombre}}</option>
         @endforeach

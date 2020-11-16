@@ -1,3 +1,5 @@
+
+
 <button type="button" id="bnedit" class="btn btn-outline-secondary btn-sm" data-toggle="modal" data-target="#editar{{ $especialidad->id }}">
     Editar
 </button>
@@ -28,10 +30,10 @@
                             </div>
                         </div>
                         <div class="form-row">
-							<div class="form-group">
+							<div class="form-group col-md-10">
 								<label>Area </label>
-								<select id="editarea{{$especialidad->id}}" name="editarea" class="form-control">
-									<option value="" selected disabled hidden>Seleccione</option>
+								<select id="editarea{{$especialidad->id}}" name="editarea" class="form-control select" style="width: 100% !important;" >
+									{{-- <option value="" selected disabled hidden>Seleccione</option> --}}
 								@foreach($editareas as $a)
 									<option value="{{ $a->id }}" {{$especialidad->id_area == $a->id ? 'selected':''}}>{{ $a->tipo_dato }} </option>
 								@endforeach
@@ -39,6 +41,7 @@
 								<div id="error_edit_area{{$especialidad->id}}"></div>
 							</div>
 						</div>
+                        
                     </div>
                 </div>
             </div>
@@ -51,6 +54,7 @@
 </div>
 
 <script>
+    var select2=$('.select').select2();
     function editaresp(id) {
       	var nombre = $('#nomb'+id).val();
 		var descripcion = $('#desc'+id).val();

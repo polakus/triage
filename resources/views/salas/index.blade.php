@@ -16,21 +16,7 @@
       </div>
     </div>
 </div>
-{{--
-<div class="form-group col-md-3">
-	<label for="inputState">Área</label>
-	<select name="area" id="area" class="form-control">
-		<option value="Todas" selected>Todas</option>
-		@foreach($areas as $area)
-			@if($area->tipo_dato == $val1)
-				<option value="{{$area->tipo_dato}}" selected>{{$area->tipo_dato}}</option>
-			@else
-				<option value="{{$area->tipo_dato}}">{{$area->tipo_dato}}</option>
-			@endif
-		@endforeach
-	</select>
-</div>
---}}
+
 <div class="table-responsive">
 	<table  class="table table-bordered table-sm table-striped table-hover" id="myTable">
 		<thead >
@@ -42,32 +28,7 @@
 		</tr>
 		</thead>
 		<tbody>
-			{{--
-		@foreach($salas as $sala)
-				<tr>
-					<td>{{ $sala->nombre }}</td>
-					<td>{{ $sala->area->tipo_dato }}</td>
-					<td>
-						<form id="f1" class= "form-inline" method="POST" action="{{route('salas.update', $sala->id)}}">
-							@csrf
-							{{ method_field('PUT') }}
-							@if($sala->disponibilidad == 0)
-								<button type="submit" style="width:100px" class="btn btn-danger btn-sm">F. de Servicio</button>
-							@else
-								<button type="submit" style="width:100px" class="btn btn-success btn-sm">Disponible</button>
-							@endif
-						</form>
-					</td>
-					<td>
-						<form id="f2" name="{{$sala->nombre}}" class= "form-inline" method="POST" action="/salas/{{$sala->id}}">
-							@csrf
-							{{ method_field('DELETE') }}
-							<button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
-						</form>
-					</td>
-				</tr>
-		@endforeach
-		--}}
+
 		</tbody>
 	</table>
 </div>
@@ -91,7 +52,7 @@
 						</div>
 						<div class="form-row">
 							<label for="inputState">Área</label>
-							<select name="areac" id="areac" class="form-control">
+							<select name="areac" id="areac" class="form-control select" style="width: 100%;">
 								<option value="" selected disabled hidden>Seleccione</option>
 							@foreach($areas as $area)
 								<option value="{{$area->id}}" {{old('area') == $area->id ? 'selected':''}}>{{$area->tipo_dato}}</option>

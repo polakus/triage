@@ -2,33 +2,10 @@
 @extends('triagepreguntas.test')
 
 @section("css")
- 
 <style type="text/css">
-/*.ui-autocomplete{
-    z-index:1050;
-}
-#container_tags {
-    display: block; 
-    position:relative
-}*/
-.table__thead{
-  background: linear-gradient(to bottom, #777, #222);
-  color:#fff;
-  /*border: 1px inset #333;
-  box-shadow: 0 0 2px 0px #000;*/
-}
-.table__thead:hover{
-  background: linear-gradient(to bottom, #555, #111);
-}
-.btn-outline-secondary{
-  /*background: linear-gradient(to bottom, #888, #222);*/
-  /*background: red;
-  color: #fff;*/
-}
-.btn-outline-secondary:hover{
-  background: linear-gradient(to bottom, #555, #000);
-  
-}
+  .select{
+    width: 100% !important;
+  }
 </style>
 
 @endsection
@@ -88,21 +65,21 @@
       <div class="modal-body ui-front">
           <div class="form-group col-md-10 op">
             <label>Para:</label>
-            <select class="form-control" name="condicion" id="condicion">
-              <option value="Operar" style="width: 10px;">Operar</option>      
+            <select class="form-control select" style="width: 100%;" name="condicion" id="condicion">
+              <option value="Operar" >Operar</option>      
               <option value="Internar">Internar</option>               
             </select>
           </div>
           <div class="form-group col-md-10 " id="operar">
             <label>Luego para operar?:</label>
-            <select class="form-control" name="selectop" id="selectop">
+            <select class="form-control select" style="width: 100%;"name="selectop" id="selectop">
               <option value="si">Si</option>      
               <option value="no">No</option>               
             </select>
           </div>
           <div class="form-group col-md-10 ">
             <label>Color:</label>
-            <select class="form-control" name="id_color" id="id_color">
+            <select class="form-control select"style="width: 100%;" name="id_color" id="id_color">
               @foreach($colores as $color)
               <option value="{{ $color->id }}">{{ $color->color }}</option>
              

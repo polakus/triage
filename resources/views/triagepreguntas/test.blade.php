@@ -29,9 +29,21 @@
     {{-- Autocompletar --}}
 
     <link rel="stylesheet" type="text/css" href="{{ asset('css/jquery-ui.css') }}">
- 
+    
+    {{-- Select2 --}}
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" />
     @yield("css")
     <style>
+  
+      .select2-selection__rendered {
+      line-height: 32px !important;
+      }
+
+      .select2-selection {
+      height: 31px !important;
+      }
+
       table{
         width: 100% !important;
         min-width: 250px;
@@ -365,6 +377,18 @@
 
 <script src="{{ asset('js/jquery-ui.js') }}"></script>
 
+{{-- sELECT 2 --}}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
+
+<script type="text/javascript">
+  var select2=$('.select').select2({
+
+    // width:'100%',dropdownCssClass: "bigdrop"
+     // width: '300px', dropdownCssClass: "bigdrop" 
+  });
+
+
+</script>
 @yield("scripts")
 
 </body>

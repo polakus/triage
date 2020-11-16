@@ -1,6 +1,9 @@
 @extends("triagepreguntas.test")
 @section("css")
 
+<style type="text/css">
+  
+</style>
 @endsection
 @section("cuerpo")
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
@@ -61,6 +64,9 @@
 
 
 <script type="text/javascript">
+  $(document).ready(function() {
+    $('#cod').select2();
+});
 
   // var fecha = new Date(); //Fecha actual
   // var mes = fecha.getMonth()+1; //obteniendo mes
