@@ -118,7 +118,7 @@
     </div>
   </div>
   --}}
-  <div class="col-x1-6 col-md-6 mb-4">
+ {{--  <div class="col-x1-6 col-md-6 mb-4">
     <div class="card border-left-success shadow h-100 py-2">
       <ul class="nav nav-tabs" id="myTab" role="tablist">
         <li class="nav-item" role="presentation">
@@ -143,6 +143,27 @@
             <div class="align-items-center" id="chartContainerAnio" style="height: 300px; width: 100%;"></div>
           </div>
         </div>
+      </div>
+    </div>
+  </div> --}}
+  <div class="col-x1-6 col-md-6 mb-4">
+    <div class="card border-left-success shadow h-100 py-2">
+      <ul class="nav nav-tabs" id="myTab" role="tablist">
+        <li class="nav-item" role="presentation">
+          <a class="nav-link active" id="home-tab" onclick = "chart('dia')" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Dia</a>
+        </li>
+        <li class="nav-item" role="presentation">
+          <a class="nav-link" id="profile-tab" onclick = "chart('mes')" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Mes</a>
+        </li>
+        <li class="nav-item" role="presentation">
+          <a class="nav-link" id="contact-tab" onclick= "chart('anio')" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">Año</a>
+        </li>
+      </ul>
+      <div class="card-body">
+         <div class="align-items-center" id="chartContainerDia" style="height: 300px; width: 100%;"></div>
+         <div class="align-items-center" id="chartContainerMes" style="height: 300px; width: 100%;"></div>
+         <div class="align-items-center" id="chartContainerAnio" style="height: 300px; width: 100%;"></div>
+        {{-- <div id="chartContainer" style="height: 300px; width: 100%;"></div> --}}
       </div>
     </div>
   </div>
@@ -204,7 +225,9 @@
 
 <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
 <script>
-
+document.getElementById('chartContainerDia').style.display = 'none';
+document.getElementById('chartContainerMes').style.display = 'none';
+document.getElementById('chartContainerAnio').style.display = 'none';
 var t = "Porcentaje de Códigos ";
 var textoDia = <?php echo json_encode("(".strtoupper($dia).")"); ?>;
 var textoMes = <?php echo json_encode("(".strtoupper($mes).")"); ?>;
@@ -216,8 +239,7 @@ var dataAnio = <?php echo $dataAnio; ?>;
 var chartDia = new CanvasJS.Chart("chartContainerDia", {
   animationEnabled: true,
   theme: "theme3",
-  width: 400,
-  height: 300,
+  
   axisY: {
     title: "Growth Rate (in %)",
     suffix: "%"
@@ -246,8 +268,7 @@ var chartDia = new CanvasJS.Chart("chartContainerDia", {
 var chartMes = new CanvasJS.Chart("chartContainerMes", {
   animationEnabled: true,
   theme: "theme3",
-  width: 400,
-  height: 300,
+
   axisY: {
     title: "Growth Rate (in %)",
     suffix: "%"
@@ -275,8 +296,7 @@ var chartMes = new CanvasJS.Chart("chartContainerMes", {
 var chartAnio = new CanvasJS.Chart("chartContainerAnio", {
   animationEnabled: true,
   theme: "theme3",
-  width: 400,
-  height: 300,
+  
   axisY: {
     title: "Growth Rate (in %)",
     suffix: "%"
@@ -302,19 +322,36 @@ var chartAnio = new CanvasJS.Chart("chartContainerAnio", {
   }]
 });
 window.onload = function(){
-  funcDia();
+  chart('dia');
 }
-function funcDia(){
-  chartDia.render();
+function chart(tipo){
+  if(tipo == 'dia'){
+    document.getElementById('chartContainerDia').style.display = 'block';
+    document.getElementById('chartContainerMes').style.display = 'none';
+    document.getElementById('chartContainerAnio').style.display = 'none';
+    chartDia.render();
+
+  }
+  else{
+    if(tipo == 'mes'){
+      document.getElementById('chartContainerDia').style.display = 'none';
+      document.getElementById('chartContainerMes').style.display = 'block';
+      document.getElementById('chartContainerAnio').style.display = 'none';
+      chartMes.render();
+    }
+    else{
+      document.getElementById('chartContainerDia').style.display = 'none';
+      document.getElementById('chartContainerMes').style.display = 'none';
+      document.getElementById('chartContainerAnio').style.display = 'block';
+      chartAnio.render();
+    }
+  }
 }
-function funcMes(){
-  chartMes.render();
-}
-function funcAnio(){
-  chartAnio.render();
-}
+
   
 </script>
+
+
 
 {{--
 <script>

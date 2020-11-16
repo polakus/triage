@@ -167,7 +167,7 @@ Route::get('protocolos',function(){
     $protocolos=App\Protocolo::all();
     return DataTables::of($protocolos)
                         ->addColumn('ver',function(){
-                            return '<button class="btn btn-sm btn-dark" style="font-size:10px;"> Ver </button>';
+                            return '<button class="btn btn-sm btn-outline-secondary" style="font-size:13px;"> Ver </button>';
                         })
                         ->addColumn('codigo',function($protocolo){
 
@@ -187,7 +187,7 @@ Route::get('protocolos',function(){
                             return $s;
                         })
                         ->addColumn('buttons',function($protocolo){
-                            return '<a class="btn btn-sm btn-dark ml-1"href="/editarProtocolo/'.$protocolo->id.'">Editar</a>'.'<button class="btn btn-dark btn-sm ml-1" onclick="eliminar('.$protocolo->id.')">Eliminar</button>';
+                            return '<a class="btn btn-sm btn-outline-secondary ml-1"href="/editarProtocolo/'.$protocolo->id.'">Editar</a>'.'<button class="btn btn-outline-secondary btn-sm ml-1" onclick="eliminar('.$protocolo->id.')">Eliminar</button>';
                         })
                         ->rawColumns(['codigo','especialidad','sintomas','ver','buttons'])
                         ->toJson();

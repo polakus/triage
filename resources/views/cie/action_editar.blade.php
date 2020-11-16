@@ -12,7 +12,7 @@
 </style>
 
 
-<button type="button" class="btn btn-dark btn-sm "  data-toggle="modal" data-target="#editar{{ $id }}">
+<button type="button" class="btn btn-outline-secondary btn-sm "  data-toggle="modal" data-target="#editar{{ $id }}">
     Editar
 </button>
 <div class="modal fade" id="editar{{ $id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -48,6 +48,6 @@
         </div>
     </div>
 </div>
-<button type="button" class="btn btn-dark btn-sm "  id="eliminarcie" onclick="eliminarCie({{$id}})">
+<button type="button" class="btn btn-outline-secondary btn-sm "  id="eliminarcie" onclick="eliminarCie({{$id}})">
     Eliminar
 </button>

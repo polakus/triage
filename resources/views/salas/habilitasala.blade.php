@@ -1,4 +1,12 @@
-<button type="button" id="bh{{$sala->id}}" onclick="habilita({{$sala->id}})" style="width:100px" class="btn {{$sala->disponibilidad==0 ? 'btn-danger': 'btn-success'}} btn-sm">{{$sala->disponibilidad==0 ? 'F. de Servicio': 'Disponible'}}</button>
+<style type="text/css">
+    @media only screen and (max-width: 615px){
+       /* .btn{
+            width: 100% !important;
+        }*/
+    }
+</style>
+
+<button type="button" id="bh{{$sala->id}}" onclick="habilita({{$sala->id}})" style="width:90%;" class="btn {{$sala->disponibilidad==0 ? 'btn-danger': 'btn-success'}} btn-sm">{{$sala->disponibilidad==0 ? 'F. de Servicio': 'Disponible'}}</button>
 
 <script>
     function habilita(id){

@@ -19,7 +19,7 @@
 
 <div class="table-responsive">
 	<table class="table table-bordered table-hover table-sm table-striped" id="myTable">
-		<thead class="thead-dark">
+		<thead >
 			<tr>
 				<th scope="col">Nombre</th>
 				<th scope="col">Descripcion</th>
@@ -100,6 +100,13 @@
 				{data:'tipo_dato'},
 				{data:'button'},
 			],
+			"columnDefs": [
+            { responsivePriority: 1, targets: 0 },
+            { responsivePriority: 2, targets: 3 },
+            { responsivePriority: 3, targets: 1 }
+            
+          
+       	     ],
 			"language": {
 				"decimal": ",",
 				"thousands": ".",

@@ -116,6 +116,12 @@
                             }
                           }
                          },
+          "columnDefs": [
+            { responsivePriority: 1, targets: 0 },
+            { responsivePriority: 2, targets: 6 },
+            { responsivePriority: 3, targets: 7 }
+          
+        ],
 
       "responsive": true,
       "processing":true,

@@ -3,7 +3,7 @@
  @if($paciente->estado =="Internar")
                     <!-- Button trigger modal -->
 
-                    <button type="button" class="btn btn-dark btn-sm" data-toggle="modal" data-target="#exampleModal{{ $paciente->id }}" id="button1">
+                    <button type="button" class="btn btn-mod btn-sm" data-toggle="modal" data-target="#exampleModal{{ $paciente->id }}" id="button1">
 
                       Asignar sala
                       

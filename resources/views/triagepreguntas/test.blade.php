@@ -36,6 +36,30 @@
         width: 100% !important;
         min-width: 250px;
       }
+      table thead{
+        background: linear-gradient(to bottom, #777, #222);
+        color:#fff;
+      }
+      table thead:hover{
+        background: linear-gradient(to bottom, #444, #111);
+      }
+
+      .btn-mod{
+        background: linear-gradient(to bottom, #888, #222);
+        /*background: red;*/
+        color: #fff;
+      }
+      .btn-mod:hover{
+        color: #fff;
+        background: linear-gradient(to bottom, #555, #000);
+      }
+
+      .btn-outline-secondary:hover{
+        background: linear-gradient(to bottom, #555, #000)!important;
+        
+      }
+
+
       .bd-placeholder-img {
         font-size: 1.125rem;
         text-anchor: middle;
@@ -69,8 +93,8 @@
   // echo $url_array[3];
   $usuario = Auth::user();
 ?>
-  <nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
-    <a class="navbar-brand col-md-3 col-lg-2 mr-0 px-3" href="#">Hopistal San Bernardo</a>
+  <nav class="navbar navbar-dark sticky-top  flex-md-nowrap p-0 shadow" style="background: linear-gradient(to bottom, #555, #222);">
+    <a class="navbar-brand col-md-3 col-lg-2 mr-0 px-3" style="background: linear-gradient(to bottom, #555, #222);" href="#">Hopistal San Bernardo</a>
     <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-toggle="collapse" data-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>

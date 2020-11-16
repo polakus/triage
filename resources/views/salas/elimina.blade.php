@@ -1,4 +1,4 @@
-<button type="button" id="bn{{$sala->id}}" onclick="elimina({{$sala->id}})" class="btn btn-dark btn-sm">Eliminar</button>
+<button type="button" id="bn{{$sala->id}}" onclick="elimina({{$sala->id}})" class="btn btn-outline-secondary btn-sm">Eliminar</button>
 
 <script>
 

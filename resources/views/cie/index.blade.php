@@ -6,7 +6,7 @@
 	<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
         <h4 class="h4">CIE</h4>
         <div class="btn-toolbar mb-2 mb-md-0">
-			<button type="button" class="btn btn-outline-secondary btn-sm" data-toggle="modal" data-target="#exampleModal">
+			<button type="button" class="btn btn-outline-secondary btn-sm" data-toggle="modal" style="width: 100%;" data-target="#exampleModal">
 				Agregar CIE
 			</button>
     	</div>

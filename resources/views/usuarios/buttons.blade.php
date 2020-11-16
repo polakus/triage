@@ -2,7 +2,7 @@
 
 <div class="form-row">
 	<!-- Button trigger modal -->
-	<button type="button" class="btn btn-dark btn-sm " id="btn_tabla3"data-toggle="modal" data-target="#exampleModalCenter{{$usuario->id}}">Ver</button>
+	<button type="button" class="btn btn-outline-secondary btn-sm " id="btn_tabla3"data-toggle="modal" data-target="#exampleModalCenter{{$usuario->id}}">Ver</button>
 	<!-- Modal -->
 	<div class="modal fade" id="exampleModalCenter{{$usuario->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
 		<div class="modal-dialog modal-dialog-centered" role="document">
@@ -64,16 +64,16 @@
 			</div>
 		</div>
 		<div class="modal-footer">
-			<button type="button" class="btn btn-secondary " data-dismiss="modal">Cerrar</button>
+			<button type="button" class="btn btn-mod " data-dismiss="modal">Cerrar</button>
 		</div>
 	</div>
 	<form id="a2" name="{{$usuario->username}}" action="usuarios/{{$usuario->id}}" method="post">
 		@csrf
 		{{method_field('DELETE')}}
 		@if(Auth::id()==$usuario->id)
-			<button type="submit" class="btn btn-danger btn-sm ml-1" id="btn_tabla1"value="{{$usuario->id}}" disabled>Eliminar</button>
+			<button type="submit" class="btn btn-outline-secondary btn-sm ml-1" id="btn_tabla1"value="{{$usuario->id}}" disabled>Eliminar</button>
 		@else
-			<button type="submit" class="btn_tabla btn btn-danger btn-sm ml-1" id="btn_tabla2" value="{{$usuario->id}}">Eliminar</button>
+			<button type="submit" class="btn_tabla btn btn-outline-secondary btn-sm ml-1" id="btn_tabla2" value="{{$usuario->id}}">Eliminar</button>
 		@endif
 	</form>
 </div>

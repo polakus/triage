@@ -1,1 +1,1 @@
-<button type="button" class="btn btn-danger btn-sm" onclick="eliminar({{ $id }})">Eliminar</button>
+<button type="button" class="btn btn-outline-secondary btn-sm" onclick="eliminar({{ $id }})">Eliminar</button>

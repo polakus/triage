@@ -1,4 +1,5 @@
 @extends("triagepreguntas.test")
+@section('css')
 <style type="text/css">
     .btn{
         width: 45%;
@@ -11,7 +12,7 @@
         }
     }
 </style>
-
+@endsection
 @section("cuerpo")
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
     <h4 class="h2">Protocolos</h4>
@@ -24,10 +25,10 @@
 
 
 <div class="table-responsive" >
-        <table class="table table-striped table-bordered table-hover  table-sm" id="example">
+        <table class="table table-striped table-bordered table-hover table-sm" id="example">
           <thead>
             <tr>
-              <th width="20px">Sintomas</th>
+              <th >Sintomas</th>
               <th>Protocolo</th>
               <th>Codigo</th>
               <th>Especialidad</th>

@@ -35,10 +35,10 @@
 	<table  class="table table-bordered table-sm table-striped table-hover" id="myTable">
 		<thead >
 		<tr>
-			<th scope="col" style="width:30%">Nombre</th>
-			<th scope="col" style="width:30%">Área</th>
-			<th scope="col" style="width:20%">Estado</th>
-			<th scope="col" style="width:20%">Acción</th>
+			<th scope="col" >Nombre</th>
+			<th scope="col" >Área</th>
+			<th scope="col" >Estado</th>
+			<th scope="col" >Acción</th>
 		</tr>
 		</thead>
 		<tbody>

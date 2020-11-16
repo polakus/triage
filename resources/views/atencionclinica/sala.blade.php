@@ -9,7 +9,7 @@
        
          <h6>{{ $mensaje }}</h6>
      
-      <a href="{{ route('atencionclinica.edit', Auth::id() ) }}"class="btn btn-dark btn-sm" style="width:220px;">Cambiar ubicacion</a>
+      <a href="{{ route('atencionclinica.edit', Auth::id() ) }}"class="btn btn-mod btn-sm" style="width:220px;">Cambiar ubicacion</a>
 </div>
 <div class="form-row" id="seccionRecargar">
         <div class="form-group col-md-2" style="font-size: 17px;">
@@ -43,12 +43,12 @@
 <div class="form-group row-cols-3">
   <label>Pacientes nuevos</label>
   <input type="text" name="cantidad" disabled value="0" id="cantidad" style="width: 40px;text-align: center;">
-  <button class="btn btn-dark btn-sm" style="height: 30px;float: right;"  onclick="document.location.reload();">Refresh</button>
+  <button class="btn btn-mod btn-sm" style="height: 30px;float: right;"  onclick="document.location.reload();">Refresh</button>
 </div>
 
 <div class="table-responsive">
 <table class="table table-striped table-bordered table-sm" id="table_id">
-    <thead class="thead-dark">
+    <thead>
       <tr>
         <th scope="col">Nombre</th>
         <th scope="col">Apellido</th>

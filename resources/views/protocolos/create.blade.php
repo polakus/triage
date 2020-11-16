@@ -64,8 +64,8 @@
   </tbody>
   </table>
 
-  <button type="submit" class="btn btn-primary">Registrar</button>
-  <a class="btn btn-default btn-close" href="{{ route('protocolos.index') }}">Volver</a>
+  <button type="submit" class="btn btn-mod">Registrar</button>
+  <a class="btn btn-outline-secondary btn-close" href="{{ route('protocolos.index') }}">Volver</a>
 </form>
  
 @endsection

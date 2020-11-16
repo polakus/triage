@@ -178,10 +178,10 @@
                 },
             error:function(err){
                if (err.status == 422) { // when status code is 422, it's a validation issue
-            console.log(err.responseJSON);
-            $('#success_message').fadeIn().html(err.responseJSON.message);
-            $.each(err.responseJSON.errors, function (i, error) {
-                $('#error_sintoma').html('<span style="color: red;">'+error[0]+'</span>');
+                console.log(err.responseJSON);
+                $('#success_message').fadeIn().html(err.responseJSON.message);
+                $.each(err.responseJSON.errors, function (i, error) {
+                    $('#error_sintoma').html('<span style="color: red;">'+error[0]+'</span>');
                 // var el = $(document).find('[name="'+i+'"]');
                 // el.after($('<span style="color: red;">'+error[0]+'</span>'));
                 // alert(error[0])

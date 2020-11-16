@@ -1,7 +1,10 @@
+
+
+
 @if($paciente->operar == 1 || $paciente->estado == "Operar" )
                     <!-- Button trigger modal -->
 
-      <button type="button" class="btn btn-dark btn-sm" data-toggle="modal" data-target="#modal{{ $paciente->id }}" id="button1">
+      <button type="button" class="btn btn-mod btn-sm" data-toggle="modal" data-target="#modal{{ $paciente->id }}" id="button1">
         Quirofano
       </button>
 

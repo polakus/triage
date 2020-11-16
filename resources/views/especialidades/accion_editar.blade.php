@@ -1,4 +1,4 @@
-<button type="button" id="bnedit" class="btn btn-dark btn-sm" data-toggle="modal" data-target="#editar{{ $especialidad->id }}">
+<button type="button" id="bnedit" class="btn btn-outline-secondary btn-sm" data-toggle="modal" data-target="#editar{{ $especialidad->id }}">
     Editar
 </button>
 <div class="modal fade" id="editar{{ $especialidad->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">

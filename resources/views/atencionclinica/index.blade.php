@@ -27,8 +27,8 @@
 
       </div>
       <div class="row">
-        <div class="col">
-          <button  type="submit" class="btn btn-success btn-sm">Listo</button>
+        <div class="col col-4">
+          <button  type="submit" class="btn btn-outline-secondary btn-sm" style="width: 100%;">Listo</button>
         </div>
         
       </div>

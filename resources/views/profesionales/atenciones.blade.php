@@ -37,7 +37,7 @@
       <input type="date" class="form-control form-control-sm" data-date-format="DD-MMMM-YYYY" name="fecha" id="fecha_hasta">
     </div>
      <div class="col-md-2">
-      <button class="btn btn-dark btn-sm" id="search">Buscar</button>
+      <button class="btn btn-outline-secondary btn-sm" id="search">Buscar</button>
     </div>
     
   </div>

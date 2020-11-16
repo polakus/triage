@@ -1,19 +1,34 @@
 
 @extends('triagepreguntas.test')
 
-@section("estilos")
+@section("css")
  
-  </style> --}}
 <style type="text/css">
-.ui-autocomplete{
+/*.ui-autocomplete{
     z-index:1050;
 }
 #container_tags {
     display: block; 
     position:relative
+}*/
+.table__thead{
+  background: linear-gradient(to bottom, #777, #222);
+  color:#fff;
+  /*border: 1px inset #333;
+  box-shadow: 0 0 2px 0px #000;*/
 }
-
-
+.table__thead:hover{
+  background: linear-gradient(to bottom, #555, #111);
+}
+.btn-outline-secondary{
+  /*background: linear-gradient(to bottom, #888, #222);*/
+  /*background: red;
+  color: #fff;*/
+}
+.btn-outline-secondary:hover{
+  background: linear-gradient(to bottom, #555, #000);
+  
+}
 </style>
 
 @endsection
@@ -43,7 +58,7 @@
 </div>
 {{-- <div class="table-responsive"> --}}
         <table id ="myTable" class="table table-hover table-striped table-bordered table-sm">
-          <thead>
+          <thead class="table__thead"> 
             <tr>
               <th >Apellido</th>
               <th >Nombre</th>
@@ -58,7 +73,7 @@
           
           </tbody>
         </table>
-{{-- </div> --}}
+
 <!-- Modal -->
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
@@ -110,7 +125,7 @@
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
         <button type="button" class="btn btn-primary" onclick="cargar_nn()">Save changes</button>
       </div>
-     {{-- </form> --}}
+    
     </div>
   </div>
 </div>

@@ -39,7 +39,7 @@
 				<thead >
 					<tr>
 						<th scope="col" style="width:20%">Usuario</th>
-						<th scope="col" style="width:15%">Estado</th>
+						<th scope="col" style="width:15%">Nombre</th>
 						<th scope="col" style="width:30%">Email</th>
 						<th scope="col" style="width:20%">Rol</th>
 						<th scope="col" style="width:15%">Acción<nav></nav></th>
@@ -177,8 +177,13 @@ $(document).ready(function() {
             {data:'email'},
             {data:'rol'},
             {data:'buttons'}
-            
            ],
+           "columnDefs": [
+            { responsivePriority: 1, targets: 0 },
+            { responsivePriority: 2, targets: 4 },
+            { responsivePriority: 3, targets: 1 }
+          
+        ],
       "language": {
          "decimal": ",",
         "thousands": ".",
