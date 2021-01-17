@@ -1,1 +1,2 @@
-<button type="button" class="btn btn-outline-secondary btn-sm" onclick="eliminar({{ $id }},'{{ $descripcion }}')">Eliminar</button>
+<button type="button" class="btn btn-outline-secondary btn-sm " style="width: 40%;" onclick="eliminar({{ $id }},'{{ $descripcion }}')">Eliminar</button>
+<button type="button" class="btn btn-outline-secondary btn-sm "style="width: 40%;" >Editar</button>

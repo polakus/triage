@@ -1,6 +1,6 @@
 
 
-<button type="button" id="bnedit" class="btn btn-outline-secondary btn-sm" data-toggle="modal" data-target="#editar{{ $especialidad->id }}">
+<button type="button" id="bnedit" class="btn btn-outline-secondary btn-sm ml-1" data-toggle="modal" data-target="#editar{{ $especialidad->id }}">
     Editar
 </button>
 <div class="modal fade" id="editar{{ $especialidad->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -49,10 +49,10 @@
                 <button type="button" onclick="editaresp({{$especialidad->id}})" class="btn btn-dark">Editar</button>
                 <button type="button" class="btn btn-dark" data-dismiss="modal">Cerrar</button>
             </div>
-        </div>
+     </div>
     </div>
 </div>
-
+<button type="button" class="btn btn-sm btn-outline-secondary ml-1" onclick="eliminar('{{ $especialidad->nombre }}')">Eliminar</button>
 <script>
     var select2=$('.select').select2();
     function editaresp(id) {
@@ -104,4 +104,9 @@
             }
         });
 	}
+
+
+    function eliminar(name){
+         if (confirm('¿Esta seguro de eliminar la especialidad'+name+' ? Tenga en cuenta que se eliminara todos los datos relacionados a ella.')) {}
+    }
 </script>

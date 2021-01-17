@@ -90,7 +90,7 @@
         </tbody>
       </table>
     </div>
-  <button type="submit" class="btn btn-mod">Registrar</button>
+  <button type="submit" class="btn btn-mod">Editar</button>
   <a class="btn btn-outline-secondary btn-close" href="{{ route('protocolos.index') }}">Volver</a>
 </form>
  
