@@ -4648,6 +4648,7 @@ return array(
     'Yajra\\DataTables\\ApiResourceDataTable' => $vendorDir . '/yajra/laravel-datatables-oracle/src/ApiResourceDataTable.php',
     'Yajra\\DataTables\\CollectionDataTable' => $vendorDir . '/yajra/laravel-datatables-oracle/src/CollectionDataTable.php',
     'Yajra\\DataTables\\Contracts\\DataTable' => $vendorDir . '/yajra/laravel-datatables-oracle/src/Contracts/DataTable.php',
+    'Yajra\\DataTables\\Contracts\\Formatter' => $vendorDir . '/yajra/laravel-datatables-oracle/src/Contracts/Formatter.php',
     'Yajra\\DataTables\\DataTableAbstract' => $vendorDir . '/yajra/laravel-datatables-oracle/src/DataTableAbstract.php',
     'Yajra\\DataTables\\DataTables' => $vendorDir . '/yajra/laravel-datatables-oracle/src/DataTables.php',
     'Yajra\\DataTables\\DataTablesServiceProvider' => $vendorDir . '/yajra/laravel-datatables-oracle/src/DataTablesServiceProvider.php',
