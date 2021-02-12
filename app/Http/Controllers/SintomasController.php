@@ -53,10 +53,6 @@ class SintomasController extends Controller
         $nuevo->save();
 
     return response()->json();
-        
-
-       
-       
     }
 
     /**

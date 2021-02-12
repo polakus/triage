@@ -20,12 +20,8 @@ class protocolosController extends Controller
      */
     public function index()
     {
-       
         return view('protocolos.index');
-        
-        
     }
-
     /**
      * Show the form for creating a new resource.
      *
@@ -38,7 +34,6 @@ class protocolosController extends Controller
         $especialidades = Especialidad::all();
         return view('protocolos.create', compact('codigos', 'sintomas','especialidades'));
     }
-
     /**
      * Store a newly created resource in storage.
      *
@@ -53,13 +48,14 @@ class protocolosController extends Controller
         ];
         $prot = $request->validate([
             'desc' => 'required|max:255',
+            'sint' => 'required'
         ], $mensajes);
         $protocolo = new Protocolo;
         $protocolo->id_codigo_triage= $request->codigo;
         $protocolo->descripcion= $request->desc;
         $protocolo->save();
 
-        $sintomas = $_POST['cbs'];
+        $sintomas = $request->sint;
         foreach($sintomas as $sintoma){
             $dsp = new Detalle_Sintoma_Protocolo;
             $dsp->id_protocolo = $protocolo->id;
