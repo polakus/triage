@@ -151,17 +151,16 @@
     }
     });
 
-   $('#agregar').click(function() {
-      var nombre_sintoma = $('#nombre_sintoma').val();
+    $('#agregar').click(function() {
+        var nombre_sintoma = $('#nombre_sintoma').val();
     
-    $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-    });
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
 
-   $.ajax({
-
+        $.ajax({
             type:'POST',
             url:"/sintomas",
             dataType:"json",
@@ -169,7 +168,6 @@
                 nombre_sintoma:nombre_sintoma,
             },
             success: function(response){
-                
                 var table = $('#myTable').DataTable();
                 table.draw();
                 var inputNombre = document.getElementById("nombre_sintoma");
@@ -177,21 +175,21 @@
 
                 },
             error:function(err){
-               if (err.status == 422) { // when status code is 422, it's a validation issue
-                console.log(err.responseJSON);
-                $('#success_message').fadeIn().html(err.responseJSON.message);
-                $.each(err.responseJSON.errors, function (i, error) {
-                    $('#error_sintoma').html('<span style="color: red;">'+error[0]+'</span>');
-                // var el = $(document).find('[name="'+i+'"]');
-                // el.after($('<span style="color: red;">'+error[0]+'</span>'));
-                // alert(error[0])
-            });
-        }
+                if (err.status == 422) { // when status code is 422, it's a validation issue
+                    console.log(err.responseJSON);
+                    $('#success_message').fadeIn().html(err.responseJSON.message);
+                    $.each(err.responseJSON.errors, function (i, error) {
+                        $('#error_sintoma').html('<span style="color: red;">'+error[0]+'</span>');
+                    // var el = $(document).find('[name="'+i+'"]');
+                    // el.after($('<span style="color: red;">'+error[0]+'</span>'));
+                    // alert(error[0])
+                    });
+                }
                 // $("#labelNombre").text("Error 2");
                 // $("#labelNombre").addClass('text-danger');
             }
         });
-});
+    });
   
     
 } );

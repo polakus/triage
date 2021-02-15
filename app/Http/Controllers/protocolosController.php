@@ -43,6 +43,7 @@ class protocolosController extends Controller
     public function store(Request $request)
     {
         $mensajes = [
+            'sint.required' =>'Debe agregar al menos un síntoma a la tabla.',
             'required' =>'Este campo no debe estar vacio.',
             'max' => 'Este campo supera la capacidad máxima de caracteres.',
         ];
@@ -67,8 +68,9 @@ class protocolosController extends Controller
         $det_protocolo->id_protocolo = $protocolo->id;
         $det_protocolo->save();
         
-        $request->session()->flash('alert-success', 'El protocolo fue agregado exitosamente!');
-        return redirect()->back()->withInput();
+        // $request->session()->flash('alert-success', 'El protocolo fue agregado exitosamente!'); //NO LO PUEDO USAR CON AJAX
+        // return redirect()->back()->withInput();
+        return response()->json();
     }
 
     /**
@@ -118,19 +120,21 @@ class protocolosController extends Controller
     public function update(Request $request, $id)
     {
         $mensajes = [
+            'sint.required' => 'Debe agregar al menos un síntoma a la tabla.',
             'required' =>'Este campo no debe estar vacio.',
             'max' => 'Este campo supera la capacidad máxima de caracteres.',
         ];
         $prot = $request->validate([
             'desc' => 'required|max:255',
-            'cbs' => 'required'
+            'sint' => 'required'
         ], $mensajes);
         $protocolo = Protocolo::find($id);
         $protocolo->id_codigo_triage= $request->codigo;
         $protocolo->descripcion= $request->desc;
         $protocolo->save();
 
-        $sintomas = $_POST['cbs'];
+        $sintomas = $request->sint;
+        
         $dsp = Detalle_Sintoma_Protocolo::where('id_protocolo', $id)->get();
         $i = 0;
         if (count($sintomas) == $dsp->count()){
@@ -147,9 +151,11 @@ class protocolosController extends Controller
                     if ($i < $sint_cant){
                         $d->id_protocolo = $protocolo->id;
                         $d->id_sintoma = $sintomas[$i];
+                        $d->save();
                         $i++;
-                    }else
+                    }else{
                         $d->delete();
+                    }
                 }
             }else{
                 $det_cant = $dsp->count();
@@ -175,8 +181,9 @@ class protocolosController extends Controller
             $dp->save();
         }
         
-        $request->session()->flash('alert-success', 'El protocolo fue agregado exitosamente!');
-        return redirect()->back()->withInput();
+        // $request->session()->flash('alert-success', 'El protocolo fue agregado exitosamente!');
+        // return redirect()->back()->withInput();
+        return response()->json();
     }
 
     /**

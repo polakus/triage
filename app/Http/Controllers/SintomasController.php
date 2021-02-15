@@ -52,7 +52,7 @@ class SintomasController extends Controller
         $nuevo->descripcion=$request->get('nombre_sintoma');
         $nuevo->save();
 
-    return response()->json();
+        return response()->json();
     }
 
     /**

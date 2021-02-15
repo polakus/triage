@@ -2,10 +2,10 @@
 
 @section("css")
   <style type="text/css">
-      .select2-choices {
-     min-height: 150px !important;
-     max-height: 150px;
-     overflow-y: auto;
+    .select2-choices {
+      min-height: 150px !important;
+      max-height: 150px;
+      overflow-y: auto;
     }
     .autocomplete-items {
       position: absolute;
@@ -34,32 +34,29 @@
 @endsection
 
 @section("cuerpo")
+
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
     <h5 class="h5">Registracion de un nuevo protocolo</h5>
 </div>
+{{--
+<!-- ACTUAL MENSAJE DE RESULTADOS DE TRANSACCIÓN -->
 <div class="flash-message">
   @foreach (['danger', 'warning', 'success', 'info'] as $msg)
     @if(Session::has('alert-' . $msg))
       <p class="alert alert-{{ $msg }}">{{ Session::get('alert-' . $msg) }} <a href="{{ route('protocolos.index') }}" class="close" data-dismiss="alert" aria-label="close">&times;</a></p>
     @endif
-  @endforeach
+  @endforeach   
 </div>
-<form method="POST" action="/protocolos">
-  @csrf
+--}}
 
   <div class="form-row">
-    <div class="form-group col-md-4">
+    <div id="div_desc" class="form-group col-md-4">
       <label for="inputEmail4">Descripción</label>
-      <input type="text" name="desc"  class="form-control form-control-sm @error('desc') is-invalid @enderror" value="{{ old('desc') }}" placeholder="Nombre">
-      @error('desc')
-      <span class="invalid-feedback" role="alert">
-          <strong>{{ $message }}</strong>
-      </span>
-      @enderror
+      <input type="text" id="desc" name="desc" class="form-control form-control-sm" value="{{ old('desc') }}" placeholder="Nombre">
     </div>
     <div class="form-group col-md-2">
-      <label for="inputState">Código</label>
-      <select name="codigo" id="inputState" class="form-control select" >
+      <label for="codigo">Código</label>
+      <select name="codigo" id="codigo" class="form-control select" >
         @foreach($codigos as $codigo)
           <option value="{{$codigo->id}}">{{$codigo->color}}</option>
         @endforeach
@@ -77,14 +74,8 @@
 
   <label for="inputEmail4">Buscar Síntomas</label>
   <div class="form-row">
-    <div class="form-group col-md-4">
-        <input id="tags" type="text" name="buscador" value="{{old('buscador')}}" class="form-control form-control-sm @error('sint') is-invalid @enderror"" placeholder="Síntoma" autocomplete="off">
-        @error('sint')
-        <span class="invalid-feedback" role="alert">
-        <!-- CAMBIAMOS EL MENSAJE PARA ESTE CASO -->
-            <strong>Debe agregar al menos un síntoma a la tabla.</strong> 
-        </span>
-        @enderror
+    <div id="div_busc" class="form-group col-md-4">
+        <input id="tags" type="text" name="buscador" value="{{old('buscador')}}" class="form-control form-control-sm " placeholder="Síntoma" autocomplete="off">
     </div>
     <div class="form-group col-md-4">
       <button type="button" id="btn_agregar" onclick="addRow()" class="btn btn-mod">Agregar</button>    
@@ -104,21 +95,28 @@
     </table>
   </div>
 
-  <button type="submit" class="btn btn-mod">Registrar</button>
+  <button type="button" id="reg_id" class="btn btn-mod">Registrar</button>
   <a class="btn btn-outline-secondary btn-close" href="{{ route('protocolos.index') }}">Volver</a>
-</form>
- 
+
+
 @endsection
 @section("scripts")
 
 <script>
+  // document.getElementById('btn_agregar').addEventListener( "click", function() {
+  //   $( "#popUp" ).show(); 
+  //   setTimeout(function() {
+  //       $( "#popUp" ).hide();
+  //     }, 2000);
+  // });
   function addRow() {   // PARA AGREGAR NUEVA FILA A LA TABLA
       // alert(document.getElementById("btn_agregar").value);
+      var ind = estaEn(document.getElementById("tags").value);
       if(document.getElementById("tags").value=='')
         alert("Para agregar un síntoma debe ingresar su nombre")
       else{
-        if(esta(document.getElementById("tags").value)){
-          if(chequeaRepetido(document.getElementById('btn_agregar').value)){
+        if(ind!=-1){
+          if(chequeaRepetido(sintomas[ind].id)){
             alert("Este síntoma ya está agregado");
           }else{
             var empTab = document.getElementById('myTable');
@@ -132,7 +130,7 @@
 
             var ele = document.createElement('input');
             ele.setAttribute('type', 'hidden');
-            ele.setAttribute('value', document.getElementById('btn_agregar').value);
+            ele.setAttribute('value', sintomas[ind].id);
             ele.setAttribute('name', 'sint[]');
             td.appendChild(ele);
             
@@ -162,19 +160,17 @@
         }
       }
   }
-
-  function esta(st){
+// PARA VER SI EL VALOR DEL INPUT ES UN SÍNTOMA Y DEVOLVER LA POSICIÓN
+  function estaEn(st){
     var i = 0;
-    var b = false;
-    while(!b && i<listasintomas.length){
-      if (listasintomas[i].toUpperCase() == st.toUpperCase())
-        b = true;
+    var ind = -1;
+    while(ind==-1 && i<sintomas.length){
+      if (sintomas[i].descripcion.toUpperCase() == st.toUpperCase()){
+        ind = i;
+      }
       i+= 1;
     }
-    if (b)
-      return true;
-    else
-      return false;
+    return ind;
   }
 
   function chequeaRepetido(id){
@@ -195,6 +191,74 @@
   function removeRow(oButton) {
       var empTab = document.getElementById('myTable');
       empTab.deleteRow(oButton.parentNode.parentNode.rowIndex); // button -> td -> tr.
+  }
+
+  document.getElementById("reg_id").addEventListener("click", function(){
+    var descripcion = document.getElementById('desc').value;
+    var codigo = document.getElementById('codigo').value;
+    var especialidad = document.getElementById('esp').value;
+    var sintObjs = document.getElementsByName('sint[]');
+    var sint = [];
+    for (let i = 0; i< sintObjs.length; i++) {
+      sint[i] = sintObjs[i].value;
+    }
+    
+    quitaSpans();
+    
+    $.ajaxSetup({
+      headers: {
+          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+      }
+    });
+
+    $.ajax({
+        type:'POST',
+        url:"/protocolos",
+        dataType:"json",
+        data:{
+            desc:descripcion,
+            codigo:codigo,
+            especialidad:especialidad,
+            sint:sint,
+        },
+        success: function(response){
+            console.log(response.responseJSON);
+            alert("El protocolo se guardó exitosamente");
+        },
+        error:function(err){
+            if (err.status == 422) { // when status code is 422, it's a validation issue
+              // alert("hubo un error");
+              console.log(err.responseJSON.errors);
+              if(err.responseJSON.errors.desc){
+                document.getElementById('desc').classList.add('is-invalid');
+                var ele_span = document.createElement('span');
+                ele_span.setAttribute('class', 'invalid-feedback');
+                ele_span.setAttribute('role', 'alert');
+                ele_span.innerHTML = "<strong>" + err.responseJSON.errors.desc + "</strong>";
+                document.getElementById('div_desc').appendChild(ele_span);
+              }
+              if(err.responseJSON.errors.sint){
+                document.getElementById('tags').classList.add('is-invalid');
+                var ele_span = document.createElement('span');
+                ele_span.setAttribute('class', 'invalid-feedback');
+                ele_span.setAttribute('role', 'alert');
+                ele_span.innerHTML = "<strong>" + err.responseJSON.errors.sint + "</strong>";
+                document.getElementById('div_busc').appendChild(ele_span);
+              }
+              
+            }
+        }
+      });
+  });
+
+  function quitaSpans(){
+    var spans = document.getElementsByClassName('invalid-feedback');
+    var inputs = document.getElementsByTagName('input');
+    for (let i = 0; i < inputs.length; i++) {
+      inputs[i].classList.remove('is-invalid');
+    }
+    while(spans.length>0)
+      spans[0].remove();
   }
 
   function autocomplete(inp, arr, arrid) {
@@ -225,20 +289,14 @@
             b.innerHTML += arr[i].substr(val.length);
             /*insert a input field that will hold the current array item's value:*/
             b.innerHTML += "<input type='hidden' value='" + arr[i] + "'>";
-            b.innerHTML += "<input type='hidden' value='" + arrid[i] + "'>";
             /*execute a function when someone clicks on the item value (DIV element):*/
             b.addEventListener("click", function(e) {
               /*insert the value for the autocomplete text field:*/
               inp.value = this.getElementsByTagName("input")[0].value;
-              document.getElementById("btn_agregar").value = this.getElementsByTagName("input")[1].value;
-              /*close the list of autocompleted values, (or any other open lists of autocompleted values:*/
               closeAllLists();
             });
             a.appendChild(b);
           }
-          // else{
-          //   document.getElementById("btn_agregar").value = "No";
-          // }
         }
     });
     
@@ -308,63 +366,6 @@
   }
   autocomplete(document.getElementById("tags"), listasintomas, listaids);
 
-</script>
-
-
-
-<script type="text/javascript">
-  $(document).ready(function() {
-    $('#dtBasicExample').DataTable({
-      
-      
-       "language": {
-        "decimal": ",",
-        "thousands": ".",
-        "info": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
-        "infoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
-        "infoPostFix": "",
-        "infoFiltered": "(filtrado de un total de _MAX_ registros)",
-        "loadingRecords": "Cargando...",
-        "lengthMenu": "Mostrar _MENU_ registros",
-        "paginate": {
-            "first": "Primero",
-            "last": "Último",
-            "next": "Siguiente",
-            "previous": "Anterior"
-        },
-        "processing": "Procesando...",
-        "search": "Buscar:",
-        "searchPlaceholder": "",
-        "zeroRecords": "No se encontraron resultados",
-        "emptyTable": "Ningún dato disponible en esta tabla",
-        "aria": {
-            "sortAscending":  ": Activar para ordenar la columna de manera ascendente",
-            "sortDescending": ": Activar para ordenar la columna de manera descendente"
-        },
-        //only works for built-in buttons, not for custom buttons
-        "buttons": {
-            "create": "Nuevo",
-            "edit": "Cambiar",
-            "remove": "Borrar",
-            "copy": "Copiar",
-            "csv": "fichero CSV",
-            "excel": "tabla Excel",
-            "pdf": "documento PDF",
-            "print": "Imprimir",
-            "colvis": "Visibilidad columnas",
-            "collection": "Colección",
-            "upload": "Seleccione fichero...."
-        },
-        "select": {
-            "rows": {
-                _: '%d filas seleccionadas',
-                0: 'clic fila para seleccionar',
-                1: 'una fila seleccionada'
-            }
-        }
-    }           
-    });
-} );
 </script>
 
 @endsection
