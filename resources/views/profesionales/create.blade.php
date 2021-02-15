@@ -1,11 +1,14 @@
-@extends("layouts.plantilla")
+@extends("triagepreguntas.test")
 
 @section("cabecera")
     
 @endsection
 
 @section("cuerpo")
-
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <h1 class="h5">Registrar un profesional</h1>
+        
+</div>
 <div class="flash-message">
     @foreach (['danger', 'warning', 'success', 'info'] as $msg)
         @if(Session::has('alert-' . $msg))
@@ -14,7 +17,7 @@
     @endforeach
 </div>
 <form method="POST" action="/profesionales">
-  @csrf
+    @csrf
     <div class="form-row">
         <div class="form-group col-md-4">
             <label for="inputEmail4">Nombre</label>

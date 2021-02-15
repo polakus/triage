@@ -19,26 +19,25 @@ use App\Profesional;
 Route::get('/', function () {
     return view('welcome');
 });
-// Route::get('/test', function () {
-//     return view('layouts.plantillaTest');
-// });
+Route::get('/atencionclinica/atencionsala','AtencionClinicaController@atencionsala')->middleware('auth');
 
 Route::get('/test',function(){
 	return view('triagepreguntas.test');
 });
-Route::post('atencionclinica/refresh','AtencionClinicaController@refresh')->name("refresh");
+Route::post('atencionclinica/refresh','AtencionClinicaController@refresh')->name("refresh")->middleware('auth');
 
 Route::get('/usuarios/pendientes/{id}/edit', 'usuariosController@aceptar')->middleware('auth');
 Route::delete('/usuarios/pendientes/{id}', 'usuariosController@rechazar')->middleware('auth');
 Route::get('/usuarios/pendientes', 'usuariosController@pendientes')->middleware('auth');
-Route::get('/triagepreguntas/estado/{triagepreguntas}', 'TriagepreguntasController@estado')->middleware('auth');
+// Route::get('/triagepreguntas/estado/{triagepreguntas}', 'TriagepreguntasController@estado')->middleware('auth');
 //Route::get('/triagepreguntas/analizar', 'TriagepreguntasController@analizar');
 Route::get('/pacientes/shows', 'PacientesController@shows')->middleware('auth');
 Route::get('/turnos/mostrar', 'TurnosController@mostrar')->name('mostrar')->middleware('auth');
 Route::get('/turnos/respuesta','TurnosController@respuesta')->middleware('auth');
-Route::post('turnos/cargarsinprotocolo','TurnosController@cargarsinprotocolo');
+Route::post('turnos/cargaratencion','TurnosController@cargaratencion')->middleware('auth');
 Route::post('/salas/filtros','salasController@filtro')->name('salas.filtro')->middleware('auth');
 // Route::post('/usuarios/registrar','usuariosController@create')->name('usuarios.registrar');
+Route::get('/editar/{id}', 'PacientesController@edit')->middleware('auth');
 Route::post('/pacientes/nn','PacientesController@insertarNN')->middleware('auth');
 Route::get('/atencionclinica/internacion','AtencionClinicaController@internar')->middleware('auth');
 
@@ -50,16 +49,20 @@ Route::resource('/pacientes','PacientesController')->middleware('auth');
 Route::resource('/triagepreguntas', 'TriagepreguntasController')->middleware('auth');
 Route::resource('/salas', 'salasController')->middleware('auth');
 Route::resource('/areas', 'areasController', ['except' => ['destroy', 'show', 'edit']])->middleware('auth');
+Route::get('/editarProtocolo/{id}','protocolosController@editar')->middleware('auth');
 Route::resource('/protocolos', 'protocolosController')->middleware('auth');
 Route::get('/profesionales/atenciones','profesionalesController@atenciones')->middleware('auth');
 Route::resource('/profesionales', 'profesionalesController', ['except' => ['destroy', 'edit', 'update']])->middleware('auth');
 Route::resource('/cie','CieController')->middleware('auth');
 Route::resource('/especialidades','EspecialidadController')->middleware('auth');
-Route::resource('/pruebas', 'pruebaController');
+Route::get('/pruebas', function(){
+    // codigo ...
+});
+
 
 Route::post('/atencionclinica/sala','AtencionClinicaController@cargarSala')->middleware('auth');
 
 
 
 Auth::routes();#['register' => false]);
-Route::get('/inicio', 'HomeController@index')->name('inicio');
+Route::get('/inicio', 'HomeController@index')->name('inicio')->middleware('auth');

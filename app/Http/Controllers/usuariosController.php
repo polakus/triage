@@ -29,12 +29,11 @@ class usuariosController extends Controller
      */
     public function index()
     {
-        $usuarios = User::where('estado', 1)->get();
-        return view('usuarios.index', compact('usuarios'));
+       $roles = Rol::all();
+        return view('usuarios.index',compact('roles'));
     }
     public function pendientes(){
-        $usuarios = User::where('estado', 0)->get();
-        return view('usuarios.pendientes', compact('usuarios'));
+        return view('usuarios.pendientes');
     }
     /**
      * Show the form for creating a new resource.
@@ -124,29 +123,44 @@ class usuariosController extends Controller
      */
     public function destroy(Request $request, $id)
     {
+        $mensaje="";
+        $tipo="";
         $aux = User::find($id)->username;
         if(Auth::user()->esAdmin()){ # El usuario logueado es Administrador?
             if(! User::find($id)->esAdmin()){ # El usuario que se quiere eliminar es administrador?
                 if(User::destroy($id)){
-                    $request->session()->flash('alert-success', 'El usuario '.$aux.' fue eliminado exitosamente!');
+                    $mensaje='El usuario '.$aux.' fue eliminado exitosamente!';
+                    $tipo="alert-success";
+                    // $request->session()->flash('alert-success', 'El usuario '.$aux.' fue eliminado exitosamente!');
                 }else{
-                    $request->session()->flash('alert-danger', 'Hubo un problema para eliminar al usuario '.$aux);
+                    $tipo="alert-danger";
+                    $mensaje='Hubo un problema para eliminar al usuario '.$aux;
+                    // $request->session()->flash('alert-danger', 'Hubo un problema para eliminar al usuario '.$aux);
                 }
             }else{
                 if(Auth::id()==1){ # El usuario logueado es Super Administrador?
                     if(User::destroy($id)){
-                        $request->session()->flash('alert-success', 'El usuario '.$aux.' fue eliminado exitosamente!');
+                        $mensaje='El usuario '.$aux.' fue eliminado exitosamente!';
+                        $tipo="alert-success";
+                        // $request->session()->flash('alert-success', 'El usuario '.$aux.' fue eliminado exitosamente!');
                     }else{
-                        $request->session()->flash('alert-danger', 'Hubo un problema para eliminar al usuario '.$aux);
+                        $mensaje='Hubo un problema para eliminar al usuario '.$aux;
+                        $tipo="alert-danger";
+                        // $request->session()->flash('alert-danger', 'Hubo un problema para eliminar al usuario '.$aux);
                     }
                 }else{
-                    $request->session()->flash('alert-warning', 'Solo el usuario '.User::find(1)->username.' puede eliminar a los usuarios Administradores!');
+                    $tipo="alert-warning";
+                    $mensaje= 'Solo el usuario '.User::find(1)->username.' puede eliminar a los usuarios Administradores!';
+                    // $request->session()->flash('alert-warning', 'Solo el usuario '.User::find(1)->username.' puede eliminar a los usuarios Administradores!');
                 }
             }
         }else{ # Si no es administrador entonces no puede eliminar usuarios
-            $request->session()->flash('alert-warning', 'Debes ser administrador para eliminar otros usuarios!');
+            $tipo="alert-warning";
+            $mensaje=  'Debes ser administrador para eliminar otros usuarios!';
+            // $request->session()->flash('alert-warning', 'Debes ser administrador para eliminar otros usuarios!');
         }
-        return redirect()->back();
+        return response()->json(['mensaje'=>$mensaje,'tipo'=>$tipo]);
+        // return redirect()->back();
     }
 
     ###################################################################################################
@@ -159,7 +173,7 @@ class usuariosController extends Controller
     // }
     public function register(Request $request)
     {
-        echo "entro register";
+        // echo "entro register";
         if (Auth::user()->esAdmin()){
             $this->validator($request->all())->validate();
             event(new Registered($user = $this->create2($request->all())));

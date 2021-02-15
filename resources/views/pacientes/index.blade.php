@@ -1,38 +1,13 @@
 
 @extends('triagepreguntas.test')
 
-@section("estilos")
-  {{-- <style type="text/css">
-    .btn{
-      display: inline-block;
-      transition: .3s;
-      border:solid 1.5px;
-    }
-    .btn-black{
-      
-      border-color: #2D2C31;
-      color: #2D2C31;
-      background-color: #eee;
-      text-decoration: none;
-      
-    }
-    .btn-black:hover{
-      border:solid 1px;
-      border-color: #eee;
-      color: #eee;
-      background-color: #2D2C31;
-      text-decoration: none;
-    }
-  </style> --}}
+@section("css")
 <style type="text/css">
-.ui-autocomplete{
-    z-index:1050;
-}
-#container_tags {
-    display: block; 
-    position:relative
-}
+  .select{
+    width: 100% !important;
+  }
 </style>
+
 @endsection
 
 @section("cuerpo")
@@ -52,15 +27,15 @@
             <a type="button" class="btn btn-sm btn-outline-secondary" href="{{ url('pacientes/create') }}">Registrar</a>
             <button type="button" class="btn btn-sm btn-outline-secondary" data-toggle="modal" data-target="#myModal">Cargar pacientes NN</button>
           </div>
-          <button type="button" class="btn btn-sm btn-outline-secondary dropdown-toggle">
+          {{-- <button type="button" class="btn btn-sm btn-outline-secondary dropdown-toggle">
             <span data-feather="calendar"></span>
             This week
-          </button>
+          </button> --}}
         </div>
 </div>
-<div class="table-responsive">
+{{-- <div class="table-responsive"> --}}
         <table id ="myTable" class="table table-hover table-striped table-bordered table-sm">
-          <thead>
+          <thead class="table__thead"> 
             <tr>
               <th >Apellido</th>
               <th >Nombre</th>
@@ -75,7 +50,7 @@
           
           </tbody>
         </table>
-</div>
+
 <!-- Modal -->
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
@@ -86,26 +61,25 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <form method="POST" action="/pacientes/nn">
-      @csrf
+     
       <div class="modal-body ui-front">
           <div class="form-group col-md-10 op">
             <label>Para:</label>
-            <select class="form-control" name="condicion">
-              <option value="Operar">Operar</option>      
+            <select class="form-control select" style="width: 100%;" name="condicion" id="condicion">
+              <option value="Operar" >Operar</option>      
               <option value="Internar">Internar</option>               
             </select>
           </div>
           <div class="form-group col-md-10 " id="operar">
             <label>Luego para operar?:</label>
-            <select class="form-control" name="selectop">
+            <select class="form-control select" style="width: 100%;"name="selectop" id="selectop">
               <option value="si">Si</option>      
               <option value="no">No</option>               
             </select>
           </div>
           <div class="form-group col-md-10 ">
             <label>Color:</label>
-            <select class="form-control" name="id_color">
+            <select class="form-control select"style="width: 100%;" name="id_color" id="id_color">
               @foreach($colores as $color)
               <option value="{{ $color->id }}">{{ $color->color }}</option>
              
@@ -115,18 +89,20 @@
           <div class="form-group col-md-10 ">
             <label>CIE:</label>
              <input type="text" name="ciess" id="cieslist" class="form-control form-control-sm">
+             <div id="error_modal_cie"></div>
      
           </div>
           <div class="form-group col-md-10 ">        
             <label for="exampleFormControlTextarea1">Observacion</label>
-            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="observacion"></textarea>
+            <textarea class="form-control" id="observacion" rows="3" name="observacion"></textarea>
+            <div id="error_modal_observacion"></div>
           </div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="submit" class="btn btn-primary">Save changes</button>
+        <button type="button" class="btn btn-primary" onclick="cargar_nn()">Save changes</button>
       </div>
-     </form>
+    
     </div>
   </div>
 </div>
@@ -134,7 +110,14 @@
 @endsection
 @section("scripts")
 @parent
+<script type="text/javascript">
+  $("document").ready(function(){
+    setTimeout(function(){
+       $("div.alert").remove();
+    }, 5000 ); // 5 secs
 
+});
+</script>
 
 <script>
   $( function() {
@@ -173,6 +156,7 @@
   $(document).ready(function() {
     
     $('#myTable').DataTable({
+      "responsive": true,
       "processing":true,
           "serverSide":true,
            "ajax":{url:"{{ url('api/ApiPacientes') }}",
@@ -237,7 +221,65 @@
     });
 } );
 </script>
+<script type="text/javascript">
+  function cargar_nn(){
+    
+    var condicion= $("#condicion").val();
+    var ciess = $("#cieslist").val();
+    var observacion=$("#observacion").val();
+    var selectop = $("#selectop").val();
+    var id_color =$("#id_color").val();
 
+    $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+    });
+
+    $.ajax({
+            type:'POST',
+            url:"/pacientes/nn",
+            dataType:"json",
+            data:{
+                condicion:condicion,
+                ciess:ciess,
+                observacion:observacion,
+                selectop:selectop,
+                id_color:id_color
+            },
+            success: function(response){
+                $('#myModal').modal('hide');
+                alert("El paciente fue cargado exitosamente")
+                var table = $('#myTable').DataTable();
+                table.draw();
+                },
+            error:function(err){
+                if (err.status == 422) { // when status code is 422, it's a validation issue
+
+                  // console.log(err.responseJSON);
+                  // $('#success_message').fadeIn().html(err.responseJSON.message);
+
+                  // // you can loop through the errors object and show it to the user
+                  // console.warn(err.responseJSON.errors);
+                  // // display errors on each form field
+                  $.each(err.responseJSON.errors, function (i, error) {
+                      if(i=='ciess'){
+                        $('#error_modal_cie').html('<span style="color: red;">'+error[0]+'</span>');
+                      }
+                      else{
+                        $('#error_modal_observacion').html('<span style="color: red;">'+error[0]+'</span>');
+                      }
+                  //     var el = $(document).find('[name="'+i+'"]');
+                  //     el.after($('<span style="color: red;">'+error[0]+'</span>'));
+                  });
+                }
+            }
+          });
+  }
+
+
+
+</script>
 
 
 

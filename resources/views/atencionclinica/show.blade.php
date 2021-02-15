@@ -1,9 +1,6 @@
 @extends("triagepreguntas.test")
 
-@section("css")
- <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
- <link rel="stylesheet" href="/resources/demos/style.css">
-@endsection
+
 @section("cuerpo")
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
   <h4 class="h4">Pacientes para atender</h4>
@@ -145,7 +142,12 @@
     <div class="col-md-2">
       <label for="exampleFormControlTextarea1">CIE</label>
       
-      <input type="text" name="cieslist" id="cieslist" class="form-control form-control-sm">
+      <input type="text" name="cieslist" id="cieslist" class="form-control form-control-sm @error('cieslist') is-invalid @enderror">
+      @error('cieslist')
+        <span class="invalid-feedback" role="alert">
+          <strong>{{ $message }}</strong>
+        </span>
+      @enderror
     </div>
     <div class="col-md-2">
       <label for="exampleFormControlTextarea1">Codigo del Triaje</label>
@@ -162,7 +164,13 @@
   <div class="row">
     <div class="col">
       <label for="exampleFormControlTextarea1">Desea agregar alguna observacion?</label>
-      <textarea class="form-control" type="text" id="observacion" name="observacion" rows="3" required></textarea>
+      <textarea class="form-control  @error('observacion') is-invalid @enderror" type="text" id="observacion" name="observacion" rows="3" ></textarea>
+      @error('observacion')
+        <span class="invalid-feedback" role="alert">
+          <strong>{{ $message }}</strong>
+        </span>
+      @enderror
+      
     </div>
   </div>
   <br>

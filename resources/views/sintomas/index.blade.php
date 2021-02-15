@@ -1,15 +1,66 @@
 @extends("triagepreguntas.test")
 
+@section('css')
+<style type="text/css">
+    .contenido{
+        display: block;
+        padding: 10px;
+        width:400px;
+    
+        flex-wrap: wrap;
+
+    }
+    .botones{
+        
+        display: flex;
+        
+        
+    }
+    .botones input{
+        flex-grow: 1;
+        width:60%;
+    }
+    .botones button{
+        width: 40%;
+        flex-grow: 1;
+    }
+    .error div{
+        margin-left: 10px;
+        
+    }
+
+    @media only screen and (max-width: 390px){
+        .botones{
+            display: block;
+
+        }
+        .botones input{
+            width: 100%;
+            margin-bottom: 3px;
+        }
+        .botones button{
+            width: 100%;
+        }
+    }
+   
+
+</style>
+
+@endsection
 @section("cuerpo")
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
   <h4 class="h4">Sintomas</h4>
-  <div class="btn-toolbar mb-2 mb-md-0">
-      <div class="btn-group mr-2">
-        <button type="button" class="btn btn-outline-secondary btn-sm" data-toggle="modal" data-target="#exampleModal">
-          Agregar sintoma
-        </button>
-      </div>
+  <div class="contenido">
+    <div class="botones">
+      <input type="text" class="form-control form-inline form-control-sm ml-2 " placeholder="Nombre del sintoma"  name="nombre_sintoma" id="nombre_sintoma" >
+         <button class="btn btn-outline-secondary btn-sm ml-2"  id="agregar">Agregar sintoma</button>
     </div>
+    <div class="error">
+        <div id="error_sintoma"></div>
+    </div>
+   </div>
+ 
+  
 </div>
 <div class="table-responsive">
  <table class="table table-bordered table-striped table-hover table-sm" id="myTable">
@@ -21,103 +72,37 @@
     </tr>
   </thead>
   <tbody>
-   @foreach($sintomas as $sintoma)
-      <tr>
-        <form class= "form-inline" method="POST" action="/sintomas/{{ $sintoma->id }} ">
-          @csrf
-          {{ method_field('DELETE') }}
-          <td>{{ $sintoma->id }}</td>
-          <td>{{ $sintoma->descripcion }}</td>
-          <td><button type="submit" class="btn btn-danger btn-sm">Eliminar</button></td>
-        </form>
-      </tr>
-
-
-   @endforeach
+ 
   </tbody>
 </table>
 </div>
-<!-- Modal -->
-      <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h3 class="modal-title" id="exampleModalLabel">Registracion de Sintomas</h3>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <form method="POST" action="/sintomas">
-                      @csrf
-            <div class="modal-body">
-             <div class="row col-md-10">
-                  <div class="form-group">
-                    
-                      <div class="table-responsive">
-                        <table class="table table-sm table-bordered"  id=tabla_sintomas>
-                          <tr>
-                            <td><input type="text" name="text_sintomas[]" class="form-control" placeholder="Nombre del Sintoma"></td>
-                            <td><button type="button" id="add" name="add" class="btn btn-dark btn-sm">Agregar filas</button></td>
-                          </tr>
-                        </table>
-                        
-                      </div>
-                      
-                  </div>
-                  
-                </div>
-              
-              
-             
-              
-            </div>
-            <div class="modal-footer">
-                <button type="submit" class="btn btn-success ">Guardar</button>
-              <button type="button" class="btn btn-dark" data-dismiss="modal">Cerrar</button>
-          
-                   
-            </div>
-             </form>
-          </div>
-        </div>
-      </div>
 
 
 @endsection
 @section("scripts")
+@parent
 
-<script >
-$(document).ready(function(){
-  var i=1;
-  $('#add').click(function(){
-    i++;
 
-    $('#tabla_sintomas').append('<tr id="row'+i+'">'+
-            '<td><input type="text" name="text_sintomas[]" class="form-control" placeholder="Nombre del Sintoma"></td>'+
-            '<td><button type="button" id="'+i+'" name="remove" class="btn btn-danger btn-sm btn_remove">Quitar</button></td>'+
-          '</tr>');
-  });
-
-  $(document).on('click','.btn_remove',function(){
-    var id= $(this).attr('id');
-    $('#row'+id).remove();
-  });
-
-})
-</script>
 
 
 {{-- JS Datatables --}}
-<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
-<script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
-<script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
+
 
 
 <script type="text/javascript">
   $(document).ready(function() {
-    $('#myTable').DataTable({
-      
-      
+   var table= $('#myTable').DataTable({
+       "processing":true,
+        "responsive":true,
+          "serverSide":true,
+           "ajax":{url:"{{ url('api/sintomas_cargar') }}",
+              
+         },
+           "columns":[
+            {data:'id'},
+            {data:'descripcion'},
+            {data:'button'},
+           ],
        "language": {
         "decimal": ",",
         "thousands": ".",
@@ -163,8 +148,92 @@ $(document).ready(function(){
                 1: 'una fila seleccionada'
             }
         }
-    }           
+    }
     });
+
+    $('#agregar').click(function() {
+        var nombre_sintoma = $('#nombre_sintoma').val();
+    
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
+        $.ajax({
+            type:'POST',
+            url:"/sintomas",
+            dataType:"json",
+            data:{
+                nombre_sintoma:nombre_sintoma,
+            },
+            success: function(response){
+                var table = $('#myTable').DataTable();
+                table.draw();
+                var inputNombre = document.getElementById("nombre_sintoma");
+                inputNombre.value="";
+
+                },
+            error:function(err){
+                if (err.status == 422) { // when status code is 422, it's a validation issue
+                    console.log(err.responseJSON);
+                    $('#success_message').fadeIn().html(err.responseJSON.message);
+                    $.each(err.responseJSON.errors, function (i, error) {
+                        $('#error_sintoma').html('<span style="color: red;">'+error[0]+'</span>');
+                    // var el = $(document).find('[name="'+i+'"]');
+                    // el.after($('<span style="color: red;">'+error[0]+'</span>'));
+                    // alert(error[0])
+                    });
+                }
+                // $("#labelNombre").text("Error 2");
+                // $("#labelNombre").addClass('text-danger');
+            }
+        });
+    });
+  
+    
 } );
 </script>
+
+<script type="text/javascript">
+function eliminar(id,sintoma){
+    if (confirm('¿Esta seguro de eliminar el sintoma '+sintoma+'? Tenga en cuenta que se eliminara todos los datos relacionados a ella.')) {
+          $.ajaxSetup({
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        }
+            });
+          $.ajax({
+
+                    type:'DELETE',
+                    url:"/sintomas/"+id,
+                    dataType:"json",
+                    data:{
+                        id:id,
+                    },
+                    success: function(response){
+                        var table=$("#myTable").DataTable();
+                        table.draw();
+
+                        },
+                    error:function(err){
+                //        if (err.status == 422) { // when status code is 422, it's a validation issue
+                //     console.log(err.responseJSON);
+                //     $('#success_message').fadeIn().html(err.responseJSON.message);
+
+                    
+                //     $.each(err.responseJSON.errors, function (i, error) {
+                        
+                //         alert(error[0])
+                //     });
+                // }
+                       
+                    }
+                });
+    }
+}
+
+</script>
+
+
 @endsection

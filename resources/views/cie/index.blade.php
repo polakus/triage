@@ -3,17 +3,13 @@
 
 
 @section("cuerpo")
-
 	<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
         <h4 class="h4">CIE</h4>
         <div class="btn-toolbar mb-2 mb-md-0">
-      <div class="btn-group mr-2">
-        <button type="button" class="btn btn-outline-secondary btn-sm" data-toggle="modal" data-target="#exampleModal">
-              Agregar CIE
-            </button>
-		   
-      </div>
-    </div>
+			<button type="button" class="btn btn-outline-secondary btn-sm" data-toggle="modal" style="width: 100%;" data-target="#exampleModal">
+				Agregar CIE
+			</button>
+    	</div>
     </div>
 	
 	
@@ -26,198 +22,206 @@
 		      <th scope="col">Accion</th>
 		    </tr>
 		  </thead>
-		  <tbody id="tabla" >
-		   	@foreach($cie as $c)
-		   		<tr>
-		   			<td>{{ $c->codigo }}</td>
-		   			<td>{{ $c->descripcion }}</td>
-		   			<td>
-		   			<button type="button" class="btn btn-dark btn-sm" data-toggle="modal" data-target="#editar{{ $c->id }}">
-		              Editar
-		            </button>
-		            <div class="modal fade" id="editar{{ $c->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-			            <div class="modal-dialog">
-			              <div class="modal-content">
-			                <div class="modal-header">
-			                  <h3 class="modal-title" id="exampleModalLabel">Editar cie</h3>
-			                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-			                    <span aria-hidden="true">&times;</span>
-			                  </button>
-			                </div>
-			                <div class="modal-body">
-			                  <div class="row col-md-16">
-								<div class="form-group">
-									<form method="POST" action="/cie/{{ $c->id }}">
-										@csrf
-										{{ method_field('PUT') }}
-										<div class="table-responsive">
-											<table class="table table-bordered"  id=tablita>
-												<tr>
-													<td width="100"><input type="text" name="editarcod" class="form-control" placeholder="Cod" value="{{ $c->codigo }}"></td>
-													<td><input type="text" name="editardesc" class="form-control" value="{{ $c->descripcion }}" ></td>
-													
-												</tr>
-											</table>
-											
-										</div>
-										&nbsp 
-										<button type="submit" class="btn btn-dark btn-sm">Editar</button>
-									</form>
-								</div>
-								
-							</div>
-			                  
-			                  
-			                 
-			                  
-			                </div>
-			                <div class="modal-footer">
-			                  <button type="button" class="btn btn-dark" data-dismiss="modal">Cerrar</button>
-			                
-			                </div>
-			              </div>
-			            </div>
-			          </div>
-			          </td>
+		  <tbody>
 
-		   		</tr>
-
-		   	@endforeach
 		  </tbody>
 		</table>
 	</div>
-{{-- </div> --}}
-
 
 <!-- Modal -->
-          <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h3 class="modal-title" id="exampleModalLabel">Registracion de Cie</h3>
-                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                  </button>
-                </div>
-                <form method="POST" action="/cie">
-				@csrf
-                <div class="modal-body">
-                  <div class="row col-md-16">
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+		<div class="modal-header">
+			<h3 class="modal-title" id="exampleModalLabel">Registracion de Cie</h3>
+			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			<span aria-hidden="true">&times;</span>
+			</button>
+		</div>
+			<div class="modal-body">
+				<div class="container">
 					<div class="form-group">
-						
-							<div class="table-responsive">
-								<table class="table table-bordered table-sm"  id=tabla_sintomas>
-									<tr>
-										<td width="100px;"><input type="text" name="ciecodigo[]" class="form-control" placeholder="Cod"></td>
-										<td><input type="text" name="ciedescripcion[]" class="form-control"placeholder="Nombre"></td>
-										<td><button type="button" id="add" name="add" class="btn btn-dark btn-sm">Agregar filas</button></td>
-									</tr>
-								</table>
-								
-							</div>
-							&nbsp 
-							
-						
+						<div class="form-group">
+							<label for="inputEmail4">Código</label>
+							<input type="text" name="codigo" id="codigo" class="form-control @error('codigo') is-invalid @enderror" value="{{ old('codigo') }}" placeholder="Código">
+							<div id="error_codigo"></div>
+						</div>
+						<div class="form-group">
+							<label for="inputEmail4">Nombre</label>
+							<input type="text" name="nombre" id="nombre" class="form-control @error('nombre') is-invalid @enderror" value="{{ old('nombre') }}" placeholder="Nombre">
+							<div id="error_nombre"></div>
+						</div>
 					</div>
-					
 				</div>
-                  
-                  
-                 
-                  
-                </div>
-                <div class="modal-footer">
-                	<button type="submit" class="btn btn-success">Guardar</button>
-                  <button type="button" class="btn btn-dark" data-dismiss="modal">Cerrar</button>
-                	
-                </div>
-                </form>
-              </div>
-            </div>
-          </div>
-
+			</div>
+			<div class="modal-footer">
+				<button type="button" id="guardar" class="btn btn-success">Guardar</button>
+				<button type="button" class="btn btn-dark" data-dismiss="modal">Cerrar</button>
+			</div>
+		</div>
+	</div>
+</div>
 
 
 @endsection
 @section("scripts")
 
-
-
-
-<script >
-$(document).ready(function(){
-	var i=1;
-	$('#add').click(function(){
-		i++;
-	
-		$('#tabla_sintomas').append('<tr id="row'+i+'">'+
-						'<td><input type="text" name="ciecodigo[]" class="form-control"placeholder="Cod"></td>'+
-						'<td><input type="text" name="ciedescripcion[]" class="form-control"placeholder="Nombre"></td>'+
-						'<td><button type="button" id="'+i+'" name="remove" class="btn btn-danger btn_remove">Quitar</button></td>'+
-					'</tr>');
-	});
-
-	$(document).on('click','.btn_remove',function(){
-		var id= $(this).attr('id');
-		$('#row'+id).remove();
-	});
-
-})
-</script>
-
 <script type="text/javascript">
-  $(document).ready(function() {
-    $('#myTable').DataTable({
-      
-      
-       "language": {
-        "decimal": ",",
-        "thousands": ".",
-        "info": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
-        "infoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
-        "infoPostFix": "",
-        "infoFiltered": "(filtrado de un total de _MAX_ registros)",
-        "loadingRecords": "Cargando...",
-        "lengthMenu": "Mostrar _MENU_ registros",
-        "paginate": {
-            "first": "Primero",
-            "last": "Último",
-            "next": "Siguiente",
-            "previous": "Anterior"
-        },
-        "processing": "Procesando...",
-        "search": "Buscar:",
-        "searchPlaceholder": "",
-        "zeroRecords": "No se encontraron resultados",
-        "emptyTable": "Ningún dato disponible en esta tabla",
-        "aria": {
-            "sortAscending":  ": Activar para ordenar la columna de manera ascendente",
-            "sortDescending": ": Activar para ordenar la columna de manera descendente"
-        },
-        //only works for built-in buttons, not for custom buttons
-        "buttons": {
-            "create": "Nuevo",
-            "edit": "Cambiar",
-            "remove": "Borrar",
-            "copy": "Copiar",
-            "csv": "fichero CSV",
-            "excel": "tabla Excel",
-            "pdf": "documento PDF",
-            "print": "Imprimir",
-            "colvis": "Visibilidad columnas",
-            "collection": "Colección",
-            "upload": "Seleccione fichero...."
-        },
-        "select": {
-            "rows": {
-                _: '%d filas seleccionadas',
-                0: 'clic fila para seleccionar',
-                1: 'una fila seleccionada'
+	$(document).ready(function() {
+		var tabla = $('#myTable').DataTable({
+			"responsive":true,
+			"serverSide":true,
+			"ajax":{url:"{{ url('api/cargar_cie') }}",},
+			"columns":[
+				{data:'codigo'}, 
+				{data:'descripcion'}, 
+				{data:'button'},
+			],
+			"language": {
+				"decimal": ",",
+				"thousands": ".",
+				"info": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+				"infoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+				"infoPostFix": "",
+				"infoFiltered": "(filtrado de un total de _MAX_ registros)",
+				"loadingRecords": "Cargando...",
+				"lengthMenu": "Mostrar _MENU_ registros",
+				"paginate": {
+					"first": "Primero",
+					"last": "Último",
+					"next": "Siguiente",
+					"previous": "Anterior"
+				},
+				"processing": "Procesando...",
+				"search": "Buscar:",
+				"searchPlaceholder": "",
+				"zeroRecords": "No se encontraron resultados",
+				"emptyTable": "Ningún dato disponible en esta tabla",
+				"aria": {
+					"sortAscending":  ": Activar para ordenar la columna de manera ascendente",
+					"sortDescending": ": Activar para ordenar la columna de manera descendente"
+				},
+				//only works for built-in buttons, not for custom buttons
+				"buttons": {
+					"create": "Nuevo",
+					"edit": "Cambiar",
+					"remove": "Borrar",
+					"copy": "Copiar",
+					"csv": "fichero CSV",
+					"excel": "tabla Excel",
+					"pdf": "documento PDF",
+					"print": "Imprimir",
+					"colvis": "Visibilidad columnas",
+					"collection": "Colección",
+					"upload": "Seleccione fichero...."
+				},
+				"select": {
+					"rows": {
+						_: '%d filas seleccionadas',
+						0: 'clic fila para seleccionar',
+						1: 'una fila seleccionada'
+					}
+				}
+			}
+		});
+	});
+
+	$('#guardar').click(function() {
+      	var nombre = $('#nombre').val();
+		var codigo = $('#codigo').val();
+		$.ajaxSetup({
+			headers: {
+				'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+			}
+		});
+   		$.ajax({
+            type:'POST',
+            url:"/cie",
+            dataType:"json",
+            data:{
+                nombre:nombre,
+				codigo:codigo,
+            },
+            success: function(response){
+				$('#exampleModal').modal('hide');
+				var table = $('#myTable').DataTable();
+                table.draw();
+            },
+            error:function(err){
+				if (err.status == 422) { // when status code is 422, it's a validation issue
+					$('#success_message').fadeIn().html(err.responseJSON.message);
+					$.each(err.responseJSON.errors, function (i, error) {
+						if(i=="nombre"){
+							$('#error_nombre').html('<span style="color: red;">'+error[0]+'</span>');
+						}else{
+							$('#error_codigo').html('<span style="color: red;">'+error[0]+'</span>');
+						}
+					});
+				}
             }
-        }
-    }           
-    });
-} );
+        });
+	});
+
+	function cargarid(id) {
+		var nombre = $('#editardesc'+id).val();
+      	var codigo = $('#editarcod'+id).val();
+		$.ajaxSetup({
+			headers: {	
+				'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+			}
+		});
+   		$.ajax({
+            type:'PUT',
+            url:"/cie/"+id,
+            dataType:"json",
+            data:{
+                nombre:nombre,
+				codigo:codigo,
+            },
+            success: function(response){
+				$('#editar'+id).modal('hide');
+				var table = $('#myTable').DataTable();
+                table.draw();
+            },
+            error: function(err){
+				if (err.status == 422) { // when status code is 422, it's a validation issue
+					$('#success_message').fadeIn().html(err.responseJSON.message);
+					$.each(err.responseJSON.errors, function (i, error) {
+						if(i=="nombre"){
+							$('#edit_error_nombre'+id).html('<span style="color: red;">'+error[0]+'</span>');
+						}else{
+							$('#edit_error_codigo'+id).html('<span style="color: red;">'+error[0]+'</span>');
+						}
+					});
+				}
+            }
+        });
+	}
+	function eliminarCie(id){
+		if (confirm('¿Desea eliminar elemento?')){
+			$.ajaxSetup({
+				headers: {
+					'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+				}
+			});
+			$.ajax({
+				type:'DELETE',
+				url:"/cie/"+id,
+				dataType:"json",
+				// data:{
+				// 	nombre:nombre,
+				// 	codigo:codigo,
+				// },
+				success: function(response){
+					var table = $('#myTable').DataTable();
+                	table.draw();
+				},
+				error:function(err){
+					alert("Hubo un error al intentar eliminar elemento");
+				}
+			});
+		}
+	}
 </script>
 
 @endsection

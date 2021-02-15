@@ -1,6 +1,10 @@
 @extends("triagepreguntas.test")
+@section("css")
 
-
+<style type="text/css">
+  
+</style>
+@endsection
 @section("cuerpo")
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
         <h4>Atenciones</h4>
@@ -32,11 +36,11 @@
   </div>
 </div>
 
-<div class="table-responsive">
-        <table class="table table-striped table-bordered table-sm" id="example" >
+<div class="table-responsive" >
+        <table class="table table-striped table-bordered table-hover  table-sm" id="example">
           <thead>
             <tr>
-              <th>Nombre y Apellido</th>
+              <th >Nombre y Apellido</th>
               <th>Fecha y hora</th>
               <th>Areas</th>
               <th>Especialidades</th>
@@ -60,6 +64,9 @@
 
 
 <script type="text/javascript">
+  $(document).ready(function() {
+    $('#cod').select2();
+});
 
   // var fecha = new Date(); //Fecha actual
   // var mes = fecha.getMonth()+1; //obteniendo mes
@@ -79,6 +86,7 @@
     
   //   }).trigger('change');
 </script>
+
 <script type="text/javascript">
   $(document).ready(function() {
    
@@ -97,21 +105,32 @@
             {data:'Internacion'},
             {data:'Operar'},
             {data:'DarAlta'}
-           ],
+           ], 
+           // "order": [[1, 'desc']],
          "createdRow": function( row, data, dataIndex){
                           if(data.color=="rojo"){
 
-                           $(row).css('background-color', '#F39B9B');
+                           $(row).css('background-color', '#FFAAAA');
                           }
                           else{
                             if(data.color=="verde"){
-                              $(row).css('background-color','#85F361')
+                              $(row).css('background-color','#B3FFAA');
+                             
                             }
                             else{
-                              $(row).css('background-color','#F6FC3C')
+                              $(row).css('background-color','#F8FFAA')
                             }
                           }
                          },
+          "columnDefs": [
+            { responsivePriority: 1, targets: 0 },
+            { responsivePriority: 2, targets: 6 },
+            { responsivePriority: 3, targets: 7 }
+          
+        ],
+
+      "responsive": true,
+      "processing":true,
       "ordering": false,
       "iDisplayLength": 10,
       "language": {
@@ -186,6 +205,7 @@
 
 } );
 
+
   function cargarValores(id,sala_id){
     $('#exampleModal'+id).modal('hide');
     var detalleatencion=$('#detalleatencion'+id).val();
@@ -227,7 +247,7 @@
     var tipo=$('#tipo'+id).val();
     var id_sala=$('#id_sala'+sala_id).val();
     var sala=$('#sala'+sala_id).val();
-    alert(sala);
+    // alert(sala);
       $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -244,6 +264,30 @@
                     id_sala:id_sala,
                     sala:sala
                 },
+                success: function(response){
+                    
+                    var table = $('#example').DataTable();
+                    table.draw();
+
+                    },
+                error:function(){
+                    // $("#labelNombre").text("Error 2");
+                    // $("#labelNombre").addClass('text-danger');
+                }
+            });
+   };
+   function darAlta(id){
+     $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+    });
+
+       $.ajax({
+                type:'get',
+                url:"/turnos/"+id+"/edit",
+                dataType:"json",
+                
                 success: function(response){
                     
                     var table = $('#example').DataTable();

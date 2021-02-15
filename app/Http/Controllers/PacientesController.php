@@ -106,7 +106,7 @@ class PacientesController extends Controller
                  ->where("p.nombre",'=',"nn")
                  ->where("p.apellido",'=','nn')
                  ->get();
-
+        
         return view('pacientes.edit', compact('paciente','nn','id'));
     }
 
@@ -156,7 +156,17 @@ class PacientesController extends Controller
 
 
     public function insertarNN(Request $request){
-
+            $mensajes = [
+                'required' =>'Este campo no debe estar vacio.',
+                'max' => 'Este campo supera la capacidad máxima de caracteres.',
+                'numeric' => 'Este campo requiere una valor numérico.',
+                'date' => 'La fecha ingresada no es válida.',
+                'unique' => 'Este documento ya se encuentra registrado',
+            ];
+            $r=$request->validate([
+            'ciess' => 'required|max:255',
+            'observacion' => 'required|max:255',
+            ], $mensajes);
             date_default_timezone_set('UTC');
 
             date_default_timezone_set("America/Argentina/Buenos_Aires");
@@ -183,27 +193,28 @@ class PacientesController extends Controller
             $detalleatencion->id_especialidad = 5; // CAMBIAR POR OTRA ID O HACER NULL LA ESPECIALIDAD
             $detalleatencion->atendido=0;
             $detalleatencion->id_atencion =$atencion->id;
-            $detalleatencion->estado=$request->condicion;
-            if($request->condicion == "Internar"){
-                if($request->selectop == "si"){
+            $detalleatencion->estado=$request->get('condicion');
+            if($request->get('condicion') == "Internar"){
+                if($request->get('selectop') == "si"){
                     $detalleatencion->operar=1;
                 }
             }
-            $detalleatencion->id_codigo_triage = $request->id_color;
+            $detalleatencion->id_codigo_triage = $request->get('id_color');
             $detalleatencion->save();
 
             $historial = new Historial;
             $historial->id_detalle_atencion = $detalleatencion->id;
-            $historial->descripcion = $request->observacion;
-            $codigocie=explode("-", $request->ciess);
+            $historial->descripcion = $request->get('observacion');
+            $codigocie=explode("-", $request->get('ciess'));
             $id_cie=CIE::select('id')->where('codigo','=',$codigocie[0])->get();
-            $historial->id_cie =$id_cie[0]->id;
-            $historial->fecha=date('Y-m-d');
-            $historial->hora  = date('H:i');
+            $historial->id_cie = $id_cie[0]->id;
+            $historial->fecha = date('Y-m-d');
+            $historial->hora = date('H:i');
             $historial->save();
-            $message="El paciente fue cargado exitosamente";
+            return response()->json(['success'=>'true']);
+            // $message="El paciente fue cargado exitosamente";
             
-            return redirect()->action("PacientesController@index")->with('success',$message);
+            // return redirect()->action("PacientesController@index")->with('success',$message);
         
     }
 }

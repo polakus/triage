@@ -198,7 +198,7 @@
 <body>
 <div class="container">
     <div class="card">
-      <div class="card-header">Registracion</div>
+      <div class="card-header">Registracion de Usuario</div>
         <div class="card-body text-center">
           <div class="flash-message">
               @foreach (['danger', 'warning', 'success', 'info'] as $msg)

@@ -20,23 +20,8 @@ class protocolosController extends Controller
      */
     public function index()
     {
-        // $protocolo = Protocolo::find(9);
-        // $var =  $protocolo->det_sintomas_protocolos()->get();
-        // foreach($var as $v){
-        //     echo $v->id_sintoma;
-        // }
-
-
-        $protocolos = Protocolo::all();
-        $det_sintomas_protocolos = Detalle_Sintoma_Protocolo::all();
-        // foreach($protocolos as $protocolo){
-        //     foreach($protocolo->det_sintomas_protocolos()->where('id_protocolo', 9)->get() as $det){
-        //         echo $det;
-        //     }
-        // }
-        return view('protocolos.index',compact('protocolos', 'det_sintomas_protocolos'));
+        return view('protocolos.index');
     }
-
     /**
      * Show the form for creating a new resource.
      *
@@ -49,7 +34,6 @@ class protocolosController extends Controller
         $especialidades = Especialidad::all();
         return view('protocolos.create', compact('codigos', 'sintomas','especialidades'));
     }
-
     /**
      * Store a newly created resource in storage.
      *
@@ -59,18 +43,20 @@ class protocolosController extends Controller
     public function store(Request $request)
     {
         $mensajes = [
+            'sint.required' =>'Debe agregar al menos un síntoma a la tabla.',
             'required' =>'Este campo no debe estar vacio.',
             'max' => 'Este campo supera la capacidad máxima de caracteres.',
         ];
         $prot = $request->validate([
             'desc' => 'required|max:255',
+            'sint' => 'required'
         ], $mensajes);
         $protocolo = new Protocolo;
         $protocolo->id_codigo_triage= $request->codigo;
         $protocolo->descripcion= $request->desc;
         $protocolo->save();
 
-        $sintomas = $_POST['cbs'];
+        $sintomas = $request->sint;
         foreach($sintomas as $sintoma){
             $dsp = new Detalle_Sintoma_Protocolo;
             $dsp->id_protocolo = $protocolo->id;
@@ -82,8 +68,9 @@ class protocolosController extends Controller
         $det_protocolo->id_protocolo = $protocolo->id;
         $det_protocolo->save();
         
-        $request->session()->flash('alert-success', 'El protocolo fue agregado exitosamente!');
-        return redirect()->back()->withInput();
+        // $request->session()->flash('alert-success', 'El protocolo fue agregado exitosamente!'); //NO LO PUEDO USAR CON AJAX
+        // return redirect()->back()->withInput();
+        return response()->json();
     }
 
     /**
@@ -94,16 +81,7 @@ class protocolosController extends Controller
      */
     public function show($id)
     {
-        $sintomas_protocolo = Detalle_Sintoma_Protocolo::where('id_protocolo', $id)
-            ->leftJoin('Sintomas', 'Sintomas.id', '=', 'id_sintoma')->get();
-        $especialidad_protocolo = DB::table('det_protocolos as det_pro')
-                                    ->join('Especialidades as esp','esp.id','=','det_pro.id_especialidad')
-                                    ->select('esp.nombre')
-                                    ->where('det_pro.id_protocolo','=',$id)
-                                    ->get();
-        $protocolo = Protocolo::find($id);
 
-        return view('protocolos.show', compact('sintomas_protocolo', 'protocolo','especialidad_protocolo'));
     }
 
     /**
@@ -112,12 +90,24 @@ class protocolosController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function editar($id)
     {
-        $sintomas_protocolo = Detalle_Sintoma_Protocolo::where('id_protocolo', $id)
-            ->leftJoin('Sintomas', 'Sintomas.id', '=', 'id_sintoma')->get();
-        $protocolo = Protocolo::find($id);
-        return view('protocolos.edit', compact('sintomas_protocolo', 'protocolo'));
+        $protocolo=DB::table('protocolos as prot')
+                        ->join('CodigosTriage as cod','cod.id','=','prot.id_codigo_triage')
+                        ->join('det_protocolos as det','det.id_protocolo','=','prot.id')
+                        ->join('Especialidades as esp','esp.id','=','det.id_especialidad')
+                        ->select('prot.id','cod.color','esp.nombre','prot.descripcion')
+                        ->where('prot.id','=',$id)
+                        ->first();
+        $sintomas_actuales=DB::table('detalles_sintomas_protocolos as det_sintomas')
+                                ->join('sintomas as s','s.id','=','det_sintomas.id_sintoma')
+                                ->select('s.descripcion','s.id')
+                                ->where('det_sintomas.id_protocolo','=',$id)
+                                ->get();
+        $codigos = Codigo::all();
+        $sintomas = Sintoma::all();
+        $especialidades = Especialidad::all();
+        return view('protocolos.edit', compact('codigos', 'sintomas','especialidades','protocolo','sintomas_actuales'));
     }
 
     /**
@@ -129,7 +119,71 @@ class protocolosController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $mensajes = [
+            'sint.required' => 'Debe agregar al menos un síntoma a la tabla.',
+            'required' =>'Este campo no debe estar vacio.',
+            'max' => 'Este campo supera la capacidad máxima de caracteres.',
+        ];
+        $prot = $request->validate([
+            'desc' => 'required|max:255',
+            'sint' => 'required'
+        ], $mensajes);
+        $protocolo = Protocolo::find($id);
+        $protocolo->id_codigo_triage= $request->codigo;
+        $protocolo->descripcion= $request->desc;
+        $protocolo->save();
+
+        $sintomas = $request->sint;
+        
+        $dsp = Detalle_Sintoma_Protocolo::where('id_protocolo', $id)->get();
+        $i = 0;
+        if (count($sintomas) == $dsp->count()){
+            foreach($sintomas as $sintoma){
+                $dsp[$i]->id_protocolo = $protocolo->id;
+                $dsp[$i]->id_sintoma = $sintoma;
+                $dsp[$i]->save();
+                $i++;
+            }
+        }else{
+            if (count($sintomas) < $dsp->count()){
+                $sint_cant = count($sintomas);
+                foreach($dsp as $d){
+                    if ($i < $sint_cant){
+                        $d->id_protocolo = $protocolo->id;
+                        $d->id_sintoma = $sintomas[$i];
+                        $d->save();
+                        $i++;
+                    }else{
+                        $d->delete();
+                    }
+                }
+            }else{
+                $det_cant = $dsp->count();
+                foreach($sintomas as $sintoma){
+                    if ($i < $det_cant){
+                        $dsp[$i]->id_protocolo = $protocolo->id;
+                        $dsp[$i]->id_sintoma = $sintoma;
+                        $dsp[$i]->save();
+                        $i++;
+                    }else{
+                        $dt = new Detalle_Sintoma_Protocolo;
+                        $dt->id_protocolo = $protocolo->id;
+                        $dt->id_sintoma = $sintoma;
+                        $dt->save();
+                    }
+                }
+            }
+        }
+        $det_protocolo = DetalleProtocolo::where('id_protocolo', $id)->get();
+        foreach($det_protocolo as $dp){
+            $dp->id_especialidad = $request->especialidad;
+            $dp->id_protocolo = $protocolo->id;
+            $dp->save();
+        }
+        
+        // $request->session()->flash('alert-success', 'El protocolo fue agregado exitosamente!');
+        // return redirect()->back()->withInput();
+        return response()->json();
     }
 
     /**
@@ -140,8 +194,10 @@ class protocolosController extends Controller
      */
     public function destroy($id)
     {
+
         Detalle_Sintoma_Protocolo::where('id_protocolo', $id)->delete();
         Protocolo::destroy($id);
-        return redirect()->route('protocolos.index');
+        // return redirect()->route('protocolos.index');
+        return response()->json();
     }
 }

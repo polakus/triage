@@ -8,6 +8,7 @@
     <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
     <meta name="generator" content="Jekyll v4.1.1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard Template · Bootstrap</title>
 
     {{-- CSS --}}
@@ -21,15 +22,56 @@
     <link href="../assets/dashboard.css" rel="stylesheet">
 
     {{-- DataTable --}}
-    {{-- <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.21/css/dataTables.bootstrap4.min.css"> --}}
+
     <link rel="stylesheet" type="text/css" href="{{ asset('css/datatables.bootstrap4.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/responsive/2.2.6/css/responsive.dataTables.min.css">
 
     {{-- Autocompletar --}}
 
     <link rel="stylesheet" type="text/css" href="{{ asset('css/jquery-ui.css') }}">
-    {{-- <link rel="stylesheet" href="/resources/demos/style.css"> --}}
+    
+    {{-- Select2 --}}
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" />
     @yield("css")
     <style>
+  
+      .select2-selection__rendered {
+      line-height: 32px !important;
+      }
+
+      .select2-selection {
+      height: 31px !important;
+      }
+
+      table{
+        width: 100% !important;
+        min-width: 250px;
+      }
+      table thead{
+        background: linear-gradient(to bottom, #777, #222);
+        color:#fff;
+      }
+      table thead:hover{
+        background: linear-gradient(to bottom, #444, #111);
+      }
+
+      .btn-mod{
+        background: linear-gradient(to bottom, #888, #222);
+        /*background: red;*/
+        color: #fff;
+      }
+      .btn-mod:hover{
+        color: #fff;
+        background: linear-gradient(to bottom, #555, #000);
+      }
+
+      .btn-outline-secondary:hover{
+        background: linear-gradient(to bottom, #555, #000)!important;
+        
+      }
+
+
       .bd-placeholder-img {
         font-size: 1.125rem;
         text-anchor: middle;
@@ -63,18 +105,12 @@
   // echo $url_array[3];
   $usuario = Auth::user();
 ?>
-  <nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
-    <a class="navbar-brand col-md-3 col-lg-2 mr-0 px-3" href="#">Hopistal San Bernardo</a>
+  <nav class="navbar navbar-dark sticky-top  flex-md-nowrap p-0 shadow" style="background: linear-gradient(to bottom, #555, #222);">
+    <a class="navbar-brand col-md-3 col-lg-2 mr-0 px-3" style="background: linear-gradient(to bottom, #555, #222);" href="#">Hopistal San Bernardo</a>
     <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-toggle="collapse" data-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
-  <!-- <input class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search"> -->
-
-  {{-- <ul class="navbar-nav px-3">
-    <li class="nav-item text-nowrap">
-      <a class="nav-link" href="#">Sign out</a>
-    </li>
-  </ul> --}}
+  
     <div class="dropdown" >
     <a class="btn btn-dark dropdown-toggle" style="background-color: transparent;"href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
       {{ $usuario->name }}
@@ -95,6 +131,7 @@
   </div>
 
 </nav>
+
 
 
 <div class="container-fluid">
@@ -139,7 +176,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a id="protocolos" class="nav-link <?php  if ($url_array[3] == "protocolos"){ echo "active";} ?>" href="{{route('protocolos.index')}}">
+            <a id="protocolos" class="nav-link <?php  if ($url_array[3] == "protocolos" or $url_array[3] == "editarProtocolo"){ echo "active";} ?>" href="{{route('protocolos.index')}}">
               <span data-feather="layers"></span>
               Protocolos
             </a>
@@ -328,6 +365,7 @@
 <script src="{{ asset('js/jquery-3.5.1.js') }}"></script>
 <script src="{{ asset('js/jquery.dataTables.min.js') }}"></script>
 <script src="{{ asset('js/dataTables.bootstrap4.min.js') }}"></script>
+<script src="https://cdn.datatables.net/responsive/2.2.6/js/dataTables.responsive.min.js"></script>
 
 {{-- Boostrap --}}
 {{-- <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script> --}}
@@ -339,6 +377,18 @@
 
 <script src="{{ asset('js/jquery-ui.js') }}"></script>
 
+{{-- sELECT 2 --}}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
+
+<script type="text/javascript">
+  var select2=$('.select').select2({
+
+    // width:'100%',dropdownCssClass: "bigdrop"
+     // width: '300px', dropdownCssClass: "bigdrop" 
+  });
+
+
+</script>
 @yield("scripts")
 
 </body>

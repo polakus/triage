@@ -1,5 +1,16 @@
 @extends('triagepreguntas.test')
 
+
+@section('css')
+<style type="text/css">
+    @media only screen and (max-width: 768px){
+      [type="date"]{
+        margin: 5px 0px;
+      }
+    }
+</style>
+
+@endsection
 @section('cuerpo')
 
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
@@ -26,7 +37,7 @@
       <input type="date" class="form-control form-control-sm" data-date-format="DD-MMMM-YYYY" name="fecha" id="fecha_hasta">
     </div>
      <div class="col-md-2">
-      <button class="btn btn-dark btn-sm" id="search">Buscar</button>
+      <button class="btn btn-outline-secondary btn-sm" id="search">Buscar</button>
     </div>
     
   </div>
@@ -62,6 +73,7 @@
    $(document).ready(function() {
       function fechas(desde,hasta){
         var table=$('#myTable').DataTable({
+          "responsive":true,
           "processing":true,
           "serverSide":true,
            "ajax":{url:"{{ url('api/profesionales') }}",

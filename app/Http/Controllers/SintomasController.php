@@ -14,9 +14,9 @@ class SintomasController extends Controller
      */
     public function index()
     {
-        $sintomas=Sintoma::all();
+       
 
-        return view('sintomas.index',compact('sintomas'));
+        return view('sintomas.index');
     }
 
     /**
@@ -26,7 +26,7 @@ class SintomasController extends Controller
      */
     public function create()
     {
-        return view('sintomas.create');
+    
     }
 
     /**
@@ -37,18 +37,22 @@ class SintomasController extends Controller
      */
     public function store(Request $request)
     {
-        $cantidad= count($request->text_sintomas);
-        
-        for ($i=0; $i <$cantidad ; $i++) { 
-            if($request->text_sintomas[$i]!=""){
-             $nuevo=new Sintoma;
-             $nuevo->descripcion=$request->text_sintomas[$i];
-             $nuevo->save();
-            }
-        }
-        
-        return redirect('/sintomas');
-       
+        $c = $request->validate([
+            'nombre_sintoma' => 'required|max:255',
+            
+        ],[
+            'required' => 'Este campo no puede estar vacio.',
+            'max' => 'Este es demasiado largo.',
+            'unique' => 'Este codigo ya se encuentra almacenado.'
+        ]);
+        // $this->validate($request, ['nombre_sintoma' => 'required']);
+        $name = $request->get('nombre_sintoma');
+
+        $nuevo=new Sintoma;
+        $nuevo->descripcion=$request->get('nombre_sintoma');
+        $nuevo->save();
+
+        return response()->json();
     }
 
     /**
@@ -95,6 +99,7 @@ class SintomasController extends Controller
     {
         $sintoma=Sintoma::findOrFail($id);
         $sintoma->delete();
-        return redirect('/sintomas');
+        return response()->json(["hola"=>'hola']);
+        // return redirect('/sintomas');
     }
 }

@@ -8,6 +8,8 @@ class Protocolo extends Model
 {
     //
     protected $table="Protocolos";
+
+    // protected $fillable = ['descripcion',];
     
     public function det_sintomas_protocolos()
     {
@@ -17,5 +19,9 @@ class Protocolo extends Model
     public function codigo()
     {
         return $this->belongsTo('App\Codigo', 'id_codigo_triage');
+    }
+
+    public function detalle_protocolo(){
+        return $this->hasMany('App\DetalleProtocolo','id_protocolo');
     }
 }
