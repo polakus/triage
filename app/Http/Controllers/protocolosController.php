@@ -93,9 +93,9 @@ class protocolosController extends Controller
     public function editar($id)
     {
         $protocolo=DB::table('protocolos as prot')
-                        ->join('CodigosTriage as cod','cod.id','=','prot.id_codigo_triage')
+                        ->join('codigostriage as cod','cod.id','=','prot.id_codigo_triage')
                         ->join('det_protocolos as det','det.id_protocolo','=','prot.id')
-                        ->join('Especialidades as esp','esp.id','=','det.id_especialidad')
+                        ->join('especialidades as esp','esp.id','=','det.id_especialidad')
                         ->select('prot.id','cod.color','esp.nombre','prot.descripcion')
                         ->where('prot.id','=',$id)
                         ->first();
