@@ -43,37 +43,83 @@ class TriagepreguntasController extends Controller
      */
     public function store(Request $request)
     { 
-        $atencion = new Atencion;
-        $atencion->Paciente_id=$request->id;
-        $atencion->usuario_id= Auth::id();
-        $atencion->save();
+        $sintomas_descriptos = json_decode($request->sintomas_descriptos);
+        $cantidad=count($sintomas_descriptos);
+        $band = False;
+        $array_ids=array();
+        for ($i=0; $i <$cantidad ; $i++) { 
+            $id_sintoma=DB::table('sintomas')
+                            ->select('id')
+                            ->where('descripcion','LIKE',$sintomas_descriptos[$i])
+                            ->get();
+            if(count($id_sintoma)==0){
+                $band=True;
+                break;
+            }
+            else{
+                array_push($array_ids,$id_sintoma[0]->id);
+            }
+        }
+        if(!$band){
+            $cantidad=count($array_ids);
+            $atencion = new Atencion;
+            $atencion->Paciente_id=$request->id;
+            $atencion->usuario_id= Auth::id();
+            $atencion->save();
+            for($i=0;$i<$cantidad;$i++){
+                 $pregunta=new Pregunta;
+                 $pregunta->id_atencion=$atencion->id;
+                 $pregunta->id_sintoma = $array_ids[$i];
+                 $pregunta->save();
+            }
+           
+
+           return response()->json(['resultado'=>True,'atencion'=>$atencion->id,'sintomas'=>$array_ids]);
+           // return redirect()->action('TurnosController@respuesta',['atencion'=>$atencion->id,'sintomas'=>$array_ids]);
+        }
+        else{
+            return response()->json(['resultado'=>False]);
+        }
+
+
+
+
+
+
+
+
+
+        // $atencion = new Atencion;
+        // $atencion->Paciente_id=$request->id;
+        // $atencion->usuario_id= Auth::id();
+        // $atencion->save();
 
         
 
-        $cantidad= count($request->respuestas);
-        for ($i=0; $i <$cantidad ; $i++) { 
-            if($request->respuestas[$i]!=""){
+        // $cantidad= count($request->respuestas);
+        // for ($i=0; $i <$cantidad ; $i++) { 
+        //     if($request->respuestas[$i]!=""){
 
-             $pregunta=new Pregunta;
-             $pregunta->id_atencion=$atencion->id;
-             $pregunta->id_sintoma = Sintoma::where('descripcion', $request->respuestas[$i])->first()->id;
+        //      $pregunta=new Pregunta;
+        //      $pregunta->id_atencion=$atencion->id;
+        //      $pregunta->id_sintoma = Sintoma::where('descripcion', $request->respuestas[$i])->first()->id;
            
              
-             $pregunta->save();
-            }
-        }
+        //      $pregunta->save();
+        //     }
+        // }
 
-        $id=$atencion->id;
+        // $id=$atencion->id;
        
-        $rtas = Pregunta::where('id_atencion', $id)->select('id_sintoma')->get();
-        $lista_respuestas= array();
-        $i=0;
-        for($i=0;$i<sizeof($rtas);$i++){
+        // $rtas = Pregunta::where('id_atencion', $id)->select('id_sintoma')->get();
+        // $lista_respuestas= array();
+        // $i=0;
+        // for($i=0;$i<sizeof($rtas);$i++){
            
-            array_push($lista_respuestas,$rtas[$i]->id_sintoma);
-        }
+        //     array_push($lista_respuestas,$rtas[$i]->id_sintoma);
+        // }
        
-        return redirect()->action('TurnosController@respuesta',['atencion'=>$id, 'sintomas'=>$lista_respuestas]);
+        // return redirect()->action('TurnosController@respuesta',['atencion'=>$id, 'sintomas'=>$lista_respuestas]);
         // return redirect('triagepreguntas/estado/'.$id);
       
      }
