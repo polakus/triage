@@ -25,7 +25,7 @@
 
     {{-- <link rel="stylesheet" type="text/css" href="{{ asset('css/datatables.bootstrap4.min.css') }}"> --}}
     {{-- eS LA MISMA RUTA DE ARRIBA PERO CON OTRA URLS --}}
-    <link rel="stylesheet" type="text/css" href="../css/datatables.bootstrap4.min.css">
+    <link rel="stylesheet" type="text/css" href="../css/dataTables.bootstrap4.min.css">
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/responsive/2.2.6/css/responsive.dataTables.min.css">
 
     {{-- Autocompletar --}}

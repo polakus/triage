@@ -34,8 +34,8 @@ Route::get('profesionales',function(Request $request){
 	$detalles_atenciones=DB::table('detalle_atencion as da')
                                  ->join('det_profesionales_salas as det_prof_salas','det_prof_salas.id','=','da.id_det_profesional_sala')
                                  ->join('profesionales as prof','prof.id','=','det_prof_salas.id_profesional')
-                                 ->join('Atencion as a','a.id','=','da.id_atencion')
-                                 ->join('Pacientes as p','p.Paciente_id','=','a.Paciente_id')
+                                 ->join('atencion as a','a.id','=','da.id_atencion')
+                                 ->join('pacientes as p','p.Paciente_id','=','a.Paciente_id')
                                  ->select(DB::raw("CONCAT(prof.apellido,' ',prof.nombre) as full_name"),
                                  	DB::raw("CONCAT(p.apellido,' ',p.nombre) as full_name_paciente"),'prof.matricula','da.fecha','da.hora')->get();
     }
@@ -44,8 +44,8 @@ Route::get('profesionales',function(Request $request){
     	$detalles_atenciones=DB::table('detalle_atencion as da')
                                  ->join('det_profesionales_salas as det_prof_salas','det_prof_salas.id','=','da.id_det_profesional_sala')
                                  ->join('profesionales as prof','prof.id','=','det_prof_salas.id_profesional')
-                                 ->join('Atencion as a','a.id','=','da.id_atencion')
-                                 ->join('Pacientes as p','p.Paciente_id','=','a.Paciente_id')
+                                 ->join('atencion as a','a.id','=','da.id_atencion')
+                                 ->join('pacientes as p','p.Paciente_id','=','a.Paciente_id')
                                  ->select(DB::raw("CONCAT(prof.apellido,' ',prof.nombre) as full_name"),
                                  	DB::raw("CONCAT(p.apellido,' ',p.nombre) as full_name_paciente"),'prof.matricula','da.fecha','da.hora')
                                  ->whereBetween('da.fecha',[$request->get('desde'),$request->get('hasta')])
@@ -56,7 +56,7 @@ Route::get('profesionales',function(Request $request){
 });
 
 Route::get('ApiPacientes',function(){
-    $pacientes= DB::table('Pacientes')->where('nombre','!=','nn')->where('apellido','!=','nn')->get();
+    $pacientes= DB::table('pacientes')->where('nombre','!=','nn')->where('apellido','!=','nn')->get();
 
     return DataTables::of($pacientes)
                        ->addColumn('btn','pacientes/botones')
@@ -68,11 +68,11 @@ Route::get('ApiPacientes',function(){
 Route::get('mostrar',function(){
     $pacientes= DB::table('detalle_atencion as da')
                     ->join('det_especialidad_area as det_e_a','det_e_a.id_especialidad','=','da.id_especialidad')
-                    ->join('Areas as are','are.id','=','det_e_a.id_area')
-                    ->join('Especialidades as esp','esp.id','=','det_e_a.id_especialidad')
-                    ->join('Atencion as a','a.id','=','da.id_atencion')
-                    ->join('Pacientes as p','p.Paciente_id','=','a.Paciente_id')
-                    ->join('CodigosTriage as codigotriage','codigotriage.id','=','da.id_codigo_triage')
+                    ->join('areas as are','are.id','=','det_e_a.id_area')
+                    ->join('especialidades as esp','esp.id','=','det_e_a.id_especialidad')
+                    ->join('atencion as a','a.id','=','da.id_atencion')
+                    ->join('pacientes as p','p.Paciente_id','=','a.Paciente_id')
+                    ->join('codigostriage as codigotriage','codigotriage.id','=','da.id_codigo_triage')
 
                     ->select(DB::raw("CONCAT(p.apellido,' ',p.nombre) as paciente_full"),
                         DB::raw("CONCAT(da.fecha,' ',da.hora) as fecha_hora"),
@@ -85,7 +85,7 @@ Route::get('mostrar',function(){
                     ->get();
 
     $salas = DB::table('salas as s')
-                    ->join('Areas as a','a.id','=','s.id_area')
+                    ->join('areas as a','a.id','=','s.id_area')
                     ->select('a.tipo_dato','s.nombre','s.camas','s.disponibilidad','s.id')
                     ->get();
     return DataTables::of($pacientes)
@@ -135,9 +135,9 @@ Route::get('cargar_cie', function(){
 
 Route::get('dtespecialidades', function(){
     // $especialidades = App\Especialidad::all();
-    $especialidades = DB::table('Especialidades as esp')
+    $especialidades = DB::table('especialidades as esp')
                         ->join('det_especialidad_area as det','det.id_especialidad','=','esp.id')
-                        ->join('Areas as a','a.id','=','det.id_area')
+                        ->join('areas as a','a.id','=','det.id_area')
                         ->select('esp.id','esp.nombre','esp.descripcion', 'a.tipo_dato', 'a.id as id_area')
                         ->get();
     $editareas = App\Area::all();
@@ -152,7 +152,7 @@ Route::get('dtespecialidades', function(){
 Route::get('historial',function(Request $request){
     $historial=DB::table('historial as h')
                      ->join('detalle_atencion as dt','dt.id','=','h.id_detalle_atencion')
-                     ->join('Atencion as a','a.id','=','dt.id_atencion')
+                     ->join('atencion as a','a.id','=','dt.id_atencion')
 
                      ->join('cie as c','c.id','=','h.id_cie')
                      ->select('c.descripcion','c.codigo','h.descripcion as observacion')
