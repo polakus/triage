@@ -23,7 +23,9 @@
 
     {{-- DataTable --}}
 
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/datatables.bootstrap4.min.css') }}">
+    {{-- <link rel="stylesheet" type="text/css" href="{{ asset('css/datatables.bootstrap4.min.css') }}"> --}}
+    {{-- eS LA MISMA RUTA DE ARRIBA PERO CON OTRA URLS --}}
+    <link rel="stylesheet" type="text/css" href="../css/datatables.bootstrap4.min.css">
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/responsive/2.2.6/css/responsive.dataTables.min.css">
 
     {{-- Autocompletar --}}
@@ -352,7 +354,8 @@
 <script src='{{ asset('js/jquery.js') }}'></script>
 
 {{-- js del dash board --}}
-<script type="text/javascript" src="{{ asset('js/jquery-3.5.1.slim.min.js') }}"></script>
+{{-- <script type="text/javascript" src="{{ asset('js/jquery-3.5.1.slim.min.js') }}"></script> --}}
+<script type="text/javascript" src="../js/jquery-3.5.1.slim.min.js"></script>
 <script>window.jQuery || document.write('<script src="../assets/js/vendor/jquery.slim.min.js"><\/script>')</script>
 {{-- <script src="../assets/dist/js/bootstrap.bundle.min.js"></script>  --}}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.9.0/feather.min.js"></script>

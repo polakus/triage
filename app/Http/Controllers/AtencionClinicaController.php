@@ -30,7 +30,7 @@ class AtencionClinicaController extends Controller
     {
 
         $salas=DB::table("salas as s")
-                   ->join("Areas as a",'a.id','=','s.id_area')
+                   ->join("areas as a",'a.id','=','s.id_area')
                    ->select('a.tipo_dato','s.nombre','s.id')
                    ->orderBy('a.tipo_dato')
                    ->get();
@@ -54,11 +54,11 @@ class AtencionClinicaController extends Controller
             
             $pacientes= DB::table('detalle_atencion as da')
                     ->join('det_especialidad_area as det_e_a','det_e_a.id_especialidad','=','da.id_especialidad')
-                    ->join('Areas as are','are.id','=','det_e_a.id_area')
-                    ->join('Especialidades as esp','esp.id','=','det_e_a.id_especialidad')
-                    ->join('Atencion as a','a.id','=','da.id_atencion')
-                    ->join('Pacientes as p','p.Paciente_id','=','a.Paciente_id')
-                    ->join('CodigosTriage as codigotriage','codigotriage.id','=','da.id_codigo_triage')
+                    ->join('areas as are','are.id','=','det_e_a.id_area')
+                    ->join('especialidades as esp','esp.id','=','det_e_a.id_especialidad')
+                    ->join('atencion as a','a.id','=','da.id_atencion')
+                    ->join('pacientes as p','p.Paciente_id','=','a.Paciente_id')
+                    ->join('codigostriage as codigotriage','codigotriage.id','=','da.id_codigo_triage')
                     ->select('p.nombre','p.apellido','da.fecha','da.id_atencion','da.id_codigo_triage','are.tipo_dato','esp.nombre as especialidad','da.id','codigotriage.color','p.Paciente_id')
                     ->where('da.fecha','=',date('Y-m-d'))
                     ->where('da.atendido','=',0)
@@ -132,7 +132,7 @@ class AtencionClinicaController extends Controller
                 $actualizar_detalle->operar=1;
             }
             }
-            $id_color=DB::table('CodigosTriage')->select('id')->where('color','LIKE',$request->color)->get();
+            $id_color=DB::table('codigostriage')->select('id')->where('color','LIKE',$request->color)->get();
             $actualizar_detalle->id_codigo_triage=$id_color[0]->id;
             $actualizar_detalle->save();
 
@@ -173,7 +173,7 @@ class AtencionClinicaController extends Controller
         
 
         $preguntas= DB::table('preguntas as p')
-                    ->join('Sintomas as s','p.id_sintoma','=','s.id')
+                    ->join('sintomas as s','p.id_sintoma','=','s.id')
                     ->select('s.descripcion')
                     ->where('p.id_atencion','=',$id)
                     ->get();
@@ -185,7 +185,7 @@ class AtencionClinicaController extends Controller
         $paciente_seleccionado=$paciente_seleccionado[0];
 
         $cie=CIE::all();
-        $codigos = DB::table('CodigosTriage')->get();
+        $codigos = DB::table('codigostriage')->get();
         return response()->json(['preguntas'=>$preguntas,'paciente_seleccionado'=>$paciente_seleccionado,'codigos'=>$codigos]);
         
     }

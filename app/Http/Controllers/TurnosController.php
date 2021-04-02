@@ -159,17 +159,17 @@ class TurnosController extends Controller
       $nombres_especialidades=array();
       $color="";
       $casos="";
-      $especialidades=DB::table('Especialidades')->orderBy('nombre','ASC')->get();
-      $codigos=DB::table('CodigosTriage')->orderBy('color')->get();
+      $especialidades=DB::table('especialidades')->orderBy('nombre','ASC')->get();
+      $codigos=DB::table('codigostriage')->orderBy('color')->get();
       $atencion=$request->get('atencion');
       $sintomas=$request->sintomas;
 
-      $protocolos = DB::table('Detalles_Sintomas_Protocolos as det')
-                            ->join('Protocolos as prot','prot.id','=','det.id_protocolo')
-                            ->join('Sintomas as s','s.id','=','det.id_sintoma')
+      $protocolos = DB::table('detalles_sintomas_protocolos as det')
+                            ->join('protocolos as prot','prot.id','=','det.id_protocolo')
+                            ->join('sintomas as s','s.id','=','det.id_sintoma')
                             ->join('det_protocolos as det_prot','det_prot.id_protocolo','=','det.id_protocolo')
-                            ->join('Especialidades as esp','esp.id','=','det_prot.id_especialidad')
-                            ->join('CodigosTriage as cod','cod.id','=','prot.id_codigo_triage')
+                            ->join('especialidades as esp','esp.id','=','det_prot.id_especialidad')
+                            ->join('codigostriage as cod','cod.id','=','prot.id_codigo_triage')
                             ->select("det.id_protocolo", DB::raw('count(*) as cantidad','det.id_protocolo'),'det_prot.id_especialidad','esp.nombre','cod.color')
                             ->whereIn('s.id',$request->sintomas)
                             ->groupBy('det.id_protocolo')
@@ -183,7 +183,7 @@ class TurnosController extends Controller
         // BUSCAMOS EL PROTOCOLO 
         
         foreach ($protocolos as $prot) {
-          $cant = DB::table('Detalles_Sintomas_Protocolos as det')
+          $cant = DB::table('detalles_sintomas_protocolos as det')
                       ->where('det.id_protocolo','=',$prot->id_protocolo)
                       ->count();
           if(sizeof($request->sintomas)==$cant){
@@ -205,7 +205,7 @@ class TurnosController extends Controller
           #Tenemos protocolos ahora buscamos cuantos especialistas se encuentran disponibles.
           $disponibles=DB::table('det_profesionales as det_pro')
                          ->join('profesionales as prof','prof.id','=','det_pro.id_profesional')
-                         ->join('Especialidades as esp','esp.id','=','det_pro.id_especialidad')
+                         ->join('especialidades as esp','esp.id','=','det_pro.id_especialidad')
                          ->select('esp.nombre',DB::raw('count(*) as cantidad','esp.nombre'))
                          ->whereIn('esp.nombre',$nombres_especialidades)
                          ->where('prof.disponibilidad','=',1)
@@ -268,7 +268,7 @@ class TurnosController extends Controller
         $nuevo=new DetalleAtencion;
         $nuevo->id_atencion=$request->atencion;
         $nuevo->id_especialidad=$request->esp;
-        $id_codigo=DB::table('CodigosTriage')->select('id')->where('color','LIKE',$request->color)->get();
+        $id_codigo=DB::table('codigostriage')->select('id')->where('color','LIKE',$request->color)->get();
         $nuevo->id_codigo_triage=$id_codigo[0]->id;
         $nuevo->fecha=date('Y-m-d');
         $nuevo->hora=date('H:i');
@@ -287,7 +287,7 @@ class TurnosController extends Controller
         $nuevo->estado="consulta";
         $nuevo->save();
         if($request->radios == "si"){
-          $cantidad= DB::table("Protocolos")
+          $cantidad= DB::table("protocolos")
                          ->where("descripcion","LIKE","DEFECTO%")
                          ->count();                    
           $nuevo_protocolo = new Protocolo;
