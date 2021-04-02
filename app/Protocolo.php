@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Protocolo extends Model
 {
     //
-    protected $table="Protocolos";
+    // protected $table="Protocolos"; # protocolos con minúscula
 
     // protected $fillable = ['descripcion',];
     

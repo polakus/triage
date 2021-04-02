@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Atencion extends Model
 {
     //
-    protected $table="Atencion";
+    // protected $table="Atencion"; #atencion con minuscula
 
     public function paciente()
     {

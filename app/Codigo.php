@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Codigo extends Model
 {
-    protected $table = "CodigosTriage";
+    protected $table = "codigostriage"; #codigostriage con minúscula
 
     public function protocolos()
     {

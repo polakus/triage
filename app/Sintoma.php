@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Sintoma extends Model
 {
     //
-    protected $table = "Sintomas";
+    // protected $table = "Sintomas"; # sintomas con minuscula
 
     // protected $fillable = ['descripcion',];
 

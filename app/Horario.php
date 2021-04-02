@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Horario extends Model
 {
     //
-    protected $table="Horarios";
+    protected $table="Horarios";  #pare que este model no se usa así que no es necesario cambiar
 
     public function salas()
     {

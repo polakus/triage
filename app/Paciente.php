@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Paciente extends Model
 {
     //
-    protected $table ='Pacientes';
+    // protected $table ='Pacientes'; # es paciente con minuscula
     protected $primaryKey = "Paciente_id";
 
     protected $fillable = ['dni', 'nombre', 'apellido', 'telefono', 'fechaNac', 'sexo', 'domicilio',];

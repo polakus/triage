@@ -7,7 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 class Detalle_Sintoma_Protocolo extends Model
 {
     //
-    protected $table="Detalles_Sintomas_Protocolos";
+    // protected $table="Detalles_Sintomas_Protocolos";
+    protected $table = "detalles_sintomas_protocolos";
 
     public function protocolo()
     {

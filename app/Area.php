@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Area extends Model
 {
-    protected $table = 'Areas';
+    // protected $table = 'Areas'; # areas con minúscula
 
     protected $fillable = [
         'tipo_dato',
