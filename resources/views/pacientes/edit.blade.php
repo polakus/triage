@@ -10,12 +10,12 @@
 <div class="row">
             <div class="col">
                <button class="btn btn-dark"  id="btnver" onclick="ver()">Cargar datos NN</button>
-               <button class="btn btn-dark" id="btnocultar" onclick="ocultar()">Ocultar datos nn</button>
+               <button class="btn btn-dark" id="btnocultar" onclick="ocultar()" style="display: none;">Ocultar datos nn</button>
             </div>
            
           </div>
           <br>
-          <div class="row" id="historial">
+          <div class="row" id="historial" style="display: none">
             <div class="col">
               <div class="table-responsive">
               <table class="table table-bordered table-sm" id="tablann">
@@ -146,8 +146,8 @@
 @section("scripts")
 @parent
 <script>
-  document.getElementById('historial').style.display = 'none';
-  document.getElementById('btnocultar').style.display = 'none';
+  // document.getElementById('historial').style.display = 'none';
+  // document.getElementById('btnocultar').style.display = 'none';
 function ver() {
      document.getElementById('historial').style.display = 'block';
      document.getElementById('btnver').style.display = 'none';

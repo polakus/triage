@@ -76,7 +76,7 @@ Route::get('mostrar',function(){
 
                     ->select(DB::raw("CONCAT(p.apellido,' ',p.nombre) as paciente_full"),
                         DB::raw("CONCAT(da.fecha,' ',da.hora) as fecha_hora"),
-                        'are.tipo_dato','esp.nombre as especialidad','da.estado','da.id_codigo_triage','da.id','da.sala','codigotriage.color','da.operar')
+                        'are.nombre','esp.nombre as especialidad','da.estado','da.id_codigo_triage','da.id','da.sala','codigotriage.color','da.operar')
                     // ->where('da.fecha','=',date('Y-m-d'))
 
                     ->orderBy('da.id_codigo_triage','DESC')
@@ -86,7 +86,7 @@ Route::get('mostrar',function(){
 
     $salas = DB::table('salas as s')
                     ->join('areas as a','a.id','=','s.id_area')
-                    ->select('a.tipo_dato','s.nombre','s.camas','s.disponibilidad','s.id')
+                    ->select('a.nombre','s.nombre','s.camas','s.disponibilidad','s.id')
                     ->get();
     return DataTables::of($pacientes)
                         ->addColumn('observacion',function($paciente){
@@ -138,7 +138,7 @@ Route::get('dtespecialidades', function(){
     $especialidades = DB::table('especialidades as esp')
                         ->join('det_especialidad_area as det','det.id_especialidad','=','esp.id')
                         ->join('areas as a','a.id','=','det.id_area')
-                        ->select('esp.id','esp.nombre','esp.descripcion', 'a.tipo_dato', 'a.id as id_area')
+                        ->select('esp.id','esp.nombre','esp.descripcion', 'a.nombre', 'a.id as id_area')
                         ->get();
     $editareas = App\Area::all();
     // $area_seleccionada = App\Det_especialidad_area::where('id_especialidad', '=', $especialidades->id)->first()->area->id;
@@ -226,7 +226,7 @@ Route::get('tablasalas',function(Request $request){
 
     return DataTables::of($salas)
                         ->addColumn('area', function($sala){
-                            return $sala->area->tipo_dato;
+                            return $sala->area->nombre;
                         })
                         ->rawColumns(['area'])
                         ->addColumn('habilita', function($sala){

@@ -43,7 +43,7 @@ class areasController extends Controller
             'nombre' => 'required|max:255',
         ], $mensajes);
         $area = Area::create([
-            'tipo_dato' => $request->nombre,
+            'nombre' => $request->nombre,
         ]);
         // $area = new Area;
         // $area->tipo_dato = $request->nombre;

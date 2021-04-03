@@ -67,7 +67,7 @@
 								<select id="area" name="area" class="form-control">
 									<option value="" selected disabled hidden>Seleccione</option>
 								@foreach($areas as $a)
-									<option value="{{ $a->id }}" {{old('area') == $a->id ? 'selected':''}}>{{ $a->tipo_dato }} </option>
+									<option value="{{ $a->id }}" {{old('area') == $a->id ? 'selected':''}}>{{ $a->nombre }} </option>
 								@endforeach
 								</select>
 								<div id="error_area"></div>
@@ -91,13 +91,14 @@
 <script type="text/javascript">
 	$(document).ready(function() {
 		$('#myTable').DataTable({
+			"processing":true,
 			"responsive":true,
 			"serverSide":true,
 			"ajax":{url:"{{ url('api/dtespecialidades') }}",},
 			"columns":[
 				{data:'nombre'}, 
 				{data:'descripcion'}, 
-				{data:'tipo_dato'},
+				{data:'nombre'},
 				{data:'button'},
 			],
 			"columnDefs": [

@@ -31,8 +31,8 @@ class AtencionClinicaController extends Controller
 
         $salas=DB::table("salas as s")
                    ->join("areas as a",'a.id','=','s.id_area')
-                   ->select('a.tipo_dato','s.nombre','s.id')
-                   ->orderBy('a.tipo_dato')
+                   ->select('a.nombre','s.nombre','s.id')
+                   ->orderBy('a.nombre')
                    ->get();
 
         
@@ -59,7 +59,7 @@ class AtencionClinicaController extends Controller
                     ->join('atencion as a','a.id','=','da.id_atencion')
                     ->join('pacientes as p','p.Paciente_id','=','a.Paciente_id')
                     ->join('codigostriage as codigotriage','codigotriage.id','=','da.id_codigo_triage')
-                    ->select('p.nombre','p.apellido','da.fecha','da.id_atencion','da.id_codigo_triage','are.tipo_dato','esp.nombre as especialidad','da.id','codigotriage.color','p.Paciente_id')
+                    ->select('p.nombre','p.apellido','da.fecha','da.id_atencion','da.id_codigo_triage','are.nombre','esp.nombre as especialidad','da.id','codigotriage.color','p.Paciente_id')
                     ->where('da.fecha','=',date('Y-m-d'))
                     ->where('da.atendido','=',0)
                     ->where('da.estado','LIKE','consulta')

@@ -207,7 +207,7 @@
             <tbody>
               @foreach($salas as $sala)
               <tr>
-                <th scope="row">{{$sala->area->tipo_dato}}</th>
+                <th scope="row">{{$sala->area->nombre}}</th>
                 <td>{{$sala->cantidad}}</td>
                 <td>{{$sala->disponibles}}</td>
               </tr>

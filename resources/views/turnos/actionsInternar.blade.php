@@ -24,7 +24,7 @@
                           <div class="container col-md-12">
 
                                 @foreach($salas as $s)
-                                  @if($s->tipo_dato == "Internacion")
+                                  @if($s->nombre == "Internacion")
                                     <div class="row border">
                                       <div class="col border">
                                        <label>{{ $s->nombre }}</label> 

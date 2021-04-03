@@ -20,7 +20,7 @@
                 
                     @foreach($salas as $s)
                         
-                        <option value="{{ $s->id}}-{{ $s->tipo_dato }} {{ $s->nombre }} ">{{ $s->tipo_dato }} {{ $s->nombre }}</option>
+                        <option value="{{ $s->id}}-{{ $s->nombre }} {{ $s->nombre }} ">{{ $s->nombre }} {{ $s->nombre }}</option>
                     @endforeach
               </select>
           </div>

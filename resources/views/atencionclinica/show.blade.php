@@ -16,10 +16,10 @@
         <option value="Todas" selected>Todas</option>
 
             @foreach($areas as $area)
-              @if($area->tipo_dato == $val1)
-                <option value="{{$area->tipo_dato}}" selected>{{$area->tipo_dato}}</option>
+              @if($area->nombre == $val1)
+                <option value="{{$area->nombre}}" selected>{{$area->nombre}}</option>
               @else
-                <option value="{{$area->tipo_dato}}">{{$area->tipo_dato}}</option>
+                <option value="{{$area->nombre}}">{{$area->nombre}}</option>
               @endif
             @endforeach
       </select>
@@ -64,7 +64,7 @@
        
         <td>{{ $paciente->fecha }}</td>
         <td> {{ $paciente->especialidad }}</td>
-        <td>{{ $paciente->tipo_dato }}</td>
+        <td>{{ $paciente->nombre }}</td>
         <td>
         <div class="form-row">
            <form class= "form-inline" action="{{route('atencionclinica.show',$paciente->id_atencion)}}" method="GET">

@@ -98,7 +98,7 @@
            "columns":[
             {data:'paciente_full',"orderable": "false"},
             {data:'fecha_hora'},
-            {data:'tipo_dato'},
+            {data:'nombre'},
             {data:'especialidad'},
             {data:'estado'},
             {data:'observacion'},

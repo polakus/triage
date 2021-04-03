@@ -71,6 +71,7 @@
 		var tabla = $('#myTable').DataTable({
 			"responsive":true,
 			"serverSide":true,
+			"processing":true,
 			"ajax":{url:"{{ url('api/cargar_cie') }}",},
 			"columns":[
 				{data:'codigo'}, 
