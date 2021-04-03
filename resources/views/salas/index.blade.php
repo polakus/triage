@@ -55,7 +55,7 @@
 							<select name="areac" id="areac" class="form-control select" style="width: 100%;">
 								<option value="" selected disabled hidden>Seleccione</option>
 							@foreach($areas as $area)
-								<option value="{{$area->id}}" {{old('area') == $area->id ? 'selected':''}}>{{$area->tipo_dato}}</option>
+								<option value="{{$area->id}}" {{old('area') == $area->id ? 'selected':''}}>{{$area->nombre}}</option>
 							@endforeach
 							</select>
 							<div id="error_area"></div>
@@ -118,6 +118,7 @@
     $('#myTable').DataTable({
     	"responsive":true,
 		"serverSide":true,
+		"processing":true,
 			"ajax":{url:"{{ url('api/tablasalas') }}",},
 			"columns":[
 				{data:'nombre'}, 

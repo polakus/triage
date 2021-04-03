@@ -35,7 +35,7 @@
 								<select id="editarea{{$especialidad->id}}" name="editarea" class="form-control select" style="width: 100% !important;" >
 									{{-- <option value="" selected disabled hidden>Seleccione</option> --}}
 								@foreach($editareas as $a)
-									<option value="{{ $a->id }}" {{$especialidad->id_area == $a->id ? 'selected':''}}>{{ $a->tipo_dato }} </option>
+									<option value="{{ $a->id }}" {{$especialidad->id_area == $a->id ? 'selected':''}}>{{ $a->nombre }} </option>
 								@endforeach
 								</select>
 								<div id="error_edit_area{{$especialidad->id}}"></div>

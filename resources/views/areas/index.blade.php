@@ -31,7 +31,7 @@
 	      	<select name="area" id="inputState" class="form-control">
 	         	<option value="Todas" selected>Todas</option>
 			@foreach($areas as $area)
-	          	<option value="{{$area->id}}">{{$area->tipo_dato}}</option>
+	          	<option value="{{$area->id}}">{{$area->nombre}}</option>
 	        @endforeach
 	      	</select>
 	    </div>
@@ -54,7 +54,7 @@
        				@csrf
        				{{ method_field('PUT') }}
 	       			<td>{{ $sala->nombre }}</td>
-	       			<td>{{ $sala->area->tipo_dato }}</td>
+	       			<td>{{ $sala->area->nombre }}</td>
        			@if($sala->estado == 0)
        				<td><button type="submit" class="btn btn-danger btn-block">Ocupado</button></td>
    				@else

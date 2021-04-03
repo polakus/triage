@@ -220,7 +220,7 @@
 				 				 	<p>El paciente debe ser atendido con un profesional con especialidad en <?php echo $especialidad ?> </p> 
 				 				 	<p> En estos momentos se encuentran disponible medicos en:</p>
 				 				 	@foreach($disponibles_salas as $dis)
-				 				 	<p>{{ $dis->tipo_dato }} Sala Nº: {{ $dis->nombre }}</p>
+				 				 	<p>{{ $dis->nombre }} Sala Nº: {{ $dis->nombre }}</p>
 				 				 	@endforeach
 				 				
 				 				 	
@@ -233,7 +233,7 @@
 				 				 	<p>El paciente debe ser atendido con un profesional con especialidad en <?php echo $especialidad ?> </p> 
 				 				 	<p> En estos momentos se encuentran disponible medicos en:</p>
 				 				 	@foreach($disponibles_salas as $dis)
-				 				 	<p>{{ $dis->tipo_dato }} Sala Nº: {{ $dis->nombre }}</p>
+				 				 	<p>{{ $dis->nombre }} Sala Nº: {{ $dis->nombre }}</p>
 				 				 	@endforeach
 				 				
 				 				 	
@@ -246,7 +246,7 @@
 				 				 	<p>El paciente debe ser atendido con un profesional con especialidad en <?php echo $especialidad ?> </p> 
 				 				 	<p> En estos momentos se encuentran disponible medicos en:</p>
 				 				 	@foreach($disponibles_salas as $dis)
-				 				 	<p>{{ $dis->tipo_dato }} Sala Nº: {{ $dis->nombre }}</p>
+				 				 	<p>{{ $dis->nombre }} Sala Nº: {{ $dis->nombre }}</p>
 				 				 	@endforeach
 				 				
 				 				 	

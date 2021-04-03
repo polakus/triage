@@ -56,7 +56,7 @@
     </div>
     <div class="form-group col-md-2">
       <label for="codigo">Código</label>
-      <select name="codigo" id="codigo" class="form-control select" >
+      <select name="codigo" id="codigo" class="form-control select">
         @foreach($codigos as $codigo)
           <option value="{{$codigo->id}}">{{$codigo->color}}</option>
         @endforeach

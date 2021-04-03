@@ -9,7 +9,7 @@ class Area extends Model
     // protected $table = 'Areas'; # areas con minúscula
 
     protected $fillable = [
-        'tipo_dato',
+        'nombre',
     ];
 
     public function salas()
