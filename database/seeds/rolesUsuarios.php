@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Seeder;
 
+
 class rolesUsuarios extends Seeder
 {
     /**
@@ -12,5 +13,10 @@ class rolesUsuarios extends Seeder
     public function run()
     {
         //
+        DB::table('roles')->insert([
+            'created_at' => Carbon::now()->toDateTimeString(),
+            'updated_at' => Carbon::now()->toDateTimeString(),
+            'nombre' => 'Administrador',
+        ]);
     }
 }
