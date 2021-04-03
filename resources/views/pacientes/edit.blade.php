@@ -9,7 +9,7 @@
 </div>
 <div class="row">
             <div class="col">
-               <button class="btn btn-dark" id="btnver" onclick="ver()">Cargar datos NN</button>
+               <button class="btn btn-dark"  id="btnver" onclick="ver()">Cargar datos NN</button>
                <button class="btn btn-dark" id="btnocultar" onclick="ocultar()">Ocultar datos nn</button>
             </div>
            
