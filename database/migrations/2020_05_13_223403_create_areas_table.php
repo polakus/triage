@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateTableProfesionalesHorarios extends Migration
+class CreateAreasTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,10 @@ class CreateTableProfesionalesHorarios extends Migration
      */
     public function up()
     {
-        Schema::create('profesionales_horarios', function (Blueprint $table) {
+        Schema::create('areas', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->foreignId('id_profesional')->references('id')->on('profesionales');
-            $table->time('hr_ini');
-            $table->time('hr_fin');
-            $table->string('dia', 10);
+            $table->string('nombre',30);
         });
     }
 
@@ -30,6 +27,8 @@ class CreateTableProfesionalesHorarios extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('profesionales_horarios');
+        Schema::dropIfExists('areas');
     }
+
+
 }

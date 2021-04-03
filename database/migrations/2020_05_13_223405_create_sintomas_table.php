@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddVotesToSalasTable extends Migration
+class CreateSintomasTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,10 @@ class AddVotesToSalasTable extends Migration
      */
     public function up()
     {
-        Schema::table('salas', function (Blueprint $table) {
-            $table->string('nombre', 20);
+        Schema::create('sintomas', function (Blueprint $table) {
+            $table->id();
+            $table->timestamps();
+            $table->string("descripcion",40);
         });
     }
 
@@ -25,8 +27,6 @@ class AddVotesToSalasTable extends Migration
      */
     public function down()
     {
-        Schema::table('salas', function (Blueprint $table) {
-            $table->dropColumn('nombre');
-        });
+        Schema::dropIfExists('sintomas');
     }
 }

@@ -16,8 +16,8 @@ class CreateTableDetProtocolos extends Migration
         Schema::create('det_protocolos', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->foreignId('id_especialidad')->references('id')->on('Especialidades');
-            $table->foreignId('id_protocolo')->references('id')->on('Protocolos');
+            $table->foreignId('id_especialidad')->references('id')->on('especialidades')->onDelete('cascade');
+            $table->foreignId('id_protocolo')->references('id')->on('protocolos')->onDelete('cascade');
         });
     }
 

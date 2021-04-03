@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreatePruebaTable extends Migration
+class CreatePreguntasTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,12 @@ class CreatePruebaTable extends Migration
      */
     public function up()
     {
-        Schema::create('pruebas', function (Blueprint $table) {
+        Schema::create('preguntas', function (Blueprint $table) {
             $table->id();
-            $table->string('atributo');
             $table->timestamps();
-        });
+            $table->foreignId('id_atencion')->references('id')->on('atencion')->onDelete('cascade');
+            $table->foreignId('id_sintoma')->references('id')->on('sintomas')->onDelete('cascade');
+            });
     }
 
     /**
@@ -27,6 +28,6 @@ class CreatePruebaTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('pruebas');
+        Schema::dropIfExists('preguntas');
     }
 }

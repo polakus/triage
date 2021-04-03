@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreatePreguntasTable extends Migration
+class CreateProtocolosTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,12 @@ class CreatePreguntasTable extends Migration
      */
     public function up()
     {
-        Schema::create('preguntas', function (Blueprint $table) {
+        Schema::create('protocolos', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->foreignId('id_atencion')->references('id')->on('Atencion');
-            $table->foreignId('id_sintoma')->references('id')->on('Sintomas');
-            });
+            $table->string('descripcion',255);
+            $table->foreignId('id_codigo_triage')->references('id')->on('codigostriage')->onDelete('cascade');
+        });
     }
 
     /**
@@ -28,6 +28,6 @@ class CreatePreguntasTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('preguntas');
+        Schema::dropIfExists('protocolos');
     }
 }
