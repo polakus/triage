@@ -324,7 +324,7 @@
               @endforeach   
             </div>
           @else
-            <h5>No hay más datos para este usuario</h5>
+            {{--<h5>No hay más datos para este usuario</h5>--}}
           @endif
         </div>
           @if($usuario->profesional)

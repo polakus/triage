@@ -16,11 +16,15 @@ class CreateProfesionalesTable extends Migration
         Schema::create('profesionales', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->string("matricula",20);
+            $table->integer('documento')->unique();
+            $table->string("matricula",20)->unique();
             $table->string("nombre",20);
             $table->string("apellido",20);
             $table->string("domicilio",255);
+            $table->string("telefono",20);
             $table->boolean("disponibilidad");
+            $table->foreignId('id_user')->references('id')->on('users')->onDelete('cascade');
+
         });
     }
 

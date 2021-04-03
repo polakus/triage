@@ -16,8 +16,8 @@ class CreateDetProfesionales extends Migration
         Schema::create('det_profesionales', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->foreignId('id_profesional')->references('id')->on('profesionales');
-            $table->foreignId('id_especialidad')->references('id')->on('Especialidades');
+            $table->foreignId('id_profesional')->references('id')->on('profesionales')->onDelete('cascade');
+            $table->foreignId('id_especialidad')->references('id')->on('especialidades')->onDelete('cascade');
         });
     }
 

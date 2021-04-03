@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddSalaToDetalleAtencionTable extends Migration
+class CreateCodigosTriageTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,11 @@ class AddSalaToDetalleAtencionTable extends Migration
      */
     public function up()
     {
-        Schema::table('detalle_atencion', function (Blueprint $table) {
-            //
-            $table->string('sala',30)->nullable();
+        Schema::create('codigostriage', function (Blueprint $table) {
+            $table->id();
+            $table->timestamps();
+            $table->string('color',20);
+            $table->string('tiempo_espera',20);
         });
     }
 
@@ -26,8 +28,6 @@ class AddSalaToDetalleAtencionTable extends Migration
      */
     public function down()
     {
-        Schema::table('detalle_atencion', function (Blueprint $table) {
-            //
-        });
+        Schema::dropIfExists('codigostriage');
     }
 }

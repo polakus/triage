@@ -13,11 +13,11 @@ class CreateDetallesSintomasProtocolosTable extends Migration
      */
     public function up()
     {
-        Schema::create('Detalles_Sintomas_Protocolos', function (Blueprint $table) {
+        Schema::create('detalles_sintomas_protocolos', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->foreignId('id_protocolo')->references('id')->on('Protocolos');
-            $table->foreignId('id_sintoma')->references('id')->on('Sintomas');
+            $table->foreignId('id_protocolo')->references('id')->on('protocolos')->onDelete('cascade');
+            $table->foreignId('id_sintoma')->references('id')->on('sintomas')->onDelete('cascade');
         });
     }
 
@@ -28,6 +28,6 @@ class CreateDetallesSintomasProtocolosTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('Detalles_Sintomas_Protocolos');
+        Schema::dropIfExists('detalles_sintomas_protocolos');
     }
 }
