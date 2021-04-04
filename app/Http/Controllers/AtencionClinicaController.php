@@ -241,31 +241,35 @@ class AtencionClinicaController extends Controller
                          ->select("pro.id")
                          ->where("u.id",'=',Auth::id())
                          ->get();
-       $cadena=explode('-',$request->sala);
-       $mensaje="Te encuentras en ".$cadena[1];
-       $consulta = DB::table("det_profesionales_salas as dt")
-                        ->join("profesionales as p",'p.id','=','dt.id_profesional')
-                        ->select("dt.id")
-                        ->join("users as u",'u.id','=','p.id_user')
-                        ->where("u.id",'=',Auth::id())
-                        ->get();
-       if(count($consulta)>0){
-        $nuevo= DetalleProfSala::findOrFail($consulta[0]->id);
-        $nuevo->id_sala=(int)$cadena[0];
-        $nuevo->disponibilidad=1;
-        $nuevo->save();
-       }
-       else{
-        $nuevo = new DetalleProfSala;
-       $nuevo->id_profesional=$id_profesional[0]->id;
-       $nuevo->id_sala=(int)$cadena[0];
-       $nuevo->disponibilidad=1;
-       $nuevo->save();
-       }
-       
+       if(count($id_profesional)>0){
+            $cadena=explode('-',$request->sala);
+            $mensaje="Te encuentras en ".$cadena[1];
+            $consulta = DB::table("det_profesionales_salas as dt")
+                                ->join("profesionales as p",'p.id','=','dt.id_profesional')
+                                ->select("dt.id")
+                                ->join("users as u",'u.id','=','p.id_user')
+                                ->where("u.id",'=',Auth::id())
+                                ->get();
+            if(count($consulta)>0){
+                $nuevo= DetalleProfSala::findOrFail($consulta[0]->id);
+                $nuevo->id_sala=(int)$cadena[0];
+                $nuevo->disponibilidad=1;
+                $nuevo->save();
+            }
+            else{
+                $nuevo = new DetalleProfSala;
+            $nuevo->id_profesional=$id_profesional[0]->id;
+            $nuevo->id_sala=(int)$cadena[0];
+            $nuevo->disponibilidad=1;
+            $nuevo->save();
+            }
+            return redirect()->action("AtencionClinicaController@atencionsala",['mensaje'=>$mensaje,'id_det_profesional_sala'=>$nuevo->id]);
+        }
+        else{
+            return redirect()->action("AtencionClinicaController@index");
+        }
 
-      return redirect()->action("AtencionClinicaController@atencionsala",['mensaje'=>$mensaje,'id_det_profesional_sala'=>$nuevo->id]);
-
+      
     }
 
 

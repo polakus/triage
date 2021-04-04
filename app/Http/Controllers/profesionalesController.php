@@ -52,6 +52,7 @@ class profesionalesController extends Controller
             'apellido' => 'required|max:255',
             'matricula' => 'required|unique:profesionales',
             'domicilio' => 'required|max:255',
+            'documento' => 'required'
         ], $mensajes);
         if (Profesional::where('id_user', Auth::id())->get()->isEmpty()){
             $profesional = Profesional::create([
@@ -59,6 +60,7 @@ class profesionalesController extends Controller
                 'apellido' => $request->apellido,
                 'matricula' => $request->matricula,
                 'domicilio' => $request->domicilio,
+                'documento' => $request->dni,
                 'id_user' => Auth::id(),
                 'disponibilidad' => 1,
             ]);

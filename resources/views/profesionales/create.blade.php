@@ -39,7 +39,7 @@
         </div>
         <div class="form-group col-md-4">
             <label for="inputZip">Matrícula</label>
-            <input type="number" name="matricula" class="form-control @error('matricula') is-invalid @enderror" value="{{ old('matricula') }}" placeholder="Número de Documento">
+            <input type="number" name="matricula" class="form-control @error('matricula') is-invalid @enderror" value="{{ old('matricula') }}" placeholder="Matricula">
             @error('matricula')
                 <span class="invalid-feedback" role="alert">
                     <strong>{{ $message }}</strong>
@@ -49,7 +49,16 @@
     </div>
 
     <div class="form-row">
-        <div class="form-group col-md-8">
+        <div class="form-group col-md-4">
+                <label for="inputZip">DNI</label>
+                <input type="number" name="dni" class="form-control @error('dni') is-invalid @enderror" value="{{ old('dni') }}" placeholder="Número de Documento">
+                @error('dni')
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                @enderror
+        </div>
+        <div class="form-group col-md-4">
             <label for="inputAddress">Domicilio</label>
             <input type="text" name="domicilio" class="form-control @error('domicilio') is-invalid @enderror" value="{{ old('domicilio') }}" placeholder="Dirección">
             @error('domicilio')
