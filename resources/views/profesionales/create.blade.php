@@ -67,6 +67,15 @@
                 </span>
             @enderror
         </div>
+        <div class="form-group col-md-4">
+            <label for="inputAddress">Telefono</label>
+            <input type="text" name="telefono" class="form-control @error('telefono') is-invalid @enderror" value="{{ old('telefono') }}" placeholder="Dirección">
+            @error('telefono')
+                <span class="invalid-feedback" role="alert">
+                    <strong>{{ $message }}</strong>
+                </span>
+            @enderror
+        </div>
     </div>
     <div class="form-group">
         <label for="exampleFormControlSelect2">Especialidades <h style="color:#E0E0E0">(Ctrl + Click para seleccionar más de una opción)</h></label>

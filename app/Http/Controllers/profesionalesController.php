@@ -52,26 +52,39 @@ class profesionalesController extends Controller
             'apellido' => 'required|max:255',
             'matricula' => 'required|unique:profesionales',
             'domicilio' => 'required|max:255',
-            'documento' => 'required'
+            // 'documento' => 'required'
         ], $mensajes);
         if (Profesional::where('id_user', Auth::id())->get()->isEmpty()){
-            $profesional = Profesional::create([
-                'nombre' => $request->nombre,
-                'apellido' => $request->apellido,
-                'matricula' => $request->matricula,
-                'domicilio' => $request->domicilio,
-                'documento' => $request->dni,
-                'id_user' => Auth::id(),
-                'disponibilidad' => 1,
-            ]);
+   
+            $profesional = new Profesional;
+            $profesional->nombre = $request->nombre;
+            $profesional->apellido = $request->apellido;
+            $profesional->matricula = $request->matricula;
+            $profesional->domicilio = $request->domicilio;
+            $profesional->telefono = $request->telefono;
+            $profesional->documento = $request->dni;
+            $profesional->id_user = Auth::id();
+            $profesional->disponibilidad=1;
+            $profesional->save();
+            // $profesional = Profesional::create([
+            //     'nombre' => $request->nombre,
+            //     'apellido' => $request->apellido,
+            //     'matricula' => $request->matricula,
+            //     'domicilio' => $request->domicilio,
+            //     'documento' => $request->dni,
+            //     'id_user' => Auth::id(),
+            //     'disponibilidad' => 1,
+            // ]);
             foreach($request->esp as $especialidad){
                 $newDet = new DetalleProfesional;
                 $newDet->id_profesional = $profesional->id;
                 $newDet->id_especialidad = $especialidad;
                 $newDet->save();
             }
+        
             $request->session()->flash('alert-success', 'Los datos se han agregado correctamente!');
         }else{
+          
             $request->session()->flash('alert-warning', 'Usted ya cargó su perfil!');
         }
         return redirect()->back()->withInput();
