@@ -248,11 +248,23 @@ Route::get('tablausuario',function(){
                     ->addColumn('rol',function($usuario){
                         return $usuario->rol->nombre;
                     })
+                    ->addColumn('estado',function($usuario){
+                        if($usuario->isOnline()){
+                            return '<li class="list-group-item list-group-item-success">Online</li>';
+                        }else{
+                            return '<li class="list-group-item list-group-item-danger">Offline</li>';
+                        }
+                    })
                     ->addColumn('buttons',function($usuario){
                         return view('usuarios/buttons',compact('usuario'));
                     })
-                    ->rawColumns(['rol','buttons'])
+                    ->rawColumns(['rol','estado','buttons'])
             ->toJson();
+            // @if( $usuario->isOnline() )
+			// 				<li class="text-success">Online</li>
+			// 			@else
+			// 				<li class="text-muted">Offline</li>
+			// 			@endif
 });
 
 Route::get('usuariospendientes',function(){

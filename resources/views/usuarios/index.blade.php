@@ -29,6 +29,7 @@
 			<table id="myTable" class="table table-bordered table-hover table-sm" cellspacing="0" width="100%">
 				<thead >
 					<tr>
+            <th scope="col">Estado</th>
 						<th scope="col">Usuario</th>
 						<th scope="col">Nombre</th>
 						<th scope="col">Email</th>
@@ -70,6 +71,7 @@ $(document).ready(function() {
       "ajax":{url:"{{ url('api/tablausuario') }}",
          },
          "columns":[
+            {data:'estado'},
             {data:'username'},
             {data:'name'},
             {data:'email'},
