@@ -37,10 +37,11 @@ class areasController extends Controller
     {
         $mensajes = [
             'required' =>'Este campo no debe estar vacio.',
+            'unique' => 'Este registro ya se encuentra almacenado',
             'max' => 'Este campo supera la capacidad máxima de caracteres.',
         ];
         $pr = $request->validate([
-            'nombre' => 'required|max:255',
+            'nombre' => 'required|max:255|unique:areas',
         ], $mensajes);
         $area = Area::create([
             'nombre' => $request->nombre,
@@ -48,8 +49,9 @@ class areasController extends Controller
         // $area = new Area;
         // $area->tipo_dato = $request->nombre;
         // $area->save();
-        $request->session()->flash('alert-success', 'El area fue agregado exitosamen!');
-        return redirect()->back()->withInput();
+        // $request->session()->flash('alert-success', 'El area fue agregado exitosamen!');
+        // return redirect()->back()->withInput();
+        return response()->json();
     }
 
     /**

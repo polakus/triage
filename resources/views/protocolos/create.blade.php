@@ -1,7 +1,7 @@
 @extends("triagepreguntas.test")
 
 @section("css")
-  <style type="text/css">
+  <!-- <style type="text/css">
     .select2-choices {
       min-height: 150px !important;
       max-height: 150px;
@@ -30,7 +30,7 @@
       background-color: #e9e9e9; 
     }
 
-  </style>
+  </style> -->
 @endsection
 
 @section("cuerpo")
@@ -54,7 +54,7 @@
       <label for="inputEmail4">Descripción</label>
       <input type="text" id="desc" name="desc" class="form-control form-control-sm" value="{{ old('desc') }}" placeholder="Nombre">
     </div>
-    <div class="form-group col-md-2">
+    <div class="form-group col-md-2" id="div_codigo">
       <label for="codigo">Código</label>
       <select name="codigo" id="codigo" class="form-control select">
         @foreach($codigos as $codigo)
@@ -62,7 +62,7 @@
         @endforeach
       </select>
     </div>
-    <div class="form-group col-md-2">
+    <div class="form-group col-md-2" id="div_especialidad">
       <label for="inputEsp">Especialidad</label>
       <select name="especialidad" id="esp" class="form-control form-control-sm select">
         @foreach($especialidades as $esp)
@@ -229,6 +229,22 @@
             if (err.status == 422) { // when status code is 422, it's a validation issue
               // alert("hubo un error");
               console.log(err.responseJSON.errors);
+              if(err.responseJSON.errors.codigo){
+                document.getElementById('codigo').classList.add('is-invalid');
+                var ele_span = document.createElement('span');
+                ele_span.setAttribute('class', 'invalid-feedback');
+                ele_span.setAttribute('role', 'alert');
+                ele_span.innerHTML = "<strong>" + err.responseJSON.errors.codigo + "</strong>";
+                document.getElementById('div_codigo').appendChild(ele_span);
+              }
+              if(err.responseJSON.errors.especialidad){
+                document.getElementById('especialidad').classList.add('is-invalid');
+                var ele_span = document.createElement('span');
+                ele_span.setAttribute('class', 'invalid-feedback');
+                ele_span.setAttribute('role', 'alert');
+                ele_span.innerHTML = "<strong>" + err.responseJSON.errors.especialidad + "</strong>";
+                document.getElementById('div_especialidad').appendChild(ele_span);
+              }
               if(err.responseJSON.errors.desc){
                 document.getElementById('desc').classList.add('is-invalid');
                 var ele_span = document.createElement('span');

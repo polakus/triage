@@ -8,6 +8,7 @@ class Atencion extends Model
 {
     //
     // protected $table="Atencion"; #atencion con minuscula
+    protected $table = "atencion";
 
     public function paciente()
     {
