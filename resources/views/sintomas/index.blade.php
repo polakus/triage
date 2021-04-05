@@ -49,18 +49,16 @@
 @endsection
 @section("cuerpo")
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-  <h4 class="h4">Sintomas</h4>
-  <div class="contenido">
-    <div class="botones">
-      <input type="text" class="form-control form-inline form-control-sm ml-2 " placeholder="Nombre del sintoma"  name="nombre_sintoma" id="nombre_sintoma" >
-         <button class="btn btn-outline-secondary btn-sm ml-2"  id="agregar">Agregar sintoma</button>
+    <h4 class="h4">Sintomas</h4>
+    <div class="contenido">
+        <div class="botones">
+            <input type="text" class="form-control form-inline form-control-sm ml-2 " placeholder="Nombre del sintoma"  name="nombre_sintoma" id="nombre_sintoma" >
+            <button class="btn btn-outline-secondary btn-sm ml-2"  id="agregar">Agregar sintoma</button>
+        </div>
+        <div class="error">
+            <div id="error_sintoma"></div>
+        </div>
     </div>
-    <div class="error">
-        <div id="error_sintoma"></div>
-    </div>
-   </div>
- 
-  
 </div>
 <div class="table-responsive">
  <table class="table table-bordered table-striped table-hover table-sm" id="myTable">
@@ -76,23 +74,59 @@
   </tbody>
 </table>
 </div>
-
+{{--
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="false">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title" id="exampleModalLabel">Se eliminarán los siguientes datos</h3>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<div class="container">
+                    <div class="row no-gutters align-items-center table-wrapper-scroll-y my-custom-scrollbar">
+                        <table class="table">
+                            <thead class="thead-light">
+                                <tr>
+                                    <th scope="col">Tablas</th>
+                                    <th scope="col">Cantidad de registros</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>nombre 1</td>
+                                    <td>1</td>
+                                </tr>
+                                <tr>
+                                    <td>nombre 2</td>
+                                    <td>2</td>
+                                </tr>
+                            </tbody>
+                        </table>
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button id="guardar" type="button" class="btn btn-dark">Guardar</button>
+				<button type="button" class="btn btn-dark" data-dismiss="modal">Cerrar</button>
+			</div>
+		</div>
+	</div>
+</div>
+--}}
 
 @endsection
 @section("scripts")
 @parent
 
-
-
-
 {{-- JS Datatables --}}
-
-
 
 <script type="text/javascript">
   $(document).ready(function() {
    var table= $('#myTable').DataTable({
-       "processing":true,
+        "processing":true,
         "responsive":true,
           "serverSide":true,
            "ajax":{url:"{{ url('api/sintomas_cargar') }}",

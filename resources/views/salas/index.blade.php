@@ -6,13 +6,8 @@
 	<h4> Salas </h4>
 	<div class="btn-toolbar mb-2 mb-md-0">
 		<div class="btn-group mr-2">
-			<button type="button" class="btn btn-sm btn-outline-secondary" data-toggle="modal" data-target="#exampleModal">
-				Agregar Sala
-			</button>
-			{{--
-		<a type="button" class="btn btn-sm btn-outline-secondary" href="{{ route('salas.create') }}">Agregar Sala</a>
-		--}}
-        <a type="button" class="btn btn-sm btn-outline-secondary" href="{{ route('areas.create') }}">Agregar Area</a>
+			<button type="button" class="btn btn-sm btn-outline-secondary" data-toggle="modal" data-target="#exampleModal">Agregar Sala</button>
+	        <a type="button" class="btn btn-sm btn-outline-secondary" href="{{ route('areas.create') }}">Agregar Area</a>
       </div>
     </div>
 </div>

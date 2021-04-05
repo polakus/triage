@@ -138,7 +138,7 @@ Route::get('dtespecialidades', function(){
     $especialidades = DB::table('especialidades as esp')
                         ->join('det_especialidad_area as det','det.id_especialidad','=','esp.id')
                         ->join('areas as a','a.id','=','det.id_area')
-                        ->select('esp.id','esp.nombre','esp.descripcion', 'a.nombre', 'a.id as id_area')
+                        ->select('esp.id','esp.nombre as nombesp','esp.descripcion', 'a.nombre as nombarea', 'a.id as id_area')
                         ->get();
     $editareas = App\Area::all();
     // $area_seleccionada = App\Det_especialidad_area::where('id_especialidad', '=', $especialidades->id)->first()->area->id;

@@ -18,7 +18,7 @@
                         <div class="form-row">
                             <div class="form-group">
                                 <label>Nombre</label>
-                                <input type="text" id="nomb{{$especialidad->id}}" name="editarnomb" class="form-control" placeholder="Cod" value="{{ $especialidad->nombre }}">
+                                <input type="text" id="nomb{{$especialidad->id}}" name="editarnomb" class="form-control" placeholder="Cod" value="{{ $especialidad->nombesp }}">
                                 <div id="error_edit_nomb{{$especialidad->id}}"></div>
                             </div>
                         </div>
@@ -52,7 +52,7 @@
      </div>
     </div>
 </div>
-<button type="button" class="btn btn-sm btn-outline-secondary ml-1" onclick="eliminar('{{ $especialidad->nombre }}')">Eliminar</button>
+<button type="button" class="btn btn-sm btn-outline-secondary ml-1" onclick="eliminar('{{ $especialidad->nombesp }}')">Eliminar</button>
 <script>
     var select2=$('.select').select2();
     function editaresp(id) {
