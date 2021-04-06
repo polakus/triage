@@ -19,8 +19,9 @@ class Especialidad extends Model
     public function detalle_protocolo(){
         return $this->hasMany('App\DetalleProtocolo','id_especialidad');
     }
-    public function pa(){
-        foreach($this->Det_especialidad_area as $det)
-            echo $det->id_area.'<br>';
-    }
+    # NO SE PARA QUE FUNCIONA ASÍ QUE LO COMENTO #
+    // public function pa(){
+    //     foreach($this->Det_especialidad_area as $det)
+    //         echo $det->id_area.'<br>';
+    // }
 }
