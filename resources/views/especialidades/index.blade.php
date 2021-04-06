@@ -180,6 +180,9 @@
 				area:area,
             },
             success: function(response){
+				document.getElementById('esp_nombre').value = "";
+				document.getElementById('descripcion').value = "";
+				document.getElementById('area').value = "";				
 				$('#exampleModal').modal('hide');
 				var table = $('#myTable').DataTable();
                 table.draw();

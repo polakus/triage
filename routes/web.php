@@ -56,7 +56,18 @@ Route::resource('/profesionales', 'profesionalesController', ['except' => ['dest
 Route::resource('/cie','CieController')->middleware('auth');
 Route::resource('/especialidades','EspecialidadController')->middleware('auth');
 Route::get('/pruebas', function(){
-    
+    // User::create([
+    //     'id' => 1,
+    //     'name' => "Alejandro Gonzales",
+    //     'username' => "admin",
+    //     'email' => "ale368_dvs@hotmail.com",
+    //     'id_rol' => 1,
+    //     'password' => Hash::make("asdfñlkj"),
+    //     'estado' => 1,
+    // ]);
+    $us = User::find(6);
+    $us->id = 1;
+    $us->save();
 });
 
 

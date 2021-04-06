@@ -138,47 +138,33 @@ $(document).ready(function() {
 
 
 function eliminar(id,username){
-  	if (confirm('¿Esta seguro de eliminar a '+username+'? Tenga en cuenta que se eliminara todos los datos relacionados a este usuario.')) {
-	  $.ajaxSetup({
-	                headers: {
-	                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-	                }
-	    });
-	  $.ajax({
-	            type:'DELETE',
-	            url:"/usuarios/"+id,
-	            data:{
-	                id:id,
-	            },
-	            dataType:"json",
-	            success: function(response){
-	            	// document.getElementById('alert').style.display = 'block';  
-	            	$('#alert').addClass('alert '+response.tipo);
-	            	$('#alert').html('<b>'+response.mensaje+'</b>');
-
-	            	$("#alert").fadeTo(2000, 500).slideUp(500, function(){
-					       $("#alert").slideUp(500);
-					});  
-	            	var table=$("#myTable").DataTable();
-	                table.draw();
-
-	                },
-	            error:function(err){
-	            	alert('Ocurrio un error');
-	        //        if (err.status == 422) { // when status code is 422, it's a validation issue
-	        //     console.log(err.responseJSON);
-	        //     $('#success_message').fadeIn().html(err.responseJSON.message);
-
-	            
-	        //     $.each(err.responseJSON.errors, function (i, error) {
-	                
-	        //         alert(error[0])
-	        //     });
-	        // }
-	               
-	            }
-
-	        });
+  if (confirm('¿Esta seguro de eliminar a '+username+'? Tenga en cuenta que se eliminara todos los datos relacionados a este usuario.')) {
+    $.ajaxSetup({
+      headers: {
+          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+      }
+    });
+    $.ajax({
+      type:'DELETE',
+      url:"/usuarios/"+id,
+      data:{
+          id:id,
+      },
+      dataType:"json",
+      success: function(response){
+        // document.getElementById('alert').style.display = 'block';  
+        $('#alert').addClass('alert '+response.tipo);
+        $('#alert').html('<b>'+response.mensaje+'</b>');
+        $("#alert").fadeTo(4000, 500).slideUp(500, function(){
+          $("#alert").slideUp(500);
+		    });  
+	      var table=$("#myTable").DataTable();
+	      table.draw();
+	    },
+      error:function(err){
+        alert('Ocurrio un error');          
+	    }
+    });
 	  $("#alert").removeClass('alert'); 
 	}
 }
