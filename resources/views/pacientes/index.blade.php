@@ -112,9 +112,13 @@
 @parent
 <script type="text/javascript">
   $("document").ready(function(){
-    setTimeout(function(){
-       $("div.alert").remove();
-    }, 5000 ); // 5 secs
+    // setTimeout(function(){
+    //    $("div.alert").remove();
+    // }, 5000 ); // 5 secs
+   $("div.alert").fadeTo(2000, 500).slideUp(500, function(){
+                $("#alerta").slideUp(500);
+              });
+
 
 });
 </script>
