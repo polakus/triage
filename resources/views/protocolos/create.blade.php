@@ -1,7 +1,7 @@
 @extends("triagepreguntas.test")
 
 @section("css")
-  <!-- <style type="text/css">
+  <style type="text/css">
     .select2-choices {
       min-height: 150px !important;
       max-height: 150px;
@@ -30,7 +30,7 @@
       background-color: #e9e9e9; 
     }
 
-  </style> -->
+  </style>
 @endsection
 
 @section("cuerpo")

@@ -37,11 +37,28 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" />
     @yield("css")
     <style>
-  
+      {{-- Fonts --}}
+      body{
+        font-size: 12px !important;
+      }
+
       .select2-selection__rendered {
       line-height: 32px !important;
       }
 
+      .btn{
+        font-size: 12px !important;
+      }
+      input{
+        font-size: 12px !important;
+      }
+      textarea{
+        font-size: 12px !important;
+      }
+      select{
+        font-size: 12px !important;
+      }
+      /*End font*/
       .select2-selection {
       height: 31px !important;
       }
@@ -70,7 +87,6 @@
 
       .btn-outline-secondary:hover{
         background: linear-gradient(to bottom, #555, #000)!important;
-        
       }
 
 
@@ -96,7 +112,6 @@
       .table-wrapper-scroll-y {
         display: block;
       }
-
     </style>
    
   </head>
@@ -107,12 +122,12 @@
   // echo $url_array[3];
   $usuario = Auth::user();
 ?>
-  <nav class="navbar navbar-dark sticky-top  flex-md-nowrap p-0 shadow" style="background: linear-gradient(to bottom, #555, #222);">
-    <a class="navbar-brand col-md-3 col-lg-2 mr-0 px-3" style="background: linear-gradient(to bottom, #555, #222);" href="#">Hopistal San Bernardo</a>
+<!-- linear-gradient(to bottom, #555, #222)# -->
+  <nav class="navbar navbar-dark sticky-top  flex-md-nowrap p-0 shadow" style="background:#24292E;">
+    <a class="navbar-brand col-md-3 col-lg-2 mr-0 px-3" style="background: #24292E;" href="#">Hopistal San Bernardo</a>
     <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-toggle="collapse" data-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
-  
     <div class="dropdown" >
     <a class="btn btn-dark dropdown-toggle" style="background-color: transparent;"href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
       {{ $usuario->name }}
@@ -138,7 +153,7 @@
 
 <div class="container-fluid">
   <div class="row">
-    <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
+    <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse" >
       <div class="sidebar-sticky pt-3">
         <ul class="nav flex-column">
           <li class="nav-item">
