@@ -37,7 +37,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" />
     @yield("css")
     <style>
-
+      {{-- Fonts --}}
       body{
         font-size: 12px !important;
       }
@@ -52,7 +52,13 @@
       input{
         font-size: 12px !important;
       }
-
+      textarea{
+        font-size: 12px !important;
+      }
+      select{
+        font-size: 12px !important;
+      }
+      /*End font*/
       .select2-selection {
       height: 31px !important;
       }

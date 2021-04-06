@@ -3,7 +3,7 @@
 <!-- Small modal -->
 <button type="button"  class="btn btn-outline-secondary btn-sm" data-toggle="modal" data-target=".bd-example-modal-sm">Eliminar</button>
 
-<div class="modal fade bd-example-modal-sm" id="modalEliminar" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+<div class="modal fade bd-example-modal-sm" id="modalEliminar{{ $sala->id }}" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-sm">
     <div class="modal-content">
       <div class="modal-header">
@@ -42,13 +42,12 @@
                     
                     // var table = $('#myTable').DataTable();
                     // table.draw();
-                    
+                    $('#modalEliminar'+id).modal('hide');
                     $('#myTable tbody').ready(function(){
                         $('#bn'+id).closest('tr').remove();
                     //     table.row(ind).remove().draw();
                         
                     });
-                    $('#modalEliminar').modal('hide');
                 },
                 error:function(err){
                     alert("No se pudo eliminar la sala");
