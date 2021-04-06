@@ -52,7 +52,7 @@
      </div>
     </div>
 </div>
-<button type="button" class="btn btn-sm btn-outline-secondary ml-1" onclick="eliminar('{{ $especialidad->nombesp }}')">Eliminar</button>
+<button id="elid{{$especialidad->id}}" type="button" class="btn btn-sm btn-outline-secondary ml-1" onclick="eliminar('{{ $especialidad->nombesp }}','{{$especialidad->id}}')">Eliminar</button>
 <script>
     var select2=$('.select').select2();
     function editaresp(id) {
@@ -106,7 +106,30 @@
 	}
 
 
-    function eliminar(name){
-         if (confirm('¿Esta seguro de eliminar la especialidad'+name+' ? Tenga en cuenta que se eliminara todos los datos relacionados a ella.')) {}
+    function eliminar(name, id){
+         if (confirm('¿Esta seguro de eliminar la especialidad'+name+' ? Tenga en cuenta que se eliminara todos los datos relacionados a ella.')) {
+            
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            $.ajax({
+                type:'DELETE',
+                url:"/especialidades/"+id,
+                dataType:"json",
+                success: function(response){
+                    $('#myTable tbody').ready(function(){
+                        $('#elid'+id).closest('tr').remove();
+                    });
+                },
+                error:function(err){
+                    // if (err.status == 422) { // when status code is 422, it's a validation issue
+                        
+                    // }
+                    alert("no elimino");
+                }
+            });
+        }
     }
 </script>

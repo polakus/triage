@@ -18,7 +18,6 @@ class CreateDetalleEspecialidadArea extends Migration
             $table->timestamps();
             $table->foreignId('id_especialidad')->references('id')->on('especialidades')->onDelete('cascade');
             $table->foreignId('id_area')->references('id')->on('areas')->onDelete('cascade');
-
         });
     }
 
