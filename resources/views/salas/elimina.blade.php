@@ -28,11 +28,6 @@
 <script>
 
     function elimina(id) {
-<<<<<<< HEAD
-         if (confirm('¿Esta seguro de eliminar la sala? Tenga en cuenta que se eliminara todos los datos relacionados a ella.')) {
-=======
-
->>>>>>> origin/cristian2021
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -43,13 +38,10 @@
                 url:"/salas/"+id,
                 dataType:"json",
                 success: function(response){
-<<<<<<< HEAD
-=======
                     
                     // var table = $('#myTable').DataTable();
                     // table.draw();
                     $('#modalEliminar'+id).modal('hide');
->>>>>>> origin/cristian2021
                     $('#myTable tbody').ready(function(){
                         $('#bn'+id).closest('tr').remove();
                     });
