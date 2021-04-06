@@ -96,9 +96,9 @@
 			"serverSide":true,
 			"ajax":{url:"{{ url('api/dtespecialidades') }}",},
 			"columns":[
-				{data:'nombre'}, 
+				{data:'nombesp'}, 
 				{data:'descripcion'}, 
-				{data:'nombre'},
+				{data:'nombarea'},
 				{data:'button'},
 			],
 			"columnDefs": [

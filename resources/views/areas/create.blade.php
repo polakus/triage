@@ -34,10 +34,6 @@
 
         <button id="guardar"class="btn btn-primary">Registrar</button>
         <a class="btn btn-default btn-close" href="{{ route('salas.index') }}">Volver</a>
-
-
-       
-
       <!-- </form> -->
     </div>
   </div>
@@ -66,7 +62,7 @@ $('#guardar').click(function(){
 							alert.classList.add('alert');
 							alert.classList.add('alert-success');
 							alert.innerHTML=`<button type="button" class="close" data-dismiss="alert">x</button><strong>El area fue agregado exitosamen!</strong>`;
-		            		$("#alerta").fadeTo(2000, 500).slideUp(500, function(){
+		          $("#alerta").fadeTo(2000, 500).slideUp(500, function(){
 						    $("#alerta").slideUp(900);
 							});
                 // $('#exampleModal').modal('hide');
@@ -74,7 +70,6 @@ $('#guardar').click(function(){
                 //         table.draw();
             },
             error:function(err){
-				// alert("No se pudo guardar la sala");
                 if (err.status == 422) { // when status code is 422, it's a validation issue
                 
                   // $('#success_message').fadeIn().html(err.responseJSON.message);

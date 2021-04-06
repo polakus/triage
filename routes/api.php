@@ -138,7 +138,7 @@ Route::get('dtespecialidades', function(){
     $especialidades = DB::table('especialidades as esp')
                         ->join('det_especialidad_area as det','det.id_especialidad','=','esp.id')
                         ->join('areas as a','a.id','=','det.id_area')
-                        ->select('esp.id','esp.nombre','esp.descripcion', 'a.nombre', 'a.id as id_area')
+                        ->select('esp.id','esp.nombre as nombesp','esp.descripcion', 'a.nombre as nombarea', 'a.id as id_area')
                         ->get();
     $editareas = App\Area::all();
     // $area_seleccionada = App\Det_especialidad_area::where('id_especialidad', '=', $especialidades->id)->first()->area->id;
@@ -248,11 +248,23 @@ Route::get('tablausuario',function(){
                     ->addColumn('rol',function($usuario){
                         return $usuario->rol->nombre;
                     })
+                    ->addColumn('estado',function($usuario){
+                        if($usuario->isOnline()){
+                            return '<li class="list-group-item list-group-item-success">Online</li>';
+                        }else{
+                            return '<li class="list-group-item list-group-item-danger">Offline</li>';
+                        }
+                    })
                     ->addColumn('buttons',function($usuario){
                         return view('usuarios/buttons',compact('usuario'));
                     })
-                    ->rawColumns(['rol','buttons'])
+                    ->rawColumns(['rol','estado','buttons'])
             ->toJson();
+            // @if( $usuario->isOnline() )
+			// 				<li class="text-success">Online</li>
+			// 			@else
+			// 				<li class="text-muted">Offline</li>
+			// 			@endif
 });
 
 Route::get('usuariospendientes',function(){
