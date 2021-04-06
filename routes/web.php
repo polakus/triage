@@ -56,7 +56,7 @@ Route::resource('/profesionales', 'profesionalesController', ['except' => ['dest
 Route::resource('/cie','CieController')->middleware('auth');
 Route::resource('/especialidades','EspecialidadController')->middleware('auth');
 Route::get('/pruebas', function(){
-    // codigo ...
+    
 });
 
 

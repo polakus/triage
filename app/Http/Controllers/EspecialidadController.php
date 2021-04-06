@@ -135,6 +135,7 @@ class EspecialidadController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Especialidad::destroy($id);
+        return response()->json();
     }
 }
