@@ -57,17 +57,29 @@ Route::resource('/cie','CieController')->middleware('auth');
 Route::resource('/especialidades','EspecialidadController')->middleware('auth');
 Route::get('/pruebas', function(){
     // User::create([
-    //     'id' => 1,
-    //     'name' => "Alejandro Gonzales",
-    //     'username' => "admin",
-    //     'email' => "ale368_dvs@hotmail.com",
+    //     'name' => "Cristian Zalazar",
+    //     'username' => "cz",
+    //     'email' => "cz@hotmail.com",
+    //     'id_rol' => 2,
+    //     'password' => Hash::make("asdfñlkj"),
+    //     'estado' => 1,
+    // ]);
+    // User::create([
+    //     'name' => "prueba de usuario",
+    //     'username' => "prueba",
+    //     'email' => "prueba@hotmail.com",
     //     'id_rol' => 1,
     //     'password' => Hash::make("asdfñlkj"),
     //     'estado' => 1,
     // ]);
-    $us = User::find(6);
-    $us->id = 1;
-    $us->save();
+    User::create([
+        'name' => "prueba2 de usuario",
+        'username' => "prueba2",
+        'email' => "prueba2@hotmail.com",
+        'id_rol' => 1,
+        'password' => Hash::make("asdfñlkj"),
+        'estado' => 1,
+    ]);
 });
 
 

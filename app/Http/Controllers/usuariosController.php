@@ -22,6 +22,11 @@ use Illuminate\Foundation\Auth\RegistersUsers;
 
 class usuariosController extends Controller
 {
+    public function __construct(){
+            $this->middleware('auth');
+            // ->except(['index'])
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -127,7 +132,7 @@ class usuariosController extends Controller
         $tipo="";
         $aux = User::find($id);
         if(Auth::user()->esAdmin()){ # El usuario logueado es Administrador?
-            if(! User::find($id)->esAdmin()){ # El usuario que se quiere eliminar es administrador?
+            if(! (User::find($id)->esAdmin())){ # El usuario que se quiere eliminar es administrador?
                 if(User::destroy($id)){
                     $mensaje='El usuario '.$aux->username.' fue eliminado exitosamente!';
                     $tipo="alert-success";
@@ -139,7 +144,7 @@ class usuariosController extends Controller
                 }
             }else{
                 if(Auth::id()==1){ # El usuario logueado es Super Administrador?
-                    if(!$aux->id==1){
+                    if(! ($aux->id==1)){
                         if(User::destroy($id)){
                             $mensaje='El usuario '.$aux->username.' fue eliminado exitosamente!';
                             $tipo="alert-success";
