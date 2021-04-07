@@ -164,26 +164,22 @@ Route::get('historial',function(Request $request){
 });
 
 Route::get('protocolos',function(){
-    // $protocolos=App\Protocolo::all();
     $protocolos=App\Protocolo::select('*')
                     ->join('det_protocolos as det','protocolos.id','=','det.id_protocolo')
                     ->whereNotNull('det.id_protocolo')
                     ->get();
-    // echo $protocolos;              
     return DataTables::of($protocolos)
                         ->addColumn('ver',function(){
                             return '<button class="btn btn-sm btn-outline-secondary" style="font-size:13px;"> Ver </button>';
                         })
                         ->addColumn('codigo',function($protocolo){
-
                             return $protocolo->codigo->color;
                         })
                         ->addColumn('especialidad',function($protocolo){
-                             $l="";
+                            $l="";
                             foreach($protocolo->detalle_protocolo as $det)
                                 $l=$l.$det->especialidad->nombre;
                             return $l;
-                            // return $protocolo->detalle_protocolo->especialidad->nombre;
                         })
                         ->addColumn('sintomas',function($protocolo){
                              $s="";

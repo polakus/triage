@@ -97,55 +97,8 @@
   </div>
 </div>
 <div class="row">
-  {{--
-  <div class="col-x1-6 col-md-6 mb-4">
-    <div class="card border-left-success shadow h-100 py-2">
-      <div class="card-body">
-        <div class="row no-gutters align-items-center">
-          <div id="chartContainer" style="height: 300px; width: 100%;"></div>
-        </div>
-      </div>
-    </div>
-  </div>--}}
-{{--
-  <div class="col-x1-6 col-md-6 mb-4">
-    <div class="card border-left-success shadow h-100 py-2">
-      <div class="card-body">
-        <div class="row no-gutters align-items-center">
-          <div id="chartContainerAnio" style="height: 300px; width: 100%;"></div>
-        </div>
-      </div>
-    </div>
-  </div>
-  --}}
- {{--  <div class="col-x1-6 col-md-6 mb-4">
-    <div class="card border-left-success shadow h-100 py-2">
-      <ul class="nav nav-tabs" id="myTab" role="tablist">
-        <li class="nav-item" role="presentation">
-          <a class="nav-link active" id="home-tab" onclick = "funcDia()" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Dia</a>
-        </li>
-        <li class="nav-item" role="presentation">
-          <a class="nav-link" id="profile-tab" onclick = "funcMes()" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Mes</a>
-        </li>
-        <li class="nav-item" role="presentation">
-          <a class="nav-link" id="contact-tab" onclick= "funcAnio()" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">Año</a>
-        </li>
-      </ul>
-      <div class="card-body">
-        <div class="tab-content" id="myTabContent">
-          <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-            <div class="align-items-center" id="chartContainerDia" style="height: 300px; width: 100%;"></div>
-          </div>
-          <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-            <div class="align-items-center" id="chartContainerMes" style="height: 300px; width: 100%;"></div>
-          </div>
-          <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
-            <div class="align-items-center" id="chartContainerAnio" style="height: 300px; width: 100%;"></div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div> --}}
+
+ 
   <div class="col-x1-6 col-md-6 mb-4">
     <div class="card border-left-success shadow h-100 py-2">
       <ul class="nav nav-tabs" id="myTab" role="tablist">
@@ -163,7 +116,6 @@
          <div class="align-items-center" id="chartContainerDia" style="height: 300px; width: 100%;"></div>
          <div class="align-items-center" id="chartContainerMes" style="height: 300px; width: 100%;"></div>
          <div class="align-items-center" id="chartContainerAnio" style="height: 300px; width: 100%;"></div>
-        {{-- <div id="chartContainer" style="height: 300px; width: 100%;"></div> --}}
       </div>
     </div>
   </div>

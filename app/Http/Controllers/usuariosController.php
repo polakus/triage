@@ -22,6 +22,11 @@ use Illuminate\Foundation\Auth\RegistersUsers;
 
 class usuariosController extends Controller
 {
+    public function __construct(){
+            $this->middleware('auth');
+            // ->except(['index'])
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -125,28 +130,33 @@ class usuariosController extends Controller
     {
         $mensaje="";
         $tipo="";
-        $aux = User::find($id)->username;
+        $aux = User::find($id);
         if(Auth::user()->esAdmin()){ # El usuario logueado es Administrador?
-            if(! User::find($id)->esAdmin()){ # El usuario que se quiere eliminar es administrador?
+            if(! (User::find($id)->esAdmin())){ # El usuario que se quiere eliminar es administrador?
                 if(User::destroy($id)){
-                    $mensaje='El usuario '.$aux.' fue eliminado exitosamente!';
+                    $mensaje='El usuario '.$aux->username.' fue eliminado exitosamente!';
                     $tipo="alert-success";
                     // $request->session()->flash('alert-success', 'El usuario '.$aux.' fue eliminado exitosamente!');
                 }else{
                     $tipo="alert-danger";
-                    $mensaje='Hubo un problema para eliminar al usuario '.$aux;
+                    $mensaje='Hubo un problema para eliminar al usuario '.$aux->username;
                     // $request->session()->flash('alert-danger', 'Hubo un problema para eliminar al usuario '.$aux);
                 }
             }else{
                 if(Auth::id()==1){ # El usuario logueado es Super Administrador?
-                    if(User::destroy($id)){
-                        $mensaje='El usuario '.$aux.' fue eliminado exitosamente!';
-                        $tipo="alert-success";
-                        // $request->session()->flash('alert-success', 'El usuario '.$aux.' fue eliminado exitosamente!');
+                    if(! ($aux->id==1)){
+                        if(User::destroy($id)){
+                            $mensaje='El usuario '.$aux->username.' fue eliminado exitosamente!';
+                            $tipo="alert-success";
+                            // $request->session()->flash('alert-success', 'El usuario '.$aux.' fue eliminado exitosamente!');
+                        }else{
+                            $mensaje='Hubo un problema para eliminar al usuario '.$aux->username;
+                            $tipo="alert-danger";
+                            // $request->session()->flash('alert-danger', 'Hubo un problema para eliminar al usuario '.$aux);
+                        }
                     }else{
-                        $mensaje='Hubo un problema para eliminar al usuario '.$aux;
+                        $mensaje='No puedes eliminar el superusuario. La página dejaría de funcionar si esto se permitiera';
                         $tipo="alert-danger";
-                        // $request->session()->flash('alert-danger', 'Hubo un problema para eliminar al usuario '.$aux);
                     }
                 }else{
                     $tipo="alert-warning";
