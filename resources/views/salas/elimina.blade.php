@@ -28,6 +28,7 @@
 <script>
 
     function elimina(id) {
+            $('#modalEliminar'+id).modal('hide');
 
             $.ajaxSetup({
                 headers: {
@@ -39,9 +40,6 @@
                 url:"/salas/"+id,
                 dataType:"json",
                 success: function(response){
-
-                    $('#modalEliminar'+id).modal('hide');
-
                     $('#myTable tbody').ready(function(){
                         $('#bn'+id).closest('tr').remove();
                     });
@@ -50,6 +48,6 @@
                     alert("No se pudo eliminar la sala");
                 }
             });
-       
+       }
 
 </script>
