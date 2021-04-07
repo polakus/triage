@@ -29,9 +29,6 @@
 
     function elimina(id) {
 
-
-
-         
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -43,11 +40,7 @@
                 dataType:"json",
                 success: function(response){
 
-                    
-                    // var table = $('#myTable').DataTable();
-                    // table.draw();
                     $('#modalEliminar'+id).modal('hide');
-
 
                     $('#myTable tbody').ready(function(){
                         $('#bn'+id).closest('tr').remove();
@@ -58,5 +51,5 @@
                 }
             });
        
-    
+
 </script>
