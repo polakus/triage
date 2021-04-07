@@ -50,7 +50,9 @@ class CieController extends Controller
         $nuevo->codigo=$request->codigo;
         $nuevo->descripcion=$request->nombre;
         $nuevo->save();
-        return response()->json();
+        $tipo ="alert-success";
+        $mensaje = "El CIE ".$request->nombre." se agregó correctamente ";
+        return response()->json(["tipo"=>$tipo, "mensaje"=>$mensaje]);
     }
     /**
      * Display the specified resource.
@@ -97,8 +99,7 @@ class CieController extends Controller
         }
         $update->descripcion = $request->nombre;
         $update->save();
-        // return redirect()->action("CieController@index");
-        return response()->json();
+        return response()->json(["tipo"=>"alert-success","mensaje"=>"El CIE ".$request->codigo." se actualizó exitosamente"]);
     }
 
     /**
@@ -109,7 +110,8 @@ class CieController extends Controller
      */
     public function destroy($id){
         $cie=CIE::findOrFail($id);
+        $aux = $cie->codigo;
         $cie->delete();
-        return response()->json();
+        return response()->json(["tipo"=>"alert-success","mensaje"=>"El CIE ".$aux." se eliminó exitosamente"]);
     }
 }
