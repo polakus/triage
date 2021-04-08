@@ -82,10 +82,7 @@ Route::get('/pruebas', function(){
     ]);
 });
 
-
 Route::post('/atencionclinica/sala','AtencionClinicaController@cargarSala')->middleware('auth');
-
-
 
 Auth::routes();#['register' => false]);
 Route::get('/inicio', 'HomeController@index')->name('inicio')->middleware('auth');

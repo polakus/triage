@@ -3,6 +3,7 @@
 
 
 @section("cuerpo")
+	<div id="alerta"></div>
 	<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
         <h4 class="h4">CIE</h4>
         <div class="btn-toolbar mb-2 mb-md-0">
@@ -144,13 +145,24 @@
 				codigo:codigo,
             },
             success: function(response){
+				//VACIA INPUTS
+				document.getElementById('nombre').value='';
+				document.getElementById('codigo').value='';
+				//OCULTA MODAL
 				$('#exampleModal').modal('hide');
+				//ACTUALIZA TABLA
 				var table = $('#myTable').DataTable();
                 table.draw();
+				//MUESTRA ALERTA
+				$('#alerta').addClass('alert '+response.tipo);
+				$('#alerta').html('<b>'+response.mensaje+'</b>');
+				$("#alerta").fadeTo(4000, 500).slideUp(500, function(){
+					$("#alerta").slideUp(500);
+				});  
             },
             error:function(err){
 				if (err.status == 422) { // when status code is 422, it's a validation issue
-					$('#success_message').fadeIn().html(err.responseJSON.message);
+					// $('#success_message').fadeIn().html(err.responseJSON.message);
 					$.each(err.responseJSON.errors, function (i, error) {
 						if(i=="nombre"){
 							$('#error_nombre').html('<span style="color: red;">'+error[0]+'</span>');
@@ -183,10 +195,17 @@
 				$('#editar'+id).modal('hide');
 				var table = $('#myTable').DataTable();
                 table.draw();
+				//MUESTRA ALERTA
+				
+				$('#alerta').addClass('alert '+response.tipo);
+				$('#alerta').html('<b>'+response.mensaje+'</b>');
+				$("#alerta").fadeTo(4000, 500).slideUp(500, function(){
+					$("#alerta").slideUp(500);
+				});
             },
             error: function(err){
 				if (err.status == 422) { // when status code is 422, it's a validation issue
-					$('#success_message').fadeIn().html(err.responseJSON.message);
+					// $('#success_message').fadeIn().html(err.responseJSON.message);
 					$.each(err.responseJSON.errors, function (i, error) {
 						if(i=="nombre"){
 							$('#edit_error_nombre'+id).html('<span style="color: red;">'+error[0]+'</span>');
@@ -216,6 +235,11 @@
 				success: function(response){
 					var table = $('#myTable').DataTable();
                 	table.draw();
+					$('#alerta').addClass('alert '+response.tipo);
+					$('#alerta').html('<b>'+response.mensaje+'</b>');
+					$("#alerta").fadeTo(4000, 500).slideUp(500, function(){
+						$("#alerta").slideUp(500);
+					});
 				},
 				error:function(err){
 					alert("Hubo un error al intentar eliminar elemento");

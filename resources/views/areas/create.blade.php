@@ -76,19 +76,6 @@ $('#guardar').click(function(){
                   $.each(err.responseJSON.errors, function (i, error) {
                     console.log(error[0]);
                     $('#error_nombre').html('<span style="color: red;">'+error[0]+'</span>');
-                  //   switch( i ){
-                  //     case "nombre":
-                  //       
-                  //     break;
-                  //     case "camas":
-                  //       $('#error_camas').html('<span style="color: red;">'+error[0]+'</span>');
-                  //     break;
-                  //     case "area":
-                  //       $('#error_area').html('<span style="color: red;">'+error[0]+'</span>');
-                  //     break;
-                  //     default:
-                  //       alert("Ocurrió un error en la función de error de ajax");
-                  //   }
                   });
                 }
             }

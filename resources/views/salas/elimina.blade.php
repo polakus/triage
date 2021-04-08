@@ -28,6 +28,8 @@
 <script>
 
     function elimina(id) {
+            $('#modalEliminar'+id).modal('hide');
+
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -38,10 +40,6 @@
                 url:"/salas/"+id,
                 dataType:"json",
                 success: function(response){
-                    
-                    // var table = $('#myTable').DataTable();
-                    // table.draw();
-                    $('#modalEliminar'+id).modal('hide');
                     $('#myTable tbody').ready(function(){
                         $('#bn'+id).closest('tr').remove();
                     });
@@ -50,6 +48,6 @@
                     alert("No se pudo eliminar la sala");
                 }
             });
-       
-    }
+       }
+
 </script>

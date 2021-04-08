@@ -86,7 +86,10 @@ class SintomasController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $sintoma = Sintoma::find($id);
+        $sintoma->descripcion = $request->nombre_sintoma;
+        $sintoma->save();
+        return response()->json(["mensaje"=>"El síntoma se actualizó exitosamente","tipo"=>"alert-success"]);
     }
 
     /**
