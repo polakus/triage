@@ -523,12 +523,7 @@ function ocultar(){
             	$("#val1").val($('#area').val());
 				$("#val2").val($('#esp').val());
 				$("#form").submit();
-				// $('#exampleModal').modal('hide');
-				// alert("se guardo prr");
-                // var table = $('#myTable').DataTable();
-                // table.draw();
-                // var inputNombre = document.getElementById("nombre_sintoma");
-                // inputNombre.value="";
+				
             },
             error:function(err){
             	// console.log(err.responseJSON);

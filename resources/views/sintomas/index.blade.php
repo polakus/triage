@@ -48,6 +48,7 @@
 
 @endsection
 @section("cuerpo")
+<div id="alerta"></div>
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
     <h4 class="h4">Sintomas</h4>
     <div class="contenido">
@@ -145,13 +146,11 @@
 
     $('#agregar').click(function() {
         var nombre_sintoma = $('#nombre_sintoma').val();
-    
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
         });
-
         $.ajax({
             type:'POST',
             url:"/sintomas",
@@ -190,38 +189,35 @@
 <script type="text/javascript">
 function eliminar(id,sintoma){
     if (confirm('¿Esta seguro de eliminar el sintoma '+sintoma+'? Tenga en cuenta que se eliminara todos los datos relacionados a ella.')) {
-          $.ajaxSetup({
-                        headers: {
-                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                        }
-            });
-          $.ajax({
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $.ajax({
+            type:'DELETE',
+            url:"/sintomas/"+id,
+            dataType:"json",
+            data:{
+                id:id,
+            },
+            success: function(response){
+                var table=$("#myTable").DataTable();
+                table.draw();
 
-                    type:'DELETE',
-                    url:"/sintomas/"+id,
-                    dataType:"json",
-                    data:{
-                        id:id,
-                    },
-                    success: function(response){
-                        var table=$("#myTable").DataTable();
-                        table.draw();
-
-                        },
-                    error:function(err){
-                //        if (err.status == 422) { // when status code is 422, it's a validation issue
-                //     console.log(err.responseJSON);
-                //     $('#success_message').fadeIn().html(err.responseJSON.message);
-
-                    
-                //     $.each(err.responseJSON.errors, function (i, error) {
-                        
-                //         alert(error[0])
-                //     });
-                // }
+                $('#alerta').addClass('alert '+response.tipo);
+                $('#alerta').html('<b>'+response.mensaje+'</b>');
+                $("#alerta").fadeTo(4000, 500).slideUp(500, function(){
+                    $("#alerta").slideUp(500);
+                });  
+            },
+            error:function(err){
+                if (err.status == 422) { // when status code is 422, it's a validation issue
+                    // console.log(err.responseJSON);
+                }
                        
-                    }
-                });
+            }
+        });
     }
 }
 

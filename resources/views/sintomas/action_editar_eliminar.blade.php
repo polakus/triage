@@ -1,5 +1,5 @@
-<button type="button" class="btn btn-outline-secondary btn-sm " style="width: 20%" data-toggle="modal" data-target="#editar{{ $id }}">Editar</button>
-<button type="button" class="btn btn-outline-secondary btn-sm " style="width: 20%;" onclick="eliminar({{ $id }},'{{ $descripcion }}')">Eliminar</button>
+<button type="button" class="btn btn-outline-secondary btn-sm " style="width: 30%" data-toggle="modal" data-target="#editar{{ $id }}">Editar</button>
+<button type="button" class="btn btn-outline-secondary btn-sm " style="width: 30%;" onclick="eliminar({{ $id }},'{{ $descripcion }}')">Eliminar</button>
 <div class="modal fade" id="editar{{$id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="false">
 	<div class="modal-dialog">
 		<div class="modal-content">
@@ -14,16 +14,16 @@
                 <hr>
 				<div class="container">
                     <div class="form-group">
-                        <div class="form-row">
+                        <div id="div_nombre{{$id}}" class="form-row">
                             <label for="nombre">Nombre</label>
-                            <input type="text" id="nombre{{$id}}" name="nombre" class="form-control" placeholder="Nombre" value={{$descripcion}}>
+                            <input type="text" id="nombre{{$id}}" class="form-control" placeholder="Nombre" value="{{$descripcion}}">
                         </div>
                     </div>
 				</div>
 			</div>
 			<div class="modal-footer">
 				<button id="guardar" type="button" onclick="editar({{$id}})" class="btn btn-dark">Editar</button>
-				<button type="button" class="btn btn-dark" data-dismiss="modal">Cerrar</button>
+				<button onclick="reset_modal_edit({{$id}},'{{$descripcion}}')" type="button" class="btn btn-dark" data-dismiss="modal">Cerrar</button>
 			</div>
 		</div>
 	</div>
@@ -31,42 +31,54 @@
 
 <script>
 function editar(id) {
-        var nombre_sintoma = document.getElementById("nombre"+id).value;
-        $.ajaxSetup({
-            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}
-        });
-        $.ajax({
-            type:'PUT',
-            url:"/sintomas/"+id,
-            dataType:"json",
-            data:{
-                nombre_sintoma:nombre_sintoma,
-            },
-            success: function(response){
-                // var table = $('#myTable').DataTable();
-                // table.draw();
-                // var inputNombre = document.getElementById("nombre_sintoma");
-                // inputNombre.value="";
-                alert("si");
-
-                // document.getElementById('desc').classList.add('is-invalid');
-                // var ele_span = document.createElement('span');
-                // ele_span.setAttribute('class', 'invalid-feedback');
-                // ele_span.setAttribute('role', 'alert');
-                // ele_span.innerHTML = "<strong>" + err.responseJSON.errors.desc + "</strong>";
-                // document.getElementById('div_desc').appendChild(ele_span);
-            },
-            error:function(err){
-                if (err.status == 422) { // when status code is 422, it's a validation issue
-                    alert("no");
-                    // console.log(err.responseJSON);
-                    // $('#success_message').fadeIn().html(err.responseJSON.message);
-                    // $.each(err.responseJSON.errors, function (i, error) {
-                    //     $('#error_sintoma').html('<span style="color: red;">'+error[0]+'</span>');
-                    // });
-                }
-            }
-        });
+    //limpia div para mensajes de error
+    document.getElementById('nombre'+id).classList.remove('is-invalid');
+    let spans = document.getElementsByClassName('invalid-feedback');
+    while(spans.length>0){
+        spans[0].remove();  //si son muchos podría haber error
     }
+    var nombre = document.getElementById("nombre"+id).value;
+    $.ajaxSetup({
+        headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}
+    });
+    $.ajax({
+        type:'PUT',
+        url:"/sintomas/"+id,
+        dataType:"json",
+        data:{
+            nombre:nombre,
+        },
+        success: function(response){
+            $('#editar'+id).modal('hide');
+            //ACTUALIZA TABLA
+            var table = $('#myTable').DataTable();
+            table.draw();
+            //MUESTRA ALERTA
+            $('#alerta').addClass('alert '+response.tipo);
+            $('#alerta').html('<b>'+response.mensaje+'</b>');
+            $("#alerta").fadeTo(4000, 500).slideUp(500, function(){
+                $("#alerta").slideUp(500);
+            });  
+        },
+        error:function(err){
+            if (err.status == 422) { // when status code is 422, it's a validation issue
+                document.getElementById('nombre'+id).classList.add('is-invalid');
+                var ele_span = document.createElement('span');
+                ele_span.setAttribute('class', 'invalid-feedback');
+                ele_span.setAttribute('role', 'alert');
+                ele_span.innerHTML = "<strong>" + err.responseJSON.errors.nombre + "</strong>";
+                document.getElementById('div_nombre'+id).appendChild(ele_span);
+            }
+        }
+    });
+}
+function reset_modal_edit(id, descripcion){
+    document.getElementById('nombre'+id).classList.remove('is-invalid');
+    document.getElementById('nombre'+id).value=descripcion;
+    let spans = document.getElementsByClassName('invalid-feedback');
+    while(spans.length>0){
+        spans[0].remove();
+    }
+}
 
 </script>

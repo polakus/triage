@@ -37,15 +37,14 @@ class SintomasController extends Controller
      */
     public function store(Request $request)
     {
-        $c = $request->validate([
-            'nombre_sintoma' => 'required|max:255',
+        $request->validate([
+            'nombre_sintoma' => 'distinct:ignore_case|required|max:255|unique:sintomas,descripcion',
             
         ],[
             'required' => 'Este campo no puede estar vacio.',
             'max' => 'Este es demasiado largo.',
-            'unique' => 'Este codigo ya se encuentra almacenado.'
+            'unique' => 'Este síntoma ya se encuentra almacenado.'
         ]);
-        // $this->validate($request, ['nombre_sintoma' => 'required']);
         $name = $request->get('nombre_sintoma');
 
         $nuevo=new Sintoma;
@@ -86,8 +85,15 @@ class SintomasController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $request->validate([
+            'nombre' => 'required|max:255|unique:sintomas,descripcion,'.$id,
+        ],[
+            'required' => 'Este campo no puede estar vacio.',
+            'max' => 'Este es demasiado largo.',
+            'unique' => 'Este síntoma ya se encuentra almacenado.'
+            ]);
         $sintoma = Sintoma::find($id);
-        $sintoma->descripcion = $request->nombre_sintoma;
+        $sintoma->descripcion = $request->nombre;
         $sintoma->save();
         return response()->json(["mensaje"=>"El síntoma se actualizó exitosamente","tipo"=>"alert-success"]);
     }
@@ -101,8 +107,9 @@ class SintomasController extends Controller
     public function destroy($id)
     {
         $sintoma=Sintoma::findOrFail($id);
+        $aux = $sintoma->descripcion;
         $sintoma->delete();
-        return response()->json(["hola"=>'hola']);
+        return response()->json(["mensaje"=>'El síntoma '.$aux.' se eliminó exitosamente',"tipo"=>"alert-success"]);
         // return redirect('/sintomas');
     }
 }
