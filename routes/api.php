@@ -119,7 +119,7 @@ Route::get('mostrar',function(){
 Route::get('sintomas_cargar', function(){
      $sintomas=DB::table('sintomas')->get();
      return DataTables::of($sintomas)
-                       ->addColumn('button','sintomas/action_eliminar')
+                       ->addColumn('button','sintomas/action_editar_eliminar')
                        ->rawColumns(['button'])
     ->toJson();
 });
@@ -209,7 +209,7 @@ Route::get('editprotocolo', function(){
                             while ($band and $i < $tam){
                                 if ($sintoma->id == $sintomas_actuales[$i]->id){
                                     $band = false;
-                                } 
+                                }
                                 $i ++;
                             }
                             if ($band){
@@ -243,7 +243,7 @@ Route::get('tablasalas',function(Request $request){
 
 
 Route::get('tablausuario',function(){
-    
+
     $usuarios = App\User::where('estado', 1)->get();
     return DataTables::of($usuarios)
                     ->addColumn('rol',function($usuario){

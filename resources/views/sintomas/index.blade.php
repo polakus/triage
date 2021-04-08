@@ -74,48 +74,6 @@
   </tbody>
 </table>
 </div>
-{{--
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="false">
-	<div class="modal-dialog">
-		<div class="modal-content">
-			<div class="modal-header">
-				<h4 class="modal-title" id="exampleModalLabel">Se eliminarán los siguientes datos</h3>
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-					<span aria-hidden="true">&times;</span>
-				</button>
-			</div>
-			<div class="modal-body">
-				<div class="container">
-                    <div class="row no-gutters align-items-center table-wrapper-scroll-y my-custom-scrollbar">
-                        <table class="table">
-                            <thead class="thead-light">
-                                <tr>
-                                    <th scope="col">Tablas</th>
-                                    <th scope="col">Cantidad de registros</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>nombre 1</td>
-                                    <td>1</td>
-                                </tr>
-                                <tr>
-                                    <td>nombre 2</td>
-                                    <td>2</td>
-                                </tr>
-                            </tbody>
-                        </table>
-					</div>
-				</div>
-			</div>
-			<div class="modal-footer">
-				<button id="guardar" type="button" class="btn btn-dark">Guardar</button>
-				<button type="button" class="btn btn-dark" data-dismiss="modal">Cerrar</button>
-			</div>
-		</div>
-	</div>
-</div>
---}}
 
 @endsection
 @section("scripts")
