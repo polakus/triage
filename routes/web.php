@@ -48,7 +48,7 @@ Route::resource('/turnos','TurnosController')->middleware('auth');
 Route::resource('/pacientes','PacientesController')->middleware('auth');
 Route::resource('/triagepreguntas', 'TriagepreguntasController')->middleware('auth');
 Route::resource('/salas', 'salasController')->middleware('auth');
-Route::resource('/areas', 'areasController', ['except' => ['destroy', 'show', 'edit']])->middleware('auth');
+Route::resource('/areas', 'areasController', ['except' => ['show', 'edit']])->middleware('auth');
 Route::get('/editarProtocolo/{id}','protocolosController@editar')->middleware('auth');
 Route::resource('/protocolos', 'protocolosController')->middleware('auth');
 Route::get('/profesionales/atenciones','profesionalesController@atenciones')->middleware('auth');

@@ -1,5 +1,3 @@
-{{-- <button type="button" id="bn{{$sala->id}}" onclick="elimina({{$sala->id}})" class="btn btn-outline-secondary btn-sm">Eliminar</button>
- --}}
 <!-- Small modal -->
 <button type="button"  class="btn btn-outline-secondary btn-sm" data-toggle="modal" data-target=".bd-example-modal-sm">Eliminar</button>
 
@@ -14,8 +12,8 @@
       </div>
       <div class="modal-body">
         Estas seguro/a que deseas eliminar la sala?
-        <li>Area: {{ $sala->area->nombre }}</li>
-        <li>Sala: {{ $sala->nombre }}</li>
+        <li><strong>Sala: {{ $sala->nombre }}</strong> del area {{ $sala->area->nombre }}</li>
+        <!-- <li></li> -->
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-success" id="bn{{$sala->id}}" onclick="elimina({{$sala->id}})"><i class="far fa-check-circle"></i> Eliminar</button>
@@ -25,29 +23,27 @@
     </div>
   </div>
 </div>
+
 <script>
+  function elimina(id) {
 
-    function elimina(id) {
-            $('#modalEliminar'+id).modal('hide');
-
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
+    $('#modalEliminar'+id).modal('hide');
+    $.ajaxSetup({
+        headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}
+    });
+    $.ajax({
+        type:'DELETE',
+        url:"/salas/"+id,
+        dataType:"json",
+        success: function(response){
+            $('#myTable tbody').ready(function(){
+                $('#bn'+id).closest('tr').remove();
             });
-            $.ajax({
-                type:'DELETE',
-                url:"/salas/"+id,
-                dataType:"json",
-                success: function(response){
-                    $('#myTable tbody').ready(function(){
-                        $('#bn'+id).closest('tr').remove();
-                    });
-                },
-                error:function(err){
-                    alert("No se pudo eliminar la sala");
-                }
-            });
-       }
+        },
+        error:function(err){
+            alert("No se pudo eliminar la sala");
+        }
+    });
+  }
 
 </script>

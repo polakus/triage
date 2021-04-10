@@ -240,6 +240,13 @@ Route::get('tablasalas',function(Request $request){
                         ->rawColumns(['elimina'])
            ->toJson();
 });
+Route::get('tablaareas',function(Request $request){
+    $areas=App\Area::all();
+    return DataTables::of($areas)
+            ->addColumn('botones', 'areas/botones')
+            ->rawColumns(['botones'])
+            ->toJson();
+});
 
 
 Route::get('tablausuario',function(){

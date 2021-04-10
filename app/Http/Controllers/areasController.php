@@ -35,14 +35,13 @@ class areasController extends Controller
      */
     public function store(Request $request)
     {
-        $mensajes = [
-            'required' =>'Este campo no debe estar vacio.',
-            'unique' => 'Este registro ya se encuentra almacenado',
-            'max' => 'Este campo supera la capacidad máxima de caracteres.',
-        ];
         $pr = $request->validate([
             'nombre' => 'required|max:255|unique:areas',
-        ], $mensajes);
+        ], [
+            'required' =>'Este campo no debe estar vacío.',
+            'unique' => 'Este registro ya se encuentra almacenado',
+            'max' => 'Este campo supera la capacidad máxima de caracteres.',
+        ]);
         $area = Area::create([
             'nombre' => $request->nombre,
         ]);
@@ -51,7 +50,8 @@ class areasController extends Controller
         // $area->save();
         // $request->session()->flash('alert-success', 'El area fue agregado exitosamen!');
         // return redirect()->back()->withInput();
-        return response()->json();
+        return response()->json(["mensaje"=>"El área ".$area->nombre." fue agregado exitosamente",
+                                "tipo"=>"alert-success"]);
     }
 
     /**
@@ -85,7 +85,18 @@ class areasController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $area = Area::find($id);
+        $request->validate([
+            'nombre' => 'required|max:255|unique:areas,nombre,'.$id,
+        ], [
+            'required' =>'Este campo no debe estar vacío.',
+            'unique' => 'Ya existe un área con el mismo nombre',
+            'max' => 'Este campo supera la capacidad máxima de caracteres.',
+        ]);
+        $area->nombre = $request->nombre;
+        $area->save();
+        return response()->json(["mensaje"=>"El Área ".$area->nombre." se guardó exitosamente",
+                                 "tipo"=>"alert-success"]);
     }
 
     /**
@@ -94,8 +105,11 @@ class areasController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
-    {
-        //
+    public function destroy($id){
+        $area = Area::find($id);
+        $aux = $area->nombre;
+        $area->delete();
+        return response()->json(["mensaje"=>"El Área ".$aux." se eliminó exitosamente",
+            "tipo"=>"alert-success"]);
     }
 }
