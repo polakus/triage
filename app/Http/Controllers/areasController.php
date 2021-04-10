@@ -51,7 +51,8 @@ class areasController extends Controller
         // $request->session()->flash('alert-success', 'El area fue agregado exitosamen!');
         // return redirect()->back()->withInput();
         return response()->json(["mensaje"=>"El área ".$area->nombre." fue agregado exitosamente",
-                                "tipo"=>"alert-success"]);
+                                "tipo"=>"alert-success",
+                                "id"=>$area->id]);
     }
 
     /**

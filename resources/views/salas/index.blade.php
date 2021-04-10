@@ -133,33 +133,6 @@
 @section("scripts")
 @parent
 <script>
-	$('form[id^="f1"').submit( function() {
-		if (confirm('¿Desea cambiar el estado del Quirófano?')) {
-			$("<input />").attr("type", "hidden")
-				.attr("name", "n")
-				.attr("value", $('#area').val())
-				.appendTo("form");
-	    	return true;
-		}else{
-			return false;
-		}
-	});
-
-	$('form[id^="f2"').submit( function() {
-		if (confirm('Por favor, confirme que desea eliminar la sala '.concat($(this).attr('name')))) {
-			$("<input />").attr("type", "hidden")
-				.attr("name", "n")
-				.attr("value", $('#area').val())
-				.appendTo("form");
-			$("<input />").attr("type", "hidden")
-				.attr("name", "a")
-				.attr("value", $('#area').val())
-				.appendTo("form");
-			return true;
-		}else{
-			return false;
-		}
-	});
   $(document).ready(function() {
     $('#tableSalas').DataTable({
     	"responsive":true,
@@ -356,7 +329,8 @@ function crearea() {
       $('#alerta').html('<b>'+response.mensaje+'</b>');
       $("#alerta").fadeTo(4000, 500).slideUp(500, function(){
           $("#alerta").slideUp(500);
-      });  
+      });
+      agregaOpcion(response.id,nombre,"areac");
     },
     error:function(err){
       if (err.status == 422) { // when status code is 422, it's a validation issue
@@ -369,6 +343,20 @@ function crearea() {
       }
     }
   });
+}
+function quitaOpcion(id,idSelect){ // para quitar opciones en select de crear sala
+  let options = document.getElementById(idSelect).options;
+  let ind = -1;
+  for (let i = 0; i < options.length; i++) {
+    if(options[i].value==id)
+      ind = i;
+  }
+  if(ind!=-1)
+    options[ind] = null;
+}
+function agregaOpcion(id,nombre,idSelect){ // para agregar opciones en select de crear sala
+  var select = document.getElementById(idSelect);
+  select.options[select.options.length] = new Option(nombre, id);
 }
 </script>
 

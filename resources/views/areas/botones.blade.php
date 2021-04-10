@@ -78,6 +78,9 @@ function editararea(id) {
       $("#alerta").fadeTo(4000, 500).slideUp(500, function(){
           $("#alerta").slideUp(500);
       });
+    
+      quitaOpcion(id,"areac");
+      agregaOpcion(id,nombre,"areac");
     },
     error:function(err){
       if (err.status == 422) { // when status code is 422, it's a validation issue
@@ -113,6 +116,7 @@ function eliminarea(id) {
       $("#alerta").fadeTo(4000, 500).slideUp(500, function(){
           $("#alerta").slideUp(500);
       });
+      quitaOpcion(id,"areac");
     },
     error:function(err){
       // if (err.status == 422) { // when status code is 422, it's a validation issue
