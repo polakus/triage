@@ -241,6 +241,7 @@ class AtencionClinicaController extends Controller
                          ->select("pro.id")
                          ->where("u.id",'=',Auth::id())
                          ->get();
+        // echo $id_profesional;
        if(count($id_profesional)>0){
             $cadena=explode('-',$request->sala);
             $mensaje="Te encuentras en ".$cadena[1];
@@ -267,6 +268,7 @@ class AtencionClinicaController extends Controller
         }
         else{
             return redirect()->action("AtencionClinicaController@index");
+           
         }
 
       

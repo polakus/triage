@@ -170,7 +170,7 @@ Route::get('protocolos',function(){
                     ->get();
     return DataTables::of($protocolos)
                         ->addColumn('ver',function(){
-                            return '<button class="btn btn-sm btn-outline-secondary" style="font-size:13px;"> Ver </button>';
+                            return '<button class="btn btn-sm btn-outline-secondary" style="font-size:12px;"> Ver </button>';
                         })
                         ->addColumn('codigo',function($protocolo){
                             return $protocolo->codigo->color;
@@ -247,7 +247,9 @@ Route::get('tablausuario',function(){
     $usuarios = App\User::where('estado', 1)->get();
     return DataTables::of($usuarios)
                     ->addColumn('rol',function($usuario){
-                        return $usuario->rol->nombre;
+                        // return $usuario->rol->name;
+                        return "vacio"; 
+                        // Todavia hay que arreglar
                     })
                     ->addColumn('estado',function($usuario){
                         if($usuario->isOnline()){
@@ -279,4 +281,33 @@ Route::get('usuariospendientes',function(){
                     })
                     ->rawColumns(['rol','buttons'])
             ->toJson();
+});
+
+
+Route::get('rolesApi', function(){
+    $roles = Spatie\Permission\Models\Role::all();
+    return DataTables::of($roles)
+                    ->addColumn('btnAccion',function(){
+                            return '<div style="display:flex; width:100%;">
+                            <a class="btn btn-sm btn-outline-secondary" > Ver Permisos</a>
+                            <a class="btn btn-sm btn-outline-secondary" > Editar</a>
+                            <a class="btn btn-sm btn-outline-secondary" > Eliminar</a>
+                            </div>'
+                            ;
+                            
+                        } )
+                    ->rawColumns(['btnAccion'])
+        ->toJson();
+
+});
+
+
+Route::get('permisosApi', function(){
+    $permisos= Spatie\Permission\Models\Permission::all();
+    return DataTables::of($permisos)
+                        ->addColumn('btnAccion','roles/boton')
+                        
+                        ->rawColumns(['btnAccion'])
+                        ->toJson();
+
 });

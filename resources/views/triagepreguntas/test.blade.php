@@ -156,12 +156,14 @@
     <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse" >
       <div class="sidebar-sticky pt-3">
         <ul class="nav flex-column">
+        
           <li class="nav-item">
             <a id="inicio" class="nav-link <?php  if ($url_array[3] == "inicio"){ echo "active";} ?>" href="{{ route('inicio') }}">
               <span data-feather="home"></span>
               Inicio <span class="sr-only">(current)</span>
             </a>
           </li>
+      
           <li class="nav-item">
             <a id="pacientes" class="nav-link <?php  if ($url_array[3] == "pacientes"){ echo "active";} ?>" href="{{route('pacientes.index')}}">
               <span data-feather="users"></span>
@@ -303,7 +305,7 @@
             <h5>Rol:</h5>     
           </div>
           <div class="col-md-6">
-            <h5>{{$usuario->rol->nombre}}</h5>    
+            {{-- <h5>{{$usuario->rol->name}}</h5>     --}}
           </div>
           @if($usuario->profesional)
             <div class="col-md-6 text-md-right">
