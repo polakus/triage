@@ -54,9 +54,9 @@ class RegisterController extends Controller
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'username' => ['required', 'max:20', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
-            'id_rol' => ['required', 'exists:roles,id'],
+            // 'id_rol' => ['required', 'exists:roles,id'],
         ], [
-            'id_rol.required' => 'Debe seleccionar un rol'
+            // 'id_rol.required' => 'Debe seleccionar un rol'
             ]);
     }
 
@@ -69,6 +69,7 @@ class RegisterController extends Controller
     protected function create(array $data)
     {
         if (User::all()->count()==0){
+            
             return User::create([
                 'name' => $data['name'],
                 'username' => $data['username'],
@@ -76,14 +77,15 @@ class RegisterController extends Controller
                 'id_rol' => 1,
                 'password' => Hash::make($data['password']),
                 'estado' => 1,
-            ]);
+            ])->assignRole('Administrador');
         }else{
             return User::create([
                 'name' => $data['name'],
                 'username' => $data['username'],
                 'email' => $data['email'],
-                'id_rol' => $data['id_rol'],
+                'id_rol' => 1,
                 'password' => Hash::make($data['password']),
+                'estado' => 0,
             ]);
         }
     }
