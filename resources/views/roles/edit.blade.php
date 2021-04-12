@@ -1,5 +1,6 @@
 @extends('triagepreguntas.test')
 
+
 @section('cuerpo')
 <div id='alerta'></div>
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
@@ -8,7 +9,7 @@
 <div class="form-row">
     <div id="div_nombre" class="form-group col-md-4">
       <label for="inputEmail4">Nombre del Rol</label>
-      <input type="text" id="nombre_rol" name="nombre_rol" class="form-control form-control-sm" placeholder="Nombre">
+      <input type="text" id="nombre_rol" name="nombre_rol" class="form-control form-control-sm" placeholder="Nombre" value="{{ $rol->name }}">
     </div>
  </div>
  <label for="inputEmail4">Buscar Permisos</label>
@@ -35,13 +36,13 @@
     </table>
 </div>
 
-<button type="button" id="btn_perm" onclick=registrar() class="btn btn-mod">Registrar</button>
+<button type="button" id="btn_perm" onclick=editar({{ $id }}) class="btn btn-mod">Editar</button>
 <a class="btn btn-outline-secondary btn-close" href="{{ route('roles.index') }}">Volver</a>
-@endsection
 
+@endsection
 @section('scripts')
 @parent
-<script type="text/javascript" src="../js/buscador.js"></script>
+<script type="text/javascript" src="{{ asset('/js/buscador.js') }}"></script>
 
 <script type="text/javascript">
   function addRow(){
@@ -95,7 +96,39 @@
   }
   
 </script>
+<script type="text/javascript">
+	{{-- Agregar filas al comeinzo --}}
+	let permisos_rol = <?php echo $permisos_rol?>;
+	let tabla = document.getElementById('myTable');
+    let tbody = tabla.getElementsByTagName('tbody')[0];
+	for(let i=0;i<permisos_rol.length;i++){
+        let rowCnt = tbody.rows.length;   
+        let tr = tbody.insertRow(rowCnt); 
+        // alert(permisos_rol[i].nombre_permiso);
+        let td = document.createElement('td'); 
+        td = tr.insertCell(0);
+        var ele = document.createElement('input');
+        ele.setAttribute('type', 'hidden');
+        ele.setAttribute('value', permisos_rol[i].id);
+        ele.setAttribute('name', 'perm[]');
+        td.appendChild(ele);
+        let newText  = document.createTextNode(permisos_rol[i].nombre_permiso);
+        let button = document.createElement('input');
+        // set input attributes.
+        button.setAttribute('type', 'button');
+        button.setAttribute('value', 'Quitar');
+        button.setAttribute('class', 'btn btn-mod')
+        // add button's 'onclick' event.
+        button.setAttribute('onclick', 'removeRow(this)');
+        td.appendChild(newText);
+        
+        td = tr.insertCell(1);
+        
 
+        td.appendChild(button);
+	}
+
+</script>
 <script type="text/javascript">
   permisos=<?php echo $permisos ?>;
   var availableTags=[];
@@ -103,6 +136,7 @@
       availableTags.push(permisos[i].name);
     }
   let buscador = new Search('buscar','searchList',availableTags);
+
   function updateInput(texto){
       $('#searchList').empty();
       let input = document.getElementById('buscar');
@@ -148,7 +182,7 @@
       return false;
   }
 
-  function registrar(){
+  function editar(id){
     let permObjs = document.getElementsByName('perm[]');
     let permisos = [];
     for (let i = 0; i< permObjs.length; i++) {
@@ -162,8 +196,8 @@
     });
 
     $.ajax({
-            type:'POST',
-            url:"/roles",
+            type:'PUT',
+            url:"/roles/"+id,
             dataType:"json",
             data:{
                 permisos:permisos,
@@ -171,11 +205,12 @@
             },
             success: function(response){
                 let alert = document.getElementById("alerta");
-                alert.classList.add('alert');
-                alert.classList.add('alert-success');
-                alert.innerHTML=`<button type="button" class="close" data-dismiss="alert">x</button><strongExito! </strong>Los datos fueron guardados exitosamente`;
-                $("#alerta").fadeTo(3000, 500).slideUp(500, function(){
-                $("#alerta").slideUp(500);window.location.replace('/roles');});
+				alert.classList.add('alert');
+				alert.classList.add('alert-success');
+				alert.innerHTML=`<button type="button" class="close" data-dismiss="alert">x</button><strongExito! </strong>Los datos fueron editados exitosamente`;
+        		$("#alerta").fadeTo(3000, 500).slideUp(500, function(){
+			    $("#alerta").slideUp(500);window.location.replace('/roles');});
+			    
                 },
             error:function(err){
                 if (err.status == 422) { // when status code is 422, it's a validation issue
