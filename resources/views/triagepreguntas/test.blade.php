@@ -10,27 +10,44 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard Template · Bootstrap</title>
-
+    {{-- Viejo --}}
     {{-- CSS --}}
     <link rel="canonical" href="https://getbootstrap.com/docs/4.5/examples/dashboard/">
 
     <!-- Bootstrap core CSS  DASHBOARD -->
-    <link href="../assets/dist/css/bootstrap.min.css" rel="stylesheet">
+    {{-- <link href="../assets/dist/css/bootstrap.min.css" rel="stylesheet"> --}}
 
-    <link href="../assets/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    {{-- <link href="../assets/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css"> --}}
    <!-- Custom styles for this template DASHBOARD -->
-    <link href="../assets/dashboard.css" rel="stylesheet">
+    {{-- <link href="../assets/dashboard.css" rel="stylesheet"> --}}
 
     {{-- DataTable --}}
+    {{-- <link rel="stylesheet" type="text/css" href="../css/dataTables.bootstrap4.min.css"> --}}
+    {{-- <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/responsive/2.2.6/css/responsive.dataTables.min.css"> --}}
 
-    {{-- <link rel="stylesheet" type="text/css" href="{{ asset('css/datatables.bootstrap4.min.css') }}"> --}}
-    {{-- eS LA MISMA RUTA DE ARRIBA PERO CON OTRA URLS --}}
-    <link rel="stylesheet" type="text/css" href="../css/dataTables.bootstrap4.min.css">
+    {{-- Autocompletar --}}
+
+    {{-- <link rel="stylesheet" type="text/css" href="{{ asset('css/jquery-ui.css') }}"> --}}
+    
+    {{-- Select2 --}}
+
+    {{-- <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" /> --}}
+
+    {{-- Nuevooo --}}
+    <!-- Bootstrap core CSS  DASHBOARD -->
+    <link href="{{ asset('/assets/dist/css/bootstrap.min.css') }}" rel="stylesheet">
+
+    <link href="{{ asset('/assets/fontawesome-free/css/all.min.css') }}" rel="stylesheet" type="text/css">
+   <!-- Custom styles for this template DASHBOARD -->
+    <link href="{{ asset('/assets/dashboard.css') }}" rel="stylesheet">
+
+    {{-- DataTable --}}
+    <link rel="stylesheet" type="text/css" href="{{ asset('/css/dataTables.bootstrap4.min.css') }}">
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/responsive/2.2.6/css/responsive.dataTables.min.css">
 
     {{-- Autocompletar --}}
 
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/jquery-ui.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('/css/jquery-ui.css') }}">
     
     {{-- Select2 --}}
 
@@ -154,12 +171,14 @@
               Inicio <span class="sr-only">(current)</span>
             </a>
           </li>
+          @canany(['VerPacientes','FullPaciente'])
           <li class="nav-item">
             <a id="pacientes" class="nav-link <?php  if ($url_array[3] == "pacientes"){ echo "active";} ?>" href="{{route('pacientes.index')}}">
               <span data-feather="users"></span>
               Pacientes
             </a>
           </li>
+          @endcanany
           <li class="nav-item">
             <a  id="turnos" class="nav-link  <?php  if ($url_array[3] == "turnos"){ echo "active";} ?>" href="{{route('mostrar')}}">
               <span data-feather="calendar"></span>
@@ -214,6 +233,12 @@
             <a id="usuarios"class="nav-link <?php  if ($url_array[3] == "usuarios"){ echo "active";} ?>"  href="{{route('usuarios.index')}}">
               <span data-feather="users"></span>
               Usuarios
+            </a>
+          </li>
+          <li class="nav-item">
+            <a id="roles" class="nav-link" href="/roles">
+              <span data-feather="layers"></span>
+              Roles
             </a>
           </li>
         </ul>
@@ -364,14 +389,17 @@
 
 {{-- js del dash board --}}
 {{-- <script type="text/javascript" src="{{ asset('js/jquery-3.5.1.slim.min.js') }}"></script> --}}
-<script type="text/javascript" src="../js/jquery-3.5.1.slim.min.js"></script>
-<script>window.jQuery || document.write('<script src="../assets/js/vendor/jquery.slim.min.js"><\/script>')</script>
+{{-- <script type="text/javascript" src="../js/jquery-3.5.1.slim.min.js"></script> --}}
+<script type="text/javascript" src="{{ asset('/js/jquery-3.5.1.slim.min.js') }}"></script>
+{{-- <script>window.jQuery || document.write('<script src="../assets/js/vendor/jquery.slim.min.js"><\/script>')</script> --}}
+<script>window.jQuery || document.write('<script src="{{ asset('/assets/js/vendor/jquery.slim.min.js') }}"><\/script>')</script>
 {{-- <script src="../assets/dist/js/bootstrap.bundle.min.js"></script>  --}}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.9.0/feather.min.js"></script>
 {{-- <script src="{{ asset('js/feather.min.js') }}"></script> --}} {{-- Sale advertencia de la url --}}
 
 {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js"></script> --}}
-<script src="../assets/dashboard.js"></script>
+{{-- <script src="../assets/dashboard.js"></script> --}}
+<script src="{{ asset('/assets/dashboard.js') }}"></script>
 
  {{-- DataTable --}}
 <script src="{{ asset('js/jquery-3.5.1.js') }}"></script>

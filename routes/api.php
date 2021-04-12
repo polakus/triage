@@ -289,27 +289,37 @@ Route::get('usuariospendientes',function(){
 Route::get('rolesApi', function(){
     $roles = Spatie\Permission\Models\Role::all();
     return DataTables::of($roles)
-                    ->addColumn('btnAccion',function(){
-                            return '<div style="display:flex; width:100%;">
-                            <a class="btn btn-sm btn-outline-secondary" > Ver Permisos</a>
-                            <a class="btn btn-sm btn-outline-secondary" > Editar</a>
-                            <a class="btn btn-sm btn-outline-secondary" > Eliminar</a>
-                            </div>'
-                            ;
+                    // ->addColumn('btnAccion',function($rol){
+                    //         return '<div style="display:flex; width:100%;">
+                    //         <a class="btn btn-sm btn-outline-secondary" > Ver Permisos</a>
+                    //         <a class="btn btn-sm btn-outline-secondary" href="roles/'.$rol->id.'/edit"> Editar</a>
+                    //         <a class="btn btn-sm btn-outline-secondary" > Eliminar</a>
+                    //         </div>'
+                    //         ;
                             
-                        } )
+                    //     } )
+                    ->addColumn('btnAccion','/roles/boton')
                     ->rawColumns(['btnAccion'])
         ->toJson();
 
 });
-
-
-Route::get('permisosApi', function(){
-    $permisos= Spatie\Permission\Models\Permission::all();
-    return DataTables::of($permisos)
-                        ->addColumn('btnAccion','roles/boton')
-                        
-                        ->rawColumns(['btnAccion'])
-                        ->toJson();
-
+Route::get('permisos_roles', function(Request $request){
+    $permisos = DB::table('roles')
+                ->join('role_has_permissions as rol_perm','rol_perm.role_id','=','roles.id')
+                ->join('permissions as permisos','permisos.id','=','rol_perm.permission_id')
+                ->select('permisos.name')
+                ->where('roles.id','=',$request->id)
+                ->get();
+    // $permisos = DB::table('role')->get();
+    return response()->json(['permisos'=>$permisos]);
 });
+
+// Route::get('permisosApi', function(){
+//     $permisos= Spatie\Permission\Models\Permission::all();
+//     return DataTables::of($permisos)
+//                         ->addColumn('btnAccion','roles/boton')
+                        
+//                         ->rawColumns(['btnAccion'])
+//                         ->toJson();
+
+// });

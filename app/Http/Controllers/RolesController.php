@@ -7,12 +7,14 @@ use Illuminate\Http\Request;
 
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
+
+use App\Role_Has_Permissions;
 use DB;
 
 class RolesController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display a listing of the resourc
      *
      * @return \Illuminate\Http\Response
      */
@@ -54,7 +56,7 @@ class RolesController extends Controller
         $rol = new Role;
         $rol->name = $request->nombre_rol;
         $rol->save();
-        $permisos = json_decode($request->permisos);
+        $permisos = $request->permisos;
         for($i=0;$i<count($permisos);$i++){
             DB::table('role_has_permissions')->insert([
                 ['permission_id' => $permisos[$i],'role_id' => $rol->id],
@@ -84,7 +86,16 @@ class RolesController extends Controller
      */
     public function edit($id)
     {
-        //
+        $permisos = Permission::all();
+        $rol = Role::find($id);
+        
+        $permisos_rol = DB::table('roles')
+                   ->join('role_has_permissions as rol_perm','rol_perm.role_id','=','roles.id')
+                   ->join('permissions as permisos','permisos.id','=','rol_perm.permission_id')
+                   ->select('permisos.name as nombre_permiso','permisos.id')
+                   ->where('roles.id','=',$id)
+                   ->get();
+        return view('roles.edit',compact('permisos','rol','permisos_rol','id'));
     }
 
     /**
@@ -96,7 +107,29 @@ class RolesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $mensajes = [
+            'permisos.required' =>'Debe agregar al menos un permiso a la tabla.',
+            'required' =>'Este campo no debe estar vacio.',
+            'max' => 'Este campo supera la capacidad máxima de caracteres.',
+        ];
+        $roles = $request->validate([
+            'nombre_rol' => 'required',
+            'permisos' => 'required'
+        ], $mensajes);
+        Role_Has_Permissions::where('role_id', '=', $id)->delete();
+        $rol = $rol = Role::find($id);
+        $rol->name= $request->nombre_rol;
+        $rol->save();
+        $permisos = $request->permisos;
+        for($i=0;$i<count($permisos);$i++){
+            DB::table('role_has_permissions')->insert([
+                ['permission_id' => $permisos[$i],'role_id' => $id],
+               
+            ]);
+        } 
+        return response()->json();
+
+
     }
 
     /**
@@ -107,6 +140,7 @@ class RolesController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Role::where('id','=',$id)->delete();
+        return response()->json();
     }
 }

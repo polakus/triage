@@ -24,8 +24,12 @@
         <h1 class="h2">Pacientes</h1>
         <div class="btn-toolbar mb-2 mb-md-0">
           <div class="btn-group mr-2">
+            @canany(['RegistrarPaciente','FullPaciente'])
             <a type="button" class="btn btn-sm btn-outline-secondary" href="{{ url('pacientes/create') }}">Registrar</a>
+            @endcanany
+            @canany(['RegistrarPacienteNN','FullPaciente'])
             <button type="button" class="btn btn-sm btn-outline-secondary" data-toggle="modal" data-target="#myModal">Cargar pacientes NN</button>
+            @endcanany
           </div>
           {{-- <button type="button" class="btn btn-sm btn-outline-secondary dropdown-toggle">
             <span data-feather="calendar"></span>
