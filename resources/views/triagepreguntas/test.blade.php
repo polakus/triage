@@ -178,14 +178,14 @@
               Triaje Clinico
             </a>
           </li>
-          @can('VerSalasAreas')
+          @canany(['VerSalasAreas','FullSalas'])
           <li class="nav-item">
             <a id="salas"class="nav-link <?php  if ($url_array[3] == "salas"){ echo "active";} ?>" href="{{route('salas.index')}}">
               <span data-feather="layers"></span>
               Salas
             </a>
           </li>
-          @endcan
+          @endcanany
           <li class="nav-item">
             <a id="protocolos" class="nav-link <?php  if ($url_array[3] == "protocolos" or $url_array[3] == "editarProtocolo"){ echo "active";} ?>" href="{{route('protocolos.index')}}">
               <span data-feather="layers"></span>

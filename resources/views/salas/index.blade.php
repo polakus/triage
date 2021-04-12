@@ -4,25 +4,25 @@
 @section("cuerpo")
 <div id="alerta"></div>
 <ul class="nav nav-tabs" id="myTab" role="tablist">
-  <li class="nav-item">
-    <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true"><h5>Salas</h5></a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false"><h5>Áreas</h5></a>
-  </li>
+	<li class="nav-item">
+		<a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true"><h5>Salas</h5></a>
+	</li>
+	<li class="nav-item">
+		<a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false"><h5>Áreas</h5></a>
+	</li>
 </ul>
 <div class="tab-content" id="myTabContent">
 <!-- TAB SALAS -->
 <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-	@can('RegistrarSala')
 	<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
 		<div class="btn-toolbar mb-2 mb-md-0">
 			<div class="btn-group mr-2">
+				@canany(['RegistrarSala','FullSalas'])
 				<button type="button" class="btn btn-sm btn-outline-secondary" data-toggle="modal" data-target="#exampleModal">Agregar Sala</button>
+				@endcan
 			</div>
 		</div>
 	</div>
-	@endcan
 	<div class="table-responsive">
 		<table  class="table table-bordered table-sm table-striped table-hover" id="tableSalas">
 			<thead >
@@ -84,7 +84,9 @@
 		<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
 			<div class="btn-toolbar mb-2 mb-md-0">
 				<div class="btn-group mr-2">
+					@canany(['RegistrarArea','FullSalas'])
 					<button type="button"  class="btn btn-sm btn-outline-secondary" data-toggle="modal" data-target="#crear_area" >Agregar Área</button>
+					@endcanany
 				</div>
 			</div>
 		</div>

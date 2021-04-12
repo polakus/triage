@@ -253,11 +253,6 @@ Route::get('tablausuario',function(){
 
     $usuarios = App\User::where('estado', 1)->get();
     return DataTables::of($usuarios)
-                    ->addColumn('rol',function($usuario){
-                        // return $usuario->rol->name;
-                        return "vacio"; 
-                        // Todavia hay que arreglar
-                    })
                     ->addColumn('estado',function($usuario){
                         if($usuario->isOnline()){
                             return '<li class="list-group-item list-group-item-success">Online</li>';
@@ -268,7 +263,7 @@ Route::get('tablausuario',function(){
                     ->addColumn('buttons',function($usuario){
                         return view('usuarios/buttons',compact('usuario'));
                     })
-                    ->rawColumns(['rol','estado','buttons'])
+                    ->rawColumns(['estado','buttons'])
             ->toJson();
             // @if( $usuario->isOnline() )
 			// 				<li class="text-success">Online</li>

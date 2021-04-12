@@ -1,6 +1,9 @@
+@canany(['EditarArea','FullSalas'])
 <button type="button"  class="btn btn-outline-secondary btn-sm" data-toggle="modal" data-target="#modal_editar_area{{$id}}">Editar</button>
+@endcanany
+@canany(['EliminarArea','FullSalas'])
 <button type="button"  class="btn btn-outline-secondary btn-sm" data-toggle="modal" data-target="#modalEliminarArea{{$id}}">Eliminar</button>
-
+@endcanany
 <!-- Modal Edit -->
 <div class="modal fade" id="modal_editar_area{{$id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="false">
     <div class="modal-dialog">

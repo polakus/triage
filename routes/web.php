@@ -55,6 +55,7 @@ Route::get('/profesionales/atenciones','profesionalesController@atenciones')->mi
 Route::resource('/profesionales', 'profesionalesController', ['except' => ['destroy', 'edit', 'update']])->middleware('auth');
 Route::resource('/cie','CieController')->middleware('auth');
 Route::resource('/especialidades','EspecialidadController')->middleware('auth');
+Route::resource('/usuario/rol','userRolController')->middleware('auth');
 Route::get('/pruebas', function(){
     // User::create([
     //     'name' => "Cristian Zalazar",

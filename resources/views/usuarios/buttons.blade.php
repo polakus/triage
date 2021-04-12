@@ -18,9 +18,8 @@
 
 <div class="form-row">
 	<!-- Button trigger modal -->
-	<button type="button" class="btn btn-outline-secondary btn-sm" data-toggle="modal" data-target="#userModal{{ $usuario->id }}">
-	  Ver
-	</button>
+	<button type="button" class="btn btn-outline-secondary btn-sm" data-toggle="modal" data-target="#userModal{{ $usuario->id }}">Ver</button>
+	<button href="/usuario/rol/{{$usuario->id}}" type="button" class="btn btn-outline-secondary btn-sm" data-toggle="modal" data-target="">Ver Roles</button>
 	<button class="btn btn-outline-secondary btn-sm" onclick="eliminar({{ $usuario->id }},'{{ $usuario->username }}')"> Eliminar</button>
 </div>
 

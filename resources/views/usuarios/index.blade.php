@@ -75,7 +75,6 @@ $(document).ready(function() {
             {data:'username'},
             {data:'name'},
             {data:'email'},
-            {data:'rol'},
             {data:'buttons'}
            ],
            "columnDefs": [
