@@ -6,7 +6,6 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
-    'AdminSeeder' => $baseDir . '/database/seeds/AdminSeeder.php',
     'App\\Area' => $baseDir . '/app/Area.php',
     'App\\Atencion' => $baseDir . '/app/Atencion.php',
     'App\\CIE' => $baseDir . '/app/CIE.php',
@@ -37,6 +36,7 @@ return array(
     'App\\Http\\Controllers\\EspecialidadController' => $baseDir . '/app/Http/Controllers/EspecialidadController.php',
     'App\\Http\\Controllers\\HomeController' => $baseDir . '/app/Http/Controllers/HomeController.php',
     'App\\Http\\Controllers\\PacientesController' => $baseDir . '/app/Http/Controllers/PacientesController.php',
+    'App\\Http\\Controllers\\RolesController' => $baseDir . '/app/Http/Controllers/RolesController.php',
     'App\\Http\\Controllers\\SintomasController' => $baseDir . '/app/Http/Controllers/SintomasController.php',
     'App\\Http\\Controllers\\TriagepreguntasController' => $baseDir . '/app/Http/Controllers/TriagepreguntasController.php',
     'App\\Http\\Controllers\\TurnosController' => $baseDir . '/app/Http/Controllers/TurnosController.php',
@@ -4652,6 +4652,7 @@ return array(
     'TijsVerkoyen\\CssToInlineStyles\\Css\\Property\\Property' => $vendorDir . '/tijsverkoyen/css-to-inline-styles/src/Css/Property/Property.php',
     'TijsVerkoyen\\CssToInlineStyles\\Css\\Rule\\Processor' => $vendorDir . '/tijsverkoyen/css-to-inline-styles/src/Css/Rule/Processor.php',
     'TijsVerkoyen\\CssToInlineStyles\\Css\\Rule\\Rule' => $vendorDir . '/tijsverkoyen/css-to-inline-styles/src/Css/Rule/Rule.php',
+    'UserSeeder' => $baseDir . '/database/seeds/UserSeeder.php',
     'Webmozart\\Assert\\Assert' => $vendorDir . '/webmozart/assert/src/Assert.php',
     'Whoops\\Exception\\ErrorException' => $vendorDir . '/filp/whoops/src/Whoops/Exception/ErrorException.php',
     'Whoops\\Exception\\Formatter' => $vendorDir . '/filp/whoops/src/Whoops/Exception/Formatter.php',

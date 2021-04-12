@@ -14,6 +14,7 @@
 <div class="tab-content" id="myTabContent">
 <!-- TAB SALAS -->
 <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+	@can('RegistrarSala')
 	<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
 		<div class="btn-toolbar mb-2 mb-md-0">
 			<div class="btn-group mr-2">
@@ -21,7 +22,7 @@
 			</div>
 		</div>
 	</div>
-
+	@endcan
 	<div class="table-responsive">
 		<table  class="table table-bordered table-sm table-striped table-hover" id="tableSalas">
 			<thead >

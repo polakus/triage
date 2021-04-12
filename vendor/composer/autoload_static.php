@@ -30,7 +30,6 @@ class ComposerStaticInit1a709310398a22a0e722e2017fb146ab
         '6124b4c8570aa390c21fafd04a26c69f' => __DIR__ . '/..' . '/myclabs/deep-copy/src/DeepCopy/deep_copy.php',
         '377b22b161c09ed6e5152de788ca020a' => __DIR__ . '/..' . '/spatie/laravel-permission/src/helpers.php',
         '0b47d6d4a00ca9112ba3953b49e7c9a4' => __DIR__ . '/..' . '/yajra/laravel-datatables-oracle/src/helper.php',
-        '377b22b161c09ed6e5152de788ca020a' => __DIR__ . '/..' . '/spatie/laravel-permission/src/helpers.php',
     );
 
     public static $prefixLengthsPsr4 = array (
@@ -496,7 +495,6 @@ class ComposerStaticInit1a709310398a22a0e722e2017fb146ab
     );
 
     public static $classMap = array (
-        'AdminSeeder' => __DIR__ . '/../..' . '/database/seeds/AdminSeeder.php',
         'App\\Area' => __DIR__ . '/../..' . '/app/Area.php',
         'App\\Atencion' => __DIR__ . '/../..' . '/app/Atencion.php',
         'App\\CIE' => __DIR__ . '/../..' . '/app/CIE.php',
@@ -527,6 +525,7 @@ class ComposerStaticInit1a709310398a22a0e722e2017fb146ab
         'App\\Http\\Controllers\\EspecialidadController' => __DIR__ . '/../..' . '/app/Http/Controllers/EspecialidadController.php',
         'App\\Http\\Controllers\\HomeController' => __DIR__ . '/../..' . '/app/Http/Controllers/HomeController.php',
         'App\\Http\\Controllers\\PacientesController' => __DIR__ . '/../..' . '/app/Http/Controllers/PacientesController.php',
+        'App\\Http\\Controllers\\RolesController' => __DIR__ . '/../..' . '/app/Http/Controllers/RolesController.php',
         'App\\Http\\Controllers\\SintomasController' => __DIR__ . '/../..' . '/app/Http/Controllers/SintomasController.php',
         'App\\Http\\Controllers\\TriagepreguntasController' => __DIR__ . '/../..' . '/app/Http/Controllers/TriagepreguntasController.php',
         'App\\Http\\Controllers\\TurnosController' => __DIR__ . '/../..' . '/app/Http/Controllers/TurnosController.php',
@@ -5142,6 +5141,7 @@ class ComposerStaticInit1a709310398a22a0e722e2017fb146ab
         'TijsVerkoyen\\CssToInlineStyles\\Css\\Property\\Property' => __DIR__ . '/..' . '/tijsverkoyen/css-to-inline-styles/src/Css/Property/Property.php',
         'TijsVerkoyen\\CssToInlineStyles\\Css\\Rule\\Processor' => __DIR__ . '/..' . '/tijsverkoyen/css-to-inline-styles/src/Css/Rule/Processor.php',
         'TijsVerkoyen\\CssToInlineStyles\\Css\\Rule\\Rule' => __DIR__ . '/..' . '/tijsverkoyen/css-to-inline-styles/src/Css/Rule/Rule.php',
+        'UserSeeder' => __DIR__ . '/../..' . '/database/seeds/UserSeeder.php',
         'Webmozart\\Assert\\Assert' => __DIR__ . '/..' . '/webmozart/assert/src/Assert.php',
         'Whoops\\Exception\\ErrorException' => __DIR__ . '/..' . '/filp/whoops/src/Whoops/Exception/ErrorException.php',
         'Whoops\\Exception\\Formatter' => __DIR__ . '/..' . '/filp/whoops/src/Whoops/Exception/Formatter.php',

@@ -117,53 +117,43 @@
   </head>
   <body>
     <?php
-  // echo $request->input('a');
-  $url_array =  explode('/', URL::current()) ;
-  // echo $url_array[3];
-  $usuario = Auth::user();
-?>
-<!-- linear-gradient(to bottom, #555, #222)# -->
-  <nav class="navbar navbar-dark sticky-top  flex-md-nowrap p-0 shadow" style="background:#24292E;">
-    <a class="navbar-brand col-md-3 col-lg-2 mr-0 px-3" style="background: #24292E;" href="#">Hopistal San Bernardo</a>
-    <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-toggle="collapse" data-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="dropdown" >
-    <a class="btn btn-dark dropdown-toggle" style="background-color: transparent;"href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-      {{ $usuario->name }}
-    </a>
-
-    <div class="dropdown-menu dropdown-menu-lg-right">
-      <a class="dropdown-item" href="{{ route('logout') }}"
-      onclick="event.preventDefault();
-                      document.getElementById('logout-form').submit();">
-          {{ __('Logout') }}
-      </a>
-      <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-          @csrf
-      </form>
-      <button type="button" class="dropdown-item" data-toggle="modal" data-target="#modalPerfil{{$usuario->id}}">Perfil</button>
-     
-    </div>
-  </div>
-
-</nav>
-
-
+      $url_array =  explode('/', URL::current()) ;
+      $usuario = Auth::user();
+    ?>
+    <!-- linear-gradient(to bottom, #555, #222)# -->
+    <nav class="navbar navbar-dark sticky-top  flex-md-nowrap p-0 shadow" style="background:#24292E;">
+      <a class="navbar-brand col-md-3 col-lg-2 mr-0 px-3" style="background: #24292E;" href="#">Hopistal San Bernardo</a>
+      <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-toggle="collapse" data-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="dropdown" >
+        <a class="btn btn-dark dropdown-toggle" style="background-color: transparent;"href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          {{ $usuario->name }}
+        </a>
+        <div class="dropdown-menu dropdown-menu-lg-right">
+          <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+            {{ __('Logout') }}
+          </a>
+          <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+              @csrf
+          </form>
+          <button type="button" class="dropdown-item" data-toggle="modal" data-target="#modalPerfil{{$usuario->id}}">Perfil</button>
+        </div>
+      </div>
+    </nav>
 
 <div class="container-fluid">
   <div class="row">
     <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse" >
       <div class="sidebar-sticky pt-3">
         <ul class="nav flex-column">
-        
+         
           <li class="nav-item">
             <a id="inicio" class="nav-link <?php  if ($url_array[3] == "inicio"){ echo "active";} ?>" href="{{ route('inicio') }}">
               <span data-feather="home"></span>
               Inicio <span class="sr-only">(current)</span>
             </a>
           </li>
-      
           <li class="nav-item">
             <a id="pacientes" class="nav-link <?php  if ($url_array[3] == "pacientes"){ echo "active";} ?>" href="{{route('pacientes.index')}}">
               <span data-feather="users"></span>
@@ -188,12 +178,14 @@
               Triaje Clinico
             </a>
           </li>
+          @can('VerSalasAreas')
           <li class="nav-item">
             <a id="salas"class="nav-link <?php  if ($url_array[3] == "salas"){ echo "active";} ?>" href="{{route('salas.index')}}">
               <span data-feather="layers"></span>
               Salas
             </a>
           </li>
+          @endcan
           <li class="nav-item">
             <a id="protocolos" class="nav-link <?php  if ($url_array[3] == "protocolos" or $url_array[3] == "editarProtocolo"){ echo "active";} ?>" href="{{route('protocolos.index')}}">
               <span data-feather="layers"></span>
