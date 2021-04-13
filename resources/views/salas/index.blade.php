@@ -130,18 +130,18 @@
     <!-- fin modal crear area-->
   </div>
 </div>
-
 @endsection
 
 @section("scripts")
 @parent
 <script>
   $(document).ready(function() {
-    $('#tableSalas').DataTable({
+	var us =<?php echo Auth::id(); ?>;
+	$('#tableSalas').DataTable({
     	"responsive":true,
 		"serverSide":true,
 		"processing":true,
-			"ajax":{url:"{{ url('api/tablasalas') }}",},
+			"ajax":{url:"api/tablasalas/"+us},//"{{ url('api/tablasalas') }}",},
 			"columns":[
 				{data:'nombre'}, 
 				{data:'area'}, 
@@ -201,7 +201,7 @@
     "responsive":true,
 		"serverSide":true,
 		"processing":true,
-			"ajax":{url:"{{ url('api/tablaareas') }}",},
+			"ajax":{url:"api/tablaareas/"+us},
 			"columns":[
 				{data:'nombre'},
 				{data:'botones'},

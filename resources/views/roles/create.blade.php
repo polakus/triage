@@ -156,9 +156,9 @@
     }
     let nombre_rol= document.getElementById('nombre_rol').value;
     $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
+      headers: {
+          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+      }
     });
 
     $.ajax({

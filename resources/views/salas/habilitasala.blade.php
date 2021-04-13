@@ -5,9 +5,8 @@
         }*/
     }
 </style>
-@canany(['HabilitarSala','FullSalas'])
+
 <button type="button" id="bh{{$sala->id}}" onclick="habilita({{$sala->id}})" style="width:90%;" class="btn {{$sala->disponibilidad==0 ? 'btn-danger': 'btn-success'}} btn-sm">{{$sala->disponibilidad==0 ? 'F. de Servicio': 'Disponible'}}</button>
-@endcanany
 <script>
     function habilita(id){
         if (confirm('¿Desea cambiar el estado del Quirófano?')) {

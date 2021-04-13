@@ -1,11 +1,11 @@
-@canany(['EditarArea','FullSalas'])
-<button type="button"  class="btn btn-outline-secondary btn-sm" data-toggle="modal" data-target="#modal_editar_area{{$id}}">Editar</button>
-@endcanany
-@canany(['EliminarArea','FullSalas'])
-<button type="button"  class="btn btn-outline-secondary btn-sm" data-toggle="modal" data-target="#modalEliminarArea{{$id}}">Eliminar</button>
-@endcanany
+@if($us->can('EditarArea'))
+<button type="button"  class="btn btn-outline-secondary btn-sm" data-toggle="modal" data-target="#modal_editar_area{{$area->id}}">Editar</button>
+@endif
+@if($us->can('EliminarArea'))
+<button type="button"  class="btn btn-outline-secondary btn-sm" data-toggle="modal" data-target="#modalEliminarArea{{$area->id}}">Eliminar</button>
+@endif
 <!-- Modal Edit -->
-<div class="modal fade" id="modal_editar_area{{$id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="false">
+<div class="modal fade" id="modal_editar_area{{$area->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="false">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -15,14 +15,14 @@
                 </button>
             </div>
             <div class="modal-body">
-                <div id="div_edit_area{{$id}}" class="form-group">
+                <div id="div_edit_area{{$area->id}}" class="form-group">
                     <label for="nombarea">Nombre</label>
-                    <input type="text" id="nombarea{{$id}}" name="nombarea" class="form-control" placeholder="Nombre" value="{{$nombre}}">
+                    <input type="text" id="nombarea{{$area->id}}" name="nombarea" class="form-control" placeholder="Nombre" value="{{$area->nombre}}">
                 </div>
             </div>
             <div class="modal-footer">
-                <button  onclick="editararea({{$id}})"type="button" class="btn btn-dark">Guardar</button>
-                <button id="eliminarea{{$id}}" type="button" onclick="reset_modal_edit({{$id}}, '{{$nombre}}')" class="btn btn-dark" data-dismiss="modal">Cerrar</button>
+                <button  onclick="editararea({{$area->id}})"type="button" class="btn btn-dark">Guardar</button>
+                <button id="eliminarea{{$area->id}}" type="button" onclick="reset_modal_edit({{$area->id}}, '{{$area->nombre}}')" class="btn btn-dark" data-dismiss="modal">Cerrar</button>
             </div>
         </div>
     </div>
@@ -30,7 +30,7 @@
 <!-- fin modal -->
 
 <!-- Modal Delete -->
-<div class="modal fade bd-example-modal-sm" id="modalEliminarArea{{$id}}" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+<div class="modal fade bd-example-modal-sm" id="modalEliminarArea{{$area->id}}" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-sm">
     <div class="modal-content">
       <div class="modal-header">
@@ -41,10 +41,10 @@
       </div>
       <div class="modal-body">
         Estas seguro/a que deseas eliminar el área?
-        <li><strong>Área : {{ $nombre }}</strong></li>
+        <li><strong>Área : {{ $area->nombre }}</strong></li>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-success" data-dismiss="modal" id="btn_area{{$id}}" onclick="eliminarea({{$id}})"><i class="far fa-check-circle"></i> Eliminar</button>
+        <button type="button" class="btn btn-success" data-dismiss="modal" id="btn_area{{$area->id}}" onclick="eliminarea({{$area->id}})"><i class="far fa-check-circle"></i> Eliminar</button>
         <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="far fa-times-circle"></i> Cerrar</button>
       </div>
     </div>
