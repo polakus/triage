@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Yajra\DataTables\Facades\DataTables;
 
+
 // use DB;
 
 /*
@@ -56,10 +57,12 @@ Route::get('profesionales',function(Request $request){
 });
 
 Route::get('ApiPacientes',function(){
+  
     $pacientes= DB::table('pacientes')->where('nombre','!=','nn')->where('apellido','!=','nn')->get();
 
     return DataTables::of($pacientes)
                        ->addColumn('btn','pacientes/botones')
+
                        ->rawColumns(['Accion','btn'])
     ->toJson();
 });

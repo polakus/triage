@@ -11,6 +11,7 @@
 @endsection
 
 @section("cuerpo")
+
 @if (Session::has('success'))
   <div class="alert alert-success" role="alert">
     <strong>{{ Session::get('success') }}</strong>
@@ -162,13 +163,13 @@
 <script type="text/javascript">
   
   $(document).ready(function() {
-    
+
     $('#myTable').DataTable({
       "responsive": true,
       "processing":true,
           "serverSide":true,
            "ajax":{url:"{{ url('api/ApiPacientes') }}",
-              
+                
          },
            "columns":[
             {data:'apellido'},

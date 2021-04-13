@@ -96,6 +96,7 @@ class PacientesController extends Controller
     public function edit($id)
     {
         //
+        if(Auth::user()->can('FullPaciente') or Auth::user()->can('EditarPaciente')){
         $paciente = Paciente::findOrFail($id);
 
         $nn= DB::table("pacientes as p")
@@ -107,7 +108,10 @@ class PacientesController extends Controller
                  ->where("p.apellido",'=','nn')
                  ->get();
         
-        return view('pacientes.edit', compact('paciente','nn','id'));
+        return view('pacientes.edit', compact('paciente','nn','id'));}
+        else{
+             return redirect()->action('PacientesController@index');
+        }
     }
 
     /**
