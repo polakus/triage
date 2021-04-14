@@ -50,7 +50,7 @@ class protocolosController extends Controller
         $prot = $request->validate([
             'desc' => 'required|max:255',
             'codigo' => 'required',
-            'buscar' => 'required',
+            'especialidad' => 'required',
             'sint' => 'required'
         ], $mensajes);
         $protocolo = new Protocolo;

@@ -83,8 +83,8 @@ Route::get('/pruebas', function(){
     //     echo "si";
     // else
     //     echo "no";
-    $user = Auth::user();
-    return redirect('/prueba2/'.$user);//->route('p2',$user);
+    echo Auth::user()->hasAnyRole(['Administrador','Profesional']);
+    // return redirect('/prueba2/'.$user);//->route('p2',$user);
 });
 Route::get('/prueba2/{user}',function(Request $request, $user){
     echo $user;

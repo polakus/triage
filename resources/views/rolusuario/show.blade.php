@@ -10,81 +10,219 @@
   <label>Buscar Roles</label>
   <div class="form-row">
     <div id="div_buscar" class="form-group col-md-4">
-        <input placeholder="Buscar aqui" type="text" id="buscar" class="input form-control"/>
+        <input placeholder="Buscar aqui" type="text" id="buscar" class="input form-control" autocomplete="off"/>
         <listgroup class="is-visible list-group" id="searchList"></listgroup>
     </div>
     <div class="form-group col-md-4">
-      <button type="button" id="btn_agregar" onclick="addRow()" class="btn btn-mod">Agregar</button>    
+      <button type="button" id="btn_agregar" onclick="addRow()" class="btn btn-mod">Agregar</button>
     </div>
   </div>
- 
+
 <div class="table-responsive mt-3">
     <table id ="myTable" class="table table-hover table-bordered table-sm">
-      <thead> 
+      <thead>
         <tr>
-          <th>Permisos</th>
+          <th>Roles</th>
           <th>Acción</th>
         </tr>
       </thead>
       <tbody>
+      @foreach($useroles as $userol)
+        <tr>
+          <td>
+            <input type="hidden" value="{{$userol}}" name="ur[]">
+            <p>{{$userol}}</p>
+          </td>
+          <td>
+            <input type="button" value="Quitar" class="btn btn-mod" onclick="removeRow(this)">
+          </td>
+        </tr>
+      @endforeach
       </tbody>
     </table>
 </div>
 
-<script type="text/javascript" src="../js/buscador.js">
-  roles=<?php echo $userol ?>;
-  var availableTags=[];
-  for(let i=0; i<roles.length;i++){
-    availableTags.push(roles[i].name);
-  }
-  let buscador = new Search('buscar','searchList',availableTags);
+<button type="button" id="btn_guardar" onclick="registrar(),limpiaSpans()" class="btn btn-mod">Guardar</button>
+<a class="btn btn-outline-secondary btn-close" href="{{ route('usuarios.index') }}">Volver</a>
 
-</script>
-
-
-
-
-
-
-{{--
-<button type="button" id="btn_perm" onclick=registrar() class="btn btn-mod">Registrar</button>
-<a class="btn btn-outline-secondary btn-close" href="{{ route('roles.index') }}">Volver</a>
-
-<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-  <h4 class="h4">Roles de {{Auth::user()->name}}</h4>
-    <div class="btn-toolbar mb-2 mb-md-0">
-      <div class="btn-group mr-2">
-        <a type="button" class="btn btn-sm btn-outline-secondary" href="">Agregar Rol</a>
-      </div>
-    </div>
-</div>
-<div class="card border-left-success shadow h-100 py-2">
-  <div class="card-body">
-    <div class="form-row">
-      <div class="container">
-      @foreach($useroles as $userol)
-        <div class="row">
-          <div class="col">
-            <strong>{{$userol}}</strong>
-          </div>
-          <div class="col">
-            <button class="btn btn-outline-secondary btn-sm">Quitar</button>
-
-            <button class="btn btn-outline-secondary btn-sm">Eliminar</button>
-          </div>
-        </div>
-        <div class="w-100"></div>
-      @endforeach
-      </div>
-    </div>
-  </div>
-</div>
---}}
 
 @endsection
 
 @section("scripts")
 @parent
+<script type="text/javascript" src="../js/buscador.js"></script>
+<script type="text/javascript">
+  var aux=<?php echo $roles ?>;
+  var roles = [];
+  for (let i = 0; i < aux.length; i++) {
+    roles[i] = aux[i].name;
+  }
+  // console.log(roles);
+  var availableTags=[];
+
+  for(let i=0; i<roles.length;i++){
+    availableTags.push(roles[i]);
+  }
+  let buscador = new Search('buscar','searchList',availableTags);
+
+  function updateInput(texto){
+    $('#searchList').empty();
+    let input = document.getElementById('buscar');
+    input.value = texto;
+  }
+  function chequeaRepetido(id){
+    var s = document.getElementsByName('ur[]')
+    var b = false;
+    var i = 0;
+    while(!b && i<s.length){
+      if (s[i].value==id)
+        b = true;
+      i += 1;
+    }
+    if(b)
+      return true;
+    else
+      return false;
+  }
+  function estaEn(st){
+    var i = 0;
+    var ind = -1;
+    while(ind==-1 && i<roles.length){
+      if (roles[i].toUpperCase() == st.toUpperCase()){
+        ind = i;
+      }
+      i+= 1;
+    }
+    return ind;
+  }
+  function addRow(){
+    // var ind = estaEn(document.getElementById("tags").value);
+
+    let input = document.getElementById('buscar');
+    let ind = estaEn(input.value);
+    if(ind!=-1){
+      if(chequeaRepetido(roles[ind])){
+            alert("Este permiso ya está agregado");
+      }else{
+        let empTab = document.getElementById('myTable');
+        let tbodyRef = empTab.getElementsByTagName('tbody')[0];
+
+        let rowCnt = tbodyRef.rows.length;   // table row count.
+        let tr = tbodyRef.insertRow(rowCnt); // the table row.
+
+        let td = document.createElement('td'); // table definition.
+        td = tr.insertCell(0);
+        var ele = document.createElement('input');
+        ele.setAttribute('type', 'hidden');
+        ele.setAttribute('value', roles[ind]);
+        ele.setAttribute('name', 'ur[]');
+        td.appendChild(ele);
+        let newText  = document.createTextNode(input.value);
+        let button = document.createElement('input');
+        // set input attributes.
+        button.setAttribute('type', 'button');
+        button.setAttribute('value', 'Quitar');
+        button.setAttribute('class', 'btn btn-mod')
+        // add button's 'onclick' event.
+        button.setAttribute('onclick', 'removeRow(this)');
+        td.appendChild(newText);
+
+        td = tr.insertCell(1);
+        td.appendChild(button);
+        input.value = "";
+      }
+    }else{
+      alert("Este rol no se encuentra almacenado");
+    }
+
+  }
+  function removeRow(oButton) {
+      var empTab = document.getElementById('myTable');
+      empTab.deleteRow(oButton.parentNode.parentNode.rowIndex); // button -> td -> tr.
+  }
+  function registrar(){
+    let id = <?php echo $idusuario ?>;
+    let urObjs = document.getElementsByName('ur[]');
+    let useroles = [];
+    for (let i = 0; i< urObjs.length; i++) {
+      useroles[i] = urObjs[i].value;
+    }
+    // let nombre_rol= document.getElementById('nombre_rol').value;
+    $.ajaxSetup({
+      headers: {
+          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+      }
+    });
+    $.ajax({
+            type:'PUT',
+            url:"/rolusuario/"+id,
+            dataType:"json",
+            data:{
+                useroles:useroles,
+            },
+            success: function(response){
+                let alert = document.getElementById("alerta");
+                alert.classList.add('alert');
+                alert.classList.add(response.tipo);
+                alert.innerHTML='<button type="button" class="close" data-dismiss="alert">x</button><b>'+response.mensaje+'</b>';
+                $("#alerta").fadeTo(4000, 500).slideUp(500, function(){
+                  $("#alerta").slideUp(500);
+                  // window.location.replace('/roles');
+                });
+                // $('#alerta').addClass('alert '+response.tipo);
+                // $('#alerta').html('<b>'+response.mensaje+'</b>');
+                // $("#alerta").fadeTo(4000, 500).slideUp(500, function(){
+                //     $("#alerta").slideUp(500);
+                // });
+            },
+            error:function(err){
+                if (err.status == 422) { // when status code is 422, it's a validation issue
+
+                  console.log(err.responseJSON);
+                  // if(err.responseJSON.errors.nombre_rol){
+                  //   document.getElementById('nombre_rol').classList.add('is-invalid');
+                  //   var ele_span = document.createElement('span');
+                  //   ele_span.setAttribute('class', 'invalid-feedback');
+                  //   ele_span.setAttribute('role', 'alert');
+                  //   ele_span.innerHTML = "<strong>" + err.responseJSON.errors.nombre_rol + "</strong>";
+                  //   document.getElementById('div_nombre').appendChild(ele_span);
+                  // }
+                  if(err.responseJSON.errors.useroles){
+                    document.getElementById('buscar').classList.add('is-invalid');
+                    var ele_span = document.createElement('span');
+                    ele_span.setAttribute('class', 'invalid-feedback');
+                    ele_span.setAttribute('role', 'alert');
+                    ele_span.innerHTML = "<strong>" + err.responseJSON.errors.useroles+ "</strong>";
+                    document.getElementById('div_buscar').appendChild(ele_span);
+                  }
+                  // // $('#success_message').fadeIn().html(err.responseJSON.message);
+
+                  // // // you can loop through the errors object and show it to the user
+                  // // console.warn(err.responseJSON.errors);
+                  // // // display errors on each form field
+                  // $.each(err.responseJSON.errors, function (i, error) {
+                  //     if(i=='ciess'){
+                  //       // $('#error_modal_cie').html('<span style="color: red;">'+error[0]+'</span>');
+                  //     }
+                  //     else{
+                  //       // $('#error_modal_observacion').html('<span style="color: red;">'+error[0]+'</span>');
+                  //     }
+                  // //     var el = $(document).find('[name="'+i+'"]');
+                  // //     el.after($('<span style="color: red;">'+error[0]+'</span>'));
+                  // });
+                }
+            }
+    });
+  }
+  function limpiaSpans(){
+    document.getElementById('buscar').classList.remove('is-invalid');
+    let spans = document.getElementsByClassName('invalid-feedback');
+    while(spans.length>0){
+      spans[0].remove();
+    }
+  }
+</script>
+
 
 
 @endsection
@@ -92,5 +230,5 @@
 
 
 @section("pie")
-    
+
 @endsection

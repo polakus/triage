@@ -34,8 +34,8 @@ class usuariosController extends Controller
      */
     public function index()
     {
-        $useroles = User::find($id)->getRoleNames();
-        return view('usuarios.index',compact('useroles'));
+       $roles = Rol::all();
+        return view('usuarios.index',compact('roles'));
     }
     public function pendientes(){
         return view('usuarios.pendientes');

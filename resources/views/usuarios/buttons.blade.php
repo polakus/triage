@@ -41,51 +41,58 @@
         @if($usuario->profesional)
         	<div class="form-group row">
             <div class="text-md-right col-md-4">
-					    <h6>Nombre:</h6>			
+					    Nombre:			
 				    </div>
             <div class="col-md-4">
-              <h6>{{$usuario->profesional->nombre}}</h6>			
+              {{$usuario->profesional->nombre}}			
             </div>
           </div>
           <div class="form-group row">
             <div class="text-md-right col-md-4">
-					    <h6>Apellido:</h6>				
+					    Apellido:				
 				    </div>
 				    <div class="col-md-4">
-					    <h6>{{$usuario->profesional->apellido}}</h6>				
+					    {{$usuario->profesional->apellido}}				
 				    </div>
           </div>
           <div class="form-group row">
             <div class="text-md-right col-md-4">
-              <h6>Domicilio:</h6>			
+              Domicilio:			
             </div>
 				    <div class="col-md-4">
-					    <h6>{{$usuario->profesional->domicilio}}</h6>					
+					    {{$usuario->profesional->domicilio}}					
 				    </div>
           </div>
           <div class="form-group row">
             <div class="text-md-right col-md-4">
-					    <h6>Matrícula:</h6>				
+					    Matrícula:				
 				    </div>
             <div class="col-md-4">
-					    <h6>{{$usuario->profesional->matricula}}</h6>		
+					    {{$usuario->profesional->matricula}}		
 				    </div>
           </div>
           <div class="form-group row">
             <div class="text-md-right col-md-4">
-					    <h6>Especialidades:</h6>			
+					    Especialidades:			
             </div>
             <div class="col-md-4">
 					    <ul class="ul"> 
                 @foreach($usuario->profesional->detalleProfesional as $esp)
-                  <h6><li> {{$esp->especialidad->nombre}}</li></h6>
+                  <li> {{$esp->especialidad->nombre}}</li>
                 @endforeach
 					    </ul>		
 				    </div>
           </div>
         @else
-        	<h6>No se encontraron datos de este usario</h6>
+        	No se encontraron datos de este usario
         @endif
+        <hr>
+          <strong>Roles de {{$usuario->name}}</strong>
+          @foreach($usuario->getRoleNames() as $roles)
+            <div>
+              <li>{{$roles}}</li>
+            </div>
+          @endforeach
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-mod" data-dismiss="modal">Cerrar</button>
