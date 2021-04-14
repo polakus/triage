@@ -7,10 +7,7 @@
         <div class="btn-toolbar mb-2 mb-md-0">
           <div class="btn-group mr-2">
           	<!-- Button trigger modal -->
-			{{-- <a type="button" class="btn btn-outline-secondary btn-sm ml-1" data-toggle="modal" data-target="#modalUsuario">
-			Registrar Usuario
-			</a> --}}
-           <a class="btn btn-outline-secondary btn-sm ml-1" href="{{ route('usuarios.create') }}">Registrar Usuario</a>
+            <a class="btn btn-outline-secondary btn-sm ml-1" href="{{ route('usuarios.create') }}">Registrar Usuario</a>
             <a class="btn btn-outline-secondary btn-sm ml-1" href="/usuarios/pendientes">Usuarios Pendientes</a>
           </div>
         </div>
@@ -33,7 +30,6 @@
 						<th scope="col">Usuario</th>
 						<th scope="col">Nombre</th>
 						<th scope="col">Email</th>
-						<th scope="col">Rol</th>
 						<th scope="col">Acción<nav></nav></th>
 					</tr>
 				</thead>

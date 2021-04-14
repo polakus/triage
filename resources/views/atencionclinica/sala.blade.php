@@ -353,16 +353,14 @@ function sala(id,detalleatencion,id_paciente){
                   "responsive":true,
                   "processing":true,
                       "serverSide":true,
-                       "ajax":{url:"{{ url('api/historial') }}",
-                       data:{id_paciente:id_paciente}
-                          
-                     },
-                       "columns":[
+                        "ajax":{url:"{{ url('api/historial') }}", data:{id_paciente:id_paciente}
+                        },
+                        "columns":[
                         {data:'codigo'},
                         {data:'descripcion'},
                         {data:'observacion'}
                         
-                       ],
+                        ],
                        
                   
                    "language": {

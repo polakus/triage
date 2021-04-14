@@ -1,6 +1,4 @@
 <?php
-
-use App\Http\Middleware\EsAdmin;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Hash;
 use App\User;
@@ -45,6 +43,7 @@ Route::get('/editar/{id}', 'PacientesController@edit')->middleware('auth');
 Route::post('/pacientes/nn','PacientesController@insertarNN')->middleware('auth');
 Route::get('/atencionclinica/internacion','AtencionClinicaController@internar')->middleware('auth');
 
+Route::resource('/rolusuario','userRolController')->middleware('auth');
 Route::resource('/usuarios','usuariosController', ['except'=>['show', 'update']])->middleware('auth');
 Route::resource('/sintomas','SintomasController')->middleware('auth');
 Route::resource('/atencionclinica','AtencionClinicaController')->middleware('auth');
@@ -59,7 +58,6 @@ Route::get('/profesionales/atenciones','profesionalesController@atenciones')->mi
 Route::resource('/profesionales', 'profesionalesController', ['except' => ['destroy', 'edit', 'update']])->middleware('auth');
 Route::resource('/cie','CieController')->middleware('auth');
 Route::resource('/especialidades','EspecialidadController')->middleware('auth');
-Route::resource('/usuario/rol','userRolController')->middleware('auth');
 Route::get('/pruebas', function(){
     // User::create([
     //     'name' => "Cristian Zalazar",
@@ -77,15 +75,24 @@ Route::get('/pruebas', function(){
     //     'password' => Hash::make("asdfñlkj"),
     //     'estado' => 1,
     // ]);
-    User::create([
-        'name' => "prueba2 de usuario",
-        'username' => "prueba2",
-        'email' => "prueba2@hotmail.com",
-        'id_rol' => 1,
-        'password' => Hash::make("asdfñlkj"),
-        'estado' => 1,
-    ]);
+    // User::create([
+    //     'name' => "prueba2 de usuario",
+    //     'username' => "prueba2",
+    //     'email' => "prueba2@hotmail.com",
+    //     'id_rol' => 1,
+    //     'password' => Hash::make("asdfñlkj"),
+    //     'estado' => 1,
+    // ]);
+    // if(Auth::user()->can('VerSalasAreas'))
+    //     echo "si";
+    // else
+    //     echo "no";
+    $user = Auth::user();
+    return redirect('/prueba2/'.$user);//->route('p2',$user);
 });
+Route::get('/prueba2/{user}',function(Request $request, $user){
+    echo $user;
+})->name('p2');
 
 Route::post('/atencionclinica/sala','AtencionClinicaController@cargarSala')->middleware('auth');
 

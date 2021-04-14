@@ -226,28 +226,29 @@ Route::get('editprotocolo', function(){
                         ->toJson();
 });
 
-Route::get('tablasalas',function(Request $request){
+Route::get('tablasalas/{us}',function(Request $request, User $us){
     $salas=App\Sala::all();
-
+    
     return DataTables::of($salas)
-                        ->addColumn('area', function($sala){
-                            return $sala->area->nombre;
-                        })
-                        ->rawColumns(['area'])
-                        ->addColumn('habilita', function($sala){
-                            return view('salas/habilitasala', compact('sala'));
-                        })
-                        ->rawColumns(['habilita'])
-                        ->addColumn('elimina', function($sala){
-                            return view('salas/elimina', compact('sala'));
-                        })
-                        ->rawColumns(['elimina'])
-           ->toJson();
+                ->addColumn('area', function($sala){
+                    return $sala->area->nombre;
+                })->rawColumns(['area'])
+                ->addColumn('habilita', function($sala) use ($us){
+                    if($us->can('HabilitarSala'))
+                        return view('salas/habilitasala', compact('sala'));
+                })->rawColumns(['habilita'])
+                ->addColumn('elimina', function($sala) use($us){
+                    if($us->can('EliminarSala'))
+                        return view('salas/elimina', compact('sala'));
+                })->rawColumns(['elimina'])
+                ->toJson();
 });
-Route::get('tablaareas',function(Request $request){
+Route::get('tablaareas/{us}',function(Request $request, User $us){
     $areas=App\Area::all();
     return DataTables::of($areas)
-            ->addColumn('botones', 'areas/botones')
+            ->addColumn('botones', function($area) use($us){
+                return view('areas/botones',compact('area','us'));
+            })
             ->rawColumns(['botones'])
             ->toJson();
 });
@@ -269,11 +270,6 @@ Route::get('tablausuario',function(){
                     })
                     ->rawColumns(['estado','buttons'])
             ->toJson();
-            // @if( $usuario->isOnline() )
-			// 				<li class="text-success">Online</li>
-			// 			@else
-			// 				<li class="text-muted">Offline</li>
-			// 			@endif
 });
 
 Route::get('usuariospendientes',function(){
@@ -300,7 +296,7 @@ Route::get('rolesApi', function(){
                     //         <a class="btn btn-sm btn-outline-secondary" > Eliminar</a>
                     //         </div>'
                     //         ;
-                            
+
                     //     } )
                     ->addColumn('btnAccion','/roles/boton')
                     ->rawColumns(['btnAccion'])
@@ -322,7 +318,7 @@ Route::get('permisos_roles', function(Request $request){
 //     $permisos= Spatie\Permission\Models\Permission::all();
 //     return DataTables::of($permisos)
 //                         ->addColumn('btnAccion','roles/boton')
-                        
+
 //                         ->rawColumns(['btnAccion'])
 //                         ->toJson();
 
