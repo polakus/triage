@@ -1,6 +1,10 @@
-<button type="button" class="btn btn-outline-secondary btn-sm " style="width: 30%" data-toggle="modal" data-target="#editar{{ $id }}">Editar</button>
-<button type="button" class="btn btn-outline-secondary btn-sm " style="width: 30%;" onclick="eliminar({{ $id }},'{{ $descripcion }}')">Eliminar</button>
-<div class="modal fade" id="editar{{$id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="false">
+@if($us->can('FullSintoma') or $us->can('EditarSintoma'))
+<button type="button" class="btn btn-outline-secondary btn-sm " style="width: 30%" data-toggle="modal" data-target="#editar{{ $sintoma->id }}">Editar</button>
+@endif
+@if($us->can('FullSintoma') or $us->can('EliminarSintoma'))
+<button type="button" class="btn btn-outline-secondary btn-sm " style="width: 30%;" onclick="eliminar({{ $sintoma->id }},'{{ $sintoma->descripcion }}')">Eliminar</button>
+@endif
+<div class="modal fade" id="editar{{$sintoma->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="false">
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-header">
@@ -14,16 +18,16 @@
                 <hr>
 				<div class="container">
                     <div class="form-group">
-                        <div id="div_nombre{{$id}}" class="form-row">
+                        <div id="div_nombre{{$sintoma->id}}" class="form-row">
                             <label for="nombre">Nombre</label>
-                            <input type="text" id="nombre{{$id}}" class="form-control" placeholder="Nombre" value="{{$descripcion}}">
+                            <input type="text" id="nombre{{$sintoma->id}}" class="form-control" placeholder="Nombre" value="{{$sintoma->descripcion}}">
                         </div>
                     </div>
 				</div>
 			</div>
 			<div class="modal-footer">
-				<button id="guardar" type="button" onclick="editar({{$id}})" class="btn btn-dark">Editar</button>
-				<button onclick="reset_modal_edit({{$id}},'{{$descripcion}}')" type="button" class="btn btn-dark" data-dismiss="modal">Cerrar</button>
+				<button id="guardar" type="button" onclick="editar({{$sintoma->id}})" class="btn btn-dark">Editar</button>
+				<button onclick="reset_modal_edit({{$sintoma->id}},'{{$sintoma->descripcion}}')" type="button" class="btn btn-dark" data-dismiss="modal">Cerrar</button>
 			</div>
 		</div>
 	</div>

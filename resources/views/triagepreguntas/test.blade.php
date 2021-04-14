@@ -185,12 +185,14 @@
               Atenciones
             </a>
           </li>
+          @canany(['FullSintoma','VerSintoma'])
           <li class="nav-item">
             <a id="sintomas"class="nav-link <?php  if ($url_array[3] == "sintomas"){ echo "active";} ?>" href="{{route('sintomas.index')}}">
               <span data-feather="users"></span>
               Sintomas
             </a>
           </li>
+          @endcanany
           <li class="nav-item">
             <a id="atencionclinica"class="nav-link <?php  if ($url_array[3] == "atencionclinica"){ echo "active";} ?>" href="{{route('atencionclinica.index')}}">
               <span data-feather="bar-chart-2"></span>
@@ -211,12 +213,14 @@
               Protocolos
             </a>
           </li>
+          @canany(['FullCie','VerCie'])
           <li class="nav-item">
             <a id="cie "class="nav-link <?php  if ($url_array[3] == "cie"){ echo "active";} ?>" href="{{route('cie.index')}}">
               <span data-feather="layers"></span>
               CIE
             </a>
           </li>
+          @endcanany
           <li class="nav-item">
             <a id="especialidades" class="nav-link <?php  if ($url_array[3] == "especialidades"){ echo "active";} ?>" href="{{route('especialidades.index')}}">
               <span data-feather="layers"></span>

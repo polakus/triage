@@ -57,12 +57,15 @@ Route::get('profesionales',function(Request $request){
 	return DataTables::of($detalles_atenciones)->toJson();
 });
 
-Route::get('ApiPacientes',function(){
+Route::get('ApiPacientes/{us}',function(User $us){
   
     $pacientes= DB::table('pacientes')->where('nombre','!=','nn')->where('apellido','!=','nn')->get();
 
     return DataTables::of($pacientes)
-                       ->addColumn('btn','pacientes/botones')
+                       // ->addColumn('btn','pacientes/botones')
+                        ->addColumn('btn', function($paciente) use ($us){
+                            return view('pacientes/botones',compact('paciente','us'));
+                        })
 
                        ->rawColumns(['Accion','btn'])
     ->toJson();
@@ -120,19 +123,23 @@ Route::get('mostrar',function(){
 });
 
 
-Route::get('sintomas_cargar', function(){
+Route::get('sintomas_cargar/{us}', function(User $us){
      $sintomas=DB::table('sintomas')->get();
      return DataTables::of($sintomas)
-                       ->addColumn('button','sintomas/action_editar_eliminar')
+                       ->addColumn('button',function($sintoma) use ($us){
+                        return view('sintomas/action_editar_eliminar',compact('sintoma','us'));
+                       })
                        ->rawColumns(['button'])
     ->toJson();
 });
 
-Route::get('cargar_cie', function(){
+Route::get('cargar_cie/{us}', function(User $us){
     // $cies = App\CIE::all();
     $enfermedades = DB::table('cie')->orderBy('codigo')->get();
     return DataTables::of($enfermedades)
-                        ->addColumn('button', 'cie/action_editar')
+                        ->addColumn('button', function($enfermedad) use($us){
+                            return view('cie/action_editar',compact('enfermedad','us'));
+                        })
                         ->rawColumns(['button'])
                         ->toJson();
 });

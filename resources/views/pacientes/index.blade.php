@@ -162,14 +162,12 @@
 <script type="text/javascript">
   
   $(document).ready(function() {
-    
+    var us =<?php echo Auth::id(); ?>;
     $('#myTable').DataTable({
       "responsive": true,
       "processing":true,
           "serverSide":true,
-           "ajax":{url:"{{ url('api/ApiPacientes') }}",
-              
-         },
+           "ajax":{url:"api/ApiPacientes/"+us},//"{{ url('api/tablasalas') }}",},
            "columns":[
             {data:'apellido'},
             {data:'nombre'},

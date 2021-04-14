@@ -21,7 +21,21 @@ class RoleSeeder extends Seeder
         Permission::create(['name'=>"RegistrarPaciente"]);
         Permission::create(['name'=>"RegistrarPacienteNN"]);
         Permission::create(['name'=>"EditarPaciente"]);
+        Permission::create(['name'=>"TriajePaciente"]);
 
+        #Permisos de Sintomas
+        Permission::create(['name'=>"RegistrarSintoma"]);
+        Permission::create(['name'=>"EditarSintoma"]);
+        Permission::create(['name'=>"EliminarSintoma"]);
+        Permission::create(['name'=>"VerSintoma"]);
+        Permission::create(['name'=>"FullSintoma"]);
+
+        #Permiso de CIE
+        Permission::create(['name'=>"RegistrarCie"]);
+        Permission::create(['name'=>"EditarCie"]);
+        Permission::create(['name'=>"EliminarCie"]);
+        Permission::create(['name'=>"VerCie"]);
+        Permission::create(['name'=>"FullCie"]);
         #Permisos de Sala
 
         Permission::create(['name'=>"FullSalas"])->syncRoles($role1);        
