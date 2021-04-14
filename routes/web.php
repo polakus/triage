@@ -83,7 +83,8 @@ Route::get('/pruebas', function(){
     //     echo "si";
     // else
     //     echo "no";
-    echo Auth::user()->hasAnyRole(['Administrador','Profesional']);
+    echo User::find(1)->getAllPermissions();
+    echo User::find(1)->name;
     // return redirect('/prueba2/'.$user);//->route('p2',$user);
 });
 Route::get('/prueba2/{user}',function(Request $request, $user){
@@ -92,7 +93,7 @@ Route::get('/prueba2/{user}',function(Request $request, $user){
 
 Route::post('/atencionclinica/sala','AtencionClinicaController@cargarSala')->middleware('auth');
 
-Auth::routes();#['register' => false]);
+Auth::routes();//['register' => false]);
 Route::get('/inicio', 'HomeController@index')->name('inicio')->middleware('auth');
 
 Route::resource('/roles','RolesController')->middleware('auth');

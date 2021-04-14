@@ -87,7 +87,8 @@
     </div>
     
     <button type="submit" class="btn btn-primary">Registrar</button>
-    <a class="btn btn-default btn-close" href="{{ route('profesionales.index') }}">Volver</a>
+    <a onclick="window.history.back();" class="btn btn-default btn-close">Volver</a>
+    {{--ELIMINAR PROFESIONAL.INDEX --><a class="btn btn-default btn-close" href="{{ route('profesionales.index') }}">Volver</a>--}} 
 </form>
 
 
