@@ -228,7 +228,7 @@
         error:function(err){
             if (err.status == 422) { // when status code is 422, it's a validation issue
               // alert("hubo un error");
-              console.log(err.responseJSON.errors);
+              // console.log(err.responseJSON.errors);
               if(err.responseJSON.errors.codigo){
                 document.getElementById('codigo').classList.add('is-invalid');
                 var ele_span = document.createElement('span');

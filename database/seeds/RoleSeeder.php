@@ -12,12 +12,19 @@ class RoleSeeder extends Seeder
      * @return void
      */
     public function run()
-    {
-        $role1=Role::create(['name'=>'Administrador']);
-        $role2=Role::create(['name'=>'Profesional']);
+    {   
+        ### ROLES PREDETERMINADOS ###
+        $super=Role::create(['name'=>'Superusuario']); // Este rol puede hacer todo
+        $admin=Role::create(['name'=>'Administrador']); // Puede hacer todo menos modificar 'Superusuario'
+        $prof=Role::create(['name'=>'Profesional']); // No puede hacer casi nada ( rol predeterminado )
+
+        Role::create(['name'=>'Empleado1']);
+        Role::create(['name'=>'Empleado2']);
+        Role::create(['name'=>'Empleado3']);
+        
         #Permisos de pacientes
-        Permission::create(['name'=>"VerPacientes"])->syncRoles($role1);
-        Permission::create(['name'=>"FullPaciente"])->syncRoles($role1);
+        Permission::create(['name'=>"VerPacientes"])->syncRoles($admin);
+        Permission::create(['name'=>"FullPaciente"])->syncRoles($admin);
         Permission::create(['name'=>"RegistrarPaciente"]);
         Permission::create(['name'=>"RegistrarPacienteNN"]);
         Permission::create(['name'=>"EditarPaciente"]);
@@ -38,13 +45,13 @@ class RoleSeeder extends Seeder
         Permission::create(['name'=>"FullCie"]);
         #Permisos de Sala
 
-        Permission::create(['name'=>"FullSalas"])->syncRoles($role1);        
-        Permission::create(['name'=>"VerSalasAreas"])->syncRoles([$role1,$role2]);
-        Permission::create(['name'=>"RegistrarSala"])->syncRoles($role1);
-        Permission::create(['name'=>"RegistrarArea"])->syncRoles($role1);
-        Permission::create(['name'=>"EditarArea"])->syncRoles($role1);
-        Permission::create(['name'=>"EliminarSala"])->syncRoles($role1);
-        Permission::create(['name'=>"EliminarArea"])->syncRoles($role1);
-        Permission::create(['name'=>"HabilitarSala"])->syncRoles($role1);
+        Permission::create(['name'=>"FullSalas"])->syncRoles($admin);        
+        Permission::create(['name'=>"VerSalasAreas"])->syncRoles([$admin,$prof]);
+        Permission::create(['name'=>"RegistrarSala"])->syncRoles($admin);
+        Permission::create(['name'=>"RegistrarArea"])->syncRoles($admin);
+        Permission::create(['name'=>"EditarArea"])->syncRoles($admin);
+        Permission::create(['name'=>"EliminarSala"])->syncRoles($admin);
+        Permission::create(['name'=>"EliminarArea"])->syncRoles($admin);
+        Permission::create(['name'=>"HabilitarSala"])->syncRoles($admin);
     }
 }
