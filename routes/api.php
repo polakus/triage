@@ -254,7 +254,7 @@ Route::get('tablaareas/{us}',function(Request $request, User $us){
 });
 
 
-Route::get('tablausuario',function(){
+Route::get('tablausuario/{us}',function(User $us){
 
     $usuarios = App\User::where('estado', 1)->get();
     return DataTables::of($usuarios)
@@ -265,8 +265,8 @@ Route::get('tablausuario',function(){
                             return '<li class="list-group-item list-group-item-danger">Offline</li>';
                         }
                     })
-                    ->addColumn('buttons',function($usuario){
-                        return view('usuarios/buttons',compact('usuario'));
+                    ->addColumn('buttons',function($usuario) use ($us){
+                        return view('usuarios/buttons',compact('usuario','us'));
                     })
                     ->rawColumns(['estado','buttons'])
             ->toJson();

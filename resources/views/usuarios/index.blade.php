@@ -7,8 +7,12 @@
         <div class="btn-toolbar mb-2 mb-md-0">
           <div class="btn-group mr-2">
           	<!-- Button trigger modal -->
+            @canany(['RegistrarUsuario','FullUsuarios'])
             <a class="btn btn-outline-secondary btn-sm ml-1" href="{{ route('usuarios.create') }}">Registrar Usuario</a>
+            @endcanany
+            @canany(['AdministrarUsuarios','FullUsuarios'])
             <a class="btn btn-outline-secondary btn-sm ml-1" href="/usuarios/pendientes">Usuarios Pendientes</a>
+            @endcanany
           </div>
         </div>
       </div>
@@ -64,7 +68,7 @@ $(document).ready(function() {
         "responsive":true,
           "serverSide":true,
       // "iDisplayLength": 50,
-      "ajax":{url:"{{ url('api/tablausuario') }}",
+      "ajax":{url:"api/tablausuario/"+<?php echo Auth::id() ?>,//"{{ url('api/tablausuario') }}",
          },
          "columns":[
             {data:'estado'},

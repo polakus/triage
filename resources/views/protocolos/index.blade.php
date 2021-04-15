@@ -1,7 +1,8 @@
 @extends("triagepreguntas.test")
 @section('css')
 <style type="text/css">
-    .btn{
+/* COMENTADO PORQUE ARRUINA EL BOTÓN DEL PERFIL */
+    /* .btn{
         width: 45%;
         margin: 1px;
     }
@@ -10,7 +11,7 @@
             width: 100%;
             margin: 1px;
         }
-    }
+    } */
 </style>
 @endsection
 @section("cuerpo")

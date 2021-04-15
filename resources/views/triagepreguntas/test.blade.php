@@ -233,12 +233,14 @@
               Profesionales Atenciones
             </a>
           </li>
+          @canany(['VerUsuarios','FullUsuarios'])
           <li class="nav-item">
             <a id="usuarios"class="nav-link <?php  if ($url_array[3] == "usuarios"){ echo "active";} ?>"  href="{{route('usuarios.index')}}">
               <span data-feather="users"></span>
               Usuarios
             </a>
           </li>
+          @endcanany
           <li class="nav-item">
             <a id="roles" class="nav-link" href="/roles">
               <span data-feather="layers"></span>
@@ -297,8 +299,8 @@
         </div>
       </div> --}}
 
-<!-- Modal -->
-<div class="modal fade" id="modalPerfil{{$usuario->id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<!-- Modal perfil -->
+<div class="modal fade" id="modalPerfil{{$usuario->id}}" role="dialog" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
@@ -308,72 +310,78 @@
         </button>
       </div>
       <div class="modal-body">
+        <strong>Datos de Perfil</strong>
         <div class="form-group row">
-
           <div class="col-md-6 text-md-right">
-            <h5>Nombre de usuario:</h5>     
+            Nombre de usuario:     
           </div>
           <div class="col-md-6">
-            <h5>{{$usuario->username}}</h5>   
+            {{$usuario->username}}   
           </div>
           <div class="col-md-6 text-md-right">
-            <h5>Email:</h5>     
+            Email:     
           </div>
           <div class="col-md-6">
-            <h5>{{$usuario->email}}</h5>    
-          </div>
-          <div class="col-md-6 text-md-right">
-            <h5>Rol:</h5>     
-          </div>
-          <div class="col-md-6">
-            {{-- <h5>{{$usuario->rol->name}}</h5>     --}}
+            {{$usuario->email}}    
           </div>
           @if($usuario->profesional)
             <div class="col-md-6 text-md-right">
-              <h5>Nombre:</h5>      
+              Nombre:      
             </div>
             <div class="col-md-6">
-              <h5>{{$usuario->profesional->nombre}}</h5>    
+              {{$usuario->profesional->nombre}}    
             </div>
             <div class="col-md-6 text-md-right">
-              <h5>Apellido:</h5>      
+              Apellido:      
             </div>
             <div class="col-md-6">
-              <h5>{{$usuario->profesional->apellido}}</h5>    
+              {{$usuario->profesional->apellido}}    
             </div>
             <div class="col-md-6 text-md-right">
-              <h5>Domicilio:</h5>     
+              Domicilio:     
             </div>
             <div class="col-md-6">
-              <h5>{{$usuario->profesional->domicilio}}</h5>   
+              {{$usuario->profesional->domicilio}}   
             </div>
             <div class="col-md-6 text-md-right">
-              <h5>Matrícula:</h5>     
+              Matrícula:     
             </div>
             <div class="col-md-6">
-              <h5>{{$usuario->profesional->matricula}}</h5>   
+              {{$usuario->profesional->matricula}}   
             </div>
             <div class="col-md-6 text-md-right">
-              <h5>Especialidades:</h5>      
+              Especialidades:      
             </div>          
             <div class="col-md-6">
               @foreach($usuario->profesional->detalleProfesional as $esp)
-                <h5><li> {{$esp->especialidad->nombre}}</li></h5>
+                <li> {{$esp->especialidad->nombre}}</li>
               @endforeach   
             </div>
           @else
-            {{--<h5>No hay más datos para este usuario</h5>--}}
+            {{--No hay más datos para este usuario--}}
           @endif
         </div>
-          @if($usuario->profesional)
-            <div class="text-center">
-              <a class="btn btn-primary" disabled>{{ __('Completar') }}</a>     
-            </div>
-          @else
-            <div class="text-center">
-              <a class="btn btn-primary" href="{{route('profesionales.create')}}">{{ __('Completar') }}</a>
-            </div>
-          @endif
+        <hr>
+        <strong>Roles de {{$usuario->name}}</strong>
+        <div class="form-group row">
+          <div class="text-md-right col-md-6"></div>
+          <div class="col-md-6">
+          @foreach($usuario->getRoleNames() as $roles)
+          <div>
+            <li>{{$roles}}</li>
+          </div>
+          @endforeach
+          </div>
+        </div>
+        @if($usuario->profesional)
+          <div class="text-center">
+            <a class="btn btn-primary" disabled>{{ __('Completar') }}</a>     
+          </div>
+        @else
+          <div class="text-center">
+            <a class="btn btn-primary" href="{{route('profesionales.create')}}">{{ __('Completar') }}</a>
+          </div>
+        @endif
       </div>
     </div>
   </div>

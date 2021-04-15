@@ -51,5 +51,12 @@ class RoleSeeder extends Seeder
         Permission::create(['name'=>"RegistrarEspecialidad"])->syncRoles($admin);
         Permission::create(['name'=>"EditarEspecialidad"])->syncRoles($admin);
         Permission::create(['name'=>"EliminarEspecialidad"])->syncRoles($admin);
+
+        Permission::create(['name'=>"FullUsuarios"])->syncRoles($admin);        
+        Permission::create(['name'=>"VerUsuarios"])->syncRoles([$admin,$prof]);
+        Permission::create(['name'=>"RegistrarUsuario"])->syncRoles($admin);
+        Permission::create(['name'=>"ModificarRolesUsuario"])->syncRoles($admin);
+        Permission::create(['name'=>"AdministrarUsuarios"])->syncRoles($admin);
+        Permission::create(['name'=>"EliminarUsuario"])->syncRoles($admin);
     }
 }
