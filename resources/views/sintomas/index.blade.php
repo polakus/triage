@@ -51,6 +51,7 @@
 <div id="alerta"></div>
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
     <h4 class="h4">Sintomas</h4>
+    @canany(['FullSintoma','RegistrarSintoma'])
     <div class="contenido">
         <div class="botones">
             <input type="text" class="form-control form-inline form-control-sm ml-2 " placeholder="Nombre del sintoma"  name="nombre_sintoma" id="nombre_sintoma" >
@@ -60,6 +61,7 @@
             <div id="error_sintoma"></div>
         </div>
     </div>
+    @endcanany
 </div>
 <div class="table-responsive">
  <table class="table table-bordered table-striped table-hover table-sm" id="myTable">
@@ -84,12 +86,13 @@
 
 <script type="text/javascript">
   $(document).ready(function() {
+    var us = <?php echo Auth::id(); ?>;
    var table= $('#myTable').DataTable({
         "processing":true,
         "responsive":true,
           "serverSide":true,
-           "ajax":{url:"{{ url('api/sintomas_cargar') }}",
-              
+           "ajax":{
+              url:"api/sintomas_cargar/"+us
          },
            "columns":[
             {data:'id'},
@@ -188,7 +191,7 @@
 
 <script type="text/javascript">
 function eliminar(id,sintoma){
-    if (confirm('¿Esta seguro de eliminar el sintoma '+sintoma+'? Tenga en cuenta que se eliminara todos los datos relacionados a ella.')) {
+    $('#modalEliminar'+id).modal('hide');
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -218,7 +221,6 @@ function eliminar(id,sintoma){
                        
             }
         });
-    }
 }
 
 </script>

@@ -33,16 +33,11 @@
 @endsection
 
 @section("cuerpo")
+<div id="alerta"></div>
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
     <h5 class="h5">Edición de un nuevo protocolo</h5>
 </div>
-<div class="flash-message">
-  @foreach (['danger', 'warning', 'success', 'info'] as $msg)
-    @if(Session::has('alert-' . $msg))
-      <p class="alert alert-{{ $msg }}">{{ Session::get('alert-' . $msg) }} <a href="{{ route('protocolos.index') }}" class="close" data-dismiss="alert" aria-label="close">&times;</a></p>
-    @endif
-  @endforeach
-</div>
+
   <div class="form-row">
     <div id="div_desc" class="form-group col-md-4">
       <label for="inputEmail4">Descripción</label>
@@ -232,7 +227,13 @@
             sint:sint,
         },
         success: function(response){
-            alert("El protocolo se guardó exitosamente");
+            let alert = document.getElementById("alerta");
+              alert.classList.add('alert');
+              alert.classList.add('alert-success');
+              alert.innerHTML=`<button type="button" class="close" data-dismiss="alert">x</button><strong>Exito! </strong>El protocolo fue editado exitosamente!`;
+                    $("#alerta").fadeTo(2000, 500).slideUp(500, function(){
+                $("#alerta").slideUp(500);
+              });
         },
         error:function(err){
             if (err.status == 422) { // when status code is 422, it's a validation issue

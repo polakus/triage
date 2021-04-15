@@ -208,7 +208,7 @@
 				alert.classList.add('alert');
 				alert.classList.add('alert-success');
 				alert.innerHTML=`<button type="button" class="close" data-dismiss="alert">x</button><strongExito! </strong>Los datos fueron editados exitosamente`;
-        		$("#alerta").fadeTo(3000, 500).slideUp(500, function(){
+        		$("#alerta").fadeTo(2000, 500).slideUp(500, function(){
 			    $("#alerta").slideUp(500);window.location.replace('/roles');});
 			    
                 },

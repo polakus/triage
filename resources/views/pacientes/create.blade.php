@@ -3,15 +3,16 @@
 
 @section("cuerpo")
 
-<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-  <h4>Registrar un nuevo Paciente</h4>
-</div>
-<div class="flash-message">
+<div class="flash-message" id="alerta">
   @foreach (['danger', 'warning', 'success', 'info'] as $msg)
     @if(Session::has('alert-' . $msg))
       <p class="alert alert-{{ $msg }}">{{ Session::get('alert-' . $msg) }} <a href="{{ route('salas.index') }}" class="close" data-dismiss="alert" aria-label="close">&times;</a></p>
     @endif
   @endforeach
+</div>
+
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+  <h4>Registrar un nuevo Paciente</h4>
 </div>
 <form method="POST" action="/pacientes">
   @csrf
@@ -94,5 +95,18 @@
   <a href="{{route('pacientes.index')}}" class="btn btn-primary">Volver</a>
   
 </form>
+
+@endsection
+@section("scripts")
+@parent
+<script type="text/javascript">
+  $("document").ready(function(){
+
+   $("#alerta").fadeTo(2000, 500).slideUp(500, function(){
+                $("#alerta").slideUp(500);
+              });
+
+});
+</script>
 
 @endsection

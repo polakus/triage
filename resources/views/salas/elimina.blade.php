@@ -1,6 +1,6 @@
 <!-- Small modal -->
 
-<button type="button"  class="btn btn-outline-secondary btn-sm" data-toggle="modal" data-target=".bd-example-modal-sm">Eliminar</button>
+<button type="button"  class="btn btn-outline-secondary btn-sm" data-toggle="modal" data-target="#modalEliminar{{ $sala->id }}">Eliminar</button>
 
 <div class="modal fade bd-example-modal-sm" id="modalEliminar{{ $sala->id }}" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-sm">

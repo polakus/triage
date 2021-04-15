@@ -2,7 +2,29 @@
 @section("css")
 
 <style type="text/css">
-  
+  .color-rojo{
+    background:linear-gradient(#EC7063,#E70E0E)!important;
+  }
+  .color-rojo:hover{
+    background: linear-gradient(#E70E0E,#B22222) !important;
+  }
+  .color-verde{
+    background:linear-gradient(#B3FFAA,#7CBC14)!important; 
+
+  }
+  .color-verde:hover{
+    background:linear-gradient(#7CBC14,#669C0C)!important; 
+  }
+
+  .color-amarillo{
+    background: linear-gradient(#F8FFAA,#DCE616)!important; 
+  }
+  .color-amarillo:hover{
+    background: linear-gradient(#DCE616,#B5BD1C)!important; 
+  }
+  thead th{
+    border-bottom: 0px solid grey !important;
+  }
 </style>
 @endsection
 @section("cuerpo")
@@ -89,10 +111,13 @@
 
 <script type="text/javascript">
   $(document).ready(function() {
-   
+    var us = <?php echo Auth::id(); ?>;
+    let url = "{{ url('api/mostrar') }}";
+    url = url+"/"+us;
+    
     var table=$('#example').DataTable({
       "serverSide":true,
-           "ajax":{url:"{{ url('api/mostrar') }}",
+           "ajax":{url:url,
               
          },
            "columns":[
@@ -110,15 +135,19 @@
          "createdRow": function( row, data, dataIndex){
                           if(data.color=="rojo"){
 
-                           $(row).css('background-color', '#FFAAAA');
+                           // $(row).css('background-color', '#FFAAAA');
+                           $(row).addClass('color-rojo');
+
                           }
                           else{
                             if(data.color=="verde"){
-                              $(row).css('background-color','#B3FFAA');
+                              // $(row).css('background-color','#B3FFAA');
+                              $(row).addClass('color-verde');
                              
                             }
                             else{
-                              $(row).css('background-color','#F8FFAA')
+                              // $(row).css('background-color','#F8FFAA')
+                              $(row).addClass('color-amarillo');
                             }
                           }
                          },

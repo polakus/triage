@@ -57,17 +57,22 @@ Route::get('profesionales',function(Request $request){
 	return DataTables::of($detalles_atenciones)->toJson();
 });
 
-Route::get('ApiPacientes',function(){
+Route::get('ApiPacientes/{us}',function(User $us){
+  
     $pacientes= DB::table('pacientes')->where('nombre','!=','nn')->where('apellido','!=','nn')->get();
 
     return DataTables::of($pacientes)
-                       ->addColumn('btn','pacientes/botones')
+                       // ->addColumn('btn','pacientes/botones')
+                        ->addColumn('btn', function($paciente) use ($us){
+                            return view('pacientes/botones',compact('paciente','us'));
+                        })
+
                        ->rawColumns(['Accion','btn'])
     ->toJson();
 });
 
 
-Route::get('mostrar',function(){
+Route::get('mostrar/{us}', function(User $us){
     $pacientes= DB::table('detalle_atencion as da')
                     ->join('det_especialidad_area as det_e_a','det_e_a.id_especialidad','=','da.id_especialidad')
                     ->join('areas as are','are.id','=','det_e_a.id_area')
@@ -104,33 +109,42 @@ Route::get('mostrar',function(){
                             }
                         })
                         // ->rawColumns(['observacion'])
-                        ->addColumn('Internacion', function($paciente) use($salas){
-                            return view('turnos/actionsInternar',compact('paciente','salas'));
+                        ->addColumn('Internacion', function($paciente) use($salas, $us){
+                            if($us->can('FullAtencion') or $us->can('InternacionAtencion')){
+                                return view('turnos/actionsInternar',compact('paciente','salas'));
+                            }
                         })
                         // ->addColumn('Operar','turnos/actionsOperar')
-                        ->addColumn('Operar', function($paciente) use ($salas){
-
-                            return view('turnos/actionsOperar', compact('paciente', 'salas'));
+                        ->addColumn('Operar', function($paciente) use ($salas, $us){
+                            if($us->can('FullAtencion') or $us->can('OperacionAtencion')){
+                                return view('turnos/actionsOperar', compact('paciente', 'salas'));
+                            }
                         })
-                        ->addColumn('DarAlta','turnos/daralta')
+                        ->addColumn('DarAlta', function($paciente) use($us){
+                            return view('turnos/daralta', compact('paciente','us'));
+                        })
                         ->rawColumns(['observacion','Internacion','Operar','DarAlta'])
                     ->toJson();
 });
 
 
-Route::get('sintomas_cargar', function(){
+Route::get('sintomas_cargar/{us}', function(User $us){
      $sintomas=DB::table('sintomas')->get();
      return DataTables::of($sintomas)
-                       ->addColumn('button','sintomas/action_editar_eliminar')
+                       ->addColumn('button',function($sintoma) use ($us){
+                        return view('sintomas/action_editar_eliminar',compact('sintoma','us'));
+                       })
                        ->rawColumns(['button'])
     ->toJson();
 });
 
-Route::get('cargar_cie', function(){
+Route::get('cargar_cie/{us}', function(User $us){
     // $cies = App\CIE::all();
     $enfermedades = DB::table('cie')->orderBy('codigo')->get();
     return DataTables::of($enfermedades)
-                        ->addColumn('button', 'cie/action_editar')
+                        ->addColumn('button', function($enfermedad) use($us){
+                            return view('cie/action_editar',compact('enfermedad','us'));
+                        })
                         ->rawColumns(['button'])
                         ->toJson();
 });

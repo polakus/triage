@@ -6,11 +6,13 @@
 	<div id="alerta"></div>
 	<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
         <h4 class="h4">CIE</h4>
+        @canany(['FullCie','RegistrarCie'])
         <div class="btn-toolbar mb-2 mb-md-0">
 			<button type="button" class="btn btn-outline-secondary btn-sm" data-toggle="modal" style="width: 100%;" data-target="#exampleModal">
 				Agregar CIE
 			</button>
     	</div>
+    	@endcanany
     </div>
 	
 	
@@ -69,11 +71,12 @@
 
 <script type="text/javascript">
 	$(document).ready(function() {
+		var us=<?php echo Auth::id();?>;
 		var tabla = $('#myTable').DataTable({
 			"responsive":true,
 			"serverSide":true,
 			"processing":true,
-			"ajax":{url:"{{ url('api/cargar_cie') }}",},
+			"ajax":{url:"api/cargar_cie/"+us},
 			"columns":[
 				{data:'codigo'}, 
 				{data:'descripcion'}, 
@@ -156,7 +159,7 @@
 				//MUESTRA ALERTA
 				$('#alerta').addClass('alert '+response.tipo);
 				$('#alerta').html('<b>'+response.mensaje+'</b>');
-				$("#alerta").fadeTo(4000, 500).slideUp(500, function(){
+				$("#alerta").fadeTo(2000, 500).slideUp(500, function(){
 					$("#alerta").slideUp(500);
 				});  
             },
@@ -218,7 +221,7 @@
         });
 	}
 	function eliminarCie(id){
-		if (confirm('¿Desea eliminar elemento?')){
+		$('#modalEliminar'+id).modal('hide');
 			$.ajaxSetup({
 				headers: {
 					'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -237,7 +240,7 @@
                 	table.draw();
 					$('#alerta').addClass('alert '+response.tipo);
 					$('#alerta').html('<b>'+response.mensaje+'</b>');
-					$("#alerta").fadeTo(4000, 500).slideUp(500, function(){
+					$("#alerta").fadeTo(2000, 500).slideUp(500, function(){
 						$("#alerta").slideUp(500);
 					});
 				},
@@ -245,7 +248,7 @@
 					alert("Hubo un error al intentar eliminar elemento");
 				}
 			});
-		}
+
 	}
 </script>
 
