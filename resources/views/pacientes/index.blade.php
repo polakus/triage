@@ -12,7 +12,7 @@
 
 @section("cuerpo")
 @if (Session::has('success'))
-  <div class="alert alert-success" role="alert">
+  <div class="alert alert-success" role="alert" id="alerta">
     <strong>{{ Session::get('success') }}</strong>
     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
       <span aria-hidden="true">&times;</span>
@@ -119,7 +119,7 @@
     // setTimeout(function(){
     //    $("div.alert").remove();
     // }, 5000 ); // 5 secs
-   $("div.alert").fadeTo(2000, 500).slideUp(500, function(){
+   $("#alerta").fadeTo(2000, 500).slideUp(500, function(){
                 $("#alerta").slideUp(500);
               });
 

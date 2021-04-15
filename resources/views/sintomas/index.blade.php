@@ -191,7 +191,7 @@
 
 <script type="text/javascript">
 function eliminar(id,sintoma){
-    if (confirm('¿Esta seguro de eliminar el sintoma '+sintoma+'? Tenga en cuenta que se eliminara todos los datos relacionados a ella.')) {
+    $('#modalEliminar'+id).modal('hide');
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -221,7 +221,6 @@ function eliminar(id,sintoma){
                        
             }
         });
-    }
 }
 
 </script>

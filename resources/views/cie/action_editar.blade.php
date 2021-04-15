@@ -50,7 +50,30 @@
     </div>
 </div>
 @if($us->can('FullCie') or $us->can('EliminarCie'))
-<button type="button" class="btn btn-outline-secondary btn-sm "  id="eliminarcie" onclick="eliminarCie({{$enfermedad->id}})">
+<button type="button" class="btn btn-outline-secondary btn-sm " data-toggle="modal" data-target="#modalEliminar{{ $enfermedad->id }}"  id="eliminarcie" >
     Eliminar
 </button>
 @endif
+
+<div class="modal fade bd-example-modal-sm" id="modalEliminar{{ $enfermedad->id }}" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Alerta</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        Estas seguro/a que deseas eliminar el CIE?
+        <li><strong>CIE: {{ $enfermedad->codigo }}-{{ $enfermedad->descripcion }}</strong></li>
+        <!-- <li></li> -->
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-success" id="bn{{$enfermedad->id}}" onclick="eliminarCie({{$enfermedad->id}})"><i class="far fa-check-circle"></i> Eliminar</button>
+        <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="far fa-times-circle"></i> Cerrar</button>
+        
+      </div>
+    </div>
+  </div>
+</div>

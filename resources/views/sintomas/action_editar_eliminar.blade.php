@@ -2,13 +2,13 @@
 <button type="button" class="btn btn-outline-secondary btn-sm " style="width: 30%" data-toggle="modal" data-target="#editar{{ $sintoma->id }}">Editar</button>
 @endif
 @if($us->can('FullSintoma') or $us->can('EliminarSintoma'))
-<button type="button" class="btn btn-outline-secondary btn-sm " style="width: 30%;" onclick="eliminar({{ $sintoma->id }},'{{ $sintoma->descripcion }}')">Eliminar</button>
+<button type="button" class="btn btn-outline-secondary btn-sm " style="width: 30%;" data-toggle="modal" data-target="#modalEliminar{{ $sintoma->id }}">Eliminar</button>
 @endif
 <div class="modal fade" id="editar{{$sintoma->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="false">
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-header">
-				<h4 class="modal-title" id="exampleModalLabel">Editar síntoma</h3>
+				<h4 class="modal-title" id="exampleModalLabel">Editar síntoma</h4>
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 					<span aria-hidden="true">&times;</span>
 				</button>
@@ -33,6 +33,28 @@
 	</div>
 </div>
 
+<div class="modal fade bd-example-modal-sm" id="modalEliminar{{$sintoma->id}}" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Alerta</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        Estas seguro/a que deseas eliminar el sintoma?
+        <li><strong>Sintoma: {{ $sintoma->descripcion }}</strong> </li>
+        <!-- <li></li> -->
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-success" id="bn{{$sintoma->id}}" onclick="eliminar({{ $sintoma->id }},'{{ $sintoma->descripcion }}')"><i class="far fa-check-circle"></i> Eliminar</button>
+        <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="far fa-times-circle"></i> Cerrar</button>
+        
+      </div>
+    </div>
+  </div>
+</div>
 <script>
 function editar(id) {
     //limpia div para mensajes de error

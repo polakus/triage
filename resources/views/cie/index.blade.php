@@ -159,7 +159,7 @@
 				//MUESTRA ALERTA
 				$('#alerta').addClass('alert '+response.tipo);
 				$('#alerta').html('<b>'+response.mensaje+'</b>');
-				$("#alerta").fadeTo(4000, 500).slideUp(500, function(){
+				$("#alerta").fadeTo(2000, 500).slideUp(500, function(){
 					$("#alerta").slideUp(500);
 				});  
             },
@@ -221,7 +221,7 @@
         });
 	}
 	function eliminarCie(id){
-		if (confirm('¿Desea eliminar elemento?')){
+		$('#modalEliminar'+id).modal('hide');
 			$.ajaxSetup({
 				headers: {
 					'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -240,7 +240,7 @@
                 	table.draw();
 					$('#alerta').addClass('alert '+response.tipo);
 					$('#alerta').html('<b>'+response.mensaje+'</b>');
-					$("#alerta").fadeTo(4000, 500).slideUp(500, function(){
+					$("#alerta").fadeTo(2000, 500).slideUp(500, function(){
 						$("#alerta").slideUp(500);
 					});
 				},
@@ -248,7 +248,7 @@
 					alert("Hubo un error al intentar eliminar elemento");
 				}
 			});
-		}
+
 	}
 </script>
 
