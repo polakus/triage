@@ -83,8 +83,8 @@ Route::get('/pruebas', function(){
     //     echo "si";
     // else
     //     echo "no";
-    echo User::find(1)->getAllPermissions();
-    echo User::find(1)->name;
+    echo Auth::user()->getAllPermissions();
+    echo Auth::user()->name;
     // return redirect('/prueba2/'.$user);//->route('p2',$user);
 });
 Route::get('/prueba2/{user}',function(Request $request, $user){

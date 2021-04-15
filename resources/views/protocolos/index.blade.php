@@ -18,7 +18,9 @@
     <h4 class="h2">Protocolos</h4>
     <div class="btn-toolbar mb-2 mb-md-0">
       <div class="btn-group mr-2">
+        @canany(['RegistrarProtocolo','FullProtocolos'])
         <a type="button" class="btn btn-sm btn-outline-secondary" href="{{ route('protocolos.create') }}">Agregar Protocolo</a>
+        @endcanany
       </div>
     </div>
 </div>
@@ -68,11 +70,11 @@
 };
 
   $(document).ready(function() {
-   
+    var us = <?php echo Auth::id() ?>;
     var table=$('#example').DataTable({
 
       "serverSide":true,
-           "ajax":{url:"{{ url('api/protocolos') }}",
+           "ajax":{url:"api/protocolos/"+us,//"{{ url('api/protocolos') }}",
               
          },
            "columns":[

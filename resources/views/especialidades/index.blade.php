@@ -8,9 +8,11 @@
 	<h4 class="h4">Especialidades</h4>
 	<div class="btn-toolbar mb-2 mb-md-0">
 		<div class="btn-group mr-2">
+			@canany(['RegistrarEspecialidad','FullEspecialidades'])
 			<button type="button" class="btn btn-sm btn-outline-secondary" data-toggle="modal" data-target="#exampleModal">
 				Agregar especialidad
 			</button>
+			@endcanany
 		</div>
 	</div>
 </div>
@@ -89,12 +91,13 @@
 {{-- JS Datatables --}}
 
 <script type="text/javascript">
+	var us = <?php echo Auth::id() ?>;
 	$(document).ready(function() {
 		$('#myTable').DataTable({
 			"processing":true,
 			"responsive":true,
 			"serverSide":true,
-			"ajax":{url:"{{ url('api/dtespecialidades') }}",},
+			"ajax":{url:"api/dtespecialidades/"+us,},//"{{ url('api/dtespecialidades') }}",},
 			"columns":[
 				{data:'nombesp'}, 
 				{data:'descripcion'}, 

@@ -1,8 +1,9 @@
 
-
+@if($us->hasAnyPermission(['EditarEspecialidad','FullEspecialidades']))
 <button type="button" id="bnedit" class="btn btn-outline-secondary btn-sm ml-1" data-toggle="modal" data-target="#editar{{ $especialidad->id }}">
     Editar
 </button>
+@endif
 <div class="modal fade" id="editar{{ $especialidad->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -52,7 +53,9 @@
      </div>
     </div>
 </div>
+@if($us->hasAnyPermission(['EliminarEspecialidad','FullEspecialidades']))
 <button id="elid{{$especialidad->id}}" type="button" class="btn btn-sm btn-outline-secondary ml-1" onclick="eliminar('{{ $especialidad->nombesp }}','{{$especialidad->id}}')">Eliminar</button>
+@endif
 <script>
     var select2=$('.select').select2();
     function editaresp(id) {

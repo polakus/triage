@@ -1,7 +1,7 @@
-@if($us->can('EditarArea'))
+@if($us->hasAnyPermission(['EditarArea','FullSalas']))
 <button type="button"  class="btn btn-outline-secondary btn-sm" data-toggle="modal" data-target="#modal_editar_area{{$area->id}}">Editar</button>
 @endif
-@if($us->can('EliminarArea'))
+@if($us->hasAnyPermission(['EliminarArea','FullSalas']))
 <button type="button"  class="btn btn-outline-secondary btn-sm" data-toggle="modal" data-target="#modalEliminarArea{{$area->id}}">Eliminar</button>
 @endif
 <!-- Modal Edit -->

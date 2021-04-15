@@ -135,7 +135,7 @@ Route::get('cargar_cie', function(){
                         ->toJson();
 });
 
-Route::get('dtespecialidades', function(){
+Route::get('dtespecialidades/{us}', function(User $us){
     // $especialidades = App\Especialidad::all();
     $especialidades = DB::table('especialidades as esp')
                         ->join('det_especialidad_area as det','det.id_especialidad','=','esp.id')
@@ -145,8 +145,8 @@ Route::get('dtespecialidades', function(){
     $editareas = App\Area::all();
     // $area_seleccionada = App\Det_especialidad_area::where('id_especialidad', '=', $especialidades->id)->first()->area->id;
     return DataTables::of($especialidades)
-                        ->addColumn('button', function($especialidad) use ($editareas){
-                            return view('especialidades/accion_editar', compact('editareas', 'especialidad'));
+                        ->addColumn('button', function($especialidad) use ($editareas,$us){
+                            return view('especialidades/accion_editar', compact('editareas', 'especialidad', 'us'));
                         })
                         ->rawColumns(['button'])
                         ->toJson();
@@ -165,35 +165,37 @@ Route::get('historial',function(Request $request){
            ->toJson();
 });
 
-Route::get('protocolos',function(){
+Route::get('protocolos/{us}',function(User $us){
     $protocolos=App\Protocolo::select('*')
                     ->join('det_protocolos as det','protocolos.id','=','det.id_protocolo')
                     ->whereNotNull('det.id_protocolo')
                     ->get();
     return DataTables::of($protocolos)
-                        ->addColumn('ver',function(){
-                            return '<button class="btn btn-sm btn-outline-secondary" style="font-size:12px;"> Ver </button>';
-                        })
-                        ->addColumn('codigo',function($protocolo){
-                            return $protocolo->codigo->color;
-                        })
-                        ->addColumn('especialidad',function($protocolo){
-                            $l="";
-                            foreach($protocolo->detalle_protocolo as $det)
-                                $l=$l.$det->especialidad->nombre;
-                            return $l;
-                        })
-                        ->addColumn('sintomas',function($protocolo){
-                             $s="";
-                            foreach($protocolo->det_sintomas_protocolos as $det)
-                                $s=$s.$det->sintoma->descripcion.'-';
-                            return $s;
-                        })
-                        ->addColumn('buttons',function($protocolo){
-                            return '<a class="btn btn-sm btn-outline-secondary ml-1"href="/editarProtocolo/'.$protocolo->id.'">Editar</a>'.'<button class="btn btn-outline-secondary btn-sm ml-1" onclick="eliminar('.$protocolo->id.')">Eliminar</button>';
-                        })
-                        ->rawColumns(['codigo','especialidad','sintomas','ver','buttons'])
-                        ->toJson();
+            ->addColumn('ver',function(){
+                return '<button class="btn btn-sm btn-outline-secondary" style="font-size:12px;"> Ver </button>';
+            })
+            ->addColumn('codigo',function($protocolo){
+                return $protocolo->codigo->color;
+            })
+            ->addColumn('especialidad',function($protocolo){
+                $l="";
+                foreach($protocolo->detalle_protocolo as $det)
+                    $l=$l.$det->especialidad->nombre;
+                return $l;
+            })
+            ->addColumn('sintomas',function($protocolo){
+                    $s="";
+                foreach($protocolo->det_sintomas_protocolos as $det)
+                    $s=$s.$det->sintoma->descripcion.'-';
+                return $s;
+            })
+            ->addColumn('buttons',function($protocolo) use ($us){
+                $editar = $us->hasAnyPermission(['EditarProtocolo','FullProtocolos']) ? '<a class="btn btn-sm btn-outline-secondary ml-1"href="/editarProtocolo/'.$protocolo->id.'">Editar</a>' : '';
+                $eliminar = $us->hasAnyPermission(['EliminarProtocolo','FullProtocolos']) ? '<button class="btn btn-outline-secondary btn-sm ml-1" onclick="eliminar('.$protocolo->id.')">Eliminar</button>':'';
+                return $editar.$eliminar;
+            })
+            ->rawColumns(['codigo','especialidad','sintomas','ver','buttons'])
+            ->toJson();
 });
 Route::get('editprotocolo', function(){
     $sintomas = App\Sintoma::all();
@@ -232,11 +234,11 @@ Route::get('tablasalas/{us}',function(Request $request, User $us){
                     return $sala->area->nombre;
                 })->rawColumns(['area'])
                 ->addColumn('habilita', function($sala) use ($us){
-                    if($us->can('HabilitarSala'))
+                    if($us->hasAnyPermission(['HabilitarSala','FullSalas']))
                         return view('salas/habilitasala', compact('sala'));
                 })->rawColumns(['habilita'])
                 ->addColumn('elimina', function($sala) use($us){
-                    if($us->can('EliminarSala'))
+                    if($us->hasAnyPermission(['HabilitarSala','FullSalas']))
                         return view('salas/elimina', compact('sala'));
                 })->rawColumns(['elimina'])
                 ->toJson();

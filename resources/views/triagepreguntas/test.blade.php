@@ -205,24 +205,28 @@
             </a>
           </li>
           @endcanany
+          @canany(['VerProtocolos','FullProtocolos'])
           <li class="nav-item">
             <a id="protocolos" class="nav-link <?php  if ($url_array[3] == "protocolos" or $url_array[3] == "editarProtocolo"){ echo "active";} ?>" href="{{route('protocolos.index')}}">
               <span data-feather="layers"></span>
               Protocolos
             </a>
           </li>
+          @endcanany
           <li class="nav-item">
             <a id="cie "class="nav-link <?php  if ($url_array[3] == "cie"){ echo "active";} ?>" href="{{route('cie.index')}}">
               <span data-feather="layers"></span>
               CIE
             </a>
           </li>
+          @canany(['VerEspecialidades','FullEspecialidades'])
           <li class="nav-item">
             <a id="especialidades" class="nav-link <?php  if ($url_array[3] == "especialidades"){ echo "active";} ?>" href="{{route('especialidades.index')}}">
               <span data-feather="layers"></span>
               Especialidades
             </a>
           </li>
+          @endcanany
           <li class="nav-item">
             <a id="especialidades" class="nav-link" href="/profesionales/atenciones">
               <span data-feather="layers"></span>
