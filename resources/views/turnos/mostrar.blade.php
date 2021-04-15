@@ -111,10 +111,13 @@
 
 <script type="text/javascript">
   $(document).ready(function() {
-   
+    var us = <?php echo Auth::id(); ?>;
+    let url = "{{ url('api/mostrar') }}";
+    url = url+"/"+us;
+    
     var table=$('#example').DataTable({
       "serverSide":true,
-           "ajax":{url:"{{ url('api/mostrar') }}",
+           "ajax":{url:url,
               
          },
            "columns":[

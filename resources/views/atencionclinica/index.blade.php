@@ -7,7 +7,7 @@
         <h4 class="h4">Pacientes para atender</h4>
 </div>
 <input type="hidden" name="_token" value="{{ csrf_token() }}" id="token">
-
+    @canany(['SalaAtencionClinica','FullAtencionClinica'])
       <div id="Salas">
         <form method="POST" action="/atencionclinica/sala">
           @csrf
@@ -34,7 +34,7 @@
       </div>
       </form>
       </div>
-
+    @endcanany
 
 
 @endsection

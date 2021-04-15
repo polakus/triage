@@ -72,7 +72,7 @@ Route::get('ApiPacientes/{us}',function(User $us){
 });
 
 
-Route::get('mostrar',function(){
+Route::get('mostrar/{us}', function(User $us){
     $pacientes= DB::table('detalle_atencion as da')
                     ->join('det_especialidad_area as det_e_a','det_e_a.id_especialidad','=','da.id_especialidad')
                     ->join('areas as are','are.id','=','det_e_a.id_area')
@@ -109,15 +109,20 @@ Route::get('mostrar',function(){
                             }
                         })
                         // ->rawColumns(['observacion'])
-                        ->addColumn('Internacion', function($paciente) use($salas){
-                            return view('turnos/actionsInternar',compact('paciente','salas'));
+                        ->addColumn('Internacion', function($paciente) use($salas, $us){
+                            if($us->can('FullAtencion') or $us->can('InternacionAtencion')){
+                                return view('turnos/actionsInternar',compact('paciente','salas'));
+                            }
                         })
                         // ->addColumn('Operar','turnos/actionsOperar')
-                        ->addColumn('Operar', function($paciente) use ($salas){
-
-                            return view('turnos/actionsOperar', compact('paciente', 'salas'));
+                        ->addColumn('Operar', function($paciente) use ($salas, $us){
+                            if($us->can('FullAtencion') or $us->can('OperacionAtencion')){
+                                return view('turnos/actionsOperar', compact('paciente', 'salas'));
+                            }
                         })
-                        ->addColumn('DarAlta','turnos/daralta')
+                        ->addColumn('DarAlta', function($paciente) use($us){
+                            return view('turnos/daralta', compact('paciente','us'));
+                        })
                         ->rawColumns(['observacion','Internacion','Operar','DarAlta'])
                     ->toJson();
 });

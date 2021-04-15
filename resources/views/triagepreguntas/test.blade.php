@@ -129,6 +129,7 @@
       .table-wrapper-scroll-y {
         display: block;
       }
+
     </style>
    
   </head>
@@ -138,11 +139,12 @@
       $usuario = Auth::user();
     ?>
     <!-- linear-gradient(to bottom, #555, #222)# -->
-    <nav class="navbar navbar-dark sticky-top  flex-md-nowrap p-0 shadow" style="background:#24292E;">
+    <nav class="navbar navbar-dark sticky-top  flex-md-nowrap p-0 shadow" id="siderbar" style="background:#24292E;">
       <a class="navbar-brand col-md-3 col-lg-2 mr-0 px-3" style="background: #24292E;" href="#">Hopistal San Bernardo</a>
       <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-toggle="collapse" data-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
+      
       <div class="dropdown" >
         <a class="btn btn-dark dropdown-toggle" style="background-color: transparent;"href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           {{ $usuario->name }}
@@ -161,7 +163,7 @@
 
 <div class="container-fluid">
   <div class="row">
-    <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse" >
+    <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse " >
       <div class="sidebar-sticky pt-3">
         <ul class="nav flex-column">
          
@@ -179,12 +181,14 @@
             </a>
           </li>
           @endcanany
+          @canany(['FullAtencion','VerAtencion'])
           <li class="nav-item">
             <a  id="turnos" class="nav-link  <?php  if ($url_array[3] == "turnos"){ echo "active";} ?>" href="{{route('mostrar')}}">
               <span data-feather="calendar"></span>
               Atenciones
             </a>
           </li>
+          @endcanany
           @canany(['FullSintoma','VerSintoma'])
           <li class="nav-item">
             <a id="sintomas"class="nav-link <?php  if ($url_array[3] == "sintomas"){ echo "active";} ?>" href="{{route('sintomas.index')}}">
@@ -193,12 +197,14 @@
             </a>
           </li>
           @endcanany
+          @canany(['VerAtencionClinica','FullAtencionClinica'])
           <li class="nav-item">
             <a id="atencionclinica"class="nav-link <?php  if ($url_array[3] == "atencionclinica"){ echo "active";} ?>" href="{{route('atencionclinica.index')}}">
               <span data-feather="bar-chart-2"></span>
               Triaje Clinico
             </a>
           </li>
+          @endcanany
           @canany(['VerSalasAreas','FullSalas'])
           <li class="nav-item">
             <a id="salas"class="nav-link <?php  if ($url_array[3] == "salas"){ echo "active";} ?>" href="{{route('salas.index')}}">
