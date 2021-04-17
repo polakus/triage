@@ -13,11 +13,10 @@ use DB;
 
 class RolesController extends Controller
 {
-    /**
-     * Display a listing of the resourc
-     *
-     * @return \Illuminate\Http\Response
-     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     public function index()
     {
         // $roles = Role::all();
@@ -31,7 +30,7 @@ class RolesController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create()
-    {  
+    {
         $permisos = Permission::all();
         return view('roles.create', compact('permisos'));
     }
@@ -60,9 +59,9 @@ class RolesController extends Controller
         for($i=0;$i<count($permisos);$i++){
             DB::table('role_has_permissions')->insert([
                 ['permission_id' => $permisos[$i],'role_id' => $rol->id],
-               
+
             ]);
-        }        
+        }
         return response()->json();
 
     }
@@ -88,7 +87,7 @@ class RolesController extends Controller
     {
         $permisos = Permission::all();
         $rol = Role::find($id);
-        
+
         $permisos_rol = DB::table('roles')
                    ->join('role_has_permissions as rol_perm','rol_perm.role_id','=','roles.id')
                    ->join('permissions as permisos','permisos.id','=','rol_perm.permission_id')
@@ -124,9 +123,9 @@ class RolesController extends Controller
         for($i=0;$i<count($permisos);$i++){
             DB::table('role_has_permissions')->insert([
                 ['permission_id' => $permisos[$i],'role_id' => $id],
-               
+
             ]);
-        } 
+        }
         return response()->json();
 
 

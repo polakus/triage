@@ -130,7 +130,13 @@
       .table-wrapper-scroll-y {
         display: block;
       }
-
+      /* CSS ALE */
+      .zoom {
+        transition: transform .2s; /* Animation */
+      }
+      .zoom:hover {
+        transform: scale(1.2); /* (120% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
+      }
     </style>
    
   </head>
@@ -246,14 +252,14 @@
           </li>
           @canany(['VerUsuarios','FullUsuarios'])
           <li class="nav-item">
-            <a id="usuarios"class="nav-link <?php  if ($url_array[3] == "usuarios"){ echo "active";} ?>"  href="{{route('usuarios.index')}}">
+            <a id="usuarios" class="nav-link <?php  if ($url_array[3] == "usuarios"){ echo "active";} ?>"  href="{{route('usuarios.index')}}">
               <span data-feather="users"></span>
               Usuarios
             </a>
           </li>
           @endcanany
           <li class="nav-item">
-            <a id="roles" class="nav-link" href="/roles">
+            <a id="roles" class="nav-link <?php  if ($url_array[3] == "roles"){ echo "active";} ?>" href="/roles">
               <span data-feather="layers"></span>
               Roles
             </a>

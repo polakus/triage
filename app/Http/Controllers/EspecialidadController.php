@@ -10,11 +10,10 @@ use DB;
 
 class EspecialidadController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    public function __construct()
+    {
+        $this->middleware('permission:VerEspecialidades|FullEspecialidades');
+    }
     public function index()
     {
        // $especialidades = DB::table('Especialidades as esp')

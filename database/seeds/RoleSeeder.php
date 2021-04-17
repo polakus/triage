@@ -25,9 +25,9 @@ class RoleSeeder extends Seeder
         Permission::create(['name'=>"VerPacientes"]);
         Permission::create(['name'=>"FullPaciente"])->syncRoles($admin);
         Permission::create(['name'=>"RegistrarPaciente"]);
-        Permission::create(['name'=>"RegistrarPacienteNN"]);
+        Permission::create(['name'=>"RegistrarPacienteNN"]); // como se hace en el middleware?
         Permission::create(['name'=>"EditarPaciente"]);
-        Permission::create(['name'=>"TriajePaciente"]);
+        Permission::create(['name'=>"TriajePaciente"]); // como se hace en el middleware?
 
         #Permisos de Sintomas
         Permission::create(['name'=>"RegistrarSintoma"]);
@@ -43,7 +43,7 @@ class RoleSeeder extends Seeder
         Permission::create(['name'=>"VerCie"]);
         Permission::create(['name'=>"FullCie"])->syncRoles($admin);
         
-        #Permisos de Sala
+        #Permisos de Salas / Areas
         Permission::create(['name'=>"FullSalas"])->syncRoles($admin);        
         Permission::create(['name'=>"VerSalasAreas"])->syncRoles([$admin,$prof]);
         Permission::create(['name'=>"RegistrarSala"])->syncRoles($admin);
@@ -72,10 +72,10 @@ class RoleSeeder extends Seeder
         Permission::create(['name'=>"VerUsuarios"])->syncRoles([$admin,$prof]);
         Permission::create(['name'=>"RegistrarUsuario"])->syncRoles($admin);
         Permission::create(['name'=>"ModificarRolesUsuario"])->syncRoles($admin);
-        Permission::create(['name'=>"AdministrarUsuarios"])->syncRoles($admin);
+        Permission::create(['name'=>"AceptarUsuarios"])->syncRoles($admin);
         Permission::create(['name'=>"EliminarUsuario"])->syncRoles($admin);
 
-        #AtencionClinica
+        #Atencion Clinica
         Permission::create(['name'=>"SalaAtencionClinica"]);
         Permission::create(['name'=>"VerAtencionClinica"]);
         Permission::create(['name'=>"FullAtencionClinica"])->syncRoles($admin);
@@ -86,6 +86,8 @@ class RoleSeeder extends Seeder
         Permission::create(['name'=>"InternacionAtencion"]);
         Permission::create(['name'=>"OperacionAtencion"]);
         Permission::create(['name'=>"DarAltaAtencion"]);
-          
+        
+        #Editar roles
+        Permission::create(['name'=>'EditarRolesUsuario']);
     }
 }

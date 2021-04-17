@@ -7,7 +7,10 @@ use App\Paciente;
 
 class controladorPacientes extends Controller
 {
-
+    public function __construct()
+    {
+        $this->middleware(['auth','permission:VerPacientes|RegistrarPaciente|EditarPaciente|FullPaciente']);
+    }
     public function index()
     {
         //

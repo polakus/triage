@@ -8,21 +8,13 @@ use App\User;
 
 class userRolController extends Controller
 {
-    // get a list of all permissions directly assigned to the user
-    // $permissionNames = $user->getPermissionNames(); // collection of name strings
-    // $permissions = $user->permissions; // collection of permission objects
-
-    // get all permissions for the user, either directly, or from roles, or from both
-    // $permissions = $user->getDirectPermissions();
-    // $permissions = $user->getPermissionsViaRoles();
-    // $permissions = $user->getAllPermissions();
-
-    // get the names of the user's roles
-    // $roles = $user->getRoleNames(); // Returns a collection
-
+    public function __construct()
+    {
+        $this->middleware('permission:EditarRolesUsuario')->only('edit');
+    }
     public function index()
     {
-        //
+        
     }
 
     public function create()
@@ -37,16 +29,15 @@ class userRolController extends Controller
 
     public function show($id){
 
-        $useroles = User::find($id)->getRoleNames();
-        $roles = Role::all();
-        // echo $roles->name;
-        $idusuario = $id;
-        return view('rolusuario.show', compact('useroles', 'roles', 'idusuario'));
+        
     }
 
     public function edit($id)
     {
-        //
+        $useroles = User::find($id)->getRoleNames();
+        $roles = Role::all();
+        $idusuario = $id;
+        return view('rolusuario.show', compact('useroles', 'roles', 'idusuario'));
     }
 
     public function update(Request $request, $id)

@@ -13,20 +13,18 @@ use DB;
 
 class protocolosController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    public function __construct()
+    {
+        $this->middleware('permission:VerProtocolos|FullProtocolos');
+        $this->middleware('permission:RegistrarProtocolo|FullProtocolos')->only('create');
+        $this->middleware('permission:EditarProtocolo|FullProtocolos')->only('edit');
+
+    }
     public function index()
     {
         return view('protocolos.index');
     }
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function create()
     {
         $codigos = Codigo::all();
@@ -34,12 +32,7 @@ class protocolosController extends Controller
         $especialidades = Especialidad::all();
         return view('protocolos.create', compact('codigos', 'sintomas','especialidades'));
     }
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+
     public function store(Request $request)
     {
         $mensajes = [
@@ -75,24 +68,12 @@ class protocolosController extends Controller
         return response()->json();
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function show($id)
     {
 
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function editar($id)
+    public function edit($id)
     {
         $protocolo=DB::table('protocolos as prot')
                         ->join('codigostriage as cod','cod.id','=','prot.id_codigo_triage')
@@ -112,13 +93,6 @@ class protocolosController extends Controller
         return view('protocolos.edit', compact('codigos', 'sintomas','especialidades','protocolo','sintomas_actuales'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
     {
         $mensajes = [
@@ -182,9 +156,6 @@ class protocolosController extends Controller
             $dp->id_protocolo = $protocolo->id;
             $dp->save();
         }
-        
-        // $request->session()->flash('alert-success', 'El protocolo fue agregado exitosamente!');
-        // return redirect()->back()->withInput();
         return response()->json();
     }
 
@@ -196,10 +167,8 @@ class protocolosController extends Controller
      */
     public function destroy($id)
     {
-
         Detalle_Sintoma_Protocolo::where('id_protocolo', $id)->delete();
         Protocolo::destroy($id);
-        // return redirect()->route('protocolos.index');
         return response()->json();
     }
 }

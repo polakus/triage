@@ -8,15 +8,12 @@ use Illuminate\Support\Facades\Validator;
 
 class CieController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    public function __construct()
+    {
+        $this->middleware('permission:VerCie|FullCie');
+    }
     public function index()
     {
-  
-
         return view('cie.index');
     }
 

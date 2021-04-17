@@ -23,8 +23,9 @@ use Illuminate\Foundation\Auth\RegistersUsers;
 class usuariosController extends Controller
 {
     public function __construct(){
-            $this->middleware('auth');
-            // ->except(['index'])
+        $this->middleware('permission:VerUsuarios|FullUsuarios');
+        $this->middleware('permission:RegistrarUsuarios|FullUsuarios')->only('create');
+        $this->middleware('permission:AceptarUsuarios|FullUsuarios');
     }
 
     /**

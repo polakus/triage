@@ -15,11 +15,6 @@ use App\Sala;
 
 class HomeController extends Controller
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
     public function __construct()
     {
         $this->middleware('auth');
@@ -29,12 +24,7 @@ class HomeController extends Controller
         $nombre=strftime("%B",mktime(0, 0, 0, $mes, 1, 2000)); 
         return $nombre;
     }
-    
-    /**
-     * Show the application dashboard.
-     *
-     * @return \Illuminate\Contracts\Support\Renderable
-     */
+
     public function index()
     {
         $usuarios = user::all();

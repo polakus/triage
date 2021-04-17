@@ -3,6 +3,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Hash;
 use App\User;
 use App\Profesional;
+use Spatie\Permission\Models\Permission;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -43,21 +44,22 @@ Route::get('/editar/{id}', 'PacientesController@edit')->middleware('auth');
 Route::post('/pacientes/nn','PacientesController@insertarNN')->middleware('auth');
 Route::get('/atencionclinica/internacion','AtencionClinicaController@internar')->middleware('auth');
 
-Route::resource('/rolusuario','userRolController')->middleware('auth');
+Route::resource('/rolusuario','userRolController');
 Route::resource('/usuarios','usuariosController', ['except'=>['show', 'update']])->middleware('auth');
-Route::resource('/sintomas','SintomasController')->middleware('auth');
+Route::resource('/sintomas','SintomasController',['except'=>['show','edit','create']]); //middleware en constructor
 Route::resource('/atencionclinica','AtencionClinicaController')->middleware('auth');
 Route::resource('/turnos','TurnosController')->middleware('auth');
 Route::resource('/pacientes','PacientesController')->middleware('auth');
 Route::resource('/triagepreguntas', 'TriagepreguntasController')->middleware('auth');
-Route::resource('/salas', 'salasController')->middleware('auth');
-Route::resource('/areas', 'areasController', ['except' => ['show', 'edit']])->middleware('auth');
-Route::get('/editarProtocolo/{id}','protocolosController@editar')->middleware('auth');
-Route::resource('/protocolos', 'protocolosController')->middleware('auth');
+Route::resource('/salas', 'salasController');
+Route::resource('/areas', 'areasController', ['except' => ['index', 'show', 'edit', 'create']]);
+// Route::get('/editarProtocolo/{id}','protocolosController@editar')->middleware('auth');
+Route::resource('/protocolos', 'protocolosController');
 Route::get('/profesionales/atenciones','profesionalesController@atenciones')->middleware('auth');
-Route::resource('/profesionales', 'profesionalesController', ['except' => ['destroy', 'edit', 'update']])->middleware('auth');
-Route::resource('/cie','CieController')->middleware('auth');
-Route::resource('/especialidades','EspecialidadController')->middleware('auth');
+Route::resource('/profesionales', 'profesionalesController', ['except' => ['destroy', 'edit', 'update']]);
+Route::resource('/cie','CieController');
+Route::resource('/especialidades','EspecialidadController');
+Route::resource('/roles','RolesController');
 Route::get('/pruebas', function(){
     // User::create([
     //     'name' => "Cristian Zalazar",
@@ -83,12 +85,8 @@ Route::get('/pruebas', function(){
     //     'password' => Hash::make("asdfñlkj"),
     //     'estado' => 1,
     // ]);
-    // if(Auth::user()->can('VerSalasAreas'))
-    //     echo "si";
-    // else
-    //     echo "no";
-    echo Auth::user()->getAllPermissions();
-    echo Auth::user()->name;
+    
+    Permission::create(['name'=>'EditarRolesUsuario']);
     // return redirect('/prueba2/'.$user);//->route('p2',$user);
 });
 Route::get('/prueba2/{user}',function(Request $request, $user){
@@ -98,6 +96,4 @@ Route::get('/prueba2/{user}',function(Request $request, $user){
 Route::post('/atencionclinica/sala','AtencionClinicaController@cargarSala')->middleware('auth');
 
 Auth::routes();//['register' => false]);
-Route::get('/inicio', 'HomeController@index')->name('inicio')->middleware('auth');
-
-Route::resource('/roles','RolesController')->middleware('auth');
+Route::get('/inicio', 'HomeController@index')->name('inicio');

@@ -7,15 +7,11 @@ use App\Sintoma;
 
 class SintomasController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    public function __construct(){
+        $this->middleware('permission:VerSintoma|FullSintoma');
+    }
     public function index()
     {
-       
-
         return view('sintomas.index');
     }
 
