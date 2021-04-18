@@ -25,65 +25,40 @@ class usuariosController extends Controller
     public function __construct(){
         $this->middleware('permission:VerUsuarios|FullUsuarios');
         $this->middleware('permission:RegistrarUsuarios|FullUsuarios')->only('create');
-        $this->middleware('permission:AceptarUsuarios|FullUsuarios');
+        $this->middleware('permission:EliminarUsuarios|FullUsuarios')->only('destroy');
+        $this->middleware('permission:AceptarUsuarios|FullUsuarios')->only(['pendientes','aceptar','rechazar']);
     }
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
        $roles = Rol::all();
         return view('usuarios.index',compact('roles'));
     }
-    public function pendientes(){
-        return view('usuarios.pendientes');
-    }
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function create()
     {
         $roles = Rol::all();
         return view('usuarios.create', compact ('roles'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         return $this->register($request);
     }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+    
     public function show($id)
     {
         //
     }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+    
     public function edit($id)
     {
-
+        
     }
+    public function pendientes(){
+        return view('usuarios.pendientes');
+    }
+
     public function aceptar(Request $request, $id){
         if(Auth::user()->esAdmin()){
             $usuario = User::find($id);
@@ -109,24 +84,12 @@ class usuariosController extends Controller
         }
         return redirect()->back()->withInput();
     }
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function update(Request $request, $id)
     {
         
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy(Request $request, $id)
     {
         $mensaje="";

@@ -89,5 +89,12 @@ class RoleSeeder extends Seeder
         
         #Editar roles
         Permission::create(['name'=>'EditarRolesUsuario']);
+
+        # Permisos - Roles
+        Permission::create(['name'=>"Ver"]);
+        Permission::create(['name'=>"FullAtencion"])->syncRoles($admin);
+        Permission::create(['name'=>"InternacionAtencion"]);
+        Permission::create(['name'=>"OperacionAtencion"]);
+        Permission::create(['name'=>"DarAltaAtencion"]);
     }
 }
