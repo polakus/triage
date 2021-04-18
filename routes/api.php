@@ -91,9 +91,17 @@ Route::get('mostrar/{us}', function(User $us){
                     ->orderBy('da.hora','ASC')
                     ->get();
 
-    $salas = DB::table('salas as s')
+    $salas_internacion = DB::table('salas as s')
                     ->join('areas as a','a.id','=','s.id_area')
+                    ->join('configuracion_areas as conf','conf.id_area','=','a.id')
                     ->select('a.nombre','s.nombre','s.camas','s.disponibilidad','s.id')
+                    ->where('conf.nombre','=','internacion')
+                    ->get();
+    $salas_operacion = DB::table('salas as s')
+                    ->join('areas as a','a.id','=','s.id_area')
+                    ->join('configuracion_areas as conf','conf.id_area','=','a.id')
+                    ->select('a.nombre','s.nombre','s.camas','s.disponibilidad','s.id')
+                    ->where('conf.nombre','=','operacion')
                     ->get();
     return DataTables::of($pacientes)
                         ->addColumn('observacion',function($paciente){
@@ -109,15 +117,15 @@ Route::get('mostrar/{us}', function(User $us){
                             }
                         })
                         // ->rawColumns(['observacion'])
-                        ->addColumn('Internacion', function($paciente) use($salas, $us){
+                        ->addColumn('Internacion', function($paciente) use($salas_internacion, $us){
                             if($us->can('FullAtencion') or $us->can('InternacionAtencion')){
-                                return view('turnos/actionsInternar',compact('paciente','salas'));
+                                return view('turnos/actionsInternar',compact('paciente','salas_internacion'));
                             }
                         })
                         // ->addColumn('Operar','turnos/actionsOperar')
-                        ->addColumn('Operar', function($paciente) use ($salas, $us){
+                        ->addColumn('Operar', function($paciente) use ($salas_operacion, $us){
                             if($us->can('FullAtencion') or $us->can('OperacionAtencion')){
-                                return view('turnos/actionsOperar', compact('paciente', 'salas'));
+                                return view('turnos/actionsOperar', compact('paciente', 'salas_operacion'));
                             }
                         })
                         ->addColumn('DarAlta', function($paciente) use($us){

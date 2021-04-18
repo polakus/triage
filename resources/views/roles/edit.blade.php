@@ -1,6 +1,12 @@
 @extends('triagepreguntas.test')
 
-
+@section('css')
+<style type="text/css">
+  #myTable .btn{
+    width: 50% !important;
+  }
+</style>
+@endsection
 @section('cuerpo')
 <div id='alerta'></div>
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
@@ -18,7 +24,7 @@
         <input placeholder="Buscar aqui" type="text" id="buscar" class="input form-control"/>
         <listgroup class="is-visible list-group" id="searchList"></listgroup>
     </div>
-    <div class="form-group col-md-4">
+    <div class="form-group col-md-2">
       <button type="button" id="btn_agregar" onclick="addRow()" class="btn btn-mod">Agregar</button>    
     </div>
   </div>
@@ -35,9 +41,11 @@
       </tbody>
     </table>
 </div>
+<div class="d-flex w-25">
+  <button type="button" id="btn_perm" onclick=editar({{ $id }}) class="btn btn-mod">Editar</button>
+<a class="btn btn-outline-secondary btn-close ml-1" href="{{ route('roles.index') }}">Volver</a>
+</div>
 
-<button type="button" id="btn_perm" onclick=editar({{ $id }}) class="btn btn-mod">Editar</button>
-<a class="btn btn-outline-secondary btn-close" href="{{ route('roles.index') }}">Volver</a>
 
 @endsection
 @section('scripts')

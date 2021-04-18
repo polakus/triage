@@ -147,8 +147,8 @@ class TurnosController extends Controller
 
 
     public function mostrar(Request $request){
-      
-       return view('turnos.mostrar');
+       $areas = Area::all();
+       return view('turnos.mostrar',compact('areas'));
      }
         
     
@@ -315,5 +315,14 @@ class TurnosController extends Controller
       return redirect()->action('PacientesController@index')->with('success',$message);
     }
     
+    public function cargar_configuracion_areas(Request $request){
+      DB::table('configuracion_areas')
+            ->where('nombre', 'LIKE', "internacion")
+            ->update(['id_area' => $request->area_internacion]);
+      DB::table('configuracion_areas')
+            ->where('nombre', 'LIKE', "operacion")
+            ->update(['id_area' => $request->area_operacion]);
+      return response()->json();
+    }
 
 }

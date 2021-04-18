@@ -260,7 +260,7 @@
           </li>
           @endcanany
           <li class="nav-item">
-            <a id="roles" class="nav-link <?php  if ($url_array[3] == "roles"){ echo "active";} ?>" href="/roles">
+            <a id="roles" class="nav-link <?php  if ($url_array[3] == "roles"){ echo "active";} ?>" href="{{route('roles.index')}}">
               <span data-feather="layers"></span>
               Roles
             </a>
