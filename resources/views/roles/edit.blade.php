@@ -4,7 +4,7 @@
 @section('cuerpo')
 <div id='alerta'></div>
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-    <h4 class="h4">Crear Rol</h4>
+    <h4 class="h4">Editar Rol</h4>
 </div>
 <div class="form-row">
     <div id="div_nombre" class="form-group col-md-4">

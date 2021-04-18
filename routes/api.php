@@ -301,19 +301,11 @@ Route::get('usuariospendientes',function(){
 });
 
 
-Route::get('rolesApi', function(){
+Route::get('rolesApi/{us}', function(User $us){
     $roles = Spatie\Permission\Models\Role::all();
     return DataTables::of($roles)
-                    // ->addColumn('btnAccion',function($rol){
-                    //         return '<div style="display:flex; width:100%;">
-                    //         <a class="btn btn-sm btn-outline-secondary" > Ver Permisos</a>
-                    //         <a class="btn btn-sm btn-outline-secondary" href="roles/'.$rol->id.'/edit"> Editar</a>
-                    //         <a class="btn btn-sm btn-outline-secondary" > Eliminar</a>
-                    //         </div>'
-                    //         ;
-
-                    //     } )
-                    ->addColumn('btnAccion','/roles/boton')
+                    ->addColumn('btnAccion',function($rol) use($us){
+                        return view('/roles/boton',compact('rol','us'));})
                     ->rawColumns(['btnAccion'])
         ->toJson();
 

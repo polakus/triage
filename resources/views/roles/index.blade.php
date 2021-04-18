@@ -19,7 +19,9 @@
     <h4 class="h4">Roles</h4>
     <div class="btn-toolbar mb-2 mb-md-0">
       <div class="btn-group mr-2">
+        @canany(['RegistrarRol','FullRoles'])
         <a type="button" class="btn btn-sm btn-outline-secondary" href="{{ route('roles.create') }}">Agregar Rol</a>
+        @endcanany
       </div>
     </div>
 </div>
@@ -53,7 +55,7 @@
       "responsive": true,
       "processing":true,
           "serverSide":true,
-           "ajax":{url:"{{ url('api/rolesApi') }}",
+           "ajax":{url:"{{ url('api/rolesApi/'.Auth::id()) }}",
               
          },
            "columns":[
@@ -110,7 +112,7 @@
         }
     }           
     });
-} );
+});
 
   function eliminar(id){
     $('#modalEliminar'+id).modal('hide');

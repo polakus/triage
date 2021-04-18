@@ -70,7 +70,7 @@
                     @auth
                         <a href="{{ url('/inicio') }}">Home</a>
                     @else
-                        <a href="{{ route('login') }}">Login</a>
+                        <a href="{{ url('/login') }}">Login</a>
                         @if (Route::has('register'))
                             <a href="{{ route('register') }}">Register</a>
                         @endif
@@ -81,7 +81,7 @@
 
             <div class="content">
                 <div class="title m-b-md">
-                    Laravel
+                    Laravelsdf
                 </div>
 
                 <div class="links">

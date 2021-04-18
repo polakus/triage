@@ -15,7 +15,9 @@ class RolesController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware('permission:VerRoles|FullRoles');
+        $this->middleware('permission:RegistrarRol|FullRoles')->only('create');
+        $this->middleware('permission:EditarRol|FullRoles')->only('edit');
     }
     public function index()
     {

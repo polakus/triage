@@ -259,12 +259,14 @@
             </a>
           </li>
           @endcanany
+          @canany(['VerRoles','FullRoles'])
           <li class="nav-item">
             <a id="roles" class="nav-link <?php  if ($url_array[3] == "roles"){ echo "active";} ?>" href="/roles">
               <span data-feather="layers"></span>
               Roles
             </a>
           </li>
+          @endcanany
         </ul>
 
         <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">

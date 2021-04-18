@@ -24,9 +24,9 @@ class usuariosController extends Controller
 {
     public function __construct(){
         $this->middleware('permission:VerUsuarios|FullUsuarios');
-        $this->middleware('permission:RegistrarUsuarios|FullUsuarios')->only('create');
-        $this->middleware('permission:EliminarUsuarios|FullUsuarios')->only('destroy');
-        $this->middleware('permission:AceptarUsuarios|FullUsuarios')->only(['pendientes','aceptar','rechazar']);
+        $this->middleware('permission:RegistrarUsuario|FullUsuarios')->only('create');
+        $this->middleware('permission:EliminarUsuario|FullUsuarios')->only('destroy');
+        $this->middleware('permission:AceptarUsuario|FullUsuarios')->only(['pendientes','aceptar','rechazar']);
     }
 
     public function index()
