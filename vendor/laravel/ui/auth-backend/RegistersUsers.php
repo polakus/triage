@@ -3,11 +3,9 @@
 namespace Illuminate\Foundation\Auth;
 
 use Illuminate\Auth\Events\Registered;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
-use App\Rol;
-use App\User;
 
 trait RegistersUsers
 {
@@ -20,34 +18,30 @@ trait RegistersUsers
      */
     public function showRegistrationForm()
     {
-        $roles = Rol::all();
-        return view('auth.register', compact('roles'));
+        return view('auth.register');
     }
 
     /**
      * Handle a registration request for the application.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Http\JsonResponse
      */
     public function register(Request $request)
     {
         $this->validator($request->all())->validate();
 
         event(new Registered($user = $this->create($request->all())));
-        
-        // $this->guard()->login($user);   
+
+        $this->guard()->login($user);
+
         if ($response = $this->registered($request, $user)) {
             return $response;
         }
-        if (User::all()->count()==1){
-            $request->session()->flash('alert-success', 'Se ha registrado exitosamente! Eres el Super Administrador');
-        }else{
-            $request->session()->flash('alert-success', 'Se ha registrado exitosamente! Debe esperar a que el administrador '.User::find(1)->username.' acepte su petición de registro.');
-        }
-            return $request->wantsJson()
-                    ? new Response('', 201)
-                    : (redirect()->back()->withInput());
+
+        return $request->wantsJson()
+                    ? new JsonResponse([], 201)
+                    : redirect($this->redirectPath());
     }
 
     /**

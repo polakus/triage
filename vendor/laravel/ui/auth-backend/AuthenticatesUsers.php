@@ -2,12 +2,11 @@
 
 namespace Illuminate\Foundation\Auth;
 
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
-use Cache;
-use App\Profesional;
+
 trait AuthenticatesUsers
 {
     use RedirectsUsers, ThrottlesLogins;
@@ -33,41 +32,19 @@ trait AuthenticatesUsers
     public function login(Request $request)
     {
         $this->validateLogin($request);
-        
+
         // If the class is using the ThrottlesLogins trait, we can automatically throttle
         // the login attempts for this application. We'll key this by the username and
         // the IP address of the client making these requests into this application.
         if (method_exists($this, 'hasTooManyLoginAttempts') &&
-        $this->hasTooManyLoginAttempts($request)) {
+            $this->hasTooManyLoginAttempts($request)) {
             $this->fireLockoutEvent($request);
-            
+
             return $this->sendLockoutResponse($request);
         }
-        if (User::where('username', $request->username)->count()>0){ #Solucion deseesperada (arreglar)
-            if (User::where('username', $request->username)->first()->estado == 1){ #consultamos si se acepto la solicitud del usuario
-                // echo "si";
-                if ($this->attemptLogin($request)) {
-                    $profesional = Profesional::where('id_user', Auth::id())->first();
-                    if($profesional){
-                        $profesional->disponibilidad = 1;
-                        $profesional->save();
-                    }
-                    return $this->sendLoginResponse($request);
-                }
-            }else{
-                // echo "no";
-                $request->session()->flash('alert-warning', 'El administrador '.User::find(1)->username.' aún no te ha aceptado en el sistema');
-                return redirect()->back()->withInput();
-            }
-        }else{
-            if ($this->attemptLogin($request)) { #Se copio este if de arriba. Solucion desesperada (arreglar)
-                $profesional = Profesional::where('id_user', Auth::id())->first();
-                if($profesional){
-                    $profesional->disponibilidad = 1;
-                    $profesional->save();
-                }
-                return $this->sendLoginResponse($request);
-            }
+
+        if ($this->attemptLogin($request)) {
+            return $this->sendLoginResponse($request);
         }
 
         // If the login attempt was unsuccessful we will increment the number of attempts
@@ -122,7 +99,7 @@ trait AuthenticatesUsers
      * Send the response after the user was authenticated.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Http\JsonResponse
      */
     protected function sendLoginResponse(Request $request)
     {
@@ -135,7 +112,7 @@ trait AuthenticatesUsers
         }
 
         return $request->wantsJson()
-                    ? new Response('', 204)
+                    ? new JsonResponse([], 204)
                     : redirect()->intended($this->redirectPath());
     }
 
@@ -180,11 +157,10 @@ trait AuthenticatesUsers
      * Log the user out of the application.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Http\JsonResponse
      */
     public function logout(Request $request)
     {
-        $id = Auth::user()->id;
         $this->guard()->logout();
 
         $request->session()->invalidate();
@@ -194,14 +170,9 @@ trait AuthenticatesUsers
         if ($response = $this->loggedOut($request)) {
             return $response;
         }
-        $profesional = Profesional::where('id_user', $id)->first();
-        if($profesional){
-            $profesional->disponibilidad = 0;
-            $profesional->save();
-        }
-        Cache::forget('user-is-online-'.$id);
+
         return $request->wantsJson()
-            ? new Response('', 204)
+            ? new JsonResponse([], 204)
             : redirect('/');
     }
 
