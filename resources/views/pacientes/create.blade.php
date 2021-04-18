@@ -91,8 +91,11 @@
       @enderror
     </div>
   </div>
-  <button type="submit" class="btn btn-primary">Registrar</button>
+  <div style="display:flex;width: 300px;">
+      <button type="submit" class="btn btn-primary">Registrar</button>
   <a href="{{route('pacientes.index')}}" class="btn btn-primary">Volver</a>
+  </div>
+
   
 </form>
 

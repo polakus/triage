@@ -4,12 +4,12 @@
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
         <h4 class="h4">Pacientes para atender</h4>
 </div>
-<div class="form-group">
+<div class="form-group w-75">
       <input type="hidden" name="cantidad_actual" id="cantidad_actual" value="{{ $cantidad }}">
        
          <h6>{{ $mensaje }}</h6>
      
-      <a href="{{ route('atencionclinica.edit', Auth::id() ) }}"class="btn btn-mod btn-sm" style="width:220px;">Cambiar ubicacion</a>
+      <a href="{{ route('atencionclinica.edit', Auth::id() ) }}"class="btn btn-mod btn-sm " style="width: 40% !important;" >Cambiar ubicacion</a>
 </div>
 <div class="form-row" id="seccionRecargar">
         <div class="form-group col-md-2" style="font-size: 17px;">
@@ -43,7 +43,7 @@
 <div class="form-group row-cols-3">
   <label>Pacientes nuevos</label>
   <input type="text" name="cantidad" disabled value="0" id="cantidad" style="width: 40px;text-align: center;">
-  <button class="btn btn-mod btn-sm" style="height: 30px;float: right;"  onclick="document.location.reload();">Refresh</button>
+  <button class="btn btn-mod btn-sm" style="height: 30px;float: right;width: 200px !important;"  onclick="document.location.reload();">Refresh</button>
 </div>
 
 <div class="table-responsive">
@@ -184,8 +184,11 @@
   <input type="hidden" name="mensaje" id="mensaje"value="{{ $mensaje }}">
   
   <br>
-  <button type="button" onclick="continuar('finalizar')"class="btn btn-dark btn-sm" name="boton">Finalizar</button>
-  <button type="button" onclick="continuar('continuar')"class="btn btn-dark btn-sm" name="Continuar">Continuar Luego</button>
+  <div class="d-flex w-25">
+    <button type="button" onclick="continuar('finalizar')"class="btn btn-dark btn-sm" name="boton">Finalizar</button>
+  <button type="button" onclick="continuar('continuar')"class="btn btn-dark btn-sm ml-1" name="Continuar">Continuar Luego</button>
+  </div>
+  
 
   {{-- Para redireccionar --}}
   <form style="display: none" action="/atencionclinica/atencionsala" method="GET" id="form">

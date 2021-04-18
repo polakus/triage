@@ -8,7 +8,7 @@
         
 </div>
 <div class="row">
-            <div class="col">
+            <div class="col col-4">
                <button class="btn btn-dark"  id="btnver" onclick="ver()">Cargar datos NN</button>
                <button class="btn btn-dark" id="btnocultar" onclick="ocultar()" style="display: none;">Ocultar datos nn</button>
             </div>
@@ -139,8 +139,11 @@
                 @enderror
               </div>
             </div>
-            <button type="submit" class="btn btn-primary">Guardar</button>
-            <a href="{{route('pacientes.index')}}" class="btn btn-primary">Volver</a>
+            <div class="w-25 d-flex">
+              <button type="submit" class="btn btn-primary">Guardar</button>
+              <a href="{{route('pacientes.index')}}" class="btn btn-primary">Volver</a>
+            </div>
+            
           </form>
 @endsection
 @section("scripts")

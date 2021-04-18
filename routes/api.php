@@ -204,9 +204,10 @@ Route::get('protocolos/{us}',function(User $us){
                 return $s;
             })
             ->addColumn('buttons',function($protocolo) use ($us){
-                $editar = $us->hasAnyPermission(['EditarProtocolo','FullProtocolos']) ? '<a class="btn btn-sm btn-outline-secondary ml-1"href="/protocolos/'.$protocolo->id.'/edit">Editar</a>' : '';
-                $eliminar = $us->hasAnyPermission(['EliminarProtocolo','FullProtocolos']) ? '<button class="btn btn-outline-secondary btn-sm ml-1" onclick="eliminar('.$protocolo->id.')">Eliminar</button>':'';
-                return $editar.$eliminar;
+                // $editar = $us->hasAnyPermission(['EditarProtocolo','FullProtocolos']) ? '<a class="btn btn-sm btn-outline-secondary ml-1"href="/protocolos/'.$protocolo->id.'/edit">Editar</a>' : '';
+                // $eliminar = $us->hasAnyPermission(['EliminarProtocolo','FullProtocolos']) ? '<button class="btn btn-outline-secondary btn-sm ml-1" onclick="eliminar('.$protocolo->id.')">Eliminar</button>':'';
+                // return $editar.$eliminar;
+                return view('protocolos/botones',compact('protocolo','us'));
             })
             ->rawColumns(['codigo','especialidad','sintomas','ver','buttons'])
             ->toJson();

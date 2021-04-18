@@ -29,6 +29,13 @@
     .autocomplete-items div:hover {
       background-color: #e9e9e9; 
     }
+    #myTable .btn{
+      width: 50% !important;
+      margin: auto;
+    }
+    #myTable{
+      text-align: center;
+    }
 
   </style>
 @endsection
@@ -69,7 +76,7 @@
         <input id="tags" type="text" name="buscador" value="{{old('buscador')}}" class="form-control form-control-sm " placeholder="Síntoma" autocomplete="off">
     </div>
     <div class="form-group col-md-4">
-      <button type="button" id="btn_agregar" onclick="addRow()" class="btn btn-mod">Agregar</button>    
+      <button type="button" id="btn_agregar" onclick="addRow()" class="btn btn-mod" style="width: 50%!important">Agregar</button>    
     </div>
   </div>
 
@@ -85,9 +92,11 @@
       </tbody>
     </table>
   </div>
+<div class="w-25 d-flex">
+    <button type="button" id="reg_id" class="btn btn-mod">Registrar</button>
+  <a class="btn btn-outline-secondary btn-close ml-1" href="{{ route('protocolos.index') }}">Volver</a>
+</div>
 
-  <button type="button" id="reg_id" class="btn btn-mod">Registrar</button>
-  <a class="btn btn-outline-secondary btn-close" href="{{ route('protocolos.index') }}">Volver</a>
 
 
 @endsection

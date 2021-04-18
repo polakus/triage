@@ -1,9 +1,11 @@
-@if($us->hasAnyPermission(['EditarArea','FullSalas']))
-<button type="button"  class="btn btn-outline-secondary btn-sm" data-toggle="modal" data-target="#modal_editar_area{{$area->id}}">Editar</button>
-@endif
-@if($us->hasAnyPermission(['EliminarArea','FullSalas']))
-<button type="button"  class="btn btn-outline-secondary btn-sm" data-toggle="modal" data-target="#modalEliminarArea{{$area->id}}">Eliminar</button>
-@endif
+<div class="d-flex w-100">
+  @if($us->hasAnyPermission(['EditarArea','FullSalas']))
+  <button type="button"  class="btn btn-outline-secondary btn-sm" data-toggle="modal" data-target="#modal_editar_area{{$area->id}}">Editar</button>
+  @endif
+  @if($us->hasAnyPermission(['EliminarArea','FullSalas']))
+  <button type="button"  class="btn btn-outline-secondary btn-sm ml-1" data-toggle="modal" data-target="#modalEliminarArea{{$area->id}}">Eliminar</button>
+  @endif
+</div>
 <!-- Modal Edit -->
 <div class="modal fade" id="modal_editar_area{{$area->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="false">
     <div class="modal-dialog">

@@ -1,9 +1,13 @@
-
-@if($us->hasAnyPermission(['EditarEspecialidad','FullEspecialidades']))
-<button type="button" id="bnedit" class="btn btn-outline-secondary btn-sm ml-1" data-toggle="modal" data-target="#editar{{ $especialidad->id }}">
-    Editar
-</button>
-@endif
+<div class="w-100 d-flex">
+    @if($us->hasAnyPermission(['EditarEspecialidad','FullEspecialidades']))
+    <button type="button" id="bnedit" class="btn btn-outline-secondary btn-sm ml-1" data-toggle="modal" data-target="#editar{{ $especialidad->id }}">
+        Editar
+    </button>
+    @endif
+    @if($us->hasAnyPermission(['EliminarEspecialidad','FullEspecialidades']))
+    <button id="elid{{$especialidad->id}}" type="button" class="btn btn-sm btn-outline-secondary ml-1" data-toggle="modal" data-target="#modalEliminar{{ $especialidad->id }}" >Eliminar</button>
+    @endif
+</div>
 <div class="modal fade" id="editar{{ $especialidad->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -53,9 +57,31 @@
      </div>
     </div>
 </div>
-@if($us->hasAnyPermission(['EliminarEspecialidad','FullEspecialidades']))
-<button id="elid{{$especialidad->id}}" type="button" class="btn btn-sm btn-outline-secondary ml-1" onclick="eliminar('{{ $especialidad->nombesp }}','{{$especialidad->id}}')">Eliminar</button>
-@endif
+
+
+<div class="modal fade bd-example-modal-sm" id="modalEliminar{{$especialidad->id}}" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Alerta</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        Estas seguro/a que deseas eliminar la especialidad?
+        <li><strong>Especialidad:</strong>{{ $especialidad->nombesp }}</li>
+        <!-- <li></li> -->
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-success" onclick="eliminar('{{ $especialidad->nombesp }}','{{$especialidad->id}}')"><i class="far fa-check-circle"></i> Eliminar</button>
+        <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="far fa-times-circle"></i> Cerrar</button>
+        
+      </div>
+    </div>
+  </div>
+</div>
+
 <script>
     var select2=$('.select').select2();
     function editaresp(id) {
@@ -110,8 +136,7 @@
 
 
     function eliminar(name, id){
-         if (confirm('¿Esta seguro de eliminar la especialidad'+name+' ? Tenga en cuenta que se eliminara todos los datos relacionados a ella.')) {
-            
+            $('#modalEliminar'+id).modal('hide');
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -122,6 +147,11 @@
                 url:"/especialidades/"+id,
                 dataType:"json",
                 success: function(response){
+                    $('#alerta').addClass('alert '+"alert-success");
+                    $('#alerta').html('La especialidad <b>'+name+'</b> se elimino exitosamente!');
+                    $("#alerta").fadeTo(2000, 500).slideUp(500, function(){
+                        $("#alerta").slideUp(500);
+                    });
                     $('#myTable tbody').ready(function(){
                         $('#elid'+id).closest('tr').remove();
                     });
@@ -134,5 +164,4 @@
                 }
             });
         }
-    }
 </script>

@@ -15,6 +15,7 @@
 </style>
 @endsection
 @section("cuerpo")
+<div id="alerta"></div>
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
     <h4 class="h2">Protocolos</h4>
     <div class="btn-toolbar mb-2 mb-md-0">
@@ -44,7 +45,6 @@
           </tbody>
         </table>
 </div>
-
 
 @endsection
 
@@ -178,8 +178,8 @@
  
 </script>
 <script type="text/javascript">
-    function eliminar(id){
-        if (confirm('Esta seguro de eliminar el protocolo? '.concat($(this).attr('name')))) {
+    function eliminar(name,id){
+       $('#modalEliminar'+id).modal('hide');
                 $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -191,7 +191,11 @@
             dataType:"json",
            
             success: function(response){
-                alert("El protocolo fue eliminado exitosamente")
+                $('#alerta').addClass('alert alert-success');
+                $('#alerta').html('El protocolo '+name+' fue eliminado exitosamente.!');
+                $("#alerta").fadeTo(2000, 500).slideUp(500, function(){
+                        $("#alerta").slideUp(500);
+                    });
                 var table = $('#example').DataTable();
                 table.draw();
                 },
@@ -213,15 +217,9 @@
                 }
             }
           });
-            }else{
-                return false;
-            }
+          
         
     }
-    function editar(){
-
-    }
-
 
 </script>
 
