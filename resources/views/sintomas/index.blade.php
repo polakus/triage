@@ -18,10 +18,10 @@
     }
     .botones input{
         flex-grow: 1;
-        width:60%;
+        width:60% !important;
     }
     .botones button{
-        width: 40%;
+        width: 40% !important;
         flex-grow: 1;
     }
     .error div{
@@ -210,7 +210,7 @@ function eliminar(id,sintoma){
 
                 $('#alerta').addClass('alert '+response.tipo);
                 $('#alerta').html('<b>'+response.mensaje+'</b>');
-                $("#alerta").fadeTo(4000, 500).slideUp(500, function(){
+                $("#alerta").fadeTo(2000, 500).slideUp(500, function(){
                     $("#alerta").slideUp(500);
                 });  
             },

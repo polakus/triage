@@ -8,7 +8,7 @@
           <div class="btn-group mr-2">
           	<!-- Button trigger modal -->
             @canany(['RegistrarUsuario','FullUsuarios'])
-            <a class="btn btn-outline-secondary btn-sm ml-1" href="{{ route('usuarios.create') }}">Registrar Usuario</a>
+            <a class="btn btn-outline-secondary btn-sm ml-1"  href="{{ route('usuarios.create') }}">Registrar Usuario</a>
             @endcanany
             @canany(['AdministrarUsuarios','FullUsuarios'])
             <a class="btn btn-outline-secondary btn-sm ml-1" href="/usuarios/pendientes">Usuarios Pendientes</a>

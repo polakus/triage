@@ -1,9 +1,11 @@
-@if($us->can('FullSintoma') or $us->can('EditarSintoma'))
-<button type="button" class="btn btn-outline-secondary btn-sm " style="width: 30%" data-toggle="modal" data-target="#editar{{ $sintoma->id }}">Editar</button>
-@endif
-@if($us->can('FullSintoma') or $us->can('EliminarSintoma'))
-<button type="button" class="btn btn-outline-secondary btn-sm " style="width: 30%;" data-toggle="modal" data-target="#modalEliminar{{ $sintoma->id }}">Eliminar</button>
-@endif
+<div class="w-100 d-flex">
+    @if($us->can('FullSintoma') or $us->can('EditarSintoma'))
+    <button type="button" class="btn btn-outline-secondary btn-sm " style="width: 30%" data-toggle="modal" data-target="#editar{{ $sintoma->id }}">Editar</button>
+    @endif
+    @if($us->can('FullSintoma') or $us->can('EliminarSintoma'))
+    <button type="button" class="btn btn-outline-secondary btn-sm ml-1" style="width: 30%;" data-toggle="modal" data-target="#modalEliminar{{ $sintoma->id }}">Eliminar</button>
+    @endif
+</div>
 <div class="modal fade" id="editar{{$sintoma->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="false">
 	<div class="modal-dialog">
 		<div class="modal-content">

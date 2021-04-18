@@ -5,7 +5,7 @@
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
   <h4 class="h4">Pacientes para atender</h4>
 </div>
-<div class="form-group" style="margin-right: 10px;">
+<div class="form-group w-25" style="margin-right: 10px;">
   <h6>{{ $mensaje }}</h6>
   <a href="{{ route('atencionclinica.index') }}"class="btn btn-dark btn-sm">Cambiar ubicacion</a>
 </div>

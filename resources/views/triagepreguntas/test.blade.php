@@ -65,7 +65,8 @@
 
       .btn{
         font-size: 12px !important;
-        /*width: 100% !important;*/
+        width: 100% !important;
+        /*margin: 2px;*/
       }
       input{
         font-size: 12px !important;
