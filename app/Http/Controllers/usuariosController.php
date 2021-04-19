@@ -60,14 +60,14 @@ class usuariosController extends Controller
     }
 
     public function aceptar(Request $request, $id){
-        if(Auth::user()->esAdmin()){
+        // if(Auth::user()->esAdmin()){
             $usuario = User::find($id);
             $usuario->estado = 1;
             $request->session()->flash('alert-success', 'Se ha aceptado la solicitud del usuario '.$usuario->username);
             $usuario->save();
-        }else{
-            $request->session()->flash('alert-warning', 'Solo un administrador puede aceptar la solicitud de un usuario!');
-        }
+        // }else{
+        //     $request->session()->flash('alert-warning', 'Solo un administrador puede aceptar la solicitud de un usuario!');
+        // }
         return redirect()->back()->withInput()  ;
     }
 
@@ -148,7 +148,7 @@ class usuariosController extends Controller
     public function register(Request $request)
     {
         // echo "entro register";
-        if (Auth::user()->esAdmin()){
+        // if (Auth::user()->esAdmin()){
             $this->validator($request->all())->validate();
             event(new Registered($user = $this->create2($request->all())));
             // $this->guard()->login($user);
@@ -159,10 +159,10 @@ class usuariosController extends Controller
             return $request->wantsJson()
                         ? new Response('', 201)
                         : redirect()->back()->withInput();
-        }else{
-            $request->session()->flash('alert-warning', 'Necesitas ser Administrador para realizar la registración de un nuevo usuario!');
-            return redirect()->back()->withInput();
-        }
+        // }else{
+        //     $request->session()->flash('alert-warning', 'Necesitas ser Administrador para realizar la registración de un nuevo usuario!');
+        //     return redirect()->back()->withInput();
+        // }
     }
 
     protected function registered(Request $request, $user)
@@ -220,7 +220,7 @@ class usuariosController extends Controller
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'username' => ['required', 'max:20', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
-            'id_rol' => ['required', 'exists:roles,id'],
+            // 'id_rol' => ['required', 'exists:roles,id'],
         ]);
     }
 
@@ -236,7 +236,7 @@ class usuariosController extends Controller
             'name' => $data['name'],
             'username' => $data['username'],
             'email' => $data['email'],
-            'id_rol' => $data['id_rol'],
+            // 'id_rol' => $data['id_rol'],
             'password' => Hash::make($data['password']),
             'estado' => 1,
         ]);

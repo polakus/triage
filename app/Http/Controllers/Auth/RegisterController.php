@@ -74,7 +74,7 @@ class RegisterController extends Controller
                 'name' => $data['name'],
                 'username' => $data['username'],
                 'email' => $data['email'],
-                'id_rol' => 1,
+                // 'id_rol' => 1,
                 'password' => Hash::make($data['password']),
                 'estado' => 1,
             ])->assignRole('Administrador');
@@ -83,7 +83,7 @@ class RegisterController extends Controller
                 'name' => $data['name'],
                 'username' => $data['username'],
                 'email' => $data['email'],
-                'id_rol' => 1,
+                // 'id_rol' => 1,
                 'password' => Hash::make($data['password']),
                 'estado' => 0,
             ]);

@@ -34,7 +34,7 @@
 					<tr>
 						<th scope="col" style="width:20%">Usuario</th>
 						<th scope="col" style="width:40%">Email</th>
-						<th scope="col" style="width:20%">Rol</th>
+						{{-- <th scope="col" style="width:20%">Rol</th> --}}
 						<th scope="col" style="width:20%">Acción<nav></nav></th>
 					</tr>
 				</thead>
@@ -109,7 +109,7 @@ $(document).ready(function() {
             {data:'username'},
          
             {data:'email'},
-            {data:'rol'},
+            // {data:'rol'},
             {data:'buttons'}
             
            ],
