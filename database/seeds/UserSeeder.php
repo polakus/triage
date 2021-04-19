@@ -18,16 +18,21 @@ class UserSeeder extends Seeder
             "username"=>"admin",
             "email"=>"ale368_dvs@hotmail.com",
             "password"=>Hash::make('asdfñlkj'),
-            "id_rol"=>1,
             "estado"=>1,
         ])->assignRole(['Administrador','Profesional']);
         User::create([
-            "name"=>"CristianZalazar",
+            "name"=>"Cristian Zalazar",
             "username"=>"cz",
             "email"=>"cz@gmail.com",
             "password"=>Hash::make('asdfñlkj'),
-            "id_rol"=>2,
             "estado"=>1,
         ])->assignRole('Profesional');
+        User::create([
+            "name"=>"Prueba",
+            "username"=>"prueba",
+            "email"=>"prueba@gmail.com",
+            "password"=>Hash::make('asdfñlkj'),
+            "estado"=>0,
+        ]);
     }
 }

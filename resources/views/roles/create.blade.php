@@ -35,14 +35,14 @@
     </table>
 </div>
 <div class="d-flex w-25">
-<button type="button" id="btn_perm" onclick=registrar() class="btn btn-mod btn-sm">Registrar</button>
-<a class="btn btn-outline-secondary btn-close ml-1 btn-sm" href="{{ route('roles.index') }}">Volver</a>
+  <button type="button" id="btn_perm" onclick=registrar() class="btn btn-mod btn-sm">Registrar</button>
+  <a class="btn btn-outline-secondary btn-close ml-1 btn-sm" href="{{ route('roles.index') }}">Volver</a>
 </div>
 @endsection
 
 @section('scripts')
 @parent
-<script type="text/javascript" src="../js/buscador.js"></script>
+<script type="text/javascript" src="{{ asset('/js/buscador.js') }}"></script>
 
 <script type="text/javascript">
   function addRow(){

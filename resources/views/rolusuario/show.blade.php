@@ -1,7 +1,12 @@
 @extends("triagepreguntas.test")
 
-
 @section("cuerpo")
+<style type="text/css">
+  #myTable .btn{
+    width: 30% !important;
+    margin: auto;
+  }
+</style>
 <div id='alerta'></div>
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
     <h4 class="h4">Modificar Roles de {{Auth::user()->name}}</h4>
@@ -13,7 +18,7 @@
         <input placeholder="Buscar aqui" type="text" id="buscar" class="input form-control" autocomplete="off"/>
         <listgroup class="is-visible list-group" id="searchList"></listgroup>
     </div>
-    <div class="form-group col-md-4">
+    <div class="form-group col-md-2">
       <button type="button" id="btn_agregar" onclick="addRow()" class="btn btn-mod">Agregar</button>
     </div>
   </div>
@@ -41,16 +46,16 @@
       </tbody>
     </table>
 </div>
-
-<button type="button" id="btn_guardar" onclick="registrar(),limpiaSpans()" class="btn btn-mod">Guardar</button>
-<a class="btn btn-outline-secondary btn-close" href="{{ route('usuarios.index') }}">Volver</a>
-
+<div class="d-flex w-25">
+  <button type="button" id="btn_guardar" onclick="registrar(),limpiaSpans()" class="btn btn-mod">Guardar</button>
+  <a class="btn btn-outline-secondary btn-close" href="{{ route('usuarios.index') }}">Volver</a>
+</div>
 
 @endsection
 
 @section("scripts")
 @parent
-<script type="text/javascript" src="../js/buscador.js"></script>
+<script type="text/javascript" src="{{ asset('/js/buscador.js') }}"></script>
 <script type="text/javascript">
   var aux=<?php echo $roles ?>;
   var roles = [];
