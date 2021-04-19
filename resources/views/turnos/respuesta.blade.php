@@ -35,7 +35,7 @@
 			</div>
 			<div class="form-group w-25 d-flex">
 				<button type="submit" class="btn btn-dark btn-sm">Aceptar</button>
-				<a href="{{ route('pacientes.index') }}" class="btn btn-dark btn-sm">Cancelar</a>
+				<a href="{{ route('pacientes.index') }}" class="btn btn-dark btn-sm ml-1">Cancelar</a>
 			</div>
 		</form>
 	</div>
@@ -71,7 +71,7 @@
 			</div>
 			<div class="form-group w-25 d-flex">
 				<button type="submit" class="btn btn-dark btn-sm">Aceptar</button>
-				<a href="{{ route('pacientes.index') }}" class="btn btn-dark btn-sm">Cancelar</a>
+				<a href="{{ route('pacientes.index') }}" class="btn btn-dark btn-sm ml-1">Cancelar</a>
 			</div>
 		</form>
 	</div>
@@ -132,7 +132,7 @@
 		
 		<div class="form-group w-25 d-flex">
 			<button type="submit" class="btn btn-dark btn-sm">Aceptar</button>
-			<a href="{{ route('pacientes.index') }}" class="btn btn-dark btn-sm">Cancelar</a>
+			<a href="{{ route('pacientes.index') }}" class="btn btn-dark btn-sm ml-1">Cancelar</a>
 		</div>
 	</form>
 	</div>
@@ -188,7 +188,7 @@
 		
 		<div class="form-group w-25 d-flex">
 			<button type="submit" class="btn btn-dark btn-sm">Aceptar</button>
-			<a href="{{ route('pacientes.index') }}" class="btn btn-dark btn-sm">Cancelar</a>
+			<a href="{{ route('pacientes.index') }}" class="btn btn-dark btn-sm ml-1">Cancelar</a>
 		</div>
 	</form>
 	</div>

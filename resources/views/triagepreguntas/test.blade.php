@@ -200,6 +200,7 @@
           @canany(['FullSintoma','VerSintoma'])
           <li class="nav-item">
             <a id="sintomas"class="nav-link <?php  if ($url_array[3] == "sintomas"){ echo "active";} ?>" href="{{route('sintomas.index')}}">
+
               <span data-feather="users"></span>
               Sintomas
             </a>
@@ -245,12 +246,14 @@
             </a>
           </li>
           @endcanany
+          @can('Profesional_Atenciones')
           <li class="nav-item">
             <a id="especialidades" class="nav-link" href="/profesionales/atenciones">
               <span data-feather="layers"></span>
               Profesionales Atenciones
             </a>
           </li>
+          @endcan
           @canany(['VerUsuarios','FullUsuarios'])
           <li class="nav-item">
             <a id="usuarios" class="nav-link <?php  if ($url_array[3] == "usuarios"){ echo "active";} ?>"  href="{{route('usuarios.index')}}">

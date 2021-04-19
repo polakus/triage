@@ -5,7 +5,7 @@
 	   	<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
         <h4 class="h4">Usuarios</h4>
         <div class="btn-toolbar mb-2 mb-md-0">
-          <div class="btn-group mr-2">
+          <div class="btn-group mr-2"style="width: 260px;">
           	<!-- Button trigger modal -->
             @canany(['RegistrarUsuario','FullUsuarios'])
             <a class="btn btn-outline-secondary btn-sm ml-1"  href="{{ route('usuarios.create') }}">Registrar Usuario</a>

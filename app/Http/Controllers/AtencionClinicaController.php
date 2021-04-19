@@ -31,7 +31,7 @@ class AtencionClinicaController extends Controller
 
         $salas=DB::table("salas as s")
                    ->join("areas as a",'a.id','=','s.id_area')
-                   ->select('a.nombre','s.nombre','s.id')
+                   ->select('a.nombre as area_nombre','s.nombre','s.id')
                    ->orderBy('a.nombre')
                    ->get();
 

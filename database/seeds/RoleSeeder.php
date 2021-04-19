@@ -45,35 +45,35 @@ class RoleSeeder extends Seeder
         
         #Permisos de Salas / Areas
         Permission::create(['name'=>"FullSalas"])->syncRoles($admin);        
-        Permission::create(['name'=>"VerSalasAreas"])->syncRoles([$admin,$prof]);
-        Permission::create(['name'=>"RegistrarSala"])->syncRoles($admin);
-        Permission::create(['name'=>"RegistrarArea"])->syncRoles($admin);
-        Permission::create(['name'=>"EditarArea"])->syncRoles($admin);
-        Permission::create(['name'=>"EliminarSala"])->syncRoles($admin);
-        Permission::create(['name'=>"EliminarArea"])->syncRoles($admin);
-        Permission::create(['name'=>"HabilitarSala"])->syncRoles($admin);
+        Permission::create(['name'=>"VerSalasAreas"]);
+        Permission::create(['name'=>"RegistrarSala"]);
+        Permission::create(['name'=>"RegistrarArea"]);
+        Permission::create(['name'=>"EditarArea"]);
+        Permission::create(['name'=>"EliminarSala"]);
+        Permission::create(['name'=>"EliminarArea"]);
+        Permission::create(['name'=>"HabilitarSala"]);
 
         #Permisos protocolos
         Permission::create(['name'=>"FullProtocolos"])->syncRoles($admin);        
-        Permission::create(['name'=>"VerProtocolos"])->syncRoles([$admin,$prof]);
-        Permission::create(['name'=>"RegistrarProtocolo"])->syncRoles($admin);
-        Permission::create(['name'=>"EditarProtocolo"])->syncRoles($admin);
-        Permission::create(['name'=>"EliminarProtocolo"])->syncRoles($admin);
+        Permission::create(['name'=>"VerProtocolos"]);
+        Permission::create(['name'=>"RegistrarProtocolo"]);
+        Permission::create(['name'=>"EditarProtocolo"]);
+        Permission::create(['name'=>"EliminarProtocolo"]);
 
         #Permisos especialidades
-        Permission::create(['name'=>"FullEspecialidades"])->syncRoles($admin);        
-        Permission::create(['name'=>"VerEspecialidades"])->syncRoles([$admin,$prof]);
-        Permission::create(['name'=>"RegistrarEspecialidad"])->syncRoles($admin);
-        Permission::create(['name'=>"EditarEspecialidad"])->syncRoles($admin);
-        Permission::create(['name'=>"EliminarEspecialidad"])->syncRoles($admin);
+        Permission::create(['name'=>"FullEspecialidades"]);        
+        Permission::create(['name'=>"VerEspecialidades"]);
+        Permission::create(['name'=>"RegistrarEspecialidad"]);
+        Permission::create(['name'=>"EditarEspecialidad"]);
+        Permission::create(['name'=>"EliminarEspecialidad"]);
 
         #Permisos usuarios
         Permission::create(['name'=>"FullUsuarios"])->syncRoles($admin);        
-        Permission::create(['name'=>"VerUsuarios"])->syncRoles([$admin,$prof]);
-        Permission::create(['name'=>"RegistrarUsuario"])->syncRoles($admin);
-        Permission::create(['name'=>"ModificarRolesUsuario"])->syncRoles($admin);
-        Permission::create(['name'=>"AceptarUsuarios"])->syncRoles($admin);
-        Permission::create(['name'=>"EliminarUsuario"])->syncRoles($admin);
+        Permission::create(['name'=>"VerUsuarios"]);
+        Permission::create(['name'=>"RegistrarUsuario"]);
+        Permission::create(['name'=>"ModificarRolesUsuario"]);
+        Permission::create(['name'=>"AceptarUsuarios"]);
+        Permission::create(['name'=>"EliminarUsuario"]);
 
         #Atencion Clinica
         Permission::create(['name'=>"SalaAtencionClinica"]);
@@ -89,5 +89,9 @@ class RoleSeeder extends Seeder
         
         #Editar roles
         Permission::create(['name'=>'EditarRolesUsuario']);
+
+        #Profesionales Atenciones
+        Permission::create(['name'=>'Profesional_Atenciones'])->syncRoles($admin);
+
     }
 }

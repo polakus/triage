@@ -17,7 +17,7 @@
         <input placeholder="Buscar aqui" type="text" id="buscar" class="input form-control"/>
         <listgroup class="is-visible list-group" id="searchList"></listgroup>
     </div>
-    <div class="form-group col-md-4">
+    <div class="form-group col-md-2">
       <button type="button" id="btn_agregar" onclick="addRow()" class="btn btn-mod">Agregar</button>    
     </div>
   </div>
@@ -34,9 +34,10 @@
       </tbody>
     </table>
 </div>
-
-<button type="button" id="btn_perm" onclick=registrar() class="btn btn-mod">Registrar</button>
-<a class="btn btn-outline-secondary btn-close" href="{{ route('roles.index') }}">Volver</a>
+<div class="d-flex w-25">
+<button type="button" id="btn_perm" onclick=registrar() class="btn btn-mod btn-sm">Registrar</button>
+<a class="btn btn-outline-secondary btn-close ml-1 btn-sm" href="{{ route('roles.index') }}">Volver</a>
+</div>
 @endsection
 
 @section('scripts')
