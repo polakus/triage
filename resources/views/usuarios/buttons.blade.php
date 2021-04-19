@@ -23,7 +23,7 @@
   <a class="btn btn-outline-secondary btn-sm ml-1" href="/rolusuario/{{$usuario->id}}/edit" >Modificar Roles</a>
 	@endif
   @if($us->hasAnyPermission(['EliminarUsuario','FullUsuarios']))
-  <button class="btn btn-outline-secondary btn-s ml-1" onclick="eliminar({{ $usuario->id }},'{{ $usuario->username }}')"> Eliminar</button>
+  <button class="btn btn-outline-secondary btn-sm ml-1" onclick="eliminar({{ $usuario->id }},'{{ $usuario->username }}')"> Eliminar</button>
   @endif
 </div>
 

@@ -1,4 +1,12 @@
 @extends('triagepreguntas.test')
+@section('css')
+  <style type="text/css">
+    #myTable .btn{
+      width: 25% !important;
+    }
+  </style>
+  
+@endsection
 
 @section('cuerpo')
 <div id='alerta'></div>
@@ -18,7 +26,7 @@
         <listgroup class="is-visible list-group" id="searchList"></listgroup>
     </div>
     <div class="form-group col-md-2">
-      <button type="button" id="btn_agregar" onclick="addRow()" class="btn btn-mod">Agregar</button>    
+      <button type="button" id="btn_agregar" onclick="addRow()" class="btn btn-mod btn-sm">Agregar</button>    
     </div>
   </div>
  
@@ -72,7 +80,7 @@
         // set input attributes.
         button.setAttribute('type', 'button');
         button.setAttribute('value', 'Quitar');
-        button.setAttribute('class', 'btn btn-mod')
+        button.setAttribute('class', 'btn btn-mod btn-sm')
         // add button's 'onclick' event.
         button.setAttribute('onclick', 'removeRow(this)');
         td.appendChild(newText);
