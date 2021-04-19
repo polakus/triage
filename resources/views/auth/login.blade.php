@@ -129,6 +129,7 @@
                           </span>
                       @enderror
                   </div>
+                  {{--
                    <div class="col-12 text-left">
                       <div class="form-check form-check-inline">
                         <input class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
@@ -137,11 +138,12 @@
                                             {{ __('Recordarme') }}</label>
                       </div>
                   </div>
+                  --}}
                   <button type="submit" class="btn btn-dark"><i class="fas fa-sign-in-alt"></i>  Ingresar </button>
                   
                   <a href="{{ route('register') }}" type="submit" class="btn btn-dark"><i class="fas fa-sign-in-alt"></i>  Registrarse</a>
               </form>
-
+{{--
               <div class="col-12 forgot">
 
                    @if (Route::has('password.request'))
@@ -149,7 +151,7 @@
                                         {{ __('Recordar contraseña?') }}
                                     </a>
                    @endif
-         
+                   --}}         
               </div>
             </div>
             

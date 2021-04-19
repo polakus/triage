@@ -102,24 +102,19 @@ class PacientesController extends Controller
      */
     public function edit($id)
     {
-        //
-        // if(Auth::user()->can('FullPaciente') or Auth::user()->can('EditarPaciente')){
-            $paciente = Paciente::findOrFail($id);
+        
+        $paciente = Paciente::findOrFail($id);
 
-            $nn= DB::table("pacientes as p")
-                    ->join("atencion as a",'a.Paciente_id','=','p.Paciente_id')
-                    ->join("detalle_atencion as da",'da.id_atencion','=','a.id')
-                    ->join("historial as h",'h.id_detalle_atencion','=','da.id')
-                    ->select("p.fechaNac",'h.descripcion','a.id as id_atencion')
-                    ->where("p.nombre",'=',"nn")
-                    ->where("p.apellido",'=','nn')
-                    ->get();
-            
-            return view('pacientes.edit', compact('paciente','nn','id'));
-        // }
-        // else{
-        //      return redirect()->action('PacientesController@index');
-        // }
+        $nn= DB::table("pacientes as p")
+                ->join("atencion as a",'a.Paciente_id','=','p.Paciente_id')
+                ->join("detalle_atencion as da",'da.id_atencion','=','a.id')
+                ->join("historial as h",'h.id_detalle_atencion','=','da.id')
+                ->select("p.fechaNac",'h.descripcion','a.id as id_atencion')
+                ->where("p.nombre",'=',"nn")
+                ->where("p.apellido",'=','nn')
+                ->get();
+        
+        return view('pacientes.edit', compact('paciente','nn','id'));
     }
 
     /**
