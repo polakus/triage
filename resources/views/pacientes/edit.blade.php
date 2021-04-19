@@ -140,8 +140,8 @@
               </div>
             </div>
             <div class="w-25 d-flex">
-              <button type="submit" class="btn btn-primary">Guardar</button>
-              <a href="{{route('pacientes.index')}}" class="btn btn-primary">Volver</a>
+              <button type="submit" class="btn btn-sm btn-mod">Guardar</button>
+              <a href="{{route('pacientes.index')}}" class="btn btn-sm btn-mod ml-1">Volver</a>
             </div>
             
           </form>

@@ -5,16 +5,16 @@
                     <!-- Button trigger modal -->
 
       <button type="button" class="btn btn-mod btn-sm" data-toggle="modal" data-target="#modal{{ $paciente->id }}" id="button1">
-        Quirofano
+        Quirofanos
       </button>
 
 
     <!-- Modal -->
     <div class="modal fade" id="modal{{ $paciente->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered"  role="document">
+      <div class="modal-dialog "  role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h3 class="modal-title" id="exampleModalLabel">Salas de Quirofanos</h3>
+            <h5 class="modal-title" id="exampleModalLabel">Salas de Operaciones</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
@@ -22,8 +22,8 @@
           <div class="modal-body">
             <div class="container col-md-12">
 
-               @foreach($salas as $s)
-                    @if($s->nombre == "Quirofano")
+               @foreach($salas_operacion as $s)
+
                        <div class="row border">
                           <div class="col border">
                             <label>{{ $s->nombre }}</label> 
@@ -50,7 +50,6 @@
                               </div>
                           @endif
                        </div>
-                    @endif
                   @endforeach
             </div>
           </div>

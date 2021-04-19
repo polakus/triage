@@ -59,6 +59,9 @@ Route::resource('/profesionales', 'profesionalesController', ['except' => ['dest
 Route::resource('/cie','CieController');
 Route::resource('/especialidades','EspecialidadController');
 Route::resource('/roles','RolesController');
+
+Route::post('/turnos/mostrar/conf','TurnosController@cargar_configuracion_areas')->middleware('auth');
+
 Route::get('/pruebas', function(){
     // User::create([
     //     'name' => "Cristian Zalazar",
@@ -98,3 +101,4 @@ Route::post('/atencionclinica/sala','AtencionClinicaController@cargarSala')->mid
 
 Auth::routes();//['register' => false]);
 Route::get('/inicio', 'HomeController@index')->name('inicio');
+

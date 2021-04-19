@@ -15,7 +15,7 @@
                     <div class="modal-dialog">
                       <div class="modal-content">
                         <div class="modal-header">
-                          <h3 class="modal-title" id="exampleModalLabel">Salas</h3>
+                          <h5 class="modal-title" id="exampleModalLabel">Salas de Internacion</h5>
                           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                           </button>
@@ -23,8 +23,7 @@
                         <div class="modal-body">
                           <div class="container col-md-12">
 
-                                @foreach($salas as $s)
-                                  @if($s->nombre == "Internacion")
+                                @foreach($salas_internacion as $s)
                                     <div class="row border">
                                       <div class="col border">
                                        <label>{{ $s->nombre }}</label> 
@@ -55,8 +54,6 @@
                                           </div>
                                       @endif
                                     </div>
-
-                                  @endif
                                 @endforeach
                               
                           </div> 

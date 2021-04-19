@@ -1,10 +1,11 @@
-@if($us->hasAnyPermission(['EditarProtocolo','FullProtocolos'])) 
-	<a class="btn btn-sm btn-outline-secondary ml-1" href="/protocolos/{{$protocolo->id}}/edit">Editar</a>
-@endif
-@if($us->hasAnyPermission(['EliminarProtocolo','FullProtocolos']))
-    <button class="btn btn-outline-secondary btn-sm ml-1" data-toggle="modal" data-target="#modalEliminar{{ $protocolo->id }}">Eliminar</button>
-@endif
-
+<div class="d-flex w-100">
+  @if($us->hasAnyPermission(['EditarProtocolo','FullProtocolos'])) 
+  	<a class="btn btn-sm btn-outline-secondary ml-1" href="/protocolos/{{$protocolo->id}}/edit">Editar</a>
+  @endif
+  @if($us->hasAnyPermission(['EliminarProtocolo','FullProtocolos']))
+      <button class="btn btn-outline-secondary btn-sm ml-1" data-toggle="modal" data-target="#modalEliminar{{ $protocolo->id }}">Eliminar</button>
+  @endif
+</div>
 
 
 

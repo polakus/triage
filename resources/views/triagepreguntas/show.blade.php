@@ -37,10 +37,10 @@
 	<h3>¿Por cuanto tiempo permanece asi?</h3>
 			<input type="text" name="duracion" class="form-control">
 </div>
-<div class="row col-md-5 " style="padding-top:10px ">
+<div class="d-flex w-25 mt-2">
 	
 		<button class="btn btn-sm btn-outline-dark" id="btn_analizar">Analizar</button>
-		<a class="btn btn-sm btn-outline-danger btn-close ml-4" href="{{ route('pacientes.index') }}">Cancelar</a>
+		<a class="btn btn-sm btn-outline-danger btn-close ml-1" href="{{ route('pacientes.index') }}">Cancelar</a>
 	
 </div>
 
@@ -104,6 +104,7 @@ $(document).ready(function(){
 
 		let inputs = document.querySelectorAll('.nombreje');
 		let sintomas_descriptos = [];
+
 		inputs.forEach(function(sint) {
 			if(sint.value.replace(/ /g, "").length >0){
 				sintomas_descriptos.push(sint.value);
@@ -120,7 +121,7 @@ $(document).ready(function(){
 
 		    $.ajax({
 		            type:'POST',
-		            url:"/triagepreguntas",
+		            url:"{{ url('triagepreguntas') }}",
 		            dataType:"json",
 		            data:{
 		                sintomas_descriptos:JSON.stringify(sintomas_descriptos),
@@ -129,7 +130,9 @@ $(document).ready(function(){
 		            },
 		            success: function(response){
 		            	if(response.resultado ){
-		            		let url ="/turnos/respuesta?atencion="+response.atencion;
+		            		let url= "{{ url('turnos/respuesta') }}";
+		            		url = url+"?atencion="+response.atencion;
+		            		// let url ="/turnos/respuesta?atencion="+response.atencion;
 		            		for(let i=0;i<response.sintomas.length;i++){
 		            			url=url+"&sintomas%5B"+i+"%5D="+response.sintomas[i];
 		            		}

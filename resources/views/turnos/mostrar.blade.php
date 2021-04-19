@@ -28,13 +28,16 @@
 </style>
 @endsection
 @section("cuerpo")
+<div id="alerta"></div>
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
         <h4>Atenciones</h4>
+        <div class="btn-toolbar mb-2 mb-md-0">
+        <div class="btn-group mr-2">
+            <a type="button" class="btn btn-sm btn-outline-secondary"  data-toggle="modal" data-target="#modalConfigurar">Configurar Salas</a>
+          </div>
+        </div>
 </div>
-
 <div class="form-row">
-
-
   <div class="form-group col-md-2">
       <label for="inputState">Condicion</label>
       <select name="cod" id="cod" class="form-control form-control-sm">
@@ -79,7 +82,44 @@
         </table>
 </div>
 
-
+<div class="modal fade bd-example-modal-sm" id="modalConfigurar" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Configuracion</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="form-row">
+            <div class="form-group col-md-10">
+              <label for="inputState">Sala de Internacion</label>
+              <select id="area_internacion" class="form-control form-control-sm select" style="width: 100% ;">
+                @foreach($areas as $area)
+                  <option value="{{ $area->id }}"> {{ $area->nombre }}</option>
+                @endforeach
+              </select>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-10">
+              <label for="inputState">Sala de Operacion</label>
+              <select id="area_operacion" class="form-control form-control-sm select" style="width: 100% ;">
+                @foreach($areas as $area)
+                  <option value="{{ $area->id }}"> {{ $area->nombre }}</option>
+                @endforeach
+              </select>
+            </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-success" onclick="cargar_conf()"><i class="far fa-check-circle" ></i> Guardar</button>
+        <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="far fa-times-circle"></i> Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>
 
 @endsection
 @section("scripts")
@@ -89,6 +129,7 @@
   $(document).ready(function() {
     $('#cod').select2();
 });
+
 
   // var fecha = new Date(); //Fecha actual
   // var mes = fecha.getMonth()+1; //obteniendo mes
@@ -324,6 +365,40 @@
 
                     },
                 error:function(){
+                    // $("#labelNombre").text("Error 2");
+                    // $("#labelNombre").addClass('text-danger');
+                }
+            });
+   }
+
+   function cargar_conf(){
+    let area_internacion = document.getElementById('area_internacion').value;
+    let area_operacion =  document.getElementById('area_operacion').value;
+    $('#modalConfigurar').modal('hide');
+     $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+    });
+
+       $.ajax({
+                type:'POST',
+                url:"/turnos/mostrar/conf",
+                dataType:"json",
+                data:{area_operacion:area_operacion,
+                  area_internacion:area_internacion},
+                success: function(response){
+                    $('#alerta').addClass('alert alert-success');
+                    $('#alerta').html('Cambios realizados exitosamente!');
+                    $("#alerta").fadeTo(1500, 500).slideUp(500, function(){
+                    $("#alerta").slideUp(500);
+                     });  
+                    var table = $('#example').DataTable();
+                    table.draw();
+
+                    },
+                error:function(){
+                  alert("No se logro realizar los cambios");
                     // $("#labelNombre").text("Error 2");
                     // $("#labelNombre").addClass('text-danger');
                 }

@@ -30,5 +30,19 @@ class codigosTriage extends Seeder
             'color' => 'verde',
             'tiempo_espera' => '20',
         ]);
+
+        #se agrega la configuracion de areas tambien
+       DB::table('configuracion_areas')->insert([
+            'created_at' => Carbon::now()->toDateTimeString(),
+            'updated_at' => Carbon::now()->toDateTimeString(),
+            'nombre' => 'internacion',
+            'id_area' => null
+        ]);
+       DB::table('configuracion_areas')->insert([
+            'created_at' => Carbon::now()->toDateTimeString(),
+            'updated_at' => Carbon::now()->toDateTimeString(),
+            'nombre' => 'operacion',
+            'id_area' => null
+        ]);
     }
 }
