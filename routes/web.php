@@ -88,8 +88,10 @@ Route::get('/pruebas', function(){
     //     'password' => Hash::make("asdfñlkj"),
     //     'estado' => 1,
     // ]);
-    
-    Permission::create(['name'=>'EditarRolesUsuario']);
+    // echo url()->current();
+    echo route('login');
+
+    // Permission::create(['name'=>'EditarRolesUsuario']);
     // return redirect('/prueba2/'.$user);//->route('p2',$user);
 });
 Route::get('/prueba2/{user}',function(Request $request, $user){
