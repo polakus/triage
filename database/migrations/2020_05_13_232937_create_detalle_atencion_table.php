@@ -24,8 +24,9 @@ class CreateDetalleAtencionTable extends Migration
             $table->boolean('atendido');
             $table->string('estado',30);
             $table->foreignId('id_codigo_triage')->references('id')->on('codigostriage')->onDelete('cascade');
-            $table->string('sala',30);
-            $table->boolean('operar');
+            $table->string('sala',30)->nullable();
+            $table->boolean('operar')->default(0)->nullable();
+            $table->string('respuestas',255)->nullable();
         });
     }
 

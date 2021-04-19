@@ -19,7 +19,8 @@ class CreateHistorialTable extends Migration
             $table->foreignId('id_detalle_atencion')->references('id')->on('detalle_atencion')->onDelete('cascade');
             $table->foreignId('id_cie')->references('id')->on('cie')->onDelete('cascade');
             $table->string('descripcion',250);
-            $table->datetime('fecha_hora');
+            $table->date("fecha");
+            $table->time("hora");
         });
     }
 
