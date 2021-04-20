@@ -16,7 +16,11 @@ class salasController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('permission:VerSalasAreas|FullSalasAreas|FullSalas');
+        $this->middleware('auth');
+        $this->middleware('permission:VerSalasAreas|FullSalas')->only('index');
+        $this->middleware('permission:RegistrarSala|FullSalas')->only('store');
+        $this->middleware('permission:EliminarSala|FullSalas')->only('destroy');
+        $this->middleware('permission:HabilitarSala|FullSalas')->only('update');
     }
     public function index(Request $request)
     {

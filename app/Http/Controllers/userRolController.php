@@ -10,7 +10,8 @@ class userRolController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('permission:ModificarRolesUsuario|FullUsuarios')->only('edit');
+        $this->middleware('auth');
+        $this->middleware('permission:ModificarRolesUsuario|FullUsuarios');
     }
     public function index()
     {
@@ -28,7 +29,6 @@ class userRolController extends Controller
     }
 
     public function show($id){
-
         
     }
 
@@ -36,8 +36,8 @@ class userRolController extends Controller
     {
         $useroles = User::find($id)->getRoleNames();
         $roles = Role::all();
-        $idusuario = $id;
-        return view('rolusuario.show', compact('useroles', 'roles', 'idusuario'));
+        $usuario = User::find($id);
+        return view('rolusuario.show', compact('useroles', 'roles', 'usuario'));
     }
 
     public function update(Request $request, $id)

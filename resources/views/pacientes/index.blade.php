@@ -24,10 +24,10 @@
         <h1 class="h2">Pacientes</h1>
         <div class="btn-toolbar mb-2 mb-md-0">
           <div class="btn-group mr-2 d-flex" style="width: 260px;">
-            @canany(['RegistrarPaciente','FullPaciente'])
+            @canany(['RegistrarPaciente','FullPacientes'])
             <a type="button" class="btn btn-sm btn-outline-secondary" href="{{ url('pacientes/create') }}">Registrar</a>
             @endcanany
-            @canany(['RegistrarPacienteNN','FullPaciente'])
+            @canany(['RegistrarPacienteNN','FullPacientes'])
             <button type="button" class="btn btn-sm btn-outline-secondary" data-toggle="modal" data-target="#myModal">Cargar pacientes NN</button>
             @endcanany
           </div>

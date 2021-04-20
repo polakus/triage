@@ -10,7 +10,11 @@ class CieController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('permission:VerCie|FullCie');
+        $this->middleware('auth');
+        $this->middleware('permission:VerCie|FullCie')->only('index');
+        $this->middleware('permission:RegistrarCie|FullCie')->only('store');
+        $this->middleware('permission:EliminarCie|FullCie')->only('destroy');
+        $this->middleware('permission:EditarCie|FullCie')->only('update');
     }
     public function index()
     {

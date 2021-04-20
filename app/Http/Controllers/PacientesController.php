@@ -16,9 +16,11 @@ class PacientesController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('permission:VerPacientes|FullPaciente');
-        $this->middleware('permission:RegistrarPaciente|FullPaciente')->only('create');
-        $this->middleware('permission:EditarPaciente|FullPaciente')->only('edit');
+        $this->middleware('auth');
+        $this->middleware('permission:VerPacientes|FullPacientes')->only('index');
+        $this->middleware('permission:RegistrarPaciente|FullPacientes')->only(['create','store']);
+        $this->middleware('permission:EditarPaciente|FullPacientes')->only(['edit','update']);
+        $this->middleware('permission:RegistrarPacienteNN|FullPacientes')->only('insertarNN');
     }
     public function index()
     {
@@ -37,7 +39,6 @@ class PacientesController extends Controller
      */
     public function create()
     {
-        // $this->middleware('permission:RegistrarPaciente');
         return view('pacientes.create');
     }
 
@@ -166,7 +167,7 @@ class PacientesController extends Controller
             $mensajes = [
                 'required' =>'Este campo no debe estar vacio.',
                 'max' => 'Este campo supera la capacidad máxima de caracteres.',
-                'numeric' => 'Este campo requiere una valor numérico.',
+                'numeric' => 'Este campo requiere un valor numérico.',
                 'date' => 'La fecha ingresada no es válida.',
                 'unique' => 'Este documento ya se encuentra registrado',
             ];

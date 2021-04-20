@@ -9,7 +9,7 @@
 </style>
 <div id='alerta'></div>
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-    <h4 class="h4">Modificar Roles de {{Auth::user()->name}}</h4>
+    <h4 class="h4">Modificar Roles de {{$usuario->name}}</h4>
 </div>
 
   <label>Buscar Roles</label>
@@ -22,8 +22,8 @@
       <button type="button" id="btn_agregar" onclick="addRow()" class="btn btn-mod btn-sm">Agregar</button>
     </div>
   </div>
-
-<div class="table-responsive mt-3">
+<div class="row no-gutters align-items-center table-wrapper-scroll-y my-custom-scrollbar">
+  <div class="table-responsive mt-3">
     <table id ="myTable" class="table table-hover table-bordered table-sm">
       <thead>
         <tr>
@@ -45,10 +45,13 @@
       @endforeach
       </tbody>
     </table>
+  </div>
 </div>
 <div class="d-flex w-25">
+
   <button type="button" id="btn_guardar" onclick="registrar(),limpiaSpans()" class="btn btn-mod btn-sm">Guardar</button>
-  <a class="btn btn-outline-secondary btn-close btn-sm" href="{{ route('usuarios.index') }}">Volver</a>
+  <a class="btn btn-outline-secondary btn-close btn-sm ml-1" href="{{ route('usuarios.index') }}">Volver</a>
+
 </div>
 
 @endsection
@@ -146,7 +149,7 @@
       empTab.deleteRow(oButton.parentNode.parentNode.rowIndex); // button -> td -> tr.
   }
   function registrar(){
-    let id = <?php echo $idusuario ?>;
+    let id = <?php echo $usuario->id ?>;
     let urObjs = document.getElementsByName('ur[]');
     let useroles = [];
     for (let i = 0; i< urObjs.length; i++) {
@@ -160,7 +163,7 @@
     });
     $.ajax({
             type:'PUT',
-            url:"/rolusuario/"+id,
+            url:"/usuarios/rolusuario/"+id,
             dataType:"json",
             data:{
                 useroles:useroles,

@@ -20,7 +20,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'username', 'id_rol', 'estado',
+        'name', 'email', 'password', 'username', 'estado',
     ];
 
     /**
@@ -41,18 +41,6 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function rol()
-    {
-        return $this->belongsTo('App\Rol', 'id_rol');
-    }
-
-    public function esAdmin(){
-        if($this->rol->name=="Administrador"){
-            return true;
-        }else{
-            return false;
-        }
-    }
     public function profesional(){
         return $this->hasOne('App\Profesional', 'id_user');
     }
@@ -60,4 +48,17 @@ class User extends Authenticatable
     public function isOnline(){
         return Cache::has('user-is-online-'.$this->id);
     }
+    // public function rol()
+    // {
+    //     return $this->belongsTo('App\Rol', 'id_rol');
+    // }
+
+    // public function esAdmin(){
+    //     // if($this->rol->name=="Administrador"){
+    //     if(true){
+    //         return true;
+    //     }else{
+    //         return false;
+    //     }
+    // }
 }

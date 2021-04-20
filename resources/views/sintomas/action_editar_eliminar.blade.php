@@ -1,8 +1,8 @@
 <div class="w-100 d-flex">
-    @if($us->can('FullSintoma') or $us->can('EditarSintoma'))
+    @if($us->can('FullSintomas') or $us->can('EditarSintoma'))
     <button type="button" class="btn btn-outline-secondary btn-sm " style="width: 30%" data-toggle="modal" data-target="#editar{{ $sintoma->id }}">Editar</button>
     @endif
-    @if($us->can('FullSintoma') or $us->can('EliminarSintoma'))
+    @if($us->can('FullSintomas') or $us->can('EliminarSintoma'))
     <button type="button" class="btn btn-outline-secondary btn-sm ml-1" style="width: 30%;" data-toggle="modal" data-target="#modalEliminar{{ $sintoma->id }}">Eliminar</button>
     @endif
 </div>

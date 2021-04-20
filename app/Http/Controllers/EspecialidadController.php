@@ -12,7 +12,11 @@ class EspecialidadController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('permission:VerEspecialidades|FullEspecialidades');
+        $this->middleware('auth');
+        $this->middleware('permission:VerEspecialidades|FullEspecialidades')->only('index');
+        $this->middleware('permission:RegistrarEspecialidad|FullEspecialidades')->only('store');
+        $this->middleware('permission:EditarEspecialidad|FullEspecialidades')->only('update');
+        $this->middleware('permission:EliminarEspecialidad|FullEspecialidades')->only('destroy');
     }
     public function index()
     {
