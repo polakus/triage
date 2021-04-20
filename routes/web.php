@@ -22,9 +22,9 @@ Route::get('/', function () {
 });
 Route::get('/atencionclinica/atencionsala','AtencionClinicaController@atencionsala')->middleware('auth');
 
-Route::get('/test',function(){
-	return view('triagepreguntas.test');
-});
+// Route::get('/test',function(){
+// 	return view('triagepreguntas.test');
+// });
 Route::post('atencionclinica/refresh','AtencionClinicaController@refresh')->name("refresh")->middleware('auth');
 
 Route::get('/usuarios/pendientes/{id}/edit', 'usuariosController@aceptar')->middleware('auth');
@@ -32,11 +32,9 @@ Route::delete('/usuarios/pendientes/{id}', 'usuariosController@rechazar')->middl
 Route::get('/usuarios/pendientes', 'usuariosController@pendientes')->middleware('auth');
 // Route::get('/triagepreguntas/estado/{triagepreguntas}', 'TriagepreguntasController@estado')->middleware('auth');
 //Route::get('/triagepreguntas/analizar', 'TriagepreguntasController@analizar');
-Route::get('/pacientes/shows', 'PacientesController@shows')->middleware('auth');
 Route::get('/turnos/mostrar', 'TurnosController@mostrar')->name('mostrar')->middleware('auth');
 Route::get('/turnos/respuesta','TurnosController@respuesta')->middleware('auth');
 Route::post('turnos/cargaratencion','TurnosController@cargaratencion')->middleware('auth');
-Route::post('/salas/filtros','salasController@filtro')->name('salas.filtro')->middleware('auth');
 // Route::post('/usuarios/registrar','usuariosController@create')->name('usuarios.registrar');
 
 Route::get('/editar/{id}', 'PacientesController@edit')->middleware('auth');
@@ -44,59 +42,36 @@ Route::get('/editar/{id}', 'PacientesController@edit')->middleware('auth');
 Route::post('/pacientes/nn','PacientesController@insertarNN')->middleware('auth');
 Route::get('/atencionclinica/internacion','AtencionClinicaController@internar')->middleware('auth');
 
-Route::resource('/rolusuario','userRolController');
-Route::resource('/usuarios','usuariosController', ['except'=>['show', 'update']])->middleware('auth');
+Route::resource('/usuarios/rolusuario','userRolController',['except' => ['index','create','store','show','destroy']]);
+Route::resource('/usuarios','usuariosController', ['except'=>['show', 'update','edit']]);
 Route::resource('/sintomas','SintomasController',['except'=>['show','edit','create']]); //middleware en constructor
 Route::resource('/atencionclinica','AtencionClinicaController')->middleware('auth');
 Route::resource('/turnos','TurnosController')->middleware('auth');
-Route::resource('/pacientes','PacientesController')->middleware('auth');
+Route::resource('/pacientes','PacientesController',['except' => ['show','destroy']]);
 Route::resource('/triagepreguntas', 'TriagepreguntasController')->middleware('auth');
-Route::resource('/salas', 'salasController');
+Route::resource('/salas', 'salasController', ['except' => ['create','show','edit']]);
 Route::resource('/areas', 'areasController', ['except' => ['index', 'show', 'edit', 'create']]);
-Route::resource('/protocolos', 'protocolosController');
+Route::resource('/protocolos', 'protocolosController',['except' => ['show']]);
 Route::get('/profesionales/atenciones','profesionalesController@atenciones')->middleware('auth');
-Route::resource('/profesionales', 'profesionalesController', ['except' => ['destroy', 'edit', 'update']]);
-Route::resource('/cie','CieController');
-Route::resource('/especialidades','EspecialidadController');
-Route::resource('/roles','RolesController');
+Route::resource('/profesionales', 'profesionalesController', ['except' => ['show','index','destroy', 'edit', 'update']]);
+Route::resource('/cie','CieController',['except' => ['create','show','edit']]);
+Route::resource('/especialidades','EspecialidadController',['except' => ['create','show','edit']]);
+Route::resource('/roles','RolesController',['except' => ['show']]);
 
 Route::post('/turnos/mostrar/conf','TurnosController@cargar_configuracion_areas')->middleware('auth');
 
-Route::get('/pruebas', function(){
-    // User::create([
-    //     'name' => "Cristian Zalazar",
-    //     'username' => "cz",
-    //     'email' => "cz@hotmail.com",
-    //     'id_rol' => 2,
-    //     'password' => Hash::make("asdfñlkj"),
-    //     'estado' => 1,
-    // ]);
-    // User::create([
-    //     'name' => "prueba de usuario",
-    //     'username' => "prueba",
-    //     'email' => "prueba@hotmail.com",
-    //     'id_rol' => 1,
-    //     'password' => Hash::make("asdfñlkj"),
-    //     'estado' => 1,
-    // ]);
-    // User::create([
-    //     'name' => "prueba2 de usuario",
-    //     'username' => "prueba2",
-    //     'email' => "prueba2@hotmail.com",
-    //     'id_rol' => 1,
-    //     'password' => Hash::make("asdfñlkj"),
-    //     'estado' => 1,
-    // ]);
-    // echo url()->current();
-    $user=User::find(12);
-    $user->estado=0;
-    $user->save();
-    // Permission::create(['name'=>'EditarRolesUsuario']);
-    // return redirect('/prueba2/'.$user);//->route('p2',$user);
-});
-Route::get('/prueba2/{user}',function(Request $request, $user){
-    echo $user;
-})->name('p2');
+// Route::get('/pruebas', function(){
+    
+//     // echo url()->current();
+//     $user=User::find(12);
+//     $user->estado=0;
+//     $user->save();
+//     // Permission::create(['name'=>'EditarRolesUsuario']);
+//     // return redirect('/prueba2/'.$user);//->route('p2',$user);
+// });
+// Route::get('/prueba2/{user}',function(Request $request, $user){
+//     echo $user;
+// })->name('p2');
 
 Route::post('/atencionclinica/sala','AtencionClinicaController@cargarSala')->middleware('auth');
 

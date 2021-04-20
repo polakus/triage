@@ -21,8 +21,9 @@
       <button type="button" id="btn_agregar" onclick="addRow()" class="btn btn-mod">Agregar</button>    
     </div>
   </div>
- 
-<div class="table-responsive mt-3">
+
+<div class="row no-gutters align-items-center table-wrapper-scroll-y my-custom-scrollbar">
+  <div class="table-responsive mt-3">
     <table id ="myTable" class="table table-hover table-bordered table-sm">
       <thead> 
         <tr>
@@ -33,6 +34,7 @@
       <tbody>
       </tbody>
     </table>
+  </div>
 </div>
 <div class="d-flex w-25">
   <button type="button" id="btn_perm" onclick=registrar() class="btn btn-mod btn-sm">Registrar</button>

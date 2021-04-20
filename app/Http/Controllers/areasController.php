@@ -8,7 +8,10 @@ use App\Area;
 class areasController extends Controller
 {
     public function __construct(){
-        $this->middleware('permission:VerSalasAreas|FullSalas');
+        $this->middleware('auth');
+        $this->middleware('permission:RegistrarArea|FullSalas')->only('store');
+        $this->middleware('permission:EliminarArea|FullSalas')->only('destroy');
+        $this->middleware('permission:EditarArea|FullSalas')->only('update');
     }
     public function index()
     {

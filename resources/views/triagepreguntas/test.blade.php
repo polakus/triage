@@ -181,7 +181,7 @@
               Inicio <span class="sr-only">(current)</span>
             </a>
           </li>
-          @canany(['VerPacientes','FullPaciente'])
+          @canany(['VerPacientes','FullPacientes'])
           <li class="nav-item">
             <a id="pacientes" class="nav-link <?php  if ($url_array[3] == "pacientes"){ echo "active";} ?>" href="{{route('pacientes.index')}}">
               <span data-feather="users"></span>
@@ -197,7 +197,7 @@
             </a>
           </li>
           @endcanany
-          @canany(['FullSintoma','VerSintoma'])
+          @canany(['FullSintomas','VerSintomas'])
           <li class="nav-item">
             <a id="sintomas"class="nav-link <?php  if ($url_array[3] == "sintomas"){ echo "active";} ?>" href="{{route('sintomas.index')}}">
 

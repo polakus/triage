@@ -23,7 +23,7 @@ class RoleSeeder extends Seeder
         
         #Permisos de pacientes
         Permission::create(['name'=>"VerPacientes"]);
-        Permission::create(['name'=>"FullPaciente"])->syncRoles($admin);
+        Permission::create(['name'=>"FullPacientes"])->syncRoles($admin);
         Permission::create(['name'=>"RegistrarPaciente"]);
         Permission::create(['name'=>"RegistrarPacienteNN"]); // como se hace en el middleware?
         Permission::create(['name'=>"EditarPaciente"]);
@@ -33,8 +33,8 @@ class RoleSeeder extends Seeder
         Permission::create(['name'=>"RegistrarSintoma"]);
         Permission::create(['name'=>"EditarSintoma"]);
         Permission::create(['name'=>"EliminarSintoma"]);
-        Permission::create(['name'=>"VerSintoma"]);
-        Permission::create(['name'=>"FullSintoma"])->syncRoles($admin);
+        Permission::create(['name'=>"VerSintomas"]);
+        Permission::create(['name'=>"FullSintomas"])->syncRoles($admin);
 
         #Permiso de CIE
         Permission::create(['name'=>"RegistrarCie"]);
@@ -46,11 +46,11 @@ class RoleSeeder extends Seeder
         #Permisos de Salas / Areas
         Permission::create(['name'=>"FullSalas"])->syncRoles($admin);        
         Permission::create(['name'=>"VerSalasAreas"]);
-        Permission::create(['name'=>"RegistrarSala"]);
         Permission::create(['name'=>"RegistrarArea"]);
         Permission::create(['name'=>"EditarArea"]);
-        Permission::create(['name'=>"EliminarSala"]);
         Permission::create(['name'=>"EliminarArea"]);
+        Permission::create(['name'=>"RegistrarSala"]);
+        Permission::create(['name'=>"EliminarSala"]);
         Permission::create(['name'=>"HabilitarSala"]);
 
         #Permisos protocolos
@@ -62,7 +62,6 @@ class RoleSeeder extends Seeder
 
         #Permisos especialidades
         Permission::create(['name'=>"FullEspecialidades"])->syncRoles($admin);        
-
         Permission::create(['name'=>"VerEspecialidades"]);
         Permission::create(['name'=>"RegistrarEspecialidad"]);
         Permission::create(['name'=>"EditarEspecialidad"]);

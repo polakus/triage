@@ -15,9 +15,11 @@ class protocolosController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('permission:VerProtocolos|FullProtocolos');
-        $this->middleware('permission:RegistrarProtocolo|FullProtocolos')->only('create');
-        $this->middleware('permission:EditarProtocolo|FullProtocolos')->only('edit');
+        $this->middleware('auth');
+        $this->middleware('permission:VerProtocolos|FullProtocolos')->only('index');
+        $this->middleware('permission:RegistrarProtocolo|FullProtocolos')->only(['create','store']);
+        $this->middleware('permission:EditarProtocolo|FullProtocolos')->only(['edit','update']);
+        $this->middleware('permission:EliminarProtocolo|FullProtocolos')->only('destroy');
 
     }
     public function index()

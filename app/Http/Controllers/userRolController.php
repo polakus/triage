@@ -10,7 +10,8 @@ class userRolController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('permission:ModificarRolesUsuario|FullUsuarios')->only('edit');
+        $this->middleware('auth');
+        $this->middleware('permission:ModificarRolesUsuario|FullUsuarios');
     }
     public function index()
     {

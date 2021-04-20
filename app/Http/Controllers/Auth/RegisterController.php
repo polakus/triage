@@ -4,10 +4,11 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
-use App\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use App\User;
 
 class RegisterController extends Controller
 {
@@ -29,8 +30,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = RouteServiceProvider::HOME;
-
+    protected $redirectTo = '/register';//RouteServiceProvider::HOME;
     /**
      * Create a new controller instance.
      *
@@ -40,7 +40,26 @@ class RegisterController extends Controller
     {
         $this->middleware('guest');
     }
+    public function register(Request $request)
+    {
+        $this->validator($request->all())->validate();
 
+        // event(new Registered($user = $this->create($request->all())));
+        $this->create($request->all());
+        // $this->guard()->login($user);   
+        // if ($response = $this->registered($request, $user)) {
+        //     return $response;
+        // }
+        if (User::all()->count()==1){
+            $request->session()->flash('alert-success', 'Se ha registrado exitosamente! Eres el Administrador');
+        }else{
+            $request->session()->flash('alert-success', 'Se ha registrado exitosamente! Debe esperar a que un administrador acepte su petición de registro.');
+        }
+        return redirect()->back()->withInput();
+        // return $request->wantsJson()
+        //         ? new Response('', 201)
+        //         : redirect()->back()->withInput();
+    }
     /**
      * Get a validator for an incoming registration request.
      *

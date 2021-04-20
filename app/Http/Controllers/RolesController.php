@@ -15,14 +15,15 @@ class RolesController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('permission:VerRoles|FullRoles');
-        $this->middleware('permission:RegistrarRol|FullRoles')->only('create');
-        $this->middleware('permission:EditarRol|FullRoles')->only('edit');
+        $this->middleware('permission:VerRoles|FullRoles')->only('index');
+        $this->middleware('permission:RegistrarRol|FullRoles')->only(['create','store']);
+        $this->middleware('permission:EditarRol|FullRoles')->only(['edit','update']);
+        $this->middleware('permission:EliminarRol|FullRoles')->only('destroy');
     }
+    
     public function index()
     {
         // $roles = Role::all();
-
         return view('roles.index');
     }
 
@@ -61,11 +62,9 @@ class RolesController extends Controller
         for($i=0;$i<count($permisos);$i++){
             DB::table('role_has_permissions')->insert([
                 ['permission_id' => $permisos[$i],'role_id' => $rol->id],
-
             ]);
         }
         return response()->json();
-
     }
 
     /**

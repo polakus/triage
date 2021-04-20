@@ -22,8 +22,8 @@
       <button type="button" id="btn_agregar" onclick="addRow()" class="btn btn-mod">Agregar</button>
     </div>
   </div>
-
-<div class="table-responsive mt-3">
+<div class="row no-gutters align-items-center table-wrapper-scroll-y my-custom-scrollbar">
+  <div class="table-responsive mt-3">
     <table id ="myTable" class="table table-hover table-bordered table-sm">
       <thead>
         <tr>
@@ -45,6 +45,7 @@
       @endforeach
       </tbody>
     </table>
+  </div>
 </div>
 <div class="d-flex w-25">
   <button type="button" id="btn_guardar" onclick="registrar(),limpiaSpans()" class="btn btn-mod">Guardar</button>
@@ -160,7 +161,7 @@
     });
     $.ajax({
             type:'PUT',
-            url:"/rolusuario/"+id,
+            url:"/usuarios/rolusuario/"+id,
             dataType:"json",
             data:{
                 useroles:useroles,

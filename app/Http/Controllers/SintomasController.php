@@ -8,7 +8,11 @@ use App\Sintoma;
 class SintomasController extends Controller
 {
     public function __construct(){
-        $this->middleware('permission:VerSintoma|FullSintoma');
+        $this->middleware('auth');
+        $this->middleware('permission:VerSintomas|FullSintomas')->only('index');
+        $this->middleware('permission:EditarSintoma|FullSintomas')->only('update');
+        $this->middleware('permission:EliminarSintoma|FullSintomas')->only('destroy');
+        $this->middleware('permission:RegistrarSintoma|FullSintomas')->only('store');        
     }
     public function index()
     {
