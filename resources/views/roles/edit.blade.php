@@ -43,7 +43,7 @@
 </div>
 <div class="d-flex w-25">
   <button type="button" id="btn_perm" onclick=editar({{ $id }}) class="btn btn-mod">Editar</button>
-<a class="btn btn-outline-secondary btn-close ml-1" href="{{ route('roles.index') }}">Volver</a>
+  <a class="btn btn-outline-secondary btn-close ml-1" href="{{ route('roles.index') }}">Volver</a>
 </div>
 
 

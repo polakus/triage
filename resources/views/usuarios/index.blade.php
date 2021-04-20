@@ -46,29 +46,16 @@
 @endsection
 @section("scripts")
 @parent
-
-
-{{-- <script>
-$('form[id^="a2"').submit( function() {
-	if (confirm('Por favor, confirme que desea eliminar al usuario '.concat($(this).attr('name')))) {
-		return true;
-	}else{
-		return false;
-	}
-});
-</script> --}}
 {{-- JS Datatables --}}
 
 <script type="text/javascript">
-
-
 $(document).ready(function() {
     $('#myTable').DataTable({
       "processing":true,
         "responsive":true,
           "serverSide":true,
       // "iDisplayLength": 50,
-      "ajax":{url:"api/tablausuario/"+<?php echo Auth::id() ?>,//"{{ url('api/tablausuario') }}",
+        "ajax":{url:"api/tablausuario/"+<?php echo Auth::id() ?>,//"{{ url('api/tablausuario') }}",
          },
          "columns":[
             {data:'estado'},
@@ -146,9 +133,6 @@ function eliminar(id,username){
     $.ajax({
       type:'DELETE',
       url:"/usuarios/"+id,
-      data:{
-          id:id,
-      },
       dataType:"json",
       success: function(response){
         // document.getElementById('alert').style.display = 'block';  

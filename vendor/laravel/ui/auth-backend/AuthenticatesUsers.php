@@ -56,7 +56,7 @@ trait AuthenticatesUsers
                 }
             }else{
                 // echo "no";
-                $request->session()->flash('alert-warning', 'El administrador '.User::find(1)->username.' aún no te ha aceptado en el sistema');
+                $request->session()->flash('alert-warning', 'El administrador aún no te ha aceptado en el sistema');
                 return redirect()->back()->withInput();
             }
         }else{

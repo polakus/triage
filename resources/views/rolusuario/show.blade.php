@@ -9,7 +9,7 @@
 </style>
 <div id='alerta'></div>
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-    <h4 class="h4">Modificar Roles de {{Auth::user()->name}}</h4>
+    <h4 class="h4">Modificar Roles de {{$usuario->name}}</h4>
 </div>
 
   <label>Buscar Roles</label>
@@ -48,7 +48,7 @@
 </div>
 <div class="d-flex w-25">
   <button type="button" id="btn_guardar" onclick="registrar(),limpiaSpans()" class="btn btn-mod">Guardar</button>
-  <a class="btn btn-outline-secondary btn-close" href="{{ route('usuarios.index') }}">Volver</a>
+  <a class="btn btn-outline-secondary btn-close ml-1" href="{{ route('usuarios.index') }}">Volver</a>
 </div>
 
 @endsection
@@ -146,7 +146,7 @@
       empTab.deleteRow(oButton.parentNode.parentNode.rowIndex); // button -> td -> tr.
   }
   function registrar(){
-    let id = <?php echo $idusuario ?>;
+    let id = <?php echo $usuario->id ?>;
     let urObjs = document.getElementsByName('ur[]');
     let useroles = [];
     for (let i = 0; i< urObjs.length; i++) {

@@ -16,7 +16,7 @@ class salasController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('permission:VerSalasAreas|FullSalasAreas');
+        $this->middleware('permission:VerSalasAreas|FullSalas');
     }
     public function index(Request $request)
     {

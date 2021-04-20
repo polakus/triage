@@ -88,8 +88,9 @@ Route::get('/pruebas', function(){
     //     'estado' => 1,
     // ]);
     // echo url()->current();
-    echo route('login');
-
+    $user=User::find(12);
+    $user->estado=0;
+    $user->save();
     // Permission::create(['name'=>'EditarRolesUsuario']);
     // return redirect('/prueba2/'.$user);//->route('p2',$user);
 });

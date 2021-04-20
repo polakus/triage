@@ -298,13 +298,13 @@ Route::get('tablausuario/{us}',function(User $us){
 Route::get('usuariospendientes',function(){
     $usuarios = App\User::where('estado', 0)->get();
      return DataTables::of($usuarios)
-                    ->addColumn('rol',function($usuario){
-                        return $usuario->rol->nombre;
-                    })
+                    // ->addColumn('rol',function($usuario){
+                    //     return $usuario->rol->nombre;
+                    // })
                     ->addColumn('buttons',function($usuario){
                         return view('usuarios/buttons_pendientes',compact('usuario'));
                     })
-                    ->rawColumns(['rol','buttons'])
+                    ->rawColumns(['buttons'])
             ->toJson();
 });
 

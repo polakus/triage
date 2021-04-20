@@ -20,8 +20,7 @@ trait RegistersUsers
      */
     public function showRegistrationForm()
     {
-        $roles = Rol::all();
-        return view('auth.register', compact('roles'));
+        return view('auth.register');
     }
 
     /**
@@ -41,13 +40,13 @@ trait RegistersUsers
             return $response;
         }
         if (User::all()->count()==1){
-            $request->session()->flash('alert-success', 'Se ha registrado exitosamente! Eres el Super Administrador');
+            $request->session()->flash('alert-success', 'Se ha registrado exitosamente! Eres el Administrador');
         }else{
-            $request->session()->flash('alert-success', 'Se ha registrado exitosamente! Debe esperar a que el administrador '.User::find(1)->username.' acepte su petición de registro.');
+            $request->session()->flash('alert-success', 'Se ha registrado exitosamente! Debe esperar a que un administrador acepte su petición de registro.');
         }
-            return $request->wantsJson()
-                    ? new Response('', 201)
-                    : (redirect()->back()->withInput());
+        return $request->wantsJson()
+                ? new Response('', 201)
+                : redirect()->back()->withInput();
     }
 
     /**

@@ -166,7 +166,7 @@ class PacientesController extends Controller
             $mensajes = [
                 'required' =>'Este campo no debe estar vacio.',
                 'max' => 'Este campo supera la capacidad máxima de caracteres.',
-                'numeric' => 'Este campo requiere una valor numérico.',
+                'numeric' => 'Este campo requiere un valor numérico.',
                 'date' => 'La fecha ingresada no es válida.',
                 'unique' => 'Este documento ya se encuentra registrado',
             ];

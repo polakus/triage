@@ -16,7 +16,7 @@ class DatabaseSeeder extends Seeder
             // rolesUsuarios::class,
             RoleSeeder::class,
             codigosTriage::class,
-            UserSeeder::class,
+            // UserSeeder::class,
             SalaAreaSeeder::class,
         ]);
     }

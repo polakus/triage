@@ -14,7 +14,6 @@
       <div class="modal-body">
         Estas seguro/a que deseas eliminar la sala?
         <li><strong>Sala: {{ $sala->nombre }}</strong> del area {{ $sala->area->nombre }}</li>
-        <!-- <li></li> -->
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-success" id="bn{{$sala->id}}" onclick="elimina({{$sala->id}})"><i class="far fa-check-circle"></i> Eliminar</button>

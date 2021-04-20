@@ -54,9 +54,14 @@ class RegisterController extends Controller
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'username' => ['required', 'max:20', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
-            // 'id_rol' => ['required', 'exists:roles,id'],
         ], [
-            // 'id_rol.required' => 'Debe seleccionar un rol'
+            'required' =>'Este campo no debe estar vacio.',
+            'max' => 'Este campo supera la capacidad máxima de caracteres.',
+            'min' => 'Este campo supera la capacidad mínima de caracteres.',
+            'string' => 'Este campo requiere un string.',
+            'confirmed' => 'Las contraseñas no coinciden.',
+            'email' => 'El email ingresado no es válido',
+            'unique' => 'Este valor ya se encuentra registrado',
             ]);
     }
 
@@ -69,12 +74,10 @@ class RegisterController extends Controller
     protected function create(array $data)
     {
         if (User::all()->count()==0){
-            
             return User::create([
                 'name' => $data['name'],
                 'username' => $data['username'],
                 'email' => $data['email'],
-                'id_rol' => 1,
                 'password' => Hash::make($data['password']),
                 'estado' => 1,
             ])->assignRole('Administrador');
@@ -83,7 +86,6 @@ class RegisterController extends Controller
                 'name' => $data['name'],
                 'username' => $data['username'],
                 'email' => $data['email'],
-                'id_rol' => 1,
                 'password' => Hash::make($data['password']),
                 'estado' => 0,
             ]);
