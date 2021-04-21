@@ -4,7 +4,7 @@
   <title>Hospital San Bernardo</title>
   <!--JQUERY-->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- FRAMEWORK BOOTSTRAP para el estilo de la pagina-->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
@@ -49,9 +49,9 @@
       .form-group input{
           font-size: 17px;
           border-radius: 5px;
-          padding-left: 54px;
+          /*padding-left: 54px;*/
           box-shadow: 0px 0px 3px #848484;
-          width: 300px;
+          /*width: 300px;*/
       }
 
       .form-group::before{
@@ -76,7 +76,14 @@
       .forgot a{
           color: #848484;
       }
-
+      @media only screen and (max-width: 768px) {
+          .container{
+            margin-top: 25px;
+          }
+          input{
+            font-size: 12px !important;
+          }
+        }
     </style>
 </head>
 <body>
@@ -163,12 +170,12 @@
                             </div>
                         </div>
 
-                        <div class="form-group row mb-0">
-                            <div class="col-md-9 offset-md-3">
+                        <div class="form-group row mb-0 d-flex justify-content-center">
+                            
                                 
-                                 <button type="submit" class="btn btn-dark"><i class="fas fa-sign-in-alt"></i>  Registrarse </button>
-                                  <a href="{{ route('login') }}" class="btn btn-dark"><i class="fas fa-sign-in-alt"></i>  Volver </a>
-                            </div>
+                                 <button type="submit" class="btn btn-dark btn-sm"><i class="fas fa-sign-in-alt"></i>  Registrarse </button>
+                                  <a href="{{ route('login') }}" class="btn btn-dark btn-sm ml-1"><i class="fas fa-sign-in-alt"></i>  Volver </a>
+                            
                         </div>
                         </form>
                   </div>

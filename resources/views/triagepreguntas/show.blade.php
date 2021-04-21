@@ -15,7 +15,6 @@
 </div>
 <h3>¿Que le sucede?</h3>
 <div class="row col-md-5"  >
-	{{-- <div class="form-group"> --}}
 			<input type="hidden" name="id" id="id_paciente" value="<?php echo $id ?>">
 				<div class="table-responsive">
 					<table class="table table-bordered"  id=tabla_sintomas>
@@ -29,13 +28,20 @@
 					</table>
 					
 				</div>
-				
-			
-		{{-- </div> --}}
+
 </div>
-<div class="row col-md-5" >
-	<h3>¿Por cuanto tiempo permanece asi?</h3>
-			<input type="text" name="duracion" class="form-control">
+<h3>¿Por cuanto tiempo permanece asi?</h3>
+<div class="form-row" >
+	<div class="col-md-1">
+		<label  class="form-label">Dias</label>
+		<input type="number" value="0" class="form-control form-control-sm " min="0" id="dias" name="dias">
+	</div>
+	<div class="col-md-1">
+		<label  class="form-label">Horas</label>
+		<input type="number" value="0" class="form-control form-control-sm " id="horas" name="horas" maxlength="2" max="24" min="0">
+
+	</div>
+		
 </div>
 <div class="d-flex w-25 mt-2">
 	
@@ -44,35 +50,6 @@
 	
 </div>
 
-{{-- <div class="row col-md-10">
-	
-		<input type="hidden" name="id" id="id_paciente" value="<?php echo $id ?>">
-		<div class="form-group">
-			
-				<div class="table-responsive">
-					<table class="table table-bordered"  id=tabla_sintomas>
-						<tr>
-							
-							<td><input type="text" name="respuestas[]" class="form-control nombreje" id="tags"></td>
-							
-							<td><button type="button" id="add" name="add" class="btn btn-sm btn-outline-dark">Agregar filas</button></td>
-						</tr>
-						
-					</table>
-					
-				</div>
-				
-			
-		</div>
-		<div class="form-group">
-			<h3>¿Por cuanto tiempo permanece asi?</h3>
-			<input type="text" name="duracion" class="form-control">
-		</div>
-		<button class="btn btn-sm btn-outline-dark" id="btn_analizar">Analizar</button>
-		<a class="btn btn-sm btn-outline-danger btn-close ml-4" href="{{ route('pacientes.index') }}">Cancelar</a>
-
-	
-</div> --}}
 
 @endsection
 @section("scripts")
@@ -104,7 +81,8 @@ $(document).ready(function(){
 
 		let inputs = document.querySelectorAll('.nombreje');
 		let sintomas_descriptos = [];
-
+		let dias = document.getElementById('dias').value;
+		let horas = document.getElementById('horas').value;
 		inputs.forEach(function(sint) {
 			if(sint.value.replace(/ /g, "").length >0){
 				sintomas_descriptos.push(sint.value);
@@ -125,8 +103,9 @@ $(document).ready(function(){
 		            dataType:"json",
 		            data:{
 		                sintomas_descriptos:JSON.stringify(sintomas_descriptos),
-		                id:id
-		       
+		                id:id,
+		       			dias:dias,
+		       			horas:horas
 		            },
 		            success: function(response){
 		            	if(response.resultado ){

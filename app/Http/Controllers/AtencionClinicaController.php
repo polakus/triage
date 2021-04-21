@@ -59,12 +59,14 @@ class AtencionClinicaController extends Controller
                     ->join('atencion as a','a.id','=','da.id_atencion')
                     ->join('pacientes as p','p.Paciente_id','=','a.Paciente_id')
                     ->join('codigostriage as codigotriage','codigotriage.id','=','da.id_codigo_triage')
-                    ->select('p.nombre','p.apellido','da.fecha','da.id_atencion','da.id_codigo_triage','are.nombre','esp.nombre as especialidad','da.id','codigotriage.color','p.Paciente_id')
+                    ->select('p.nombre as paciente_nombre','p.apellido','da.fecha','da.id_atencion','da.id_codigo_triage','are.nombre as area_nombre','esp.nombre as especialidad','da.id','codigotriage.color','p.Paciente_id')
                     ->where('da.fecha','=',date('Y-m-d'))
                     ->where('da.atendido','=',0)
                     ->where('da.estado','LIKE','consulta')
-                    ->orderBy('da.id_codigo_triage','DESC')
-                    ->orderBy('da.id','ASC')
+                    ->orderBy('da.id_codigo_triage','ASC')
+                    ->orderBy('a.dias','DESC')
+                    ->orderBy('a.horas','DESC')
+                    // ->orderBy('da.id','ASC')
                     ->get();
             $especialidades=Especialidad::all();
             $cantidad= DetalleAtencion::where("estado","LIKE","consulta")->count();
@@ -73,7 +75,7 @@ class AtencionClinicaController extends Controller
         
             $val1=$request->val1;
             $val2=$request->val2;
-       
+        
         $cie=DB::table('cie')->get();
 
         return view('atencionclinica.sala',compact('pacientes','areas','especialidades','mensaje','cantidad','id_det_profesional_sala','cie','val1','val2'));
