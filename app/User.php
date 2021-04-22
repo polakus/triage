@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use App\Notifications\NotificacionDeReseteoDeContrasenia;
 use Cache;
 
 use Spatie\Permission\Traits\HasRoles;
@@ -48,17 +49,15 @@ class User extends Authenticatable
     public function isOnline(){
         return Cache::has('user-is-online-'.$this->id);
     }
-    // public function rol()
-    // {
-    //     return $this->belongsTo('App\Rol', 'id_rol');
-    // }
-
-    // public function esAdmin(){
-    //     // if($this->rol->name=="Administrador"){
-    //     if(true){
-    //         return true;
-    //     }else{
-    //         return false;
-    //     }
-    // }
+        
+    /**
+     * Send the password reset notification.
+     *
+     * @param  string  $token
+     * @return void
+     */
+    public function sendPasswordResetNotification($token)
+    {
+        $this->notify(new NotificacionDeReseteoDeContrasenia($token));
+    }
 }

@@ -97,11 +97,17 @@
     <div class="card-header">Acceso al sistema</div>
       <div class="card-body text-center">
         <div class="flash-message">
-        @foreach (['danger', 'warning', 'success', 'info'] as $msg)
-            @if(Session::has('alert-' . $msg))
-                <p class="alert alert-{{ $msg }}">{{ Session::get('alert-' . $msg) }} <a href="{{ route('usuarios.index') }}" class="close" data-dismiss="alert" aria-label="close">&times;</a></p>
-            @endif
-        @endforeach
+        @if (session('status'))
+          <div class="alert alert-success" role="alert">
+              {{ session('status') }}
+          </div>
+        @else
+          @foreach (['danger', 'warning', 'success', 'info'] as $msg)
+              @if(Session::has('alert-' . $msg))
+                  <p class="alert alert-{{ $msg }}">{{ Session::get('alert-' . $msg) }} <a href="{{ route('usuarios.index') }}" class="close" data-dismiss="alert" aria-label="close">&times;</a></p>
+              @endif
+          @endforeach
+        @endif
         </div>
         <div class="modal-dialog">
           <div class="col-sm-12 main-section">
@@ -138,7 +144,6 @@
                   <button type="submit" class="btn btn-dark"><i class="fas fa-sign-in-alt"></i>  Ingresar </button>
                   <a href="{{ route('register') }}" type="submit" class="btn btn-dark"><i class="fas fa-sign-in-alt"></i>  Registrarse</a>
               </form>
-              {{--
               <div class="col-12 forgot">
                 @if (Route::has('password.request'))
                 <a  href="{{ route('password.request') }}">
@@ -146,7 +151,6 @@
                 </a>
                 @endif
               </div>
-              --}}         
             </div>
           </div>
         </div>
