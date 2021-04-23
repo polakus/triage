@@ -25,7 +25,7 @@
         <listgroup class="is-visible list-group" id="searchList"></listgroup>
     </div>
     <div class="form-group col-md-2">
-      <button type="button" id="btn_agregar" onclick="addRow()" class="btn btn-mod">Agregar</button>    
+      <button type="button" id="btn_agregar" onclick="addRow()" class="btn btn-mod btn-sm">Agregar</button>    
     </div>
   </div>
 
@@ -44,8 +44,11 @@
   </div>
 </div>
 <div class="d-flex w-25">
-  <button type="button" id="btn_perm" onclick=editar({{ $id }}) class="btn btn-mod">Editar</button>
-  <a class="btn btn-outline-secondary btn-close ml-1" href="{{ route('roles.index') }}">Volver</a>
+
+  <button type="button" id="btn_perm" onclick=editar({{ $id }}) class="btn btn-mod btn-sm">Editar</button>
+<a class="btn btn-outline-secondary btn-close ml-1 btn-sm" href="{{ route('roles.index') }}">Volver</a>
+
+
 </div>
 
 
@@ -127,7 +130,7 @@
         // set input attributes.
         button.setAttribute('type', 'button');
         button.setAttribute('value', 'Quitar');
-        button.setAttribute('class', 'btn btn-mod')
+        button.setAttribute('class', 'btn btn-mod btn-sm')
         // add button's 'onclick' event.
         button.setAttribute('onclick', 'removeRow(this)');
         td.appendChild(newText);

@@ -92,8 +92,8 @@
     </div>
   </div>
   <div style="display:flex;width: 300px;">
-      <button type="submit" class="btn btn-primary">Registrar</button>
-  <a href="{{route('pacientes.index')}}" class="btn btn-primary">Volver</a>
+      <button type="submit" class="btn btn-mod btn-sm">Registrar</button>
+  <a href="{{route('pacientes.index')}}" class="btn btn-mod btn-sm ml-1">Volver</a>
   </div>
 
   

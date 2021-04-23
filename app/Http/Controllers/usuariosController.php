@@ -61,6 +61,7 @@ class usuariosController extends Controller
     }
 
     public function aceptar(Request $request, $id){
+
         $usuario = User::find($id);
         $usuario->estado = 1;
         $usuario->save();

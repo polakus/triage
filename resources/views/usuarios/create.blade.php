@@ -82,24 +82,7 @@
             <input id="password-confirm" type="password" class="form-control form-control-sm" name="password_confirmation"  autocomplete="new-password">
         </div>
     </div>
-{{--
-    <div class="form-group row">
-        <label class="col-md-4 col-form-label text-md-right" for="id_rol">Rol</label>
-        <div class="col-md-6">
-            <select name="id_rol" id="id_rol" class="form-control @error('id_rol') is-invalid @enderror">
-                <option value=""></option>
-                @foreach($roles as $rol)
-                    <option value="{{$rol->id}}" {{ old('id_rol')==$rol->id ? 'selected': '' }}>{{$rol->nombre}}</option>
-                @endforeach
-            </select>
-            @error('id_rol')
-                <span class="invalid-feedback" role="alert">
-                    <strong>{{ $message }}</strong>
-                </span>
-            @enderror
-        </div>
-    </div>
-    --}}
+
     <div class="form-group row mb-0">
         <div class="col-md-6 offset-md-4 d-flex">
             <button type="submit" class="btn btn-outline-secondary">{{ __('Register') }}</button>

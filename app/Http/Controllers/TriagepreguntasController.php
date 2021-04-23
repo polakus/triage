@@ -65,6 +65,8 @@ class TriagepreguntasController extends Controller
             $atencion = new Atencion;
             $atencion->Paciente_id=$request->id;
             $atencion->usuario_id= Auth::id();
+            $atencion->dias=$request->dias;
+            $atencion->horas=$request->horas;
             $atencion->save();
             for($i=0;$i<$cantidad;$i++){
                  $pregunta=new Pregunta;

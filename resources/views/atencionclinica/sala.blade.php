@@ -1,5 +1,32 @@
 @extends('triagepreguntas.test')
+@section("css")
 
+<style type="text/css">
+  .color-rojo{
+    background:linear-gradient(#EC7063,#E70E0E)!important;
+  }
+  .color-rojo:hover{
+    background: linear-gradient(#E70E0E,#B22222) !important;
+  }
+  .color-verde{
+    background:linear-gradient(#B3FFAA,#7CBC14)!important; 
+
+  }
+  .color-verde:hover{
+    background:linear-gradient(#7CBC14,#669C0C)!important; 
+  }
+
+  .color-amarillo{
+    background: linear-gradient(#F8FFAA,#DCE616)!important; 
+  }
+  .color-amarillo:hover{
+    background: linear-gradient(#DCE616,#B5BD1C)!important; 
+  }
+  thead th{
+    border-bottom: 0px solid grey !important;
+  }
+</style>
+@endsection
 @section("cuerpo")
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
         <h4 class="h4">Pacientes para atender</h4>
@@ -62,22 +89,22 @@
     <tbody id="tabla">
       @foreach($pacientes as $paciente)
           @if($paciente->color == "verde")
-          <tr class="table-success">
+          <tr class="color-verde">
         @elseif($paciente->color== "amarillo")
-          <tr class="table-warning">
+          <tr class="color-amarillo">
         @elseif($paciente->color=="rojo")
-          <tr class="table-danger">
+          <tr class="color-rojo">
         @endif
       
-        <td>{{ $paciente->nombre }}</td>
+        <td>{{ $paciente->paciente_nombre }}</td>
         <td> {{ $paciente->apellido }}</td>
        
         <td>{{ $paciente->fecha }}</td>
         <td> {{ $paciente->especialidad }}</td>
-        <td>{{ $paciente->nombre }}</td>
+        <td>{{ $paciente->area_nombre }}</td>
         <td>
         <div class="form-row" >
-          <button type="button" class="btn btn-dark btn-sm ml-1" id="button{{ $paciente->id }}" onclick="sala({{ $paciente->id_atencion}},{{ $paciente->id }},{{ $paciente->Paciente_id }})">Triaje</button>
+          <button type="button" class="btn btn-mod btn-sm ml-1" id="button{{ $paciente->id }}" onclick="sala({{ $paciente->id_atencion}},{{ $paciente->id }},{{ $paciente->Paciente_id }})">Triaje</button>
         </div>
        
         
@@ -241,6 +268,7 @@
 $(document).ready(function() {
     $('#table_id').DataTable({
        "responsive":true,
+       "ordering": false,
        "language": {
         "decimal": ",",
         "thousands": ".",

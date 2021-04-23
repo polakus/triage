@@ -19,7 +19,7 @@
         <listgroup class="is-visible list-group" id="searchList"></listgroup>
     </div>
     <div class="form-group col-md-2">
-      <button type="button" id="btn_agregar" onclick="addRow()" class="btn btn-mod">Agregar</button>
+      <button type="button" id="btn_agregar" onclick="addRow()" class="btn btn-mod btn-sm">Agregar</button>
     </div>
   </div>
 <div class="row no-gutters align-items-center table-wrapper-scroll-y my-custom-scrollbar">
@@ -48,8 +48,10 @@
   </div>
 </div>
 <div class="d-flex w-25">
-  <button type="button" id="btn_guardar" onclick="registrar(),limpiaSpans()" class="btn btn-mod">Guardar</button>
-  <a class="btn btn-outline-secondary btn-close ml-1" href="{{ route('usuarios.index') }}">Volver</a>
+
+  <button type="button" id="btn_guardar" onclick="registrar(),limpiaSpans()" class="btn btn-mod btn-sm">Guardar</button>
+  <a class="btn btn-outline-secondary btn-close btn-sm ml-1" href="{{ route('usuarios.index') }}">Volver</a>
+
 </div>
 
 @endsection
@@ -128,7 +130,7 @@
         // set input attributes.
         button.setAttribute('type', 'button');
         button.setAttribute('value', 'Quitar');
-        button.setAttribute('class', 'btn btn-mod')
+        button.setAttribute('class', 'btn btn-mod btn-sm')
         // add button's 'onclick' event.
         button.setAttribute('onclick', 'removeRow(this)');
         td.appendChild(newText);

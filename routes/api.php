@@ -86,9 +86,11 @@ Route::get('mostrar/{us}', function(User $us){
                         'are.nombre','esp.nombre as especialidad','da.estado','da.id_codigo_triage','da.id','da.sala','codigotriage.color','da.operar')
                     // ->where('da.fecha','=',date('Y-m-d'))
 
-                    ->orderBy('da.id_codigo_triage','DESC')
-                    ->orderBy('da.fecha','DESC')
-                    ->orderBy('da.hora','ASC')
+                    ->orderBy('da.id_codigo_triage','ASC')
+                    // ->orderBy('da.fecha','DESC')
+                    // ->orderBy('da.hora','ASC')
+                    ->orderBy('a.dias','DESC')
+                    ->orderBy('a.horas','DESC')
                     ->get();
 
     $salas_internacion = DB::table('salas as s')
