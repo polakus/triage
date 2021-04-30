@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'failed' => 'Usuario o contraseña mal ingresados.',//'These credentials do not match our records.',
+    'failed' => 'Los datos ingresados no pertenecen a ningún usuario.',//'These credentials do not match our records.',
     'throttle' => 'Demasiados intentos de loguearse. Espere :seconds segundos',//'Too many login attempts. Please try again in :seconds seconds.',
 
 ];

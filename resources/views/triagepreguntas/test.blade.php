@@ -138,6 +138,29 @@
       .zoom:hover {
         transform: scale(1.2); /* (120% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
       }
+      /* para arreglar lo del espacio en el menú */
+      /* @media screen and (max-width: 768px) {     parece que es lo mismo que lo de abajo*/
+      @media (max-width: 768px){
+        #sidebarMenu{
+          padding-top:0;
+          top:60px;
+        }
+        #siderbar{
+          height: 60px !important;
+        }
+        #nombrehsb{
+          display:none;
+        }
+        /* #btn-menu{
+          align-items:center !important;
+        } */
+        #dropdownMenuLink{
+
+          /* height:50px; */
+          margin: auto;
+          /* align-items: center !important; */
+        }
+      }
     </style>
    
   </head>
@@ -148,7 +171,7 @@
     ?>
     <!-- linear-gradient(to bottom, #555, #222)# -->
     <nav class="navbar navbar-dark sticky-top  flex-md-nowrap p-0 shadow" id="siderbar" style="background:#24292E;">
-      <a class="navbar-brand col-md-3 col-lg-2 mr-0 px-3" style="background: #24292E;" href="#">Hopistal San Bernardo</a>
+      <a id="nombrehsb" class="navbar-brand col-md-3 col-lg-2 mr-0 px-3" style="background: #24292E;" href="#">Hospital San Bernardo</a>
       <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-toggle="collapse" data-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
