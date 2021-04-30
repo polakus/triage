@@ -1,11 +1,11 @@
 
 <div class="d-flex w-100">
-    @if($us->can('FullCie') or $us->can('EditarCie'))
+    @if($us->hasAnyPermission(['FullCie','EditarCie']))
     <button type="button" class="btn btn-outline-secondary btn-sm "  data-toggle="modal" data-target="#editar{{ $enfermedad->id }}">
         Editar
     </button>
     @endif
-    @if($us->can('FullCie') or $us->can('EliminarCie'))
+    @if($us->hasAnyPermission(['FullCie','EliminarCie']))
     <button type="button" class="btn btn-outline-secondary btn-sm ml-1" data-toggle="modal" data-target="#modalEliminar{{ $enfermedad->id }}"  id="eliminarcie" >
         Eliminar
     </button>

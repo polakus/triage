@@ -149,7 +149,7 @@ Route::get('sintomas_cargar/{us}', function(User $us){
 });
 
 Route::get('cargar_cie/{us}', function(User $us){
-    // $cies = App\CIE::all();
+    // $enfermedades = App\CIE::all();
     $enfermedades = DB::table('cie')->orderBy('codigo')->get();
     return DataTables::of($enfermedades)
                         ->addColumn('button', function($enfermedad) use($us){

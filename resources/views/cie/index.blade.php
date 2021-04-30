@@ -1,20 +1,17 @@
 @extends("triagepreguntas.test")
 
-
-
 @section("cuerpo")
 	<div id="alerta"></div>
 	<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
         <h4 class="h4">CIE</h4>
         @canany(['FullCie','RegistrarCie'])
         <div class="btn-toolbar mb-2 mb-md-0">
-			<button type="button" class="btn btn-outline-secondary btn-sm" data-toggle="modal" style="width: 100%;" data-target="#exampleModal">
+			<button onclick="reset_modal_create()" type="button" class="btn btn-outline-secondary btn-sm" data-toggle="modal" style="width: 100%;" data-target="#exampleModal">
 				Agregar CIE
 			</button>
     	</div>
     	@endcanany
     </div>
-	
 	
 	<div class="table-responsive">
 	    <table class="table table-bordered table-sm table-hover" id="myTable">
@@ -222,33 +219,39 @@
 	}
 	function eliminarCie(id){
 		$('#modalEliminar'+id).modal('hide');
-			$.ajaxSetup({
-				headers: {
-					'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-				}
-			});
-			$.ajax({
-				type:'DELETE',
-				url:"/cie/"+id,
-				dataType:"json",
-				// data:{
-				// 	nombre:nombre,
-				// 	codigo:codigo,
-				// },
-				success: function(response){
-					var table = $('#myTable').DataTable();
-                	table.draw();
-					$('#alerta').addClass('alert '+response.tipo);
-					$('#alerta').html('<b>'+response.mensaje+'</b>');
-					$("#alerta").fadeTo(2000, 500).slideUp(500, function(){
-						$("#alerta").slideUp(500);
-					});
-				},
-				error:function(err){
-					alert("Hubo un error al intentar eliminar elemento");
-				}
-			});
+		$.ajaxSetup({
+			headers: {
+				'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+			}
+		});
+		$.ajax({
+			type:'DELETE',
+			url:"/cie/"+id,
+			dataType:"json",
+			// data:{
+			// 	nombre:nombre,
+			// 	codigo:codigo,
+			// },
+			success: function(response){
+				var table = $('#myTable').DataTable();
+				table.draw();
+				$('#alerta').addClass('alert '+response.tipo);
+				$('#alerta').html('<b>'+response.mensaje+'</b>');
+				$("#alerta").fadeTo(2000, 500).slideUp(500, function(){
+					$("#alerta").slideUp(500);
+				});
+			},
+			error:function(err){
+				alert("Hubo un error al intentar eliminar elemento");
+			}
+		});
+	}
 
+	function reset_modal_create(id, nombre){
+		document.getElementById('codigo').value="";
+		document.getElementById('nombre').value="";
+		document.getElementById('error_codigo').innerHTML="";
+		document.getElementById('error_codigo').innerHTML="";
 	}
 </script>
 
