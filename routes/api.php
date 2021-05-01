@@ -149,8 +149,8 @@ Route::get('sintomas_cargar/{us}', function(User $us){
 });
 
 Route::get('cargar_cie/{us}', function(User $us){
-    // $enfermedades = App\CIE::all();
-    $enfermedades = DB::table('cie')->orderBy('codigo')->get();
+    $enfermedades = App\CIE::all();
+    // $enfermedades = DB::table('cie')->orderBy('codigo')->get();
     $s = '<div class="d-flex w-100">';
     if($us->hasAnyPermission(['FullCie','EditarCie']) && $us->hasAnyPermission(['FullCie','EliminarCie'])){
         return DataTables::of($enfermedades)

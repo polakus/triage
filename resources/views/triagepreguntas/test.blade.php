@@ -161,10 +161,10 @@
         }
         
       }
-      #alerta{
+      /* #alerta{
         position:fixed;
         width:70%;
-      }
+      } */
     </style>
    
   </head>
