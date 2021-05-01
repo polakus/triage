@@ -151,14 +151,53 @@ Route::get('sintomas_cargar/{us}', function(User $us){
 Route::get('cargar_cie/{us}', function(User $us){
     // $enfermedades = App\CIE::all();
     $enfermedades = DB::table('cie')->orderBy('codigo')->get();
+    $s = '<div class="d-flex w-100">';
+    if($us->hasAnyPermission(['FullCie','EditarCie']) && $us->hasAnyPermission(['FullCie','EliminarCie'])){
+        return DataTables::of($enfermedades)
+            ->addColumn('button', function($enfermedad) use($s) {
+                $s=$s.'<button id="btn-editar-'.$enfermedad->id.'" onclick="iniModalEditar(\''.$enfermedad->codigo.'\',\''.$enfermedad->descripcion.'\',\''.$enfermedad->id.'\')" type="button" class="btn btn-outline-secondary btn-sm "  data-toggle="modal" data-target="#editar">
+                            Editar
+                        </button>
+                        <button onclick="iniModalEliminar(\''.$enfermedad->codigo.'\',\''.$enfermedad->descripcion.'\',\''.$enfermedad->id.'\')" type="button" class="btn btn-outline-secondary btn-sm ml-1" data-toggle="modal" data-target="#modalEliminar" >
+                            Eliminar
+                        </button>';
+                $s = $s.'</div>';
+                return $s;
+                })
+                ->rawColumns(['button'])
+                ->toJson();
+    }elseif($us->hasAnyPermission(['FullCie','EditarCie'])){
+        return DataTables::of($enfermedades)
+            ->addColumn('button', function($enfermedad) use($s) {
+                $s=$s.'<button id="btn-editar-'.$enfermedad->id.'" onclick="iniModalEditar(\''.$enfermedad->codigo.'\',\''.$enfermedad->descripcion.'\',\''.$enfermedad->id.'\')" type="button" class="btn btn-outline-secondary btn-sm "  data-toggle="modal" data-target="#editar">
+                            Editar
+                        </button>';
+                $s = $s.'</div>';
+                return $s;
+            })
+            ->rawColumns(['button'])
+            ->toJson();
+    }elseif($us->hasAnyPermission(['FullCie','EliminarCie'])){
+        return DataTables::of($enfermedades)
+            ->addColumn('button', function($enfermedad) use($s) {
+                $s=$s.'<button type="button" class="btn btn-outline-secondary btn-sm ml-1" data-toggle="modal" data-target="#modalEliminar" >
+                            Eliminar
+                        </button>';
+                $s = $s.'</div>';
+                return $s;
+            })
+            ->rawColumns(['button'])
+            ->toJson();
+    }
     return DataTables::of($enfermedades)
-                        ->addColumn('button', function($enfermedad) use($us){
-                            return view('cie/action_editar',compact('enfermedad','us'));
-                        })
-                        ->rawColumns(['button'])
-                        ->toJson();
+            ->addColumn('button', function($enfermedad) use($s) {
+                $s = $s.'</div>';
+                return $s;
+            })
+            ->rawColumns(['button'])
+            ->toJson();
 });
-
+            
 Route::get('dtespecialidades/{us}', function(User $us){
     // $especialidades = App\Especialidad::all();
     $especialidades = DB::table('especialidades as esp')

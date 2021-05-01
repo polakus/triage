@@ -85,7 +85,7 @@ $(document).ready(function() {
             "next": "Siguiente",
             "previous": "Anterior"
         },
-         "processing": "Procesando...",
+         "processing": '<i class="fa fa-spinner fa-spin fa-2x fa-fw"></i><span class="sr-only">Loading...</span> ',
         "search": "Buscar:",
         "searchPlaceholder": "",
         "zeroRecords": "No se encontraron resultados",
