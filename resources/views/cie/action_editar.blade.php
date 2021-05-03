@@ -1,16 +1,17 @@
 
 <div class="d-flex w-100">
-    @if($us->can('FullCie') or $us->can('EditarCie'))
-    <button type="button" class="btn btn-outline-secondary btn-sm "  data-toggle="modal" data-target="#editar{{ $enfermedad->id }}">
+    @if($us->hasAnyPermission(['FullCie','EditarCie']))
+    <button onclick="iniModalEditar('{{$enfermedad->codigo}}','{{$enfermedad->descripcion}}',{{$enfermedad->id}})" type="button" class="btn btn-outline-secondary btn-sm "  data-toggle="modal" data-target="#editar">
         Editar
     </button>
     @endif
-    @if($us->can('FullCie') or $us->can('EliminarCie'))
-    <button type="button" class="btn btn-outline-secondary btn-sm ml-1" data-toggle="modal" data-target="#modalEliminar{{ $enfermedad->id }}"  id="eliminarcie" >
+    @if($us->hasAnyPermission(['FullCie','EliminarCie']))
+    <button type="button" class="btn btn-outline-secondary btn-sm ml-1" data-toggle="modal" data-target="#modalEliminar" >
         Eliminar
     </button>
     @endif
 </div>
+{{--
 <div class="modal fade" id="editar{{ $enfermedad->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -68,3 +69,4 @@
     </div>
   </div>
 </div>
+--}}

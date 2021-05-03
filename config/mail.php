@@ -49,8 +49,13 @@ return [
             'transport' => 'ses',
         ],
 
+        // 'mailgun' => [
+        //     'transport' => 'mailgun',
+        // ],
         'mailgun' => [
-            'transport' => 'mailgun',
+            'domain' => env('MAILGUN_DOMAIN'),
+            'secret' => env('MAILGUN_SECRET'),
+            // 'endpoint' => env('MAILGUN_ENDPOINT', 'api.eu.mailgun.net'), If you are not using the United States Mailgun region, you may define your region's endpoint in the services configuration file:
         ],
 
         'postmark' => [

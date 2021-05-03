@@ -233,7 +233,7 @@ class usuariosController extends Controller
         ],[
             'required' =>'Este campo no debe estar vacio.',
             'max' => 'Este campo supera la capacidad máxima de caracteres.',
-            'min' => 'Este campo supera la capacidad mínima de caracteres.',
+            'min' => 'Debe ser de al menos 8 caracteres',
             'string' => 'Este campo requiere un string.',
             'confirmed' => 'Las contraseñas no coinciden.',
             'email' => 'El email ingresado no es válido',

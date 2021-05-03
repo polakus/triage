@@ -63,7 +63,6 @@
           font-family: "Font Awesome\ 5 Free";
           position: absolute;
           left: 28px;
-
           font-size: 22px;
           padding-top:4px;
       }
@@ -94,72 +93,70 @@
 </head>
 <body>
 <div class="container">
-    <div class="card">
-      <div class="card-header">Acceso al sistema</div>
+  <div class="card">
+    <div class="card-header">Acceso al sistema</div>
       <div class="card-body text-center">
         <div class="flash-message">
-                        @foreach (['danger', 'warning', 'success', 'info'] as $msg)
-                            @if(Session::has('alert-' . $msg))
-                                <p class="alert alert-{{ $msg }}">{{ Session::get('alert-' . $msg) }} <a href="{{ route('usuarios.index') }}" class="close" data-dismiss="alert" aria-label="close">&times;</a></p>
-                            @endif
-                        @endforeach
+        @if (session('status'))
+          <div class="alert alert-success" role="alert">
+              {{ session('status') }}
+          </div>
+        @else
+          @foreach (['danger', 'warning', 'success', 'info'] as $msg)
+              @if(Session::has('alert-' . $msg))
+                  <p class="alert alert-{{ $msg }}">{{ Session::get('alert-' . $msg) }} <a href="{{ route('usuarios.index') }}" class="close" data-dismiss="alert" aria-label="close">&times;</a></p>
+              @endif
+          @endforeach
+        @endif
         </div>
         <div class="modal-dialog">
           <div class="col-sm-12 main-section">
             <div class="modal-content" style="border:0px;">
               <div class="col-12 user-img">
-                    <img src="imagenes/doctor.png"class="img-fluid">  
+                <img src="imagenes/doctor.png"class="img-fluid">  
               </div> 
               <form class="col-12" action="{{ route('login') }}" method="POST">
                 @csrf
                   <div class="form-group" id="user-group">
-                      <input id="username" type="text" class="form-control @error('username') is-invalid @enderror" name="username" value="{{ old('username') }}" placeholder="Nombre de usuario" required autofocus>
+                    <input id="username" type="text" class="form-control @error('username') is-invalid @enderror" name="username" value="{{ old('username') }}" placeholder="Nombre de usuario" required autofocus>
                       @error('username')
-                          <span class="invalid-feedback" role="alert">
-                              <strong>{{ $message }}</strong>
-                          </span>
+                      <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                      </span>
                       @enderror
                   </div>
                   <div class="form-group" id="contrasena-group">
-                      <input id="password" type="password" placeholder="Contraseña" class="form-control @error('password') is-invalid @enderror" name="password" required>
-
-                      @error('password')
-                          <span class="invalid-feedback" role="alert">
-                              <strong>{{ $message }}</strong>
-                          </span>
-                      @enderror
+                    <input id="password" type="password" placeholder="Contraseña" class="form-control @error('password') is-invalid @enderror" name="password" required>
+                    @error('password')
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                    @enderror
                   </div>
                   {{--
                    <div class="col-12 text-left">
                       <div class="form-check form-check-inline">
                         <input class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
-                        
-                        <label class="form-check-label" for="remember">
-                                            {{ __('Recordarme') }}</label>
+                        <label class="form-check-label" for="remember">{{ __('Recordarme') }}</label>
                       </div>
                   </div>
                   --}}
                   <button type="submit" class="btn btn-dark"><i class="fas fa-sign-in-alt"></i>  Ingresar </button>
-                  
                   <a href="{{ route('register') }}" type="submit" class="btn btn-dark"><i class="fas fa-sign-in-alt"></i>  Registrarse</a>
               </form>
-{{--
               <div class="col-12 forgot">
-
-                   @if (Route::has('password.request'))
-                                    <a  href="{{ route('password.request') }}">
-                                        {{ __('Recordar contraseña?') }}
-                                    </a>
-                   @endif
-                   --}}         
+                @if (Route::has('password.request'))
+                <a  href="{{ route('password.request') }}">
+                  {{ __('Recordar contraseña?') }}
+                </a>
+                @endif
               </div>
             </div>
-            
           </div>
         </div>
-        
       </div>
     </div>
+  </div>
 </div>
 </body>
 </html>

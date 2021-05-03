@@ -138,6 +138,33 @@
       .zoom:hover {
         transform: scale(1.2); /* (120% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
       }
+      /* para arreglar lo del espacio enel menú */
+      /* @media screen and (max-width: 768px)     parece que es lo msmo que lo de abajo */
+      /* #dropdownMenuLink{ */
+      #perfil-dropdown{
+        /* margin: auto; */
+        margin-left: 10px;
+        margin-right: 10px;
+        /* padding: 8px 6px; */
+        /* align-items: center !important; */
+      }
+      @media (max-width: 768px){
+        #sidebarMenu{
+          padding-top:0;
+          top:60px;
+        }
+        #siderbar{
+          height: 60px !important;
+        }
+        #nombrehsb{
+          display: none;
+        }
+        
+      }
+      /* #alerta{
+        position:fixed;
+        width:70%;
+      } */
     </style>
    
   </head>
@@ -148,12 +175,12 @@
     ?>
     <!-- linear-gradient(to bottom, #555, #222)# -->
     <nav class="navbar navbar-dark sticky-top  flex-md-nowrap p-0 shadow" id="siderbar" style="background:#24292E;">
-      <a class="navbar-brand col-md-3 col-lg-2 mr-0 px-3" style="background: #24292E;" href="#">Hopistal San Bernardo</a>
+      <a id="nombrehsb" class="navbar-brand col-md-3 col-lg-2 mr-0 px-3" style="background: #24292E;" href="#">Hopistal San Bernardo</a>
       <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-toggle="collapse" data-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
       
-      <div class="dropdown" >
+      <div id="perfil-dropdown" class="dropdown" >
         <a class="btn btn-dark dropdown-toggle" style="background-color: transparent;"href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           {{ $usuario->name }}
         </a>

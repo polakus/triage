@@ -79,7 +79,12 @@ trait ResetsPasswords
      */
     protected function validationErrorMessages()
     {
-        return [];
+        return [
+            'email' => 'El email ingresado no es válido',
+            'required' =>'Este campo no debe estar vacio.',
+            'confirmed' => 'Las contraseñas no coinciden.',
+            'min' => 'Debe ser de al menos 8 caracteres',
+        ];
     }
 
     /**
@@ -112,7 +117,7 @@ trait ResetsPasswords
 
         event(new PasswordReset($user));
 
-        $this->guard()->login($user);
+        // $this->guard()->login($user);  CREO QUE PARA QUE NO LOGUEE AL RESTABLECER CONTRASEÑA
     }
 
     /**
