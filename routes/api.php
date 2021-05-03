@@ -152,6 +152,10 @@ Route::get('cargar_cie/{us}', function(User $us){
     // $cies = App\CIE::all();
     $enfermedades = DB::table('cie')->orderBy('codigo')->get();
     return DataTables::of($enfermedades)
+                        // ->addColumn('button',function($enfermedad){
+                        //     return '<button>Hola</button>';
+                        // })
+                        // ->rawColumns(['button'])
                         ->addColumn('button', function($enfermedad) use($us){
                             return view('cie/action_editar',compact('enfermedad','us'));
                         })
