@@ -116,6 +116,7 @@
     </tbody>
   </table>
 </div>
+
 <div id="formulario">
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
   <h4 class="h4">Formulario</h4>
@@ -480,15 +481,22 @@ function sala(id,detalleatencion,id_paciente){
     }
    
     $( "#cieslist" ).autocomplete({
-      source: availableTags
+      // source: availableTags
+      source: function(request, response) {
+        var results = $.ui.autocomplete.filter(availableTags, request.term);
+
+        response(results.slice(0, 6));
+    }
+
+
     });
    
   
 
   } );
  
-  
  </script>
+
 <script>
 // document.getElementById('his').style.display = 'none';
 document.getElementById('formulario').style.display = 'none';

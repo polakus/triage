@@ -40,7 +40,7 @@
 <div class="form-row">
   <div class="form-group col-md-2">
       <label for="inputState">Condicion</label>
-      <select name="cod" id="cod" class="form-control form-control-sm">
+      <select name="cod" id="cod" class="form-control form-control-sm select">
         <option value="Todas" selected>Todas</option>
         <option value="Operar">Operar</option>
         <option value="Internar" >Internar</option>
@@ -82,10 +82,11 @@
         </table>
 </div>
 
+<!-- Modal para Configurar las areas de internacion y operacion -->
 <div class="modal fade bd-example-modal-sm" id="modalConfigurar" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-sm">
     <div class="modal-content">
-      <div class="modal-header">
+      <div class="modal-header" >
         <h5 class="modal-title" id="exampleModalLabel">Configuracion</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
@@ -121,34 +122,35 @@
   </div>
 </div>
 
+
+<!-- Modal para Internacion -->
+<div class="modal fade" id="modalInternacion" tabindex="-1" role="dialog" aria-labelledby="modalInternacionLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header" id="modal_header">
+          <h5 class="modal-title"  id="h5_modal" ></h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="container col-md-12" id="div_container_modal">
+              
+          </div> 
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+        
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+
 @endsection
 @section("scripts")
-
-
-<script type="text/javascript">
-  $(document).ready(function() {
-    $('#cod').select2();
-});
-
-
-  // var fecha = new Date(); //Fecha actual
-  // var mes = fecha.getMonth()+1; //obteniendo mes
-  // var dia = fecha.getDate(); //obteniendo dia
-  // var ano = fecha.getFullYear(); //obteniendo año
-  // if(dia<10)
-    // dia='0'+dia; //agrega cero si el menor de 10
-  // if(mes<10)
-    // mes='0'+mes //agrega cero si el menor de 10
-  // document.getElementById('fecha').value=ano+"-"+mes+"-"+dia;
-  // $('input').on('change', function() {
-   
-  //     $("#tabla tr").filter(function() {
-  //         $(this).toggle($(this).text().toLowerCase().indexOf($('#fecha').val().toLowerCase()) > -1)
-  //       });
-    
-    
-  //   }).trigger('change');
-</script>
 
 <script type="text/javascript">
   $(document).ready(function() {
@@ -276,76 +278,76 @@
 } );
 
 
-  function cargarValores(id,sala_id){
-    $('#exampleModal'+id).modal('hide');
-    var detalleatencion=$('#detalleatencion'+id).val();
-    var tipo=$('#tipo'+id).val();
-    var id_sala=$('#id_sala'+sala_id).val();
-    var sala=$('#sala'+sala_id).val();
+  // function cargarValores(id,sala_id){
+  //   $('#exampleModal'+id).modal('hide');
+  //   var detalleatencion=$('#detalleatencion'+id).val();
+  //   var tipo=$('#tipo'+id).val();
+  //   var id_sala=$('#id_sala'+sala_id).val();
+  //   var sala=$('#sala'+sala_id).val();
    
-      $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-    });
+  //     $.ajaxSetup({
+  //               headers: {
+  //                   'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+  //               }
+  //   });
 
-       $.ajax({
-                type:'POST',
-                url:"/turnos",
-                dataType:"json",
-                data:{
-                    detalleatencion:detalleatencion,
-                    tipo:tipo,
-                    id_sala:id_sala,
-                    sala:sala
-                },
-                success: function(response){
+  //      $.ajax({
+  //               type:'POST',
+  //               url:"/turnos",
+  //               dataType:"json",
+  //               data:{
+  //                   detalleatencion:detalleatencion,
+  //                   tipo:tipo,
+  //                   id_sala:id_sala,
+  //                   sala:sala
+  //               },
+  //               success: function(response){
                     
-                    var table = $('#example').DataTable();
-                    table.draw();
+  //                   var table = $('#example').DataTable();
+  //                   table.draw();
 
-                    },
-                error:function(){
-                    // $("#labelNombre").text("Error 2");
-                    // $("#labelNombre").addClass('text-danger');
-                }
-            });
-   };
-   function cargarValorOperar(id,sala_id){
-    $('#modal'+id).modal('hide');
-    var detalleatencion=$('#detalleatencion'+id).val();
-    var tipo=$('#tipo'+id).val();
-    var id_sala=$('#id_sala'+sala_id).val();
-    var sala=$('#sala'+sala_id).val();
-    // alert(sala);
-      $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-    });
+  //                   },
+  //               error:function(){
+  //                   // $("#labelNombre").text("Error 2");
+  //                   // $("#labelNombre").addClass('text-danger');
+  //               }
+  //           });
+  //  };
+  //  function cargarValorOperar(id,sala_id){
+  //   $('#modal'+id).modal('hide');
+  //   var detalleatencion=$('#detalleatencion'+id).val();
+  //   var tipo=$('#tipo'+id).val();
+  //   var id_sala=$('#id_sala'+sala_id).val();
+  //   var sala=$('#sala'+sala_id).val();
+  //   // alert(sala);
+  //     $.ajaxSetup({
+  //               headers: {
+  //                   'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+  //               }
+  //   });
 
-       $.ajax({
-                type:'POST',
-                url:"/turnos",
-                dataType:"json",
-                data:{
-                    detalleatencion:detalleatencion,
-                    tipo:tipo,
-                    id_sala:id_sala,
-                    sala:sala
-                },
-                success: function(response){
+  //      $.ajax({
+  //               type:'POST',
+  //               url:"/turnos",
+  //               dataType:"json",
+  //               data:{
+  //                   detalleatencion:detalleatencion,
+  //                   tipo:tipo,
+  //                   id_sala:id_sala,
+  //                   sala:sala
+  //               },
+  //               success: function(response){
                     
-                    var table = $('#example').DataTable();
-                    table.draw();
+  //                   var table = $('#example').DataTable();
+  //                   table.draw();
 
-                    },
-                error:function(){
-                    // $("#labelNombre").text("Error 2");
-                    // $("#labelNombre").addClass('text-danger');
-                }
-            });
-   };
+  //                   },
+  //               error:function(){
+  //                   // $("#labelNombre").text("Error 2");
+  //                   // $("#labelNombre").addClass('text-danger');
+  //               }
+  //           });
+  //  };
    function darAlta(id){
      $.ajaxSetup({
                 headers: {
@@ -404,6 +406,148 @@
                 }
             });
    }
+// Consulta para rellenar los datos de internaciones
+   function iniModalInternacion(id){
+    $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+    });
+
+    $.ajax({
+            type:'GET',
+            url:"/api/salas_internacion",
+            dataType:"json",
+            data:{
+            },
+            success: function(response){
+                $('#h5_modal').html("Salas de Internaciones");
+                let lista = response.salas_internacion;
+                let lista_string='';
+                for(let i=0;i< lista.length;i++){
+                    lista_string= lista_string+`<div class="row border">
+                                      <div class="col border">`+`<label>${lista[i].nombre}</label> 
+                                      </div>`;
+                    if(lista[i].disponibilidad == 1){
+                      lista_string= lista_string+`<div class="col">
+                                              <label>Disponible</label>
+                                          </div>
+                                          <div class="col border">
+                                                <button type="button" class="btn btn-success btn-sm asignar" 
+                                                onclick="cargarValores('${id}','${lista[i].id}','${lista[i].nombre}','Internado')">
+                                                Asignar esta sala</button>
+                                          </div>`;
+                    }
+                    else{
+                      lista_string = lista_string+`<div class="col border">
+                                            <label>No disponible</label>
+                                          </div>
+                                           <div class="col border">
+                                            <button type="submit" id="add" name="add"  class="btn btn-success btn-sm" disabled>Asignar esta sala</button>
+                                          </div>`;
+                    }
+                    lista_string=lista_string+'</div>';
+                }
+                $('#div_container_modal').html(lista_string);
+
+                },
+            error:function(){
+
+            }
+        });
+   }
+
+   function iniModalOperacion(id){
+    $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+    });
+
+    $.ajax({
+            type:'GET',
+            url:"/api/salas_operacion",
+            dataType:"json",
+            data:{
+            },
+            success: function(response){
+                $('#h5_modal').html("Salas de Operaciones")
+                let lista = response.salas_operacion;
+                let lista_string='';
+                for(let i=0;i< lista.length;i++){
+                    
+                    lista_string= lista_string+`<div class="row border">
+                                      <div class="col border">`+`<label>${lista[i].nombre}</label> 
+                                      </div>`;
+                    if(lista[i].disponibilidad == 1){
+                      lista_string= lista_string+`<div class="col">
+                                              <label>Disponible</label>
+                                          </div>
+                                          <div class="col border">
+                                                <button type="button" class="btn btn-success btn-sm asignar" 
+                                                onclick="cargarValores('${id}','${lista[i].id}','${lista[i].nombre}','Operado')">
+                                                Asignar esta sala</button>
+                                          </div>`;
+                    }
+                    else{
+                      lista_string = lista_string+`<div class="col border">
+                                            <label>No disponible</label>
+                                          </div>
+                                           <div class="col border">
+                                            <button type="submit" id="add" name="add"  class="btn btn-success btn-sm" disabled>Asignar esta sala</button>
+                                          </div>`;
+                    }
+                    lista_string=lista_string+'</div>';
+                }
+                $('#div_container_modal').html(lista_string);
+
+                },
+            error:function(){
+
+            }
+        });
+   }
+
+
+
+   function cargarValores(id, sala_id, sala, tipo){
+    $('#modalInternacion').modal('hide');
+    $('#h5_modal').html("");
+    var detalleatencion=id;
+    var tipo=tipo;
+    var id_sala=sala_id;
+    var sala=sala;
+   
+      $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+    });
+
+       $.ajax({
+                type:'POST',
+                url:"/turnos",
+                dataType:"json",
+                data:{
+                    detalleatencion:detalleatencion,
+                    tipo:tipo,
+                    id_sala:id_sala,
+                    sala:sala
+                },
+                success: function(response){
+                    
+                    var table = $('#example').DataTable();
+                    table.draw();
+
+                    },
+                error:function(){
+                    // $("#labelNombre").text("Error 2");
+                    // $("#labelNombre").addClass('text-danger');
+                }
+            });
+   };
+
+
 </script>
 
 
