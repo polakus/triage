@@ -24,12 +24,12 @@ class PacientesController extends Controller
     }
     public function index()
     {
-        
         // $pacientes= DB::table('Pacientes')->where('nombre','!=','nn')->where('apellido','!=','nn')->get();
         //$pacientes = Paciente::all()->paginate(10);
         $colores = Codigo::all();
         $cie = DB::table("cie as c")->get();
-        return view('pacientes.index', compact('colores','cie'));
+        $especialidades = DB::table('especialidades')->get();
+        return view('pacientes.index', compact('colores','cie','especialidades'));
     }
 
     /**
@@ -160,8 +160,6 @@ class PacientesController extends Controller
     {
         //
     }
-
-
 
     public function insertarNN(Request $request){
             $mensajes = [

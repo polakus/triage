@@ -58,7 +58,7 @@ Route::get('profesionales',function(Request $request){
 });
 
 Route::get('ApiPacientes/{us}',function(User $us){
-    $pacientes= DB::table('pacientes')->where('nombre','!=','nn')->where('apellido','!=','nn')->get();
+    $pacientes= DB::table('pacientes')->where('nombre','!=','nn')->where('apellido','!=','nn');
     if($us->hasAnyPermission(['FullPacientes','TriajePaciente']) && $us->hasAnyPermission(['FullPacientes','EditarPaciente'])){
         return DataTables::of($pacientes)
             ->addColumn('btn', function($paciente){

@@ -68,7 +68,9 @@ Route::get('/pruebas', function(){
 //     $user->save();
 //     // Permission::create(['name'=>'EditarRolesUsuario']);
 //     // return redirect('/prueba2/'.$user);//->route('p2',$user);
-
+$start=microtime(true);
+$pacientes= DB::table('pacientes')->where('nombre','!=','nn')->where('apellido','!=','nn')->get();
+echo microtime(true)-$start;
 });
 // Route::get('/prueba2/{user}',function(Request $request, $user){
 //     echo $user;

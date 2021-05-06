@@ -86,7 +86,6 @@
             <select class="form-control select"style="width: 100%;" name="id_color" id="id_color">
               @foreach($colores as $color)
               <option value="{{ $color->id }}">{{ $color->color }}</option>
-             
               @endforeach         
             </select>
           </div>
@@ -94,7 +93,11 @@
             <label>CIE:</label>
              <input type="text" name="ciess" id="cieslist" class="form-control form-control-sm">
              <div id="error_modal_cie"></div>
-     
+          </div>
+          <div class="form-group col-md-10 ">
+            <label>Especialidad:</label>
+             <input type="text" name="ciess" id="esplist" class="form-control form-control-sm">
+             <div id="error_modal_esp"></div>
           </div>
           <div class="form-group col-md-10 ">        
             <label for="exampleFormControlTextarea1">Observacion</label>
@@ -129,6 +132,7 @@
 
 <script>
   $( function() {
+    // AUTOCOMPLETAR DE CIE
     cies=<?php echo $cie ?>;
     var availableTags=[];
     for(let i=0; i<cies.length;i++){
@@ -140,13 +144,23 @@
         var results = $.ui.autocomplete.filter(availableTags, request.term);
 
         response(results.slice(0, 6));
-    }
+      }
     });
-   
-  
 
-  } );
- 
+    // AUTOCOMPLETAR DE ESPECIALIDADES
+    especialidades=<?php echo $especialidades ?>;
+    var availableTags=[];
+    for(let i=0; i<especialidades.length;i++){
+      availableTags.push(especialidades[i].nombre);
+    }
+    
+    $( "#esplist" ).autocomplete({
+      source: function(request, response) {
+        var results = $.ui.autocomplete.filter(availableTags, request.term);
+        response(results.slice(0, 6));
+      }
+    });
+  });
  </script>
 <script >
   document.getElementById('operar').style.display = 'none';
@@ -236,14 +250,15 @@
     
     var condicion= $("#condicion").val();
     var ciess = $("#cieslist").val();
+    var especialidad = $("#esplist").val();
     var observacion=$("#observacion").val();
     var selectop = $("#selectop").val();
     var id_color =$("#id_color").val();
 
     $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
+      headers: {
+          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+      }
     });
 
     $.ajax({
@@ -253,6 +268,7 @@
             data:{
                 condicion:condicion,
                 ciess:ciess,
+                especialidad:especialidad,
                 observacion:observacion,
                 selectop:selectop,
                 id_color:id_color
@@ -286,9 +302,6 @@
             }
           });
   }
-
-
-
 </script>
 
 
