@@ -2,11 +2,6 @@
 @extends("triagepreguntas.test")
 
 @section("cuerpo")
-{{-- <div class="alert alert-danger" id="danger-alert">
-   <button type="button" class="close" data-dismiss="alert">x</button>
-   <strong>Success!</strong>
-   Product have added to your wishlist.
-</div> --}}
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
         <h1 class="h2">Preguntas del Triaje</h1>
         
@@ -162,13 +157,23 @@ $(document).ready(function(){
   	}
   	
     $( "#tags" ).autocomplete({
-      source: availableTags
+    //   source: availableTags
+	source: function(request, response) {
+        var results = $.ui.autocomplete.filter(availableTags, request.term);
+
+        response(results.slice(0, 6));
+    }
     });
    
  	$(document).on('click','.nombreje',function(){
  		var id= $(this).attr('id');
  		$( "#"+id ).autocomplete({
-     		 source: availableTags
+     		//  source: availableTags
+			 source: function(request, response) {
+        var results = $.ui.autocomplete.filter(availableTags, request.term);
+
+        response(results.slice(0, 6));
+    }
    		});
  	});
 

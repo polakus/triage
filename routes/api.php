@@ -118,21 +118,54 @@ Route::get('mostrar/{us}', function(User $us){
                                 return '<td> </td>';
                             }
                         })
-                        // ->rawColumns(['observacion'])
-                        ->addColumn('Internacion', function($paciente) use($salas_internacion, $us){
-                            if($us->can('FullAtencion') or $us->can('InternacionAtencion')){
-                                return view('turnos/actionsInternar',compact('paciente','salas_internacion'));
+                        ->addColumn('Internacion', function($paciente){
+                            if($paciente->estado == 'Internar'){
+                              return '<button id="btn-internacion-'.$paciente->id.'" onclick="iniModalInternacion(\''.$paciente->id.'\')" type="button" class="btn btn-mod btn-sm"  data-toggle="modal" data-target="#modalInternacion">
+                            Asignar Sala
+                        </button>';
+                            }
+                            else{
+                                if($paciente->estado != "consulta" && $paciente->estado != "Operado"){
+                                    return  $paciente->sala;
+                                }
                             }
                         })
-                        // ->addColumn('Operar','turnos/actionsOperar')
-                        ->addColumn('Operar', function($paciente) use ($salas_operacion, $us){
-                            if($us->can('FullAtencion') or $us->can('OperacionAtencion')){
-                                return view('turnos/actionsOperar', compact('paciente', 'salas_operacion'));
+                        ->addColumn('Operar', function($paciente){
+                            if($paciente->operar == 1 || $paciente->estado == "Operar"){
+                                return '<button id="btn-operacion-'.$paciente->id.'" onclick="iniModalOperacion(\''.$paciente->id.'\')" type="button" class="btn btn-mod btn-sm"  data-toggle="modal" data-target="#modalInternacion">
+                            Asignar Sala
+                        </button>';
+                            }
+                            else{
+                                if($paciente->estado =="Operado"){
+                                  return $paciente->sala;
+                                }
                             }
                         })
-                        ->addColumn('DarAlta', function($paciente) use($us){
-                            return view('turnos/daralta', compact('paciente','us'));
+                        ->addColumn('DarAlta',function($paciente){
+                            if($paciente->estado!="alta"){
+                                return '<button id="btn-operacion-'.$paciente->id.'" onclick="darAlta(\''.$paciente->id.'\')" type="button" class="btn btn-mod btn-sm"  >
+                                   Dar Alta
+                                </button>';
+                                
+                            }
+                            else{
+                                return 'Alta';
+                            }
                         })
+                        // ->addColumn('Internacion', function($paciente) use($salas_internacion, $us){
+                        //     if($us->can('FullAtencion') or $us->can('InternacionAtencion')){
+                        //         return view('turnos/actionsInternar',compact('paciente','salas_internacion'));
+                        //     }
+                        // })
+                        // ->addColumn('Operar', function($paciente) use ($salas_operacion, $us){
+                        //     if($us->can('FullAtencion') or $us->can('OperacionAtencion')){
+                        //         return view('turnos/actionsOperar', compact('paciente', 'salas_operacion'));
+                        //     }
+                        // })
+                        // ->addColumn('DarAlta', function($paciente) use($us){
+                        //     return view('turnos/daralta', compact('paciente','us'));
+                        // })
                         ->rawColumns(['observacion','Internacion','Operar','DarAlta'])
                     ->toJson();
 });
@@ -149,7 +182,8 @@ Route::get('sintomas_cargar/{us}', function(User $us){
 });
 
 Route::get('cargar_cie/{us}', function(User $us){
-    $enfermedades = App\CIE::all();
+    // $enfermedades = App\CIE::all();
+    $enfermedades = DB::table('cie');
     // $enfermedades = DB::table('cie')->orderBy('codigo')->get();
     $s = '<div class="d-flex w-100">';
     if($us->hasAnyPermission(['FullCie','EditarCie']) && $us->hasAnyPermission(['FullCie','EliminarCie'])){
@@ -370,6 +404,25 @@ Route::get('permisos_roles', function(Request $request){
     return response()->json(['permisos'=>$permisos]);
 });
 
+
+Route::get('salas_internacion', function(Request $request){
+    $salas_internacion = DB::table('salas as s')
+                    ->join('areas as a','a.id','=','s.id_area')
+                    ->join('configuracion_areas as conf','conf.id_area','=','a.id')
+                    ->select('s.nombre','s.camas','s.disponibilidad','s.id')
+                    ->where('conf.nombre','=','internacion')
+                    ->get();
+    return response()->json(['salas_internacion'=>$salas_internacion]);
+});
+Route::get('salas_operacion', function(Request $request){
+    $salas_operacion = DB::table('salas as s')
+                    ->join('areas as a','a.id','=','s.id_area')
+                    ->join('configuracion_areas as conf','conf.id_area','=','a.id')
+                    ->select('a.nombre','s.nombre','s.camas','s.disponibilidad','s.id')
+                    ->where('conf.nombre','=','operacion')
+                    ->get();
+    return response()->json(['salas_operacion'=>$salas_operacion]);
+});
 // Route::get('permisosApi', function(){
 //     $permisos= Spatie\Permission\Models\Permission::all();
 //     return DataTables::of($permisos)

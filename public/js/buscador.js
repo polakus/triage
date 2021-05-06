@@ -5,6 +5,7 @@ class Search {
 		this.search= document.getElementById(id_search);
 		this.list = lista;
        	this.watch(this.input, this.list, this.search);
+        this.cantidad = 0;
     }
 
     watch(input, list, search) {
@@ -27,7 +28,10 @@ class Search {
     }
 
     updateList(el, text) {
-        el.innerHTML += `<li class="list-group-item list-group-item-action" onclick=updateInput('${text}') style="padding:5px;">${text}</li>`;
+        if(this.cantidad<5){
+            el.innerHTML += `<li class="list-group-item list-group-item-action" onclick=updateInput('${text}') style="padding:5px;">${text}</li>`;
+            this.cantidad+=1;
+        }
     }
 
 
