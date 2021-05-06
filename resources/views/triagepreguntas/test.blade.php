@@ -159,7 +159,6 @@
         #nombrehsb{
           display: none;
         }
-        
       }
       /* #alerta{
         position:fixed;
@@ -289,16 +288,16 @@
             </a>
           </li>
           @endcanany
-          {{-- @canany(['VerRoles','FullRoles']) --}}
-          <li class="nav-item">
+          @canany(['VerRoles','FullRoles'])
+           <li class="nav-item">
             <a id="roles" class="nav-link <?php  if ($url_array[3] == "roles"){ echo "active";} ?>" href="{{route('roles.index')}}">
               <span data-feather="layers"></span>
               Roles
             </a>
           </li>
-          {{-- @endcanany --}}
+          @endcanany
         </ul>
-
+{{--
         <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
           <span>Saved reports</span>
           <a class="d-flex align-items-center text-muted" href="#" aria-label="Add a new report">
@@ -331,9 +330,9 @@
             </a>
           </li>
         </ul>
+    --}}
       </div>
     </nav>
-
     <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
       {{-- <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
         <h1 class="h2">Dashboard</h1>

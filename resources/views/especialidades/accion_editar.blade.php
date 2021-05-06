@@ -8,6 +8,7 @@
     <button id="elid{{$especialidad->id}}" type="button" class="btn btn-sm btn-outline-secondary ml-1" data-toggle="modal" data-target="#modalEliminar{{ $especialidad->id }}" >Eliminar</button>
     @endif
 </div>
+
 <div class="modal fade" id="editar{{ $especialidad->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -81,87 +82,3 @@
     </div>
   </div>
 </div>
-
-<script>
-    var select2=$('.select').select2();
-    function editaresp(id) {
-      	var nombre = $('#nomb'+id).val();
-		var descripcion = $('#desc'+id).val();
-		var area = $('#editarea'+id).val();
-		$('#error_edit_nomb'+id).empty();
-		$('#error_edit_desc'+id).empty();
-		$('#error_edit_area'+id).empty();
-
-		$.ajaxSetup({
-			headers: {
-				'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-			}
-		});
-   		$.ajax({
-            type:'PUT',
-            url:"/especialidades/"+id,
-            dataType:"json",
-            data:{
-                esp_nombre:nombre,
-				descripcion:descripcion,
-				area:area,
-            },
-            success: function(response){
-				$('#editar'+id).modal('hide');
-				var table = $('#myTable').DataTable();
-                table.draw();
-            },
-            error:function(err){
-                if (err.status == 422) { // when status code is 422, it's a validation issue
-					$('#success_message').fadeIn().html(err.responseJSON.message);
-					$.each(err.responseJSON.errors, function (i, error) {
-						switch( i ){
-							case "esp_nombre":
-								$('#error_edit_nomb'+id).html('<span style="color: red;">'+error[0]+'</span>');
-							break;
-							case "descripcion":
-								$('#error_edit_desc'+id).html('<span style="color: red;">'+error[0]+'</span>');
-							break;
-							case "area":
-								$('#error_edit_area'+id).html('<span style="color: red;">'+error[0]+'</span>');
-							break;
-							default:
-								alert("Ocurrió un error en la función de error de ajax");
-						}
-					});
-				}
-            }
-        });
-	}
-
-
-    function eliminar(name, id){
-            $('#modalEliminar'+id).modal('hide');
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
-            $.ajax({
-                type:'DELETE',
-                url:"/especialidades/"+id,
-                dataType:"json",
-                success: function(response){
-                    $('#alerta').addClass('alert '+"alert-success");
-                    $('#alerta').html('La especialidad <b>'+name+'</b> se elimino exitosamente!');
-                    $("#alerta").fadeTo(2000, 500).slideUp(500, function(){
-                        $("#alerta").slideUp(500);
-                    });
-                    $('#myTable tbody').ready(function(){
-                        $('#elid'+id).closest('tr').remove();
-                    });
-                },
-                error:function(err){
-                    // if (err.status == 422) { // when status code is 422, it's a validation issue
-                        
-                    // }
-                    alert("no elimino");
-                }
-            });
-        }
-</script>

@@ -9,7 +9,7 @@ class Sintoma extends Model
     //
     // protected $table = "Sintomas"; # sintomas con minuscula
 
-    // protected $fillable = ['descripcion',];
+    protected $fillable = ['descripcion',];
 
     public function det_sintomas_protocolos()
     {

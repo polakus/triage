@@ -11,13 +11,16 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // $this->call(UserSeeder::class);
         $this->call([
             // rolesUsuarios::class,
-            RoleSeeder::class,
-            codigosTriage::class,
+            // RoleSeeder::class,
+            // codigosTriage::class,
             // UserSeeder::class,
-            SalaAreaSeeder::class,
+            // SalaAreaSeeder::class,
+            // SintomasSeeder::class,
+            // EspecialidadesSeeder::class,
+            // ProfesionalesSeeder::class,
+            PacientesSeeder::class,
         ]);
     }
 }

@@ -31,7 +31,7 @@ Route::get('/usuarios/pendientes/{id}/edit', 'usuariosController@aceptar')->midd
 Route::delete('/usuarios/pendientes/{id}', 'usuariosController@rechazar')->middleware('auth');
 Route::get('/usuarios/pendientes', 'usuariosController@pendientes')->middleware('auth');
 // Route::get('/triagepreguntas/estado/{triagepreguntas}', 'TriagepreguntasController@estado')->middleware('auth');
-//Route::get('/triagepreguntas/analizar', 'TriagepreguntasController@analizar');
+// Route::get('/triagepreguntas/analizar', 'TriagepreguntasController@analizar');
 Route::get('/turnos/mostrar', 'TurnosController@mostrar')->name('mostrar')->middleware('auth');
 Route::get('/turnos/respuesta','TurnosController@respuesta')->middleware('auth');
 Route::post('turnos/cargaratencion','TurnosController@cargaratencion')->middleware('auth');
@@ -60,7 +60,7 @@ Route::resource('/roles','RolesController',['except' => ['show']]);
 
 Route::post('/turnos/mostrar/conf','TurnosController@cargar_configuracion_areas')->middleware('auth');
 
-// Route::get('/pruebas', function(){
+Route::get('/pruebas', function(){
     
 //     // echo url()->current();
 //     $user=User::find(12);
@@ -68,7 +68,8 @@ Route::post('/turnos/mostrar/conf','TurnosController@cargar_configuracion_areas'
 //     $user->save();
 //     // Permission::create(['name'=>'EditarRolesUsuario']);
 //     // return redirect('/prueba2/'.$user);//->route('p2',$user);
-// });
+
+});
 // Route::get('/prueba2/{user}',function(Request $request, $user){
 //     echo $user;
 // })->name('p2');

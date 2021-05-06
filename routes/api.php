@@ -58,17 +58,56 @@ Route::get('profesionales',function(Request $request){
 });
 
 Route::get('ApiPacientes/{us}',function(User $us){
-  
     $pacientes= DB::table('pacientes')->where('nombre','!=','nn')->where('apellido','!=','nn')->get();
-
-    return DataTables::of($pacientes)
-                       // ->addColumn('btn','pacientes/botones')
-                        ->addColumn('btn', function($paciente) use ($us){
-                            return view('pacientes/botones',compact('paciente','us'));
-                        })
-
-                       ->rawColumns(['Accion','btn'])
-    ->toJson();
+    if($us->hasAnyPermission(['FullPacientes','TriajePaciente']) && $us->hasAnyPermission(['FullPacientes','EditarPaciente'])){
+        return DataTables::of($pacientes)
+            ->addColumn('btn', function($paciente){
+                return '<div class="w-100 d-flex">
+                            <form class="w-100" action="'.route('triagepreguntas.show',$paciente->Paciente_id).'" method="GET">
+                                    <button type="submit" class="btn btn-sm btn-outline-secondary ">Triaje</button>
+                                </form>
+                            <a href="/editar/'.$paciente->Paciente_id.'"  class="btn btn-sm btn-outline-secondary ml-1">Editar</a>
+                        </div>';
+            })
+            ->rawColumns(['btn'])
+            ->toJson();
+    }elseif($us->hasAnyPermission(['FullPacientes','EditarPaciente'])){
+        return DataTables::of($pacientes)
+            ->addColumn('btn', function($paciente){
+                return '<div class="w-100 d-flex">
+                            <a href="/editar/'.$paciente->Paciente_id.'"  class="btn btn-sm btn-outline-secondary ml-1">Editar</a>
+                        </div>';
+            })
+            ->rawColumns(['btn'])
+            ->toJson();
+    }elseif($us->hasAnyPermission(['FullPacientes','TriajePaciente'])){
+        return DataTables::of($pacientes)
+            ->addColumn('btn', function($paciente){
+                return '<div class="w-100 d-flex">
+                            <form class="w-100" action="'.route('triagepreguntas.show',$paciente->Paciente_id).'" method="GET">
+                                <button type="submit" class="btn btn-sm btn-outline-secondary ">Triaje</button>
+                            </form>
+                        </div>';
+            })
+            ->rawColumns(['btn'])
+            ->toJson();
+    }else{
+        return DataTables::of($pacientes)
+            ->addColumn('btn', function($paciente){
+                return '<div class="w-100 d-flex">
+                        </div>';
+            })
+            ->rawColumns(['btn'])
+            ->toJson();
+    }
+    
+    // return DataTables::of($pacientes)
+    //                    // ->addColumn('btn','pacientes/botones')
+    //                     ->addColumn('btn', function($paciente) use ($us){
+    //                         return view('pacientes/botones',compact('paciente','us'));
+    //                     })
+    //                    ->rawColumns(['Accion','btn'])
+    // ->toJson();
 });
 
 
@@ -139,7 +178,7 @@ Route::get('mostrar/{us}', function(User $us){
 
 
 Route::get('sintomas_cargar/{us}', function(User $us){
-     $sintomas=DB::table('sintomas')->get();
+     $sintomas=DB::table('sintomas');
      return DataTables::of($sintomas)
                        ->addColumn('button',function($sintoma) use ($us){
                         return view('sintomas/action_editar_eliminar',compact('sintoma','us'));
@@ -149,7 +188,8 @@ Route::get('sintomas_cargar/{us}', function(User $us){
 });
 
 Route::get('cargar_cie/{us}', function(User $us){
-    $enfermedades = App\CIE::all();
+    $enfermedades = DB::table('cie');
+    // $enfermedades = App\CIE::all();
     // $enfermedades = DB::table('cie')->orderBy('codigo')->get();
     $s = '<div class="d-flex w-100">';
     if($us->hasAnyPermission(['FullCie','EditarCie']) && $us->hasAnyPermission(['FullCie','EliminarCie'])){
@@ -205,8 +245,8 @@ Route::get('dtespecialidades/{us}', function(User $us){
                         ->join('areas as a','a.id','=','det.id_area')
                         ->select('esp.id','esp.nombre as nombesp','esp.descripcion', 'a.nombre as nombarea', 'a.id as id_area')
                         ->get();
-    $editareas = App\Area::all();
-    // $area_seleccionada = App\Det_especialidad_area::where('id_especialidad', '=', $especialidades->id)->first()->area->id;
+    $editareas = DB::table('areas')->get();
+    // $editareas = App\Area::all();
     return DataTables::of($especialidades)
                         ->addColumn('button', function($especialidad) use ($editareas,$us){
                             return view('especialidades/accion_editar', compact('editareas', 'especialidad', 'us'));

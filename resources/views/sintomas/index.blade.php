@@ -192,37 +192,86 @@
 <script type="text/javascript">
 function eliminar(id,sintoma){
     $('#modalEliminar'+id).modal('hide');
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
-        $.ajax({
-            type:'DELETE',
-            url:"/sintomas/"+id,
-            dataType:"json",
-            data:{
-                id:id,
-            },
-            success: function(response){
-                var table=$("#myTable").DataTable();
-                table.draw();
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+    $.ajax({
+        type:'DELETE',
+        url:"/sintomas/"+id,
+        dataType:"json",
+        data:{
+            id:id,
+        },
+        success: function(response){
+            var table=$("#myTable").DataTable();
+            table.draw();
 
-                $('#alerta').addClass('alert '+response.tipo);
-                $('#alerta').html('<b>'+response.mensaje+'</b>');
-                $("#alerta").fadeTo(2000, 500).slideUp(500, function(){
-                    $("#alerta").slideUp(500);
-                });  
-            },
-            error:function(err){
-                if (err.status == 422) { // when status code is 422, it's a validation issue
-                    // console.log(err.responseJSON);
-                }
-                       
+            $('#alerta').addClass('alert '+response.tipo);
+            $('#alerta').html('<b>'+response.mensaje+'</b>');
+            $("#alerta").fadeTo(2000, 500).slideUp(500, function(){
+                $("#alerta").slideUp(500);
+            });  
+        },
+        error:function(err){
+            if (err.status == 422) { // when status code is 422, it's a validation issue
+                // console.log(err.responseJSON);
             }
-        });
+                    
+        }
+    });
 }
-
+function editar(id) {
+    //limpia div para mensajes de error
+    document.getElementById('nombre'+id).classList.remove('is-invalid');
+    let spans = document.getElementsByClassName('invalid-feedback');
+    while(spans.length>0){
+        spans[0].remove();  //si son muchos podría haber error
+    }
+    var nombre = document.getElementById("nombre"+id).value;
+    $.ajaxSetup({
+        headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}
+    });
+    $.ajax({
+        type:'PUT',
+        url:"/sintomas/"+id,
+        dataType:"json",
+        data:{
+            nombre:nombre,
+        },
+        success: function(response){
+            $('#editar'+id).modal('hide');
+            //ACTUALIZA TABLA
+            var table = $('#myTable').DataTable();
+            table.draw();
+            //MUESTRA ALERTA
+            $('#alerta').addClass('alert '+response.tipo);
+            $('#alerta').html('<b>'+response.mensaje+'</b>');
+            $("#alerta").fadeTo(4000, 500).slideUp(500, function(){
+                $("#alerta").slideUp(500);
+            });  
+        },
+        error:function(err){
+            if (err.status == 422) { // when status code is 422, it's a validation issue
+                document.getElementById('nombre'+id).classList.add('is-invalid');
+                var ele_span = document.createElement('span');
+                ele_span.setAttribute('class', 'invalid-feedback');
+                ele_span.setAttribute('role', 'alert');
+                ele_span.innerHTML = "<strong>" + err.responseJSON.errors.nombre + "</strong>";
+                document.getElementById('div_nombre'+id).appendChild(ele_span);
+            }
+        }
+    });
+}
+function reset_modal_edit(id, descripcion){
+    document.getElementById('nombre'+id).classList.remove('is-invalid');
+    document.getElementById('nombre'+id).value=descripcion;
+    let spans = document.getElementsByClassName('invalid-feedback');
+    while(spans.length>0){
+        spans[0].remove();
+    }
+}
 </script>
 
 
