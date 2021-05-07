@@ -62,7 +62,7 @@
 			<div class="form-row">
 					<div class="form-group col-md-4">
 						<label>Elija que especialidad desea que lo atiendan:</label>
-	  				<select class="form-control form-control-sm" name="esp">
+	  				<select class="form-control form-control-sm select" name="esp">
 	  					@foreach($especialidades as $esp)
 						  <option value="{{ $esp->id }}">{{ $esp->nombre }}</option>
 						 @endforeach
@@ -97,7 +97,7 @@
 			<div class="form-row">
 					<div class="form-group col-md-2">
 						<label>Especialidad</label>
-	  				<select class="form-control form-control-sm" name="esp">
+	  				<select class="form-control form-control-sm select" name="esp">
 	  					@foreach($especialidades as $esp)
 					  <option value="{{ $esp->id }}">{{ $esp->nombre }}</option>
 					  @endforeach
@@ -106,7 +106,7 @@
 					</div>
 					<div class="form-group col-md-2">
 						<label>Codigo de triaje</label>
-					<select class="form-control form-control-sm" name="color">
+					<select class="form-control form-control-sm select" name="color">
 						@foreach($codigos as $c)
 					  <option value="{{ $c->id }}">{{ $c->color }}</option>
 					  @endforeach
@@ -153,7 +153,7 @@
 			<div class="form-row">
 					<div class="form-group col-md-2">
 						<label>Especialidad</label>
-	  				<select class="form-control form-control-sm" name="esp">
+	  				<select class="form-control form-control-sm select" name="esp">
 	  					@foreach($especialidades as $esp)
 					  <option value="{{ $esp->id }}">{{ $esp->nombre }}</option>
 					  @endforeach
@@ -162,7 +162,7 @@
 					</div>
 					<div class="form-group col-md-2">
 						<label>Codigo de triaje</label>
-					<select class="form-control form-control-sm" name="color">
+					<select class="form-control form-control-sm select" name="color">
 						@foreach($codigos as $c)
 					  <option value="{{ $c->id }}">{{ $c->color }}</option>
 					  @endforeach

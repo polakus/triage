@@ -96,7 +96,12 @@
           </div>
           <div class="form-group col-md-10 ">
             <label>Especialidad:</label>
-             <input type="text" name="ciess" id="esplist" class="form-control form-control-sm">
+            <select class="form-control form-control-sm select" id="especialidad_nn" style="width: 100%;">
+                @foreach($especialidades as $esp)
+                    <option value="{{$esp->id}}">{{$esp->nombre}}</option>
+                @endforeach
+            </select>
+             <!-- <input type="text" name="ciess" id="esplist" class="form-control form-control-sm"> -->
              <div id="error_modal_esp"></div>
           </div>
           <div class="form-group col-md-10 ">        
@@ -148,18 +153,18 @@
     });
 
     // AUTOCOMPLETAR DE ESPECIALIDADES
-    especialidades=<?php echo $especialidades ?>;
-    var availableTags=[];
-    for(let i=0; i<especialidades.length;i++){
-      availableTags.push(especialidades[i].nombre);
-    }
+    // especialidades=<?php echo $especialidades ?>;
+    // var availableTags=[];
+    // for(let i=0; i<especialidades.length;i++){
+    //   availableTags.push(especialidades[i].nombre);
+    // }
     
-    $( "#esplist" ).autocomplete({
-      source: function(request, response) {
-        var results = $.ui.autocomplete.filter(availableTags, request.term);
-        response(results.slice(0, 6));
-      }
-    });
+    // $( "#esplist" ).autocomplete({
+    //   source: function(request, response) {
+    //     var results = $.ui.autocomplete.filter(availableTags, request.term);
+    //     response(results.slice(0, 6));
+    //   }
+    // });
   });
  </script>
 <script >
@@ -250,10 +255,11 @@
     
     var condicion= $("#condicion").val();
     var ciess = $("#cieslist").val();
-    var especialidad = $("#esplist").val();
+  
     var observacion=$("#observacion").val();
     var selectop = $("#selectop").val();
     var id_color =$("#id_color").val();
+    var especialidad_nn = $('#especialidad_nn').val();
 
     $.ajaxSetup({
       headers: {
@@ -268,10 +274,11 @@
             data:{
                 condicion:condicion,
                 ciess:ciess,
-                especialidad:especialidad,
+               
                 observacion:observacion,
                 selectop:selectop,
-                id_color:id_color
+                id_color:id_color,
+                especialidad_nn:especialidad_nn,
             },
             success: function(response){
                 $('#myModal').modal('hide');

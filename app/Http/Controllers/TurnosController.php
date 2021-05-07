@@ -183,10 +183,10 @@ class TurnosController extends Controller
         // BUSCAMOS EL PROTOCOLO 
         
         foreach ($protocolos as $prot) {
-          $cant = DB::table('detalles_sintomas_protocolos as det')
-                      ->where('det.id_protocolo','=',$prot->id_protocolo)
-                      ->count();
-          if(sizeof($request->sintomas)==$cant){
+          // $cant = DB::table('detalles_sintomas_protocolos as det')
+          //             ->where('det.id_protocolo','=',$prot->id_protocolo)
+          //             ->count();
+          if(sizeof($request->sintomas)==$prot->cantidad){
             #Encontramos el protocolo
             if(sizeof($nombres_especialidades)==0){
               array_push($nombres_especialidades, $prot->nombre);

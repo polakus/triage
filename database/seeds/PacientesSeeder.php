@@ -16,7 +16,7 @@ class PacientesSeeder extends Seeder
     public function run()
     {
         $genero = array('Masculino','Femenino');
-        for ($i=0; $i < 5000; $i++) { 
+        for ($i=0; $i < 50; $i++) { 
             DB::table('pacientes')->insertOrIgnore([
                 'dni'=>rand(10000000,99999999),
                 'sexo'=>$genero[array_rand($genero)],

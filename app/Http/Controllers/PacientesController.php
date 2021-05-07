@@ -167,7 +167,7 @@ class PacientesController extends Controller
                 'max' => 'Este campo supera la capacidad máxima de caracteres.',
                 'numeric' => 'Este campo requiere un valor numérico.',
                 'date' => 'La fecha ingresada no es válida.',
-                'unique' => 'Este documento ya se encuentra registrado',
+                // 'unique' => 'Este documento ya se encuentra registrado',
             ];
             $r=$request->validate([
             'ciess' => 'required|max:255',
@@ -176,14 +176,14 @@ class PacientesController extends Controller
             date_default_timezone_set('UTC');
 
             date_default_timezone_set("America/Argentina/Buenos_Aires");
-
+            
             $nuevo = new Paciente;
-            $nuevo->dni=0;
+            $nuevo->dni = rand(0,999999999);
             $nuevo->nombre="nn";
             $nuevo->apellido="nn";
             $nuevo->domicilio="nn";
             $nuevo->telefono="1";
-            $nuevo->fechaNac=date('Y-m-d-H:i');
+            $nuevo->fechaNac=date('Y-m-d');
             $nuevo->sexo="Masculino";
 
             $nuevo->save();
@@ -191,12 +191,14 @@ class PacientesController extends Controller
             $atencion = new Atencion;
             $atencion->Paciente_id = $nuevo->Paciente_id;
             $atencion->usuario_id = Auth::id();
+            $atencion->dias =0;
+            $atencion->horas=0;
             $atencion->save();
 
             $detalleatencion = new DetalleAtencion;
             $detalleatencion->fecha=date('Y-m-d');
             $detalleatencion->hora=date('H:i');
-            $detalleatencion->id_especialidad = 5; // CAMBIAR POR OTRA ID O HACER NULL LA ESPECIALIDAD
+            $detalleatencion->id_especialidad = $request->especialidad_nn; // CAMBIAR POR OTRA ID O HACER NULL LA ESPECIALIDAD
             $detalleatencion->atendido=0;
             $detalleatencion->id_atencion =$atencion->id;
             $detalleatencion->estado=$request->get('condicion');
