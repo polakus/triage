@@ -17,13 +17,10 @@ class RoleSeeder extends Seeder
         $admin=Role::create(['name'=>'Administrador']); // Puede hacer todo menos modificar 'Superusuario'
         $prof=Role::create(['name'=>'Profesional']); // No puede hacer casi nada ( rol predeterminado )
 
-        Role::create(['name'=>'Empleado1']);
-        Role::create(['name'=>'Empleado2']);
-        Role::create(['name'=>'Empleado3']);
         
         #Permisos de pacientes
-        Permission::create(['name'=>"VerPacientes"]);
         Permission::create(['name'=>"FullPacientes"])->syncRoles($admin);
+        Permission::create(['name'=>"VerPacientes"]);
         Permission::create(['name'=>"RegistrarPaciente"]);
         Permission::create(['name'=>"RegistrarPacienteNN"]); // como se hace en el middleware?
         Permission::create(['name'=>"EditarPaciente"]);

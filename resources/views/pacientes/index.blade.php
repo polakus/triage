@@ -67,54 +67,53 @@
       </div>
      
       <div class="modal-body ui-front">
-          <div class="form-group col-md-10 op">
-            <label>Para:</label>
-            <select class="form-control select" style="width: 100%;" name="condicion" id="condicion">
-              <option value="Operar" >Operar</option>      
-              <option value="Internar">Internar</option>               
-            </select>
-          </div>
-          <div class="form-group col-md-10 " id="operar">
-            <label>Luego para operar?:</label>
-            <select class="form-control select" style="width: 100%;"name="selectop" id="selectop">
-              <option value="si">Si</option>      
-              <option value="no">No</option>               
-            </select>
-          </div>
-          <div class="form-group col-md-10 ">
-            <label>Color:</label>
-            <select class="form-control select"style="width: 100%;" name="id_color" id="id_color">
-              @foreach($colores as $color)
-              <option value="{{ $color->id }}">{{ $color->color }}</option>
-              @endforeach         
-            </select>
-          </div>
-          <div class="form-group col-md-10 ">
-            <label>CIE:</label>
-             <input type="text" name="ciess" id="cieslist" class="form-control form-control-sm">
-             <div id="error_modal_cie"></div>
-          </div>
-          <div class="form-group col-md-10 ">
-            <label>Especialidad:</label>
-            <select class="form-control form-control-sm select" id="especialidad_nn" style="width: 100%;">
-                @foreach($especialidades as $esp)
-                    <option value="{{$esp->id}}">{{$esp->nombre}}</option>
-                @endforeach
-            </select>
-             <!-- <input type="text" name="ciess" id="esplist" class="form-control form-control-sm"> -->
-             <div id="error_modal_esp"></div>
-          </div>
-          <div class="form-group col-md-10 ">        
-            <label for="exampleFormControlTextarea1">Observacion</label>
-            <textarea class="form-control" id="observacion" rows="3" name="observacion"></textarea>
-            <div id="error_modal_observacion"></div>
-          </div>
+        <div class="form-group col-md-10 op">
+          <label>Para:</label>
+          <select class="form-control select" style="width: 100%;" name="condicion" id="condicion">
+            <option value="Operar" >Operar</option>      
+            <option value="Internar">Internar</option>               
+          </select>
+        </div>
+        <div class="form-group col-md-10 " id="operar">
+          <label>Luego para operar?:</label>
+          <select class="form-control select" style="width: 100%;"name="selectop" id="selectop">
+            <option value="si">Si</option>      
+            <option value="no">No</option>               
+          </select>
+        </div>
+        <div class="form-group col-md-10 ">
+          <label>Color:</label>
+          <select class="form-control select"style="width: 100%;" name="id_color" id="id_color">
+            @foreach($colores as $color)
+            <option value="{{ $color->id }}">{{ $color->color }}</option>
+            @endforeach         
+          </select>
+        </div>
+        <div class="form-group col-md-10 ">
+          <label>CIE:</label>
+            <input type="text" name="ciess" id="cieslist" class="form-control form-control-sm">
+            <div id="error_modal_cie"></div>
+        </div>
+        <div class="form-group col-md-10 ">
+          <label>Especialidad:</label>
+          <select class="form-control form-control-sm select" id="especialidad_nn" style="width: 100%;">
+            @foreach($especialidades as $esp)
+              <option value="{{$esp->id}}">{{$esp->nombre}}</option>
+            @endforeach
+          </select>
+            <!-- <input type="text" name="ciess" id="esplist" class="form-control form-control-sm"> -->
+            <div id="error_modal_esp"></div>
+        </div>
+        <div class="form-group col-md-10 ">        
+          <label for="exampleFormControlTextarea1">Observacion</label>
+          <textarea class="form-control" id="observacion" rows="3" name="observacion"></textarea>
+          <div id="error_modal_observacion"></div>
+        </div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
         <button type="button" class="btn btn-primary" onclick="cargar_nn()">Save changes</button>
       </div>
-    
     </div>
   </div>
 </div>
@@ -127,12 +126,10 @@
     // setTimeout(function(){
     //    $("div.alert").remove();
     // }, 5000 ); // 5 secs
-   $("#alerta").fadeTo(2000, 500).slideUp(500, function(){
-                $("#alerta").slideUp(500);
-              });
-
-
-});
+    $("#alerta").fadeTo(2000, 500).slideUp(500, function(){
+      $("#alerta").slideUp(500);
+    });
+  });
 </script>
 
 <script>
@@ -151,20 +148,6 @@
         response(results.slice(0, 6));
       }
     });
-
-    // AUTOCOMPLETAR DE ESPECIALIDADES
-    // especialidades=<?php echo $especialidades ?>;
-    // var availableTags=[];
-    // for(let i=0; i<especialidades.length;i++){
-    //   availableTags.push(especialidades[i].nombre);
-    // }
-    
-    // $( "#esplist" ).autocomplete({
-    //   source: function(request, response) {
-    //     var results = $.ui.autocomplete.filter(availableTags, request.term);
-    //     response(results.slice(0, 6));
-    //   }
-    // });
   });
  </script>
 <script >

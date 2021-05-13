@@ -170,8 +170,8 @@ class PacientesController extends Controller
                 // 'unique' => 'Este documento ya se encuentra registrado',
             ];
             $r=$request->validate([
-            'ciess' => 'required|max:255',
-            'observacion' => 'required|max:255',
+                'ciess' => 'required|max:255',
+                'observacion' => 'required|max:255',
             ], $mensajes);
             date_default_timezone_set('UTC');
 
