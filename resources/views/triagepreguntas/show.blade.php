@@ -10,20 +10,15 @@
 </div>
 <h3>¿Que le sucede?</h3>
 <div class="row col-md-5"  >
-			<input type="hidden" name="id" id="id_paciente" value="<?php echo $id ?>">
-				<div class="table-responsive">
-					<table class="table table-bordered"  id=tabla_sintomas>
-						<tr>
-							
-							<td><input type="text" name="respuestas[]" class="form-control nombreje" id="tags"></td>
-							
-							<td><button type="button" id="add" name="add" class="btn btn-sm btn-outline-dark">Agregar filas</button></td>
-						</tr>
-						
-					</table>
-					
-				</div>
-
+	<input type="hidden" name="id" id="id_paciente" value="<?php echo $id ?>">
+	<div class="table-responsive">
+		<table class="table table-bordered"  id=tabla_sintomas>
+			<tr>
+				<td><input type="text" name="respuestas[]" class="form-control nombreje" id="tags"></td>
+				<td><button type="button" id="add" name="add" class="btn btn-sm btn-outline-dark">Agregar filas</button></td>
+			</tr>
+		</table>
+	</div>
 </div>
 <h3>¿Por cuanto tiempo permanece asi?</h3>
 <div class="form-row" >
@@ -34,15 +29,11 @@
 	<div class="col-md-1">
 		<label  class="form-label">Horas</label>
 		<input type="number" value="0" class="form-control form-control-sm " id="horas" name="horas" maxlength="2" max="24" min="0">
-
 	</div>
-		
 </div>
 <div class="d-flex w-25 mt-2">
-	
-		<button class="btn btn-sm btn-outline-dark" id="btn_analizar">Analizar</button>
-		<a class="btn btn-sm btn-outline-danger btn-close ml-1" href="{{ route('pacientes.index') }}">Cancelar</a>
-	
+	<button class="btn btn-sm btn-outline-dark" id="btn_analizar">Analizar</button>
+	<a class="btn btn-sm btn-outline-danger btn-close ml-1" href="{{ route('pacientes.index') }}">Cancelar</a>
 </div>
 
 
@@ -90,7 +81,7 @@ $(document).ready(function(){
 	                headers: {
 	                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
 	                }
-	   		 });
+	   		});
 
 		    $.ajax({
 		            type:'POST',
@@ -110,7 +101,6 @@ $(document).ready(function(){
 		            		for(let i=0;i<response.sintomas.length;i++){
 		            			url=url+"&sintomas%5B"+i+"%5D="+response.sintomas[i];
 		            		}
-
 		            		window.location.replace(url);
 		            	}
 		            	else{

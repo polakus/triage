@@ -214,7 +214,7 @@ class TurnosController extends Controller
 
           if(sizeof($disponibles)>0){
             $casos="disponibles";
-          #Armamos el msj de cuantos disponibles hay
+            #Armamos el msj de cuantos disponibles hay
             
             foreach ($disponibles as $d) {
               $temp_msj=$d->nombre.":".$d->cantidad;

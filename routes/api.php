@@ -64,8 +64,8 @@ Route::get('ApiPacientes/{us}',function(User $us){
             ->addColumn('btn', function($paciente){
                 return '<div class="w-100 d-flex">
                             <form class="w-100" action="'.route('triagepreguntas.show',$paciente->Paciente_id).'" method="GET">
-                                    <button type="submit" class="btn btn-sm btn-outline-secondary ">Triaje</button>
-                                </form>
+                                <button type="submit" class="btn btn-sm btn-outline-secondary ">Triaje</button>
+                            </form>
                             <a href="/editar/'.$paciente->Paciente_id.'"  class="btn btn-sm btn-outline-secondary ml-1">Editar</a>
                         </div>';
             })
