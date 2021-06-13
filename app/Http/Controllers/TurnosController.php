@@ -181,12 +181,13 @@ class TurnosController extends Controller
                             ->get();
       if(sizeof($protocolos)>0){
         // BUSCAMOS EL PROTOCOLO 
-        
+        $arrayCant = array();
         foreach ($protocolos as $prot) {
-          // $cant = DB::table('detalles_sintomas_protocolos as det')
-          //             ->where('det.id_protocolo','=',$prot->id_protocolo)
-          //             ->count();
-          if(sizeof($request->sintomas)==$prot->cantidad){
+          $cant = DB::table('detalles_sintomas_protocolos as det')
+                      ->where('det.id_protocolo','=',$prot->id_protocolo)
+                      ->count();
+                      array_push($arrayCant, $cant);
+          if(sizeof($request->sintomas)==$cant and $prot->cantidad==sizeof($request->sintomas)){
             #Encontramos el protocolo
             if(sizeof($nombres_especialidades)==0){
               array_push($nombres_especialidades, $prot->nombre);
@@ -235,10 +236,12 @@ class TurnosController extends Controller
           $casos="probabilidades";
           $lista_probabilidades=array();
           $lista_nombres_especialidades=array();
+          $i=0;
           foreach ($protocolos as $p) {
-           
+            
             array_push($lista_nombres_especialidades,$p->nombre);
-            array_push($lista_probabilidades,$p->cantidad*100/sizeof($request->sintomas).'%'.' Codigo: '.$p->color);
+            array_push($lista_probabilidades,$p->cantidad*100/$arrayCant[$i].'%'.' Codigo: '.$p->color);
+            $i=$i+1;
           }
           $nombres_especialidades=array_unique($lista_nombres_especialidades);
           foreach ($nombres_especialidades as $r ) {
