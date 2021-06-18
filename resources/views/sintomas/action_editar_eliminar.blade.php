@@ -1,11 +1,12 @@
 <div class="w-100 d-flex">
     @if($us->can('FullSintomas') or $us->can('EditarSintoma'))
-    <button type="button" class="btn btn-outline-secondary btn-sm " style="width: 30%" data-toggle="modal" data-target="#editar{{ $sintoma->id }}">Editar</button>
+    <button type="button" onclick="iniEditModal({{$sintoma->id}},'{{$sintoma->descripcion}}',{{$sintoma->dias}},{{$sintoma->horas}})" style="width: 30%" class="btn btn-sm btn-outline-secondary" data-toggle="modal" data-target="#modalEditar">Editar</button>
     @endif
     @if($us->can('FullSintomas') or $us->can('EliminarSintoma'))
     <button type="button" class="btn btn-outline-secondary btn-sm ml-1" style="width: 30%;" data-toggle="modal" data-target="#modalEliminar{{ $sintoma->id }}">Eliminar</button>
     @endif
 </div>
+{{--
 <div class="modal fade" id="editar{{$sintoma->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="false">
 	<div class="modal-dialog">
 		<div class="modal-content">
@@ -16,15 +17,15 @@
 				</button>
 			</div>
 			<div class="modal-body">
-                <h6><strong style="color:red;">¡Cuidado! </strong>Si edita este síntoma el protocolo asociado al mismo se verá afectado también.</h6>
-                <hr>
+        <h6><strong style="color:red;">¡Cuidado! </strong>Si edita este síntoma el protocolo asociado al mismo se verá afectado también.</h6>
+        <hr>
 				<div class="container">
-                    <div class="form-group">
-                        <div id="div_nombre{{$sintoma->id}}" class="form-row">
-                            <label for="nombre">Nombre</label>
-                            <input type="text" id="nombre{{$sintoma->id}}" class="form-control" placeholder="Nombre" value="{{$sintoma->descripcion}}">
-                        </div>
-                    </div>
+          <div class="form-group">
+            <div id="div_nombre{{$sintoma->id}}" class="form-row">
+              <label for="nombre">Nombre</label>
+              <input type="text" id="nombre{{$sintoma->id}}" class="form-control" placeholder="Nombre" value="{{$sintoma->descripcion}}">
+            </div>
+          </div>
 				</div>
 			</div>
 			<div class="modal-footer">
@@ -34,7 +35,7 @@
 		</div>
 	</div>
 </div>
-
+--}}
 <div class="modal fade bd-example-modal-sm" id="modalEliminar{{$sintoma->id}}" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-sm">
     <div class="modal-content">
@@ -45,9 +46,10 @@
         </button>
       </div>
       <div class="modal-body">
-        Estas seguro/a que deseas eliminar el sintoma?
-        <li><strong>Sintoma: {{ $sintoma->descripcion }}</strong> </li>
-        <!-- <li></li> -->
+        <h6><strong style="color:red;">¡Cuidado! </strong>Si elimina este síntoma el protocolo asociado al mismo se verá afectado también.</h6>
+        <hr>
+        <h6>Estas seguro/a que deseas eliminar el sintoma?</h6>
+        <h6><li><strong>Sintoma: {{ $sintoma->descripcion }}</strong> </li></h6>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-success" id="bn{{$sintoma->id}}" onclick="eliminar({{ $sintoma->id }},'{{ $sintoma->descripcion }}')"><i class="far fa-check-circle"></i> Eliminar</button>

@@ -38,20 +38,24 @@ class SintomasController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'nombre_sintoma' => 'distinct:ignore_case|required|max:255|unique:sintomas,descripcion',
-            
+            'nombre_sintoma' => 'distinct:ignore_case|required|max:40|unique:sintomas,descripcion',
+            'dias' => 'numeric|min:0|max:100',
+            'horas' => 'numeric|min:0|max:24',
         ],[
             'required' => 'Este campo no puede estar vacio.',
-            'max' => 'Este es demasiado largo.',
-            'unique' => 'Este síntoma ya se encuentra almacenado.'
+            'nombre_sintoma.max' => 'Este campo tiene más caracteres de lo permitido.',
+            'min' => 'Este valor es menor al mínimo permitido.',
+            'max' => 'Este valor sobrepasa al máximo permitido.',
+            'unique' => 'Este síntoma ya se encuentra almacenado.',
+            'numeric' => 'Este valor debe ser de tipo numérico.',
         ]);
-        $name = $request->get('nombre_sintoma');
 
-        $nuevo=new Sintoma;
-        $nuevo->descripcion=$request->get('nombre_sintoma');
+        $nuevo= new Sintoma;
+        $nuevo->descripcion = $request->get('nombre_sintoma');
+        $nuevo->dias = empty($request->get('dias')) ? 0 : $request->get('dias');
+        $nuevo->horas = empty($request->get('horas')) ? 0 : $request->get('horas');
         $nuevo->save();
-
-        return response()->json();
+        return response()->json(['mensaje' => "El síntoma se guardo exitosamente.", 'tipo' => "alert-success"]);
     }
 
     /**
@@ -86,14 +90,21 @@ class SintomasController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'nombre' => 'required|max:255|unique:sintomas,descripcion,'.$id,
+            'nombre_sintoma' => 'required|max:4|unique:sintomas,descripcion,'.$id,
+            'dias' => 'numeric|min:0|max:100',
+            'horas' => 'numeric|min:0|max:24',
         ],[
             'required' => 'Este campo no puede estar vacio.',
-            'max' => 'Este es demasiado largo.',
-            'unique' => 'Este síntoma ya se encuentra almacenado.'
+            'nombre_sintoma.max' => 'Este campo tiene más caracteres de lo permitido.',
+            'min' => 'Este valor es menor al mínimo permitido.',
+            'max' => 'Este valor sobrepasa al máximo permitido.',
+            'unique' => 'Este síntoma ya se encuentra almacenado.',
+            'numeric' => 'Este valor debe ser de tipo numérico.',
             ]);
         $sintoma = Sintoma::find($id);
-        $sintoma->descripcion = $request->nombre;
+        $sintoma->descripcion = $request->nombre_sintoma;
+        $sintoma->dias = $request->dias;
+        $sintoma->horas = $request->horas;
         $sintoma->save();
         return response()->json(["mensaje"=>"El síntoma se actualizó exitosamente","tipo"=>"alert-success"]);
     }

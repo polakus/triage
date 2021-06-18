@@ -49,35 +49,104 @@
 @endsection
 @section("cuerpo")
 <div id="alerta"></div>
+
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
     <h4 class="h4">Sintomas</h4>
-    @canany(['FullSintomas','RegistrarSintoma'])
-    <div class="contenido">
-        <div class="botones">
-            <input type="text" class="form-control form-inline form-control-sm ml-2 " placeholder="Nombre del sintoma"  name="nombre_sintoma" id="nombre_sintoma" >
-            <button class="btn btn-outline-secondary btn-sm ml-2"  id="agregar">Agregar sintoma</button>
-        </div>
-        <div class="error">
-            <div id="error_sintoma"></div>
+    <div class="btn-toolbar mb-2 mb-md-0">
+        <div class="btn-group mr-2">
+            @canany(['FullSintomas','RegistrarSintoma'])
+            <button type="button" class="btn btn-sm btn-outline-secondary" data-toggle="modal" data-target="#exampleModal">Agregar Síntoma</button>
+            @endcan
         </div>
     </div>
-    @endcanany
 </div>
 <div class="table-responsive">
- <table class="table table-bordered table-striped table-hover table-sm" id="myTable">
-  <thead>
-    <tr>
-      <th scope="col" >#</th>
-      <th scope="col">Sintomas</th>
-      <th scope="col" >Accion</th>
-    </tr>
-  </thead>
-  <tbody>
- 
-  </tbody>
-</table>
+    <table id="myTable" class="table table-bordered table-striped table-hover table-sm">
+        <thead>
+            <tr>
+            <th scope="col">Sintomas</th>
+            <th scope="col">Dias</th>
+            <th scope="col">Horas</th>
+            <th scope="col" >Accion</th>
+            </tr>
+        </thead>
+        <tbody>
+        
+        </tbody>
+    </table>
 </div>
+<!-- Modal Create Síntoma-->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="exampleModalLabel">Registracion de Síntoma</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div id="error_nombre" class="form-group">
+                    <label for="nombre_sintoma">Nombre del Síntoma</label>
+                    <input type="text" id="nombre_sintoma" name="nombre_sintoma" class="form-control" placeholder="Síntoma">
+                </div>
+                <div class="form-row">
+                    <div id="error_dias" class="form-group col-md-4">
+                        <label for="dias">Días</label>
+                        <input type="number" id="dias" name="dias" class="form-control" min="0" max="100" placeholder="Dias">
+                    </div>
+                    <div id="error_horas" class="form-group col-md-4">
+                        <label for="horas">Horas</label>
+                        <input type="number" id="horas" name="horas" class="form-control" min="0" max="24" placeholder="Horas">
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="guardar" type="button" class="btn btn-dark">Guardar</button>
+                <button type="button" class="btn btn-dark" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- fin Modal -->
 
+<!-- Modal Edit Síntoma-->
+<div class="modal fade" id="modalEditar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="false">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title" id="exampleModalLabel">Editar síntoma</h4>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+                <h6><strong style="color:red;">¡Cuidado! </strong>Si edita este síntoma el protocolo asociado al mismo se verá afectado también.</h6>
+                <hr>
+                <input type="hidden" id="edit_id_sintoma">
+                <div id="div_nombre" class="form-group">
+                    <label for="edit_nombre_sintoma">Nombre del Síntoma</label>
+                    <input type="text" id="edit_nombre_sintoma" name="edit_nombre_sintoma" class="form-control" placeholder="Nombre" >
+                </div>
+                <div class="form-row">
+                    <div id="div_dias" class="form-group col-md-4">
+                        <label for="edit_dias">Días</label>
+                        <input type="number" id="edit_dias" name="edit_dias" class="form-control" min="0" max="100" placeholder="Dias">
+                    </div>
+                    <div id="div_horas" class="form-group col-md-4">
+                        <label for="edit_horas">Horas</label>
+                        <input type="number" id="edit_horas" name="edit_horas" class="form-control" min="0" max="24" placeholder="Horas">
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="editarbtn" onclick="editar()" type="button" class="btn btn-dark">Editar</button>
+                <button {{--onclick="reset_modal_edit({{$sintoma->id}},'{{$sintoma->descripcion}}')"--}} type="button" class="btn btn-dark" data-dismiss="modal">Cerrar</button>
+            </div>
+		</div>
+	</div>
+</div>
+<!-- fin Modal -->
 @endsection
 @section("scripts")
 @parent
@@ -87,7 +156,7 @@
 <script type="text/javascript">
   $(document).ready(function() {
     var us = <?php echo Auth::id(); ?>;
-   var table= $('#myTable').DataTable({
+    var table= $('#myTable').DataTable({
         "processing":true,
         "responsive":true,
           "serverSide":true,
@@ -95,11 +164,12 @@
               url:"api/sintomas_cargar/"+us
          },
            "columns":[
-            {data:'id'},
             {data:'descripcion'},
+            {data:'dias'},
+            {data:'horas'},
             {data:'button'},
            ],
-       "language": {
+        "language": {
         "decimal": ",",
         "thousands": ".",
         "info": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
@@ -147,8 +217,12 @@
     }
     });
 
-    $('#agregar').click(function() {
-        var nombre_sintoma = $('#nombre_sintoma').val();
+    $('#guardar').click(function() {
+        var nombre_sintoma = document.getElementById("nombre_sintoma").value;
+        var dias = document.getElementById("dias").value;
+        var horas = document.getElementById("horas").value;
+        if (! (dias)) dias = 0;
+        if (! (horas)) horas = 0;
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -159,37 +233,70 @@
             url:"/sintomas",
             dataType:"json",
             data:{
-                nombre_sintoma:nombre_sintoma,
+                nombre_sintoma: nombre_sintoma,
+                dias: dias,
+                horas: horas,
             },
             success: function(response){
-                var table = $('#myTable').DataTable();
+                $('#exampleModal').modal('hide');
+                var table=$("#myTable").DataTable();
                 table.draw();
-                var inputNombre = document.getElementById("nombre_sintoma");
-                inputNombre.value="";
 
-                },
+                $('#alerta').addClass('alert '+response.tipo);
+                $('#alerta').html('<b>'+response.mensaje+'</b>');
+                $("#alerta").fadeTo(2000, 500).slideUp(500, function(){
+                    $("#alerta").slideUp(500);
+                });
+                document.getElementById("nombre_sintoma").value = "";
+                document.getElementById("dias").value = "";
+                document.getElementById("horas").value = "";
+            },
             error:function(err){
                 if (err.status == 422) { // when status code is 422, it's a validation issue
-                    console.log(err.responseJSON);
-                    $('#success_message').fadeIn().html(err.responseJSON.message);
                     $.each(err.responseJSON.errors, function (i, error) {
-                        $('#error_sintoma').html('<span style="color: red;">'+error[0]+'</span>');
-                    // var el = $(document).find('[name="'+i+'"]');
-                    // el.after($('<span style="color: red;">'+error[0]+'</span>'));
-                    // alert(error[0])
+                        switch( i ){
+							case "nombre_sintoma":
+                                // document.getElementById('error_nombre').classList.add('is-invalid');
+                                // parentNode.appendChild(a)
+                                var ele_span = document.createElement('span');
+                                ele_span.setAttribute('style', 'color:#e74a3b');
+                                ele_span.setAttribute('role', 'alert');
+                                ele_span.innerHTML = "<strong>" + error[0] + "</strong>";
+                                document.getElementById('error_nombre').appendChild(ele_span);
+                                document.getElementById("nombre_sintoma").classList.add("is-invalid");							    
+                                break;
+							case "dias":
+                                var ele_span = document.createElement('span');
+                                ele_span.setAttribute('style', 'color:#e74a3b');
+                                ele_span.setAttribute('role', 'alert');
+                                ele_span.innerHTML = "<strong>" + error[0] + "</strong>";
+                                document.getElementById('error_dias').appendChild(ele_span);
+                                document.getElementById("dias").classList.add("is-invalid");							    
+                                break;
+							case "horas":
+                                var ele_span = document.createElement('span');
+                                ele_span.setAttribute('style', 'color:#e74a3b');
+                                ele_span.setAttribute('role', 'alert');
+                                ele_span.innerHTML = "<strong>" + error[0] + "</strong>";
+                                document.getElementById('error_horas').appendChild(ele_span);
+                                document.getElementById("horas").classList.add("is-invalid");
+                                break;
+							default:
+								alert("Ocurrió un error en la función de error de ajax");
+						}
                     });
                 }
-                // $("#labelNombre").text("Error 2");
-                // $("#labelNombre").addClass('text-danger');
             }
         });
     });
-  
-    
-} );
-</script>
+});
 
-<script type="text/javascript">
+function iniEditModal(id, descripcion, dias, horas){
+    document.getElementById('edit_id_sintoma').value = id;
+    document.getElementById('edit_nombre_sintoma').value = descripcion;
+    document.getElementById('edit_dias').value = dias;
+    document.getElementById('edit_horas').value = horas;
+}
 function eliminar(id,sintoma){
     $('#modalEliminar'+id).modal('hide');
     $.ajaxSetup({
@@ -222,14 +329,18 @@ function eliminar(id,sintoma){
         }
     });
 }
-function editar(id) {
+function editar() {
+    // alert(document.getElementById("edit_nombre_sintoma").value+document.getElementById("edit_dias").value+document.getElementById("edit_horas").value);
     //limpia div para mensajes de error
-    document.getElementById('nombre'+id).classList.remove('is-invalid');
+    // document.getElementById('nombre').classList.remove('is-invalid');
     let spans = document.getElementsByClassName('invalid-feedback');
     while(spans.length>0){
         spans[0].remove();  //si son muchos podría haber error
     }
-    var nombre = document.getElementById("nombre"+id).value;
+    var id = document.getElementById("edit_id_sintoma").value;
+    var nombre_sintoma = document.getElementById("edit_nombre_sintoma").value;
+    var dias = document.getElementById("edit_dias").value;
+    var horas = document.getElementById("edit_horas").value;
     $.ajaxSetup({
         headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}
     });
@@ -238,10 +349,12 @@ function editar(id) {
         url:"/sintomas/"+id,
         dataType:"json",
         data:{
-            nombre:nombre,
+            nombre_sintoma:nombre_sintoma,
+            dias:dias,
+            horas:horas,
         },
         success: function(response){
-            $('#editar'+id).modal('hide');
+            $('#modalEditar').modal('hide');
             //ACTUALIZA TABLA
             var table = $('#myTable').DataTable();
             table.draw();
@@ -254,19 +367,51 @@ function editar(id) {
         },
         error:function(err){
             if (err.status == 422) { // when status code is 422, it's a validation issue
-                document.getElementById('nombre'+id).classList.add('is-invalid');
-                var ele_span = document.createElement('span');
-                ele_span.setAttribute('class', 'invalid-feedback');
-                ele_span.setAttribute('role', 'alert');
-                ele_span.innerHTML = "<strong>" + err.responseJSON.errors.nombre + "</strong>";
-                document.getElementById('div_nombre'+id).appendChild(ele_span);
+                $.each(err.responseJSON.errors, function (i, error) {
+                    switch( i ){
+                        case "nombre_sintoma":
+                            // document.getElementById('error_nombre').classList.add('is-invalid');
+                            // parentNode.appendChild(a)
+                            var ele_span = document.createElement('span');
+                            ele_span.setAttribute('style', 'color:#e74a3b');
+                            ele_span.setAttribute('role', 'alert');
+                            ele_span.innerHTML = "<strong>" + error[0] + "</strong>";
+                            document.getElementById('div_nombre').appendChild(ele_span);
+                            document.getElementById("edit_nombre_sintoma").classList.add("is-invalid");							    
+                            break;
+                        case "dias":
+                            var ele_span = document.createElement('span');
+                            ele_span.setAttribute('style', 'color:#e74a3b');
+                            ele_span.setAttribute('role', 'alert');
+                            ele_span.innerHTML = "<strong>" + error[0] + "</strong>";
+                            document.getElementById('div_dias').appendChild(ele_span);
+                            document.getElementById("edit_dias").classList.add("is-invalid");							    
+                            break;
+                        case "horas":
+                            var ele_span = document.createElement('span');
+                            ele_span.setAttribute('style', 'color:#e74a3b');
+                            ele_span.setAttribute('role', 'alert');
+                            ele_span.innerHTML = "<strong>" + error[0] + "</strong>";
+                            document.getElementById('error_horas').appendChild(ele_span);
+                            document.getElementById("edit_horas").classList.add("is-invalid");
+                            break;
+                        default:
+                            alert("Ocurrió un error en la función de error de ajax");
+                    }
+                });
             }
         }
     });
 }
-function reset_modal_edit(id, descripcion){
-    document.getElementById('nombre'+id).classList.remove('is-invalid');
-    document.getElementById('nombre'+id).value=descripcion;
+
+function reset_modal_edit(){
+    // document.getElementById('nombre'+id).classList.remove('is-invalid');
+    // document.getElementById('nombre'+id).value=descripcion;
+    // let spans = document.getElementsByClassName('invalid-feedback');
+    // while(spans.length>0){
+    //     spans[0].remove();
+    // }
+    document.getElementByTag('input').classList.remove('is-invalid');
     let spans = document.getElementsByClassName('invalid-feedback');
     while(spans.length>0){
         spans[0].remove();

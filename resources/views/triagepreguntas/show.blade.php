@@ -78,60 +78,60 @@ $(document).ready(function(){
 		if(sintomas_descriptos.length>0){
 			let id = document.getElementById('id_paciente').value;
 			$.ajaxSetup({
-	                headers: {
-	                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-	                }
+				headers: {
+					'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+				}
 	   		});
 
 		    $.ajax({
-		            type:'POST',
-		            url:"{{ url('triagepreguntas') }}",
-		            dataType:"json",
-		            data:{
-		                sintomas_descriptos:JSON.stringify(sintomas_descriptos),
-		                id:id,
-		       			dias:dias,
-		       			horas:horas
-		            },
-		            success: function(response){
-		            	if(response.resultado ){
-		            		let url= "{{ url('turnos/respuesta') }}";
-		            		url = url+"?atencion="+response.atencion;
-		            		// let url ="/turnos/respuesta?atencion="+response.atencion;
-		            		for(let i=0;i<response.sintomas.length;i++){
-		            			url=url+"&sintomas%5B"+i+"%5D="+response.sintomas[i];
-		            		}
-		            		window.location.replace(url);
-		            	}
-		            	else{
-		            		let alert = document.getElementById("alerta");
-							alert.classList.add('alert');
-							alert.classList.add('alert-danger');
-							alert.innerHTML=`<button type="button" class="close" data-dismiss="alert">x</button><strong>Error! </strong>Los sintomas mencionados no se encuentran registrados`;
-		            		$("#alerta").fadeTo(2000, 500).slideUp(500, function(){
-						    $("#alerta").slideUp(500);
-							});
-		            	}
-		                // $('#myModal').modal('hide');
-		                // alert("El paciente fue cargado exitosamente")
-		                // var table = $('#myTable').DataTable();
-		                // table.draw();
-		                },
-		            error:function(err){
-		                // if (err.status == 422) { // when status code is 422, it's a validation issue
+				type:'POST',
+				url:"{{ url('triagepreguntas') }}",
+				dataType:"json",
+				data:{
+					sintomas_descriptos:JSON.stringify(sintomas_descriptos),
+					id:id,
+					dias:dias,
+					horas:horas
+				},
+				success: function(response){
+					if(response.resultado ){
+						let url= "{{ url('turnos/respuesta') }}";
+						url = url+"?atencion="+response.atencion;
+						// let url ="/turnos/respuesta?atencion="+response.atencion;
+						for(let i=0;i<response.sintomas.length;i++){
+							url=url+"&sintomas%5B"+i+"%5D="+response.sintomas[i];
+						}
+						window.location.replace(url);
+					}
+					else{
+						let alert = document.getElementById("alerta");
+						alert.classList.add('alert');
+						alert.classList.add('alert-danger');
+						alert.innerHTML=`<button type="button" class="close" data-dismiss="alert">x</button><strong>Error! </strong>Los sintomas mencionados no se encuentran registrados`;
+						$("#alerta").fadeTo(2000, 500).slideUp(500, function(){
+						$("#alerta").slideUp(500);
+						});
+					}
+					// $('#myModal').modal('hide');
+					// alert("El paciente fue cargado exitosamente")
+					// var table = $('#myTable').DataTable();
+					// table.draw();
+					},
+				error:function(err){
+					// if (err.status == 422) { // when status code is 422, it's a validation issue
 
-		                
-		                //   $.each(err.responseJSON.errors, function (i, error) {
-		                //       if(i=='ciess'){
-		                //         $('#error_modal_cie').html('<span style="color: red;">'+error[0]+'</span>');
-		                //       }
-		                //       else{
-		                //         $('#error_modal_observacion').html('<span style="color: red;">'+error[0]+'</span>');
-		                //       }
-		                //   });
-		                // }
-		            }
-		          });
+					
+					//   $.each(err.responseJSON.errors, function (i, error) {
+					//       if(i=='ciess'){
+					//         $('#error_modal_cie').html('<span style="color: red;">'+error[0]+'</span>');
+					//       }
+					//       else{
+					//         $('#error_modal_observacion').html('<span style="color: red;">'+error[0]+'</span>');
+					//       }
+					//   });
+					// }
+				}
+		    });
 		}
 	});
 	

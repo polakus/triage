@@ -80,7 +80,7 @@
 	<!-- fin modal -->
   </div>
   <!-- TAB AREA -->
-  <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+  	<div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
 		<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
 			<div class="btn-toolbar mb-2 mb-md-0">
 				<div class="btn-group mr-2">
@@ -104,7 +104,7 @@
 			</table>
 		</div>
 
-		<!-- Modal Create Area -->
+	<!-- Modal Create Area -->
     <div class="modal fade" id="crear_area" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="false">
       <div class="modal-dialog">
         <div class="modal-content">
