@@ -55,7 +55,7 @@
     <div class="btn-toolbar mb-2 mb-md-0">
         <div class="btn-group mr-2">
             @canany(['FullSintomas','RegistrarSintoma'])
-            <button type="button" class="btn btn-sm btn-outline-secondary" data-toggle="modal" data-target="#exampleModal">Agregar Síntoma</button>
+            <button type="button" id="btnCreateModal" class="btn btn-sm btn-outline-secondary" data-toggle="modal" data-target="#createModal">Agregar Síntoma</button>
             @endcan
         </div>
     </div>
@@ -76,7 +76,7 @@
     </table>
 </div>
 <!-- Modal Create Síntoma-->
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="false">
+<div class="modal fade" id="createModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="false">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -93,7 +93,7 @@
                 <div class="form-row">
                     <div id="error_dias" class="form-group col-md-4">
                         <label for="dias">Días</label>
-                        <input type="number" id="dias" name="dias" class="form-control" min="0" max="100" placeholder="Dias">
+                        <input type="number" id="dias" name="dias" class="form-control" min="0" max="100" placeholder="Días">
                     </div>
                     <div id="error_horas" class="form-group col-md-4">
                         <label for="horas">Horas</label>
@@ -102,7 +102,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button id="guardar" type="button" class="btn btn-dark">Guardar</button>
+                <button onclick="guardar()" type="button" class="btn btn-dark">Guardar</button>
                 <button type="button" class="btn btn-dark" data-dismiss="modal">Cerrar</button>
             </div>
         </div>
@@ -141,7 +141,7 @@
             </div>
             <div class="modal-footer">
                 <button id="editarbtn" onclick="editar()" type="button" class="btn btn-dark">Editar</button>
-                <button {{--onclick="reset_modal_edit({{$sintoma->id}},'{{$sintoma->descripcion}}')"--}} type="button" class="btn btn-dark" data-dismiss="modal">Cerrar</button>
+                <button  type="button" class="btn btn-dark" data-dismiss="modal">Cerrar</button>
             </div>
 		</div>
 	</div>
@@ -217,86 +217,96 @@
     }
     });
 
-    $('#guardar').click(function() {
-        var nombre_sintoma = document.getElementById("nombre_sintoma").value;
-        var dias = document.getElementById("dias").value;
-        var horas = document.getElementById("horas").value;
-        if (! (dias)) dias = 0;
-        if (! (horas)) horas = 0;
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
-        $.ajax({
-            type:'POST',
-            url:"/sintomas",
-            dataType:"json",
-            data:{
-                nombre_sintoma: nombre_sintoma,
-                dias: dias,
-                horas: horas,
-            },
-            success: function(response){
-                $('#exampleModal').modal('hide');
-                var table=$("#myTable").DataTable();
-                table.draw();
-
-                $('#alerta').addClass('alert '+response.tipo);
-                $('#alerta').html('<b>'+response.mensaje+'</b>');
-                $("#alerta").fadeTo(2000, 500).slideUp(500, function(){
-                    $("#alerta").slideUp(500);
-                });
-                document.getElementById("nombre_sintoma").value = "";
-                document.getElementById("dias").value = "";
-                document.getElementById("horas").value = "";
-            },
-            error:function(err){
-                if (err.status == 422) { // when status code is 422, it's a validation issue
-                    $.each(err.responseJSON.errors, function (i, error) {
-                        switch( i ){
-							case "nombre_sintoma":
-                                // document.getElementById('error_nombre').classList.add('is-invalid');
-                                // parentNode.appendChild(a)
-                                var ele_span = document.createElement('span');
-                                ele_span.setAttribute('style', 'color:#e74a3b');
-                                ele_span.setAttribute('role', 'alert');
-                                ele_span.innerHTML = "<strong>" + error[0] + "</strong>";
-                                document.getElementById('error_nombre').appendChild(ele_span);
-                                document.getElementById("nombre_sintoma").classList.add("is-invalid");							    
-                                break;
-							case "dias":
-                                var ele_span = document.createElement('span');
-                                ele_span.setAttribute('style', 'color:#e74a3b');
-                                ele_span.setAttribute('role', 'alert');
-                                ele_span.innerHTML = "<strong>" + error[0] + "</strong>";
-                                document.getElementById('error_dias').appendChild(ele_span);
-                                document.getElementById("dias").classList.add("is-invalid");							    
-                                break;
-							case "horas":
-                                var ele_span = document.createElement('span');
-                                ele_span.setAttribute('style', 'color:#e74a3b');
-                                ele_span.setAttribute('role', 'alert');
-                                ele_span.innerHTML = "<strong>" + error[0] + "</strong>";
-                                document.getElementById('error_horas').appendChild(ele_span);
-                                document.getElementById("horas").classList.add("is-invalid");
-                                break;
-							default:
-								alert("Ocurrió un error en la función de error de ajax");
-						}
-                    });
-                }
-            }
-        });
-    });
+    
 });
+function guardar() {
+    var nombre_sintoma = document.getElementById("nombre_sintoma").value;
+    var dias = document.getElementById("dias").value;
+    var horas = document.getElementById("horas").value;
+    if (! (dias)) dias = 0;
+    if (! (horas)) horas = 0;
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+    $.ajax({
+        type:'POST',
+        url:"/sintomas",
+        dataType:"json",
+        data:{
+            nombre_sintoma: nombre_sintoma,
+            dias: dias,
+            horas: horas,
+        },
+        success: function(response){
+            $('#createModal').modal('hide');
+            var table=$("#myTable").DataTable();
+            table.draw();
+
+            $('#alerta').addClass('alert '+response.tipo);
+            $('#alerta').html('<b>'+response.mensaje+'</b>');
+            $("#alerta").fadeTo(2000, 500).slideUp(500, function(){
+                $("#alerta").slideUp(500);
+            });
+            reset_error_msj();
+        },
+        error:function(err){
+            if (err.status == 422) { // when status code is 422, it's a validation issue
+                $.each(err.responseJSON.errors, function (i, error) {
+                    switch( i ){
+                        case "nombre_sintoma":
+                            // document.getElementById('error_nombre').classList.add('is-invalid');
+                            // parentNode.appendChild(a)
+                            var ele_span = document.createElement('span');
+                            ele_span.setAttribute('style', 'color:#e74a3b');
+                            ele_span.setAttribute('role', 'alert');
+                            ele_span.innerHTML = "<strong>" + error[0] + "</strong>";
+                            document.getElementById('error_nombre').appendChild(ele_span);
+                            document.getElementById("nombre_sintoma").classList.add("is-invalid");							    
+                            break;
+                        case "dias":
+                            var ele_span = document.createElement('span');
+                            ele_span.setAttribute('style', 'color:#e74a3b');
+                            ele_span.setAttribute('role', 'alert');
+                            ele_span.innerHTML = "<strong>" + error[0] + "</strong>";
+                            document.getElementById('error_dias').appendChild(ele_span);
+                            document.getElementById("dias").classList.add("is-invalid");							    
+                            break;
+                        case "horas":
+                            var ele_span = document.createElement('span');
+                            ele_span.setAttribute('style', 'color:#e74a3b');
+                            ele_span.setAttribute('role', 'alert');
+                            ele_span.innerHTML = "<strong>" + error[0] + "</strong>";
+                            document.getElementById('error_horas').appendChild(ele_span);
+                            document.getElementById("horas").classList.add("is-invalid");
+                            break;
+                        default:
+                            alert("Ocurrió un error en la función de error de ajax");
+                    }
+                });
+            }
+        }
+    });
+}
 
 function iniEditModal(id, descripcion, dias, horas){
+    reset_error_msj();
     document.getElementById('edit_id_sintoma').value = id;
     document.getElementById('edit_nombre_sintoma').value = descripcion;
     document.getElementById('edit_dias').value = dias;
     document.getElementById('edit_horas').value = horas;
 }
+document.getElementById("btnCreateModal").onclick = function (){
+    iniCreateModal();
+}
+function iniCreateModal(){
+    reset_error_msj();
+    document.getElementById('nombre_sintoma').value = "";
+    document.getElementById('dias').value = "";
+    document.getElementById('horas').value = "";
+}
+
 function eliminar(id,sintoma){
     $('#modalEliminar'+id).modal('hide');
     $.ajaxSetup({
@@ -330,13 +340,6 @@ function eliminar(id,sintoma){
     });
 }
 function editar() {
-    // alert(document.getElementById("edit_nombre_sintoma").value+document.getElementById("edit_dias").value+document.getElementById("edit_horas").value);
-    //limpia div para mensajes de error
-    // document.getElementById('nombre').classList.remove('is-invalid');
-    let spans = document.getElementsByClassName('invalid-feedback');
-    while(spans.length>0){
-        spans[0].remove();  //si son muchos podría haber error
-    }
     var id = document.getElementById("edit_id_sintoma").value;
     var nombre_sintoma = document.getElementById("edit_nombre_sintoma").value;
     var dias = document.getElementById("edit_dias").value;
@@ -392,7 +395,7 @@ function editar() {
                             ele_span.setAttribute('style', 'color:#e74a3b');
                             ele_span.setAttribute('role', 'alert');
                             ele_span.innerHTML = "<strong>" + error[0] + "</strong>";
-                            document.getElementById('error_horas').appendChild(ele_span);
+                            document.getElementById('div_horas').appendChild(ele_span);
                             document.getElementById("edit_horas").classList.add("is-invalid");
                             break;
                         default:
@@ -404,19 +407,19 @@ function editar() {
     });
 }
 
-function reset_modal_edit(){
-    // document.getElementById('nombre'+id).classList.remove('is-invalid');
-    // document.getElementById('nombre'+id).value=descripcion;
-    // let spans = document.getElementsByClassName('invalid-feedback');
-    // while(spans.length>0){
-    //     spans[0].remove();
-    // }
-    document.getElementByTag('input').classList.remove('is-invalid');
-    let spans = document.getElementsByClassName('invalid-feedback');
+function reset_error_msj(){
+    // let invalid_inputs = document.getElementsByClassName('is-invalid');
+    let invalid_inputs = document.querySelectorAll('.is-invalid')
+    // console.log(invalid_inputs);
+    for (let i = 0; i < invalid_inputs.length; i++) {
+        invalid_inputs[i].classList.remove('is-invalid');
+    }
+    let spans = document.getElementsByTagName('span');
     while(spans.length>0){
         spans[0].remove();
     }
 }
+
 </script>
 
 
