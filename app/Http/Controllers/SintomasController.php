@@ -38,7 +38,7 @@ class SintomasController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'nombre_sintoma' => 'distinct:ignore_case|required|max:4|unique:sintomas,descripcion',
+            'nombre_sintoma' => 'distinct:ignore_case|required|max:40|unique:sintomas,descripcion',
             'dias' => 'numeric|min:0|max:100',
             'horas' => 'numeric|min:0|max:24',
         ],[
@@ -90,7 +90,7 @@ class SintomasController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'nombre_sintoma' => 'required|max:4|unique:sintomas,descripcion,'.$id,
+            'nombre_sintoma' => 'required|max:40|unique:sintomas,descripcion,'.$id,
             'dias' => 'numeric|min:0|max:100',
             'horas' => 'numeric|min:0|max:24',
         ],[

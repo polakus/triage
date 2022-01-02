@@ -43,11 +43,9 @@
 
 <script >
 $(document).ready(function(){
-	
 	var i=1;
 	$('#add').click(function(){
 		i++;
-
 		$('#tabla_sintomas').append('<tr id="row'+i+'">'+
 						'<td><input type="text" name="respuestas[]" class="form-control nombreje" id="tags'+i+'"></td>'+
 						'<td><button type="button" id="'+i+'" name="remove" class="btn btn-outline-danger btn_remove">Quitar</button></td>'+
@@ -56,15 +54,11 @@ $(document).ready(function(){
 
 	$(document).on('click','.btn_remove',function(){
 		var id= $(this).attr('id');
-
 		$('#row'+id).remove();
 	});
 
-	// aGREGADO
-	
-
+	// AGREGADO
 	$(document).on('click','#btn_analizar',function(){
-
 		let inputs = document.querySelectorAll('.nombreje');
 		let sintomas_descriptos = [];
 		let dias = document.getElementById('dias').value;
@@ -73,7 +67,6 @@ $(document).ready(function(){
 			if(sint.value.replace(/ /g, "").length >0){
 				sintomas_descriptos.push(sint.value);
 			}
-		  
 		});
 		if(sintomas_descriptos.length>0){
 			let id = document.getElementById('id_paciente').value;

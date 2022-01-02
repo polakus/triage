@@ -408,9 +408,7 @@ function editar() {
 }
 
 function reset_error_msj(){
-    // let invalid_inputs = document.getElementsByClassName('is-invalid');
     let invalid_inputs = document.querySelectorAll('.is-invalid')
-    // console.log(invalid_inputs);
     for (let i = 0; i < invalid_inputs.length; i++) {
         invalid_inputs[i].classList.remove('is-invalid');
     }
